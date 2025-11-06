@@ -116,99 +116,78 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (title != null) ...[
-          Text(
-            title! + (required ? '*' : ''),
-            style: context.text.subtitleRegularSubtitle2.copyWith(color: context.theme.colors.black),
-          ),
-          SizedBox(height: 9),
-          if (titleWidget != null) titleWidget!,
-        ],
-        TextFormField(
-          onTapOutside: (event) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          obscureText: obscureText,
-          textInputAction: textInputAction ?? TextInputAction.done,
-          inputFormatters: inputFormatters ?? [InputFormatter.getStandardFormatter()],
-          textCapitalization: textCapitalization ?? TextCapitalization.none,
-          initialValue: initialValue,
-          validator: validator,
-          autofocus: false,
-          readOnly: readOnly,
-          focusNode: focusNode,
-          style: context.text.bodyMediumBody3.copyWith(
-            fontSize: fontSize ?? 14,
-            color: color ?? context.theme.colors.textDark,
-            fontWeight: fontWeight,
-          ),
-          controller: controller,
-          onChanged: (text) {
-            onChanged?.call(text);
-          },
-          textAlign: align!,
-          showCursor: showCursor,
-          onTap: () {
-            if (onTap != null) onTap!.call();
-          },
-          keyboardType: keyboardType,
-          enabled: enabled,
-          textAlignVertical: verticalTextAlign,
-          scrollPadding: scrollPadding ?? const EdgeInsets.only(bottom: 32),
-          onFieldSubmitted: onFieldSubmitted,
-          cursorColor: hasError ? context.theme.colors.error : context.theme.colors.black,
-          decoration: InputDecoration(
-            filled: fillColor == null ? false : true,
-            fillColor: fillColor ?? Colors.transparent,
-            errorText: errorText,
-            alignLabelWithHint: true,
-            counterText: '',
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(color: borderColor ?? context.theme.colors.lightGray),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(color: focusedBorderColor ?? context.theme.colors.secondary),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(color: context.theme.colors.error),
-            ),
-            prefixIcon: prefix,
-            prefixIconConstraints: prefixIconConstraints,
-            hintText: hint,
-            suffixIcon: suffix,
-            contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-            hintStyle: hintStyle ?? context.text.bodyMediumBody3.copyWith(color: context.theme.colors.textLight),
-            labelText: label,
-            labelStyle:
-                labelStyle ??
-                TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: fontWeight,
-                  color: context.theme.colors.textDark,
-                  height: height,
-                ),
-            errorStyle: TextStyle(color: context.theme.colors.error, fontSize: 14),
-          ),
-          minLines: minLines,
-          maxLines: maxLines,
-          maxLength: maxLength,
+    return TextFormField(
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      obscureText: obscureText,
+      textInputAction: textInputAction ?? TextInputAction.done,
+      inputFormatters: inputFormatters ?? [InputFormatter.getStandardFormatter()],
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      initialValue: initialValue,
+      validator: validator,
+      autofocus: false,
+      readOnly: readOnly,
+      focusNode: focusNode,
+      style: TextStyle(fontSize: fontSize ?? 14, color: color ?? context.theme.colors.textDark, fontWeight: fontWeight),
+      controller: controller,
+      onChanged: (text) {
+        onChanged?.call(text);
+      },
+      textAlign: align!,
+      showCursor: showCursor,
+      onTap: () {
+        if (onTap != null) onTap!.call();
+      },
+      keyboardType: keyboardType,
+      enabled: enabled,
+      textAlignVertical: verticalTextAlign,
+      scrollPadding: scrollPadding ?? const EdgeInsets.only(bottom: 32),
+      onFieldSubmitted: onFieldSubmitted,
+      cursorColor: hasError ? context.theme.colors.error : context.theme.colors.black,
+      decoration: InputDecoration(
+        filled: fillColor == null ? false : true,
+        fillColor: fillColor ?? Colors.transparent,
+        errorText: errorText,
+        alignLabelWithHint: true,
+        counterText: '',
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide(color: borderColor ?? context.theme.colors.lightGray),
         ),
-      ],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide(color: focusedBorderColor ?? context.theme.colors.secondary),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide(color: context.theme.colors.error),
+        ),
+        prefixIcon: prefix,
+        prefixIconConstraints: prefixIconConstraints,
+        hintText: hint,
+        suffixIcon: suffix,
+        contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+        hintStyle:
+            hintStyle ?? TextStyle(color: context.theme.colors.textLight, fontSize: 14, fontWeight: FontWeight.w300),
+        labelText: label,
+        labelStyle:
+            labelStyle ??
+            TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: context.theme.colors.textDark, height: height),
+        errorStyle: TextStyle(color: context.theme.colors.error, fontSize: 14),
+      ),
+      minLines: minLines,
+      maxLines: maxLines,
+      maxLength: maxLength,
     );
   }
 }

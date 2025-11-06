@@ -6,4 +6,26 @@ abstract class Languages {
   }
 
   String get appName;
+
+  String get $continue;
+
+  String get mainHome;
+
+  String get mainMessage;
+
+  String get mainFavorite;
+
+  String get mainBasket;
+
+  String get mainProfile;
+
+  String get messagesNotLoggedText;
+
+  String get favoritesNotLoggedText;
+
+  String get basketNotLoggedText;
+
+  String get profileNotLoggedText;
+
+  String get or;
 }

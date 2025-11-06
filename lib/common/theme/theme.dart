@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'text_styles.dart';
 
 class AppTheme extends InheritedWidget {
   final _lightColors = _LightColors();
@@ -13,9 +12,7 @@ class AppTheme extends InheritedWidget {
 
   AppTheme({super.key, required super.child, required this.themeMode});
 
-  ThemeData getTheme() => ThemeData(brightness: brightness, textTheme: defaultTextTheme, useMaterial3: false);
-
-  CustomTextTheme getTextTheme() => defaultTextTheme;
+  ThemeData getTheme() => ThemeData(brightness: brightness, useMaterial3: false);
 
   static AppTheme of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<AppTheme>()!;
 
@@ -25,8 +22,6 @@ class AppTheme extends InheritedWidget {
 
 extension ThemeContextExtension on BuildContext {
   AppTheme get theme => AppTheme.of(this);
-
-  CustomTextTheme get text => AppTheme.of(this).getTextTheme();
 }
 
 abstract interface class ColorScheme {
@@ -57,6 +52,10 @@ abstract interface class ColorScheme {
   Color get error;
 
   Color get border;
+
+  Color get bg;
+
+  Color get divider;
 }
 
 class _LightColors extends ColorScheme {
@@ -101,4 +100,10 @@ class _LightColors extends ColorScheme {
 
   @override
   Color get border => Color(0xFFD8D7D7);
+
+  @override
+  Color get bg => Color(0xFFF7FBFE);
+
+  @override
+  Color get divider => Color(0xFFE3E3E3);
 }
