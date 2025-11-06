@@ -6,13 +6,16 @@ import 'common/di/di.dart';
 import 'common/router/app_router.dart';
 import 'common/util/pref_util.dart';
 import 'presentation/app/ui/app.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await _config();
 
   runApp(const CarfyApp());
+  FlutterNativeSplash.remove();
 }
 
 Future<void> _config() async {

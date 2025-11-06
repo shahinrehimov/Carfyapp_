@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../common/theme/theme.dart';
+import '../theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -62,11 +62,13 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Ink(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [colors.secondary, colors.primary],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
+            gradient: backgroundColor == null
+                ? LinearGradient(
+                    colors: [colors.secondary, colors.primary],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )
+                : null,
             borderRadius: BorderRadius.circular(borderRadius ?? 40),
           ),
           child: Container(
@@ -82,7 +84,7 @@ class CustomButton extends StatelessWidget {
                           Text(
                             text!,
                             style: TextStyle(
-                              fontWeight: fontWeight ?? FontWeight.w700,
+                              fontWeight: fontWeight ?? FontWeight.w400,
                               fontSize: fontSize ?? 16,
                               color: color ?? colors.white,
                             ),

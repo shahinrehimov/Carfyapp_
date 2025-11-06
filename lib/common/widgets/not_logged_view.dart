@@ -1,0 +1,65 @@
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/localization/languages/languages.dart';
+import 'package:flutter/material.dart';
+
+import '../../gen/assets.gen.dart';
+
+enum NotLoggedPage { messages, favorites, basket, profile }
+
+class NotLoggedView extends StatelessWidget {
+  final NotLoggedPage page;
+
+  const NotLoggedView({super.key, required this.page});
+
+  // $1 is page, $2 is icon
+  (String, String) _getData(BuildContext context) => switch (page) {
+    NotLoggedPage.messages => (Languages.of(context)!.messagesNotLoggedText, Assets.images.messageNotLogged.path),
+    NotLoggedPage.favorites => (Languages.of(context)!.messagesNotLoggedText, Assets.images.favoriteNotLogged.path),
+    NotLoggedPage.basket => (Languages.of(context)!.messagesNotLoggedText, Assets.images.basketNotLogged.path),
+    NotLoggedPage.profile => (Languages.of(context)!.messagesNotLoggedText, Assets.images.profileNotLogged.path),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final data = _getData(context);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(data.$2, height: 168),
+        Text(data.$1, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
+        SizedBox(height: 24),
+        CustomButton(onPressed: () {}, text: 'Daxil ol', width: 268),
+        if (page == NotLoggedPage.profile) ...[
+          SizedBox(height: 12),
+          Padding(
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 26),
+            child: Row(
+              children: [
+                Expanded(child: Divider(color: context.theme.colors.divider, thickness: 1)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    Languages.of(context)!.or,
+                    style: TextStyle(fontWeight: FontWeight.w300, color: context.theme.colors.darkGray),
+                  ),
+                ),
+                Expanded(child: Divider(color: context.theme.colors.divider, thickness: 1)),
+              ],
+            ),
+          ),
+          SizedBox(height: 24),
+          CustomButton(
+            onPressed: () {},
+            backgroundColor: Colors.transparent,
+            color: context.theme.colors.secondary,
+            outlineColor: context.theme.colors.secondary,
+            text: 'Qeydiyyatdan keç',
+            width: 268,
+          ),
+        ],
+      ],
+    );
+  }
+}
