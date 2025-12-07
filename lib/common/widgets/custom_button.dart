@@ -44,7 +44,7 @@ class CustomButton extends StatelessWidget {
     final colors = context.theme.colors; // assuming you have primary & secondary there
 
     return SizedBox(
-      height: height ?? 56,
+      height: height ?? 48,
       width: width,
       child: ElevatedButton(
         clipBehavior: Clip.none,
