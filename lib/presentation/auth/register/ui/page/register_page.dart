@@ -1,0 +1,50 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/field_validation_state.dart';
+import 'package:carfy/common/util/input_formatters.dart';
+import 'package:carfy/common/widgets/custom_app_bar.dart';
+import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/common/widgets/custom_text_field.dart';
+import 'package:carfy/common/widgets/tab_bar.dart';
+import 'package:carfy/presentation/auth/register/state/register_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../../../common/state/state_status.dart';
+import '../../../../../../common/theme/theme.dart';
+import '../../../../../../common/widgets/state_status_toast.dart';
+import '../../../../../../gen/assets.gen.dart';
+import '../../../../../common/translations/translation_context_extension.dart';
+import '../../../../../common/translations/translation_keys.dart';
+
+part '../widget/common.dart';
+
+part '../widget/with_email.dart';
+
+part '../widget/with_number.dart';
+
+@RoutePage()
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => RegisterCubit(),
+      child: Scaffold(
+        appBar: CustomAppBar().copyWith(),
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 32, 16, 0),
+            child: CustomTabBar(
+              titles: [context.localization.withNumber, context.localization.withEmail],
+              children: [_RegisterWithNumber(), _RegisterWithEmail()],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 enum Language {
-  az(Locale('az', ''));
+  az(Locale('az', '')),
+  en(Locale('en', '')),
+  ru(Locale('ru', ''));
 
   final Locale locale;
 

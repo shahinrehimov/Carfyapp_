@@ -1,7 +1,8 @@
 import 'package:carfy/common/theme/theme.dart';
-import 'package:carfy/localization/languages/languages.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../common/translations/translation_context_extension.dart';
+import '../../../../common/translations/translation_keys.dart';
 import '../../../../gen/assets.gen.dart';
 import '../enum/main_pages.dart';
 import 'navbar_item.dart';
@@ -24,7 +25,7 @@ class CustomBottomNav extends StatelessWidget {
           children: [
             NavBarItem(
               image: Assets.icons.mainHome,
-              text: Languages.of(context)!.mainHome,
+              text: context.localization.mainHome,
               onTap: () {
                 onTap(MainPages.home);
               },
@@ -32,7 +33,7 @@ class CustomBottomNav extends StatelessWidget {
             ),
             NavBarItem(
               image: Assets.icons.mainMessage,
-              text: Languages.of(context)!.mainMessage,
+              text: context.localization.mainMessage,
               onTap: () {
                 onTap(MainPages.messages);
               },
@@ -40,7 +41,7 @@ class CustomBottomNav extends StatelessWidget {
             ),
             NavBarItem(
               image: Assets.icons.mainFavorite,
-              text: Languages.of(context)!.mainFavorite,
+              text: context.localization.mainFavorite,
               onTap: () {
                 onTap(MainPages.favorites);
               },
@@ -48,7 +49,7 @@ class CustomBottomNav extends StatelessWidget {
             ),
             NavBarItem(
               image: Assets.icons.mainBasket,
-              text: Languages.of(context)!.mainBasket,
+              text: context.localization.mainBasket,
               onTap: () {
                 onTap(MainPages.basket);
               },
@@ -56,7 +57,7 @@ class CustomBottomNav extends StatelessWidget {
             ),
             NavBarItem(
               image: Assets.icons.mainProfile,
-              text: Languages.of(context)!.mainProfile,
+              text: context.localization.mainProfile,
               onTap: () {
                 onTap(MainPages.profile);
               },

@@ -76,6 +76,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/splash-logo.png
   AssetGenImage get splashLogo => const AssetGenImage('assets/images/splash-logo.png');
 
+  /// File path: assets/images/successfully-registered.png
+  AssetGenImage get successfullyRegistered => const AssetGenImage('assets/images/successfully-registered.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     basketNotLogged,
@@ -84,6 +87,7 @@ class $AssetsImagesGen {
     profileNotLogged,
     splashLogoAndroid12,
     splashLogo,
+    successfullyRegistered,
   ];
 }
 

@@ -35,7 +35,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
   final TextEditingController phoneController = TextEditingController();
 
   void toggleObscureText() {
-    emit(state.copyWith(obscureText: !state.obscureText));
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
   Future<void> loginWithEmail() async {
@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       (success) {
         emit(state.copyWith(emailLoginState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replace(MainRoute());
+        _appRouter.replaceAll([MainRoute()]);
       },
     );
   }
@@ -79,7 +79,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
         phoneValidationState: FieldValidationState.pure(),
       ),
     );
-    final phone = phoneController.text.trim();
+    final phone = phoneController.text.trim().replaceAll(' ', '');
 
     final result = await _sendPhoneLoginOtpUseCase(LoginWithPhoneOtpParams(phone: phone));
     result.fold(

@@ -11,7 +11,7 @@ class _Common extends StatelessWidget {
           children: [
             Expanded(child: Divider()),
             SizedBox(width: 10),
-            Text(Languages.of(context)!.or, style: TextStyle(color: context.theme.colors.textDark)),
+            Text(context.localization.or, style: TextStyle(color: context.theme.colors.textDark)),
             SizedBox(width: 10),
             Expanded(child: Divider()),
           ],
@@ -19,7 +19,7 @@ class _Common extends StatelessWidget {
         SizedBox(height: 16),
         CustomButton(
           onPressed: () {},
-          text: Languages.of(context)!.google,
+          text: context.localization.google,
           backgroundColor: Colors.transparent,
           outlineColor: context.theme.colors.secondary,
           color: Color(0xFF0E1217),
@@ -30,7 +30,7 @@ class _Common extends StatelessWidget {
         SizedBox(height: 16),
         CustomButton(
           onPressed: () {},
-          text: Languages.of(context)!.google,
+          text: context.localization.apple,
           backgroundColor: Colors.transparent,
           outlineColor: context.theme.colors.secondary,
           color: Color(0xFF0E1217),
@@ -43,13 +43,13 @@ class _Common extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Languages.of(context)!.doNotHaveAccount,
+              context.localization.doNotHaveAccount,
               style: TextStyle(color: context.theme.colors.textBlack, fontSize: 12, fontWeight: FontWeight.w300),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => context.pushRoute(RegisterRoute()),
               child: Text(
-                Languages.of(context)!.signUp,
+                context.localization.signUp,
                 style: TextStyle(
                   color: context.theme.colors.secondary,
                   fontWeight: FontWeight.w600,
@@ -64,7 +64,7 @@ class _Common extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(
-            Languages.of(context)!.signUpTermsText,
+            context.localization.signUpTermsText,
             style: TextStyle(fontSize: 8, color: context.theme.colors.textDark),
             textAlign: TextAlign.center,
           ),

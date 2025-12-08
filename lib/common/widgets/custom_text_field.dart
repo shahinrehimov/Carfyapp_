@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../common/theme/theme.dart';
-import '../../common/util/input_formatters.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
@@ -123,7 +122,7 @@ class CustomTextField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       textInputAction: textInputAction ?? TextInputAction.done,
-      inputFormatters: inputFormatters ?? [InputFormatter.getStandardFormatter()],
+      inputFormatters: inputFormatters ?? [],
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       initialValue: initialValue,
       validator: validator,
@@ -151,6 +150,7 @@ class CustomTextField extends StatelessWidget {
         filled: fillColor == null ? false : true,
         fillColor: fillColor ?? Colors.transparent,
         errorText: errorText,
+        errorMaxLines: 10,
         alignLabelWithHint: true,
         counterText: '',
         disabledBorder: OutlineInputBorder(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 
 import 'common/di/di.dart';
 import 'common/router/app_router.dart';
 import 'common/util/pref_util.dart';
+import 'data/models/translation/translation_local_model.dart';
 import 'presentation/app/ui/app.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -20,6 +22,7 @@ void main() async {
 
 Future<void> _config() async {
   await PrefUtil.init();
+  await _initLocalStorage();
 
   GetIt.I.allowReassignment = true;
   configureDependencies();
@@ -29,4 +32,10 @@ Future<void> _config() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark),
   );
+}
+
+Future<void> _initLocalStorage() async {
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(TranslationLocalModelAdapter());
 }

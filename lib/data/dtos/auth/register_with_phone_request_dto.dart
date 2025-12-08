@@ -1,5 +1,6 @@
+import 'package:carfy/common/constants/constants.dart';
+
 class RegisterWithPhoneRequestDto {
-  final String deviceType;
   final String name;
   final String surname;
   final String? gender;
@@ -10,7 +11,6 @@ class RegisterWithPhoneRequestDto {
   final int otp;
 
   RegisterWithPhoneRequestDto({
-    required this.deviceType,
     required this.name,
     required this.surname,
     this.gender,
@@ -22,7 +22,7 @@ class RegisterWithPhoneRequestDto {
   });
 
   Map<String, dynamic> toJson() => {
-    'device_type': deviceType,
+    'device_type': Constants.deviceType,
     'name': name,
     'surname': surname,
     'gender': gender,

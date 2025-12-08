@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../../common/error/failure.dart';
 import '../../entities/auth/check_email_response.dart';
 import '../../params/auth/check_email_params.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 @injectable
 class CheckEmailUseCase {

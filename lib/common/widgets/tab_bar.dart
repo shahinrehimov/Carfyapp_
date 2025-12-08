@@ -58,6 +58,7 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
               boxShadow: [BoxShadow(color: Color(0x29000000), offset: Offset(0, 1), blurRadius: 8, spreadRadius: 0)],
               borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
             ),
+            splashBorderRadius: BorderRadius.vertical(top: Radius.circular(40)),
             labelStyle: TextStyle(color: context.theme.colors.primary, fontWeight: FontWeight.w500, fontSize: 14),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF313131), fontSize: 14),
             tabs: widget.titles.map((e) => Tab(text: e, height: 60)).toList(),
