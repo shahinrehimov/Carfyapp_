@@ -70,4 +70,6 @@ abstract class Languages {
   String otpSentToNumber(String number);
 
   String get confirm;
+
+  String get passwordRecovery;
 }

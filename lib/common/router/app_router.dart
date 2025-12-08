@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../presentation/auth/forgot_password/ui/page/forgot_password_page.dart';
 import '../../presentation/auth/login/ui/page/login_page.dart';
 import '../../presentation/auth/login/ui/page/login_phone_verify_page.dart';
 import '../../presentation/basket/ui/page/basket_page.dart';
@@ -31,5 +32,6 @@ class AppRouter extends RootStackRouter {
     ),
     AutoRoute(page: LoginRoute.page),
     AutoRoute(page: LoginPhoneVerifyRoute.page),
+    AutoRoute(page: ForgotPasswordRoute.page),
   ];
 }

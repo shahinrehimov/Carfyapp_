@@ -40,7 +40,8 @@ class _LoginWithEmail extends StatelessWidget {
               SizedBox(height: 16),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) =>
-                oldState.obscureText != newState.obscureText || oldState.passwordValidationState != newState.passwordValidationState,
+                    oldState.obscureText != newState.obscureText ||
+                    oldState.passwordValidationState != newState.passwordValidationState,
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.passwordController,
@@ -71,7 +72,7 @@ class _LoginWithEmail extends StatelessWidget {
                 },
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => context.router.push(ForgotPasswordRoute()),
                 child: Text(
                   Languages.of(context)!.forgotPassword,
                   style: TextStyle(color: context.theme.colors.primary, decoration: TextDecoration.underline),

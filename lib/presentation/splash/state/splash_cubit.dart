@@ -31,7 +31,8 @@ class SplashCubit extends Cubit<SplashState> {
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (!firstEnter) {
-      _appRouter.replace(MainRoute());
+      // _appRouter.replace(MainRoute());
+      _appRouter.replace(LoginRoute());
     }
   }
 

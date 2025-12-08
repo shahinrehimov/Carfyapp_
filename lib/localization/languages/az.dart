@@ -100,4 +100,7 @@ class LanguageAz extends Languages {
 
   @override
   String get confirm => 'Təsdiqlə';
+
+  @override
+  String get passwordRecovery => 'Şifrə bərpası';
 }
