@@ -19,15 +19,7 @@ mixin StateMapHelper {
     final errors = ((failure.errors[key] ?? []) as List);
     if (errors.isNotEmpty) {
       final error = errors.first;
-      if (error == 'validation.required') {
-        return FieldValidationState.required();
-      } else if (error == 'validation.email') {
-        return FieldValidationState.invalidEmail();
-      } else if (error == 'validation.size.string') {
-        return FieldValidationState.short();
-      } else if (error == 'validation.regex') {
-        return FieldValidationState.regex();
-      }
+      return FieldValidationState.failure(error);
     }
     return FieldValidationState.pure();
   }

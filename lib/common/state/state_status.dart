@@ -17,6 +17,8 @@ class StateStatus {
 
   factory StateStatus.success() = StateStatusSuccess;
 
+  factory StateStatus.successWithMessage(String msg) = StateStatusSuccessWithMessage;
+
   T maybeWhen<T>({
     T Function()? initial,
     T Function()? loading,
@@ -27,6 +29,7 @@ class StateStatus {
     T Function()? serverFailure,
     T Function()? networkFailure,
     T Function()? success,
+    T Function(String msg)? successWithMessage,
     required T Function() orElse,
   }) {
     if (this is StateStatusInitial && initial != null) return initial();
@@ -36,7 +39,6 @@ class StateStatus {
     if (this is StateStatusFailure && failure != null) {
       return failure((this as StateStatusFailure).msg);
     }
-
     if (this is StateStatusServerFailure && serverFailure != null) {
       return serverFailure();
     }
@@ -44,6 +46,9 @@ class StateStatus {
       return networkFailure();
     }
     if (this is StateStatusSuccess && success != null) return success();
+    if (this is StateStatusSuccessWithMessage && successWithMessage != null) {
+      return successWithMessage((this as StateStatusSuccessWithMessage).msg);
+    }
     return orElse();
   }
 }
@@ -80,4 +85,10 @@ class StateStatusNetworkFailure extends StateStatus {
 
 class StateStatusSuccess extends StateStatus {
   StateStatusSuccess();
+}
+
+class StateStatusSuccessWithMessage extends StateStatus {
+  final String msg;
+
+  StateStatusSuccessWithMessage(this.msg);
 }

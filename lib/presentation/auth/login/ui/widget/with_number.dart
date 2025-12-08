@@ -18,7 +18,7 @@ class _LoginWithNumber extends StatelessWidget {
             children: [
               SizedBox(height: 30),
               Text(
-                Languages.of(context)!.entranceToAccount,
+                context.localization.entranceToAccount,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.theme.colors.primary),
               ),
               SizedBox(height: 32),
@@ -27,14 +27,10 @@ class _LoginWithNumber extends StatelessWidget {
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.phoneController,
-                    hint: Languages.of(context)!.mobileNumber,
-                    errorText: state.phoneValidationState.maybeWhen(
-                      requiredField: () => Languages.of(context)!.requiredFieldErrorText,
-                      short: () => Languages.of(context)!.invalidFormat,
-                      regex: () => Languages.of(context)!.invalidFormat,
-                      orElse: () => null,
-                    ),
-                    inputFormatters: [InputFormatter.getNumberFormatter()],
+                    hint: context.localization.mobileNumber,
+                    errorText: state.phoneValidationState.message,
+                    inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
+                    keyboardType: TextInputType.number,
                   );
                 },
               ),
@@ -45,7 +41,7 @@ class _LoginWithNumber extends StatelessWidget {
                   return CustomButton(
                     onPressed: () => cubit.loginWithNumber(),
                     loading: state.phoneLoginState is StateStatusLoading,
-                    text: Languages.of(context)!.forward,
+                    text: context.localization.forward,
                   );
                 },
               ),

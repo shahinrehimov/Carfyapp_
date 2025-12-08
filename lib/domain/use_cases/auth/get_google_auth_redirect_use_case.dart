@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../common/error/failure.dart';
 import '../../entities/auth/google_auth_redirect.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 @injectable
 class GetGoogleAuthRedirectUseCase {

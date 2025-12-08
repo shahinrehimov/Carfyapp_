@@ -2,12 +2,13 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
-import 'package:carfy/localization/languages/languages.dart';
 import 'package:carfy/presentation/splash/state/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/state/state_status.dart';
+import '../../../../common/translations/translation_context_extension.dart';
+import '../../../../common/translations/translation_keys.dart';
 import '../../../../common/widgets/state_status_toast.dart';
 import '../../../../gen/assets.gen.dart';
 
@@ -34,7 +35,7 @@ class SplashPage extends StatelessWidget {
                 if (state.firstEnter)
                   CustomButton(
                     onPressed: () => context.read<SplashCubit>().generateGuestIdentifier(),
-                    text: Languages.of(context)!.$continue,
+                    text: context.localization.continueBtn,
                     loading: state.guestIdentifierState is StateStatusLoading,
                     width: 268,
                   ),

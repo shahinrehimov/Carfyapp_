@@ -1,9 +1,10 @@
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
-import 'package:carfy/localization/languages/languages.dart';
 import 'package:flutter/material.dart';
 
 import '../../gen/assets.gen.dart';
+import '../translations/translation_context_extension.dart';
+import '../translations/translation_keys.dart';
 
 enum NotLoggedPage { messages, favorites, basket, profile }
 
@@ -12,12 +13,12 @@ class NotLoggedView extends StatelessWidget {
 
   const NotLoggedView({super.key, required this.page});
 
-  // $1 is page, $2 is icon
+  // $1 is ui, $2 is icon
   (String, String) _getData(BuildContext context) => switch (page) {
-    NotLoggedPage.messages => (Languages.of(context)!.messagesNotLoggedText, Assets.images.messageNotLogged.path),
-    NotLoggedPage.favorites => (Languages.of(context)!.messagesNotLoggedText, Assets.images.favoriteNotLogged.path),
-    NotLoggedPage.basket => (Languages.of(context)!.messagesNotLoggedText, Assets.images.basketNotLogged.path),
-    NotLoggedPage.profile => (Languages.of(context)!.messagesNotLoggedText, Assets.images.profileNotLogged.path),
+    NotLoggedPage.messages => (context.localization.messagesNotLoggedText, Assets.images.messageNotLogged.path),
+    NotLoggedPage.favorites => (context.localization.messagesNotLoggedText, Assets.images.favoriteNotLogged.path),
+    NotLoggedPage.basket => (context.localization.messagesNotLoggedText, Assets.images.basketNotLogged.path),
+    NotLoggedPage.profile => (context.localization.messagesNotLoggedText, Assets.images.profileNotLogged.path),
   };
 
   @override
@@ -41,7 +42,7 @@ class NotLoggedView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    Languages.of(context)!.or,
+                    context.localization.or,
                     style: TextStyle(fontWeight: FontWeight.w300, color: context.theme.colors.darkGray),
                   ),
                 ),

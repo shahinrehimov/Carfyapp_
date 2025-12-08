@@ -4,6 +4,11 @@ import 'package:flutter/cupertino.dart';
 import '../../presentation/auth/forgot_password/ui/page/forgot_password_page.dart';
 import '../../presentation/auth/login/ui/page/login_page.dart';
 import '../../presentation/auth/login/ui/page/login_phone_verify_page.dart';
+import '../../presentation/auth/register/ui/page/complete_email_register_page.dart';
+import '../../presentation/auth/register/ui/page/complete_phone_register_page.dart';
+import '../../presentation/auth/register/ui/page/register_phone_otp_verify.dart';
+import '../../presentation/auth/register/ui/page/register_page.dart';
+import '../../presentation/auth/register/ui/page/registered_successfully_page.dart';
 import '../../presentation/basket/ui/page/basket_page.dart';
 import '../../presentation/favorites/ui/page/favorites_page.dart';
 import '../../presentation/home/ui/page/home_page.dart';
@@ -30,8 +35,15 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProfileRoute.page),
       ],
     ),
+
+    // Auth
     AutoRoute(page: LoginRoute.page),
     AutoRoute(page: LoginPhoneVerifyRoute.page),
     AutoRoute(page: ForgotPasswordRoute.page),
+    AutoRoute(page: RegisterRoute.page),
+    AutoRoute(page: RegisterPhoneOtpVerifyRoute.page),
+    AutoRoute(page: CompletePhoneRegisterRoute.page),
+    AutoRoute(page: CompleteEmailRegisterRoute.page),
+    AutoRoute(page: RegisteredSuccessfullyRoute.page),
   ];
 }

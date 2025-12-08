@@ -1,6 +1,7 @@
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 import '../../common/error/failure.dart';
 import '../../common/mixin/repository_safe_call_mixin.dart';
@@ -26,10 +27,9 @@ import '../../domain/params/auth/login_with_email_params.dart';
 import '../../domain/params/auth/login_with_phone_otp_params.dart';
 import '../../domain/params/auth/login_with_phone_submit_params.dart';
 import '../../domain/params/auth/third_party_login_params.dart';
-import '../../domain/params/auth/reset_password_params.dart';
 import '../../domain/params/auth/forgot_password_params.dart';
 
-import '../../domain/repositories/auth/auth_repository.dart';
+import '../../domain/repositories/auth_repository.dart';
 
 import '../datasources/auth_remote_data_source.dart';
 import '../mappers/auth_mapper.dart';
@@ -121,11 +121,10 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final res = await _dataSource.registerWithPhone(
         RegisterWithPhoneRequestDto(
-          deviceType: params.deviceType,
           name: params.name,
           surname: params.surname,
-          gender: params.gender,
-          birthDate: params.birthDate,
+          gender: params.gender?.name,
+          birthDate: params.birthDate != null ? DateFormat('dd.MM.yyyy').format(params.birthDate!) : null,
           email: params.email,
           phone: params.phone,
           phoneConfirmationToken: params.phoneConfirmationToken,
@@ -158,7 +157,7 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   Future<Either<Failure, LoginResponse>> loginWithPhone({required LoginWithPhoneSubmitParams params}) {
     return safeCall(() async {
       final res = await _dataSource.loginWithPhone(
-        LoginWithPhoneSubmitRequestDto( phone: params.phone, otp: params.otp),
+        LoginWithPhoneSubmitRequestDto(phone: params.phone, otp: params.otp),
       );
       return _mapper.mapLogin(res);
     });
@@ -202,20 +201,6 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final res = await _dataSource.forgotPassword(ForgotPasswordRequestDto(email: params.email));
       return _mapper.mapForgotPassword(res);
-    });
-  }
-
-  @override
-  Future<Either<Failure, void>> resetPassword({required ResetPasswordParams params}) {
-    return safeCall(() async {
-      await _dataSource.resetPassword(
-        ResetPasswordRequestDto(
-          resetToken: params.resetToken,
-          email: params.email,
-          password: params.password,
-          passwordConfirmation: params.passwordConfirmation,
-        ),
-      );
     });
   }
 

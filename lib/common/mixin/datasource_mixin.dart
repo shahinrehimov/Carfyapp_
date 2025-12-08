@@ -30,6 +30,23 @@ mixin DataSourceMixin {
           }
         }
         return response.data;
+      } else if (response.statusCode == 400) {
+        throw UserException(message: response.data['message']);
+      } else if (response.statusCode == 401) {
+        throw UserException(message: response.data['message']);
+      } else if (response.statusCode == 403) {
+        throw UserException(message: response.data['message']);
+      } else if (response.statusCode == 422) {
+        final data = response.data;
+        if (data is Map<String, dynamic> && data.containsKey('errors')) {
+          final errors = Map<String, List<String>>.from(
+            (data['errors'] as Map).map((key, value) => MapEntry(key.toString(), List<String>.from(value))),
+          );
+          throw ValidationException(errors);
+        }
+        throw ServerException();
+      } else if (response.statusCode == 429) {
+        throw UserException(message: response.data['message']);
       }
 
       throw ServerException();
@@ -42,7 +59,7 @@ mixin DataSourceMixin {
       }
       throw ServerException();
     } on Exception {
-      throw ServerException();
+      rethrow;
     }
   }
 }

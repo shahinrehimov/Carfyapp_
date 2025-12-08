@@ -18,7 +18,7 @@ class _LoginWithEmail extends StatelessWidget {
             children: [
               SizedBox(height: 30),
               Text(
-                Languages.of(context)!.entranceToAccount,
+                context.localization.entranceToAccount,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.theme.colors.primary),
               ),
               SizedBox(height: 32),
@@ -27,12 +27,8 @@ class _LoginWithEmail extends StatelessWidget {
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.emailController,
-                    hint: Languages.of(context)!.email,
-                    errorText: state.emailValidationState.maybeWhen(
-                      requiredField: () => Languages.of(context)!.requiredFieldErrorText,
-                      invalidEmail: () => Languages.of(context)!.invalidEmailText,
-                      orElse: () => null,
-                    ),
+                    hint: context.localization.email,
+                    errorText: state.emailValidationState.message,
                     inputFormatters: [InputFormatter.getEmailFormatter()],
                   );
                 },
@@ -40,19 +36,16 @@ class _LoginWithEmail extends StatelessWidget {
               SizedBox(height: 16),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) =>
-                    oldState.obscureText != newState.obscureText ||
+                    oldState.obscurePassword != newState.obscurePassword ||
                     oldState.passwordValidationState != newState.passwordValidationState,
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.passwordController,
-                    hint: Languages.of(context)!.password,
+                    hint: context.localization.password,
                     inputFormatters: [InputFormatter.getPasswordFormatter()],
-                    obscureText: state.obscureText,
+                    obscureText: state.obscurePassword,
                     maxLines: 1,
-                    errorText: state.passwordValidationState.maybeWhen(
-                      requiredField: () => Languages.of(context)!.requiredFieldErrorText,
-                      orElse: () => null,
-                    ),
+                    errorText: state.passwordValidationState.message,
                     suffix: GestureDetector(
                       onTap: () => cubit.toggleObscureText(),
                       child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.eyeOff, width: 24, height: 24)),
@@ -67,14 +60,14 @@ class _LoginWithEmail extends StatelessWidget {
                   return CustomButton(
                     onPressed: () => cubit.loginWithEmail(),
                     loading: state.emailLoginState is StateStatusLoading,
-                    text: Languages.of(context)!.forward,
+                    text: context.localization.forward,
                   );
                 },
               ),
               TextButton(
                 onPressed: () => context.router.push(ForgotPasswordRoute()),
                 child: Text(
-                  Languages.of(context)!.forgotPassword,
+                  context.localization.forgotPassword,
                   style: TextStyle(color: context.theme.colors.primary, decoration: TextDecoration.underline),
                 ),
               ),

@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../../../../common/translations/translation_context_extension.dart';
+import '../../../../../common/translations/translation_keys.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../../../../../localization/languages/languages.dart';
 
 @RoutePage()
 class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
@@ -33,7 +34,7 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
         leading: InkWell(
-          onTap: () => context.pop(),
+          onTap: () => context.maybePop(),
           child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 24, height: 24)),
         ),
       ),
@@ -47,12 +48,12 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Languages.of(context)!.phoneVerification,
+              context.localization.phoneVerification,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
             ),
             SizedBox(height: 8),
             Text(
-              Languages.of(context)!.otpSentToNumber(phone),
+              context.localization.phone,
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: context.theme.colors.darkGray),
             ),
             SizedBox(height: 40),
@@ -90,7 +91,7 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
                   return CustomButton(
                     onPressed: () => context.read<VerifyOtpCubit>().verify(phone),
                     loading: state.verifyState is StateStatusLoading,
-                    text: Languages.of(context)!.confirm,
+                    text: context.localization.confirm,
                   );
                 },
               ),
