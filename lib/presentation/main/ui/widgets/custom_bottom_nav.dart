@@ -42,25 +42,25 @@ class CustomBottomNav extends StatelessWidget {
               image: Assets.icons.mainFavorite,
               text: Languages.of(context)!.mainFavorite,
               onTap: () {
-                onTap(MainPages.basket);
+                onTap(MainPages.favorites);
               },
-              isActive: activePage == MainPages.basket,
+              isActive: activePage == MainPages.favorites,
             ),
             NavBarItem(
               image: Assets.icons.mainBasket,
               text: Languages.of(context)!.mainBasket,
               onTap: () {
-                onTap(MainPages.profile);
+                onTap(MainPages.basket);
               },
-              isActive: activePage == MainPages.profile,
+              isActive: activePage == MainPages.basket,
             ),
             NavBarItem(
               image: Assets.icons.mainProfile,
               text: Languages.of(context)!.mainProfile,
               onTap: () {
-                onTap(MainPages.favorites);
+                onTap(MainPages.profile);
               },
-              isActive: activePage == MainPages.favorites,
+              isActive: activePage == MainPages.profile,
             ),
           ],
         ),

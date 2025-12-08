@@ -28,3 +28,12 @@ class ParseException extends Equatable implements Exception {
   @override
   List<Object> get props => [];
 }
+
+class UserException extends Equatable implements Exception {
+  final String message;
+
+  const UserException({required this.message});
+
+  @override
+  List<Object> get props => [];
+}

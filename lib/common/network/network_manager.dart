@@ -1,9 +1,13 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:dio_curl_logger/dio_curl_logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../constants/constants.dart';
+import '../constants/preference_keys.dart';
+import '../util/pref_util.dart';
 
 @singleton
 class NetworkManager {
@@ -17,9 +21,21 @@ class NetworkManager {
         validateStatus: (_) => true,
         baseUrl: Constants.baseUrl,
         connectTimeout: const Duration(seconds: 10),
-        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        headers: {"Accept": "application/json", "Content-Type": "application/json", "Token": Constants.securityToken},
       ),
     );
+    dio.interceptors.addAll([
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final guestIdentifier = PrefUtil.getString(AppPreferenceKeys.guestIdentifier);
+          if (guestIdentifier != null && guestIdentifier.isNotEmpty) {
+            options.headers["identifier"] = guestIdentifier;
+          }
+          return handler.next(options);
+        },
+      ),
+      if (kDebugMode) CurlLoggingInterceptor(showResponseLog: true, showRequestLog: true),
+    ]);
   }
 
   Future<Response> post(String url, {dynamic data, dynamic queryParameters}) async {

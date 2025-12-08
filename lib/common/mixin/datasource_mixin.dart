@@ -3,6 +3,20 @@ import 'package:dio/dio.dart';
 import '../error/exceptions.dart';
 
 mixin DataSourceMixin {
+  Exception handleException(Exception e) {
+    if (e is DioException) {
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        return ConnectionException();
+      }
+      return ServerException();
+    } else {
+      return e;
+    }
+  }
+
   Future<T> handleResponse<T>(Future<Response> Function() call, {T Function(dynamic data)? map}) async {
     try {
       final response = await call();
@@ -16,17 +30,6 @@ mixin DataSourceMixin {
           }
         }
         return response.data;
-      }
-
-      if (response.statusCode == 400) {
-        final data = response.data;
-        if (data is Map<String, dynamic> && data.containsKey('errors')) {
-          final errors = Map<String, List<String>>.from(
-            (data['errors'] as Map).map((key, value) => MapEntry(key.toString(), List<String>.from(value))),
-          );
-          throw ValidationException(errors);
-        }
-        throw ServerException();
       }
 
       throw ServerException();

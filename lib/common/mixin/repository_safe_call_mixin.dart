@@ -13,6 +13,9 @@ mixin RepositorySafeCallMixin {
     } on ValidationException catch (e) {
       _logError(e);
       return Left(ValidationFailure(e.errors));
+    } on UserException catch (e) {
+      _logError(e);
+      return Left(UserFailure(message: e.message));
     } on ConnectionException catch (e) {
       _logError(e);
       return Left(ConnectionFailure());

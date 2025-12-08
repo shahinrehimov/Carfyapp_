@@ -1,0 +1,25 @@
+class AuthUser {
+  final String uuid;
+  final String email;
+  final String phone;
+  final String name;
+  final String surname;
+  final String? gender;
+  final String? birthDate;
+  final bool emailIsVerified;
+  final bool phoneIsVerified;
+  final String? token;
+
+  AuthUser({
+    required this.uuid,
+    required this.email,
+    required this.phone,
+    required this.name,
+    required this.surname,
+    this.gender,
+    this.birthDate,
+    required this.emailIsVerified,
+    required this.phoneIsVerified,
+    this.token,
+  });
+}
