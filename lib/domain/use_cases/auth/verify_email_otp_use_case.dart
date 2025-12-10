@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../../common/error/failure.dart';
 import '../../entities/auth/verify_otp_response.dart';
 import '../../params/auth/verify_email_otp_params.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 @injectable
 class VerifyEmailOtpUseCase {

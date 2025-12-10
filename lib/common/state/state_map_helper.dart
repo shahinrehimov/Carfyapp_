@@ -16,19 +16,20 @@ mixin StateMapHelper {
   }
 
   FieldValidationState mapValidationFailure(String key, ValidationFailure failure) {
-    final errors = ((failure.errors[key] ?? []) as List);
-    if (errors.isNotEmpty) {
-      final error = errors.first;
-      if (error == 'validation.required') {
-        return FieldValidationState.required();
-      } else if (error == 'validation.email') {
-        return FieldValidationState.invalidEmail();
-      } else if (error == 'validation.size.string') {
-        return FieldValidationState.short();
-      } else if (error == 'validation.regex') {
-        return FieldValidationState.regex();
-      }
+    final errors = (failure.errors[key] ?? []) as List;
+
+    if (errors.isEmpty) {
+      return FieldValidationState.pure();
     }
-    return FieldValidationState.pure();
+
+    // Single error → return as plain text
+    if (errors.length == 1) {
+      return FieldValidationState.failure(errors.first);
+    }
+
+    // Multiple errors → return numbered list
+    final message = errors.asMap().entries.map((e) => '${e.key + 1}. ${e.value}').join('\n');
+
+    return FieldValidationState.failure(message);
   }
 }

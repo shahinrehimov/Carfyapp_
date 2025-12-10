@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../localization/languages/languages.dart';
 import '../state/state_status.dart';
+import '../translations/translation_context_extension.dart';
 
 void showStateStatusToast(BuildContext context, StateStatus state) {
   switch (state) {
@@ -9,10 +9,13 @@ void showStateStatusToast(BuildContext context, StateStatus state) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
       break;
     case StateStatusNetworkFailure():
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Languages.of(context)!.connectionFailure)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localization.connectionFailure)));
       break;
     case StateStatusServerFailure():
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Languages.of(context)!.serverFailure)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localization.serverFailure)));
+      break;
+    case StateStatusSuccessWithMessage(msg: final msg):
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
       break;
   }
 }

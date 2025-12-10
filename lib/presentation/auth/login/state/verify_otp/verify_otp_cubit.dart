@@ -37,7 +37,7 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
 
   void _startTimer() {
     _timer?.cancel();
-    emit(state.copyWith(timeRemaining: 120, isTimerActive: true));
+    emit(state.copyWith(timeRemaining: 180, isTimerActive: true));
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (state.timeRemaining > 0) {
@@ -73,7 +73,7 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
       (success) {
         emit(state.copyWith(verifyState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replace(MainRoute());
+        _appRouter.replaceAll([MainRoute()]);
       },
     );
   }

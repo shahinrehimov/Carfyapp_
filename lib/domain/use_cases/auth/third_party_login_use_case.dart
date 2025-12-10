@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../../common/error/failure.dart';
 import '../../entities/auth/login_response.dart';
 import '../../params/auth/third_party_login_params.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 @injectable
 class ThirdPartyLoginUseCase {

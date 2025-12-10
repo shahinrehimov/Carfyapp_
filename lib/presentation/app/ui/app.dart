@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../../common/theme/theme.dart';
-import '../../../localization/localizations_delegate.dart';
+import '../../../common/translations/delegate.dart';
 import '../state/localization/localization_cubit.dart';
 
 class CarfyApp extends StatelessWidget {
@@ -26,9 +26,9 @@ class CarfyApp extends StatelessWidget {
                 theme: AppTheme.of(context).getTheme(),
                 debugShowCheckedModeBanner: false,
                 locale: localizationState.appLanguage.locale,
-                supportedLocales: const [Locale('az', '')],
-                localizationsDelegates: const [
-                  AppLocalizationsDelegate(),
+                supportedLocales: const [Locale('az', ''), Locale('en', ''), Locale('ru', '')],
+                localizationsDelegates: [
+                  AppLocalizationsDelegate(context: context),
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,

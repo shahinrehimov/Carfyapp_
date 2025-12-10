@@ -1,5 +1,4 @@
 class RegisterWithEmailParams {
-  final String deviceType;
   final String name;
   final String surname;
   final String? gender;
@@ -10,7 +9,6 @@ class RegisterWithEmailParams {
   final String passwordConfirmation;
 
   RegisterWithEmailParams({
-    required this.deviceType,
     required this.name,
     required this.surname,
     this.gender,

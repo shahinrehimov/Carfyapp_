@@ -61,8 +61,6 @@ abstract class AuthRemoteDataSource {
 
   Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto);
 
-  Future<void> resetPassword(ResetPasswordRequestDto dto);
-
   Future<GuestIdentifierResponseModel> generateGuestIdentifier();
 }
 
@@ -79,9 +77,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<SimpleMessageModel> checkEmail(CheckEmailRequestDto dto) {
+  Future<SimpleMessageModel> checkEmail(CheckEmailRequestDto dto) async {
     return handleResponse(
-      () => _networkManager.get(EndpointPaths.registerCheckEmail, queryParams: {'email': dto.email}),
+      () => _networkManager.get(EndpointPaths.registerCheckEmail, queryParams: dto.toJson()),
       map: (json) => SimpleMessageModel.fromJson(json),
     );
   }
@@ -103,7 +101,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<SimpleMessageModel> sendPhoneOtp(SendPhoneOtpRequestDto dto) {
+  Future<SimpleMessageModel> sendPhoneOtp(SendPhoneOtpRequestDto dto) async {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.registerSendPhoneOtp, data: dto.toJson()),
       map: (json) => SimpleMessageModel.fromJson(json),
@@ -119,7 +117,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<RegisterPhoneResponseModel> registerWithPhone(RegisterWithPhoneRequestDto dto) {
+  Future<RegisterPhoneResponseModel> registerWithPhone(RegisterWithPhoneRequestDto dto) async {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.registerWithPhone, data: dto.toJson()),
       map: (json) => RegisterPhoneResponseModel.fromJson(json),
@@ -128,65 +126,26 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
 
   @override
   Future<LoginResponseModel> loginWithEmail(LoginWithEmailRequestDto dto) async {
-    try {
-      final response = await _networkManager.post(EndpointPaths.loginWithEmail, data: dto.toJson());
-      if (response.statusCode == 200) {
-        return LoginResponseModel.fromJson(response.data);
-      } else if (response.statusCode == 401) {
-        throw UserException(message: response.data['message']);
-      } else if (response.statusCode == 422) {
-        final data = response.data;
-        if (data is Map<String, dynamic> && data.containsKey('errors')) {
-          final errors = Map<String, List<String>>.from(
-            (data['errors'] as Map).map((key, value) => MapEntry(key.toString(), List<String>.from(value))),
-          );
-          throw ValidationException(errors);
-        }
-        throw ServerException();
-      }
-      throw ServerException();
-    } on Exception catch (e) {
-      throw handleException(e);
-    }
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.loginWithEmail, data: dto.toJson()),
+      map: (json) => LoginResponseModel.fromJson(json),
+    );
   }
 
   @override
   Future<SimpleMessageModel> sendPhoneLoginOtp(LoginWithPhoneOtpRequestDto dto) async {
-    try {
-      final response = await _networkManager.post(EndpointPaths.loginSendPhoneOtp, data: dto.toJson());
-      if (response.statusCode == 200) {
-        return SimpleMessageModel.fromJson(response.data);
-      } else if (response.statusCode == 401) {
-        throw UserException(message: response.data['message']);
-      } else if (response.statusCode == 422) {
-        final data = response.data;
-        if (data is Map<String, dynamic> && data.containsKey('errors')) {
-          final errors = Map<String, List<String>>.from(
-            (data['errors'] as Map).map((key, value) => MapEntry(key.toString(), List<String>.from(value))),
-          );
-          throw ValidationException(errors);
-        }
-        throw ServerException();
-      }
-      throw ServerException();
-    } on Exception catch (e) {
-      throw handleException(e);
-    }
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.loginSendPhoneOtp, data: dto.toJson()),
+      map: (json) => SimpleMessageModel.fromJson(json),
+    );
   }
 
   @override
   Future<LoginResponseModel> loginWithPhone(LoginWithPhoneSubmitRequestDto dto) async {
-    try {
-      final response = await _networkManager.post(EndpointPaths.loginWithPhone, data: dto.toJson());
-      if (response.statusCode == 200) {
-        return LoginResponseModel.fromJson(response.data);
-      } else if (response.statusCode == 400) {
-        throw UserException(message: response.data['message']);
-      }
-      throw ServerException();
-    } on Exception catch (e) {
-      throw handleException(e);
-    }
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.loginWithPhone, data: dto.toJson()),
+      map: (json) => LoginResponseModel.fromJson(json),
+    );
   }
 
   @override
@@ -219,16 +178,11 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto) {
+  Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto) async {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.forgotPassword, data: dto.toJson()),
       map: (json) => SimpleMessageModel.fromJson(json),
     );
-  }
-
-  @override
-  Future<void> resetPassword(ResetPasswordRequestDto dto) {
-    return handleResponse(() => _networkManager.post(EndpointPaths.resetPassword, data: dto.toJson()));
   }
 
   @override

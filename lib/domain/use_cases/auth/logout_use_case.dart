@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../common/error/failure.dart';
 import '../../entities/auth/logout_response.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 @injectable
 class LogoutUseCase {

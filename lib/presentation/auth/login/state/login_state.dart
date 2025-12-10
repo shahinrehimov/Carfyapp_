@@ -1,7 +1,7 @@
 part of 'login_cubit.dart';
 
 class LoginState {
-  final bool obscureText;
+  final bool obscurePassword;
   final StateStatus emailLoginState;
   final FieldValidationState emailValidationState;
   final FieldValidationState passwordValidationState;
@@ -9,7 +9,7 @@ class LoginState {
   final FieldValidationState phoneValidationState;
 
   LoginState({
-    required this.obscureText,
+    required this.obscurePassword,
     required this.emailLoginState,
     required this.emailValidationState,
     required this.passwordValidationState,
@@ -18,7 +18,7 @@ class LoginState {
   });
 
   factory LoginState.initial() => LoginState(
-    obscureText: true,
+    obscurePassword: true,
     emailLoginState: StateStatus.initial(),
     emailValidationState: FieldValidationState.pure(),
     passwordValidationState: FieldValidationState.pure(),
@@ -27,7 +27,7 @@ class LoginState {
   );
 
   LoginState copyWith({
-    bool? obscureText,
+    bool? obscurePassword,
     StateStatus? emailLoginState,
     FieldValidationState? emailValidationState,
     FieldValidationState? passwordValidationState,
@@ -35,7 +35,7 @@ class LoginState {
     FieldValidationState? phoneValidationState,
   }) {
     return LoginState(
-      obscureText: obscureText ?? this.obscureText,
+      obscurePassword: obscurePassword ?? this.obscurePassword,
       emailLoginState: emailLoginState ?? this.emailLoginState,
       emailValidationState: emailValidationState ?? this.emailValidationState,
       passwordValidationState: passwordValidationState ?? this.passwordValidationState,
