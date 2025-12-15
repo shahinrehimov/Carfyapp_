@@ -546,7 +546,7 @@ class WishlistRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const WishlistPage();
+      return WrappedRoute(child: const WishlistPage());
     },
   );
 }

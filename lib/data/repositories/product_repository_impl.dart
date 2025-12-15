@@ -28,4 +28,16 @@ class ProductRepositoryImpl extends ProductRepository with RepositorySafeCallMix
       return _mapper.mapPaginationResponse(res);
     });
   }
+
+  @override
+  Future<Either<Failure, PaginationResponse<Product>>> getWishlist(ProductListParams params) {
+    return safeCall(() async {
+      final queryParams = ProductListQueryParams(
+        page: params.page,
+        limit: params.limit,
+      );
+      final res = await _remoteDataSource.fetchWishlist(queryParams);
+      return _mapper.mapPaginationResponse(res);
+    });
+  }
 }

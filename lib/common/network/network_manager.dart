@@ -34,7 +34,7 @@ class NetworkManager {
 
           final authToken = PrefUtil.getString(AppPreferenceKeys.authToken);
           if (authToken != null && authToken.isNotEmpty) {
-            options.headers["Authentication"] = 'Bearer $authToken';
+            options.headers["Authorization"] = 'Bearer $authToken';
           }
           return handler.next(options);
         },

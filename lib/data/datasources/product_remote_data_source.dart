@@ -10,6 +10,7 @@ import '../../common/constants/endpoint_paths.dart';
 
 abstract class ProductRemoteDataSource {
   Future<PaginationResponseModel<ProductModel>> fetchProducts(ProductListQueryParams params);
+  Future<PaginationResponseModel<ProductModel>> fetchWishlist(ProductListQueryParams params);
 }
 
 @Injectable(as: ProductRemoteDataSource)
@@ -20,6 +21,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource with DataSourc
   Future<PaginationResponseModel<ProductModel>> fetchProducts(ProductListQueryParams params) {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.products, queryParams: params.toQueryParameters()),
+      map: (json) => PaginationResponseModel.fromJson(json, (item) => ProductModel.fromJson(item)),
+    );
+  }
+
+  @override
+  Future<PaginationResponseModel<ProductModel>> fetchWishlist(ProductListQueryParams params) {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.wishlist, queryParams: params.toQueryParameters()),
       map: (json) => PaginationResponseModel.fromJson(json, (item) => ProductModel.fromJson(item)),
     );
   }

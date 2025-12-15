@@ -124,4 +124,6 @@ class AppLocalizations {
   String get allProducts => _tr(TranslationKeys.allProducts);
 
   String get addToBasket => _tr(TranslationKeys.addToBasket);
+
+  String get wishlist => _tr(TranslationKeys.wishlist);
 }

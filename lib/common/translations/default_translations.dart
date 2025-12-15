@@ -53,6 +53,7 @@ class TranslationDefaults {
       TranslationKeys.categories: 'Kateqoriyalar',
       TranslationKeys.allProducts: 'Bütün məhsullar',
       TranslationKeys.addToBasket: 'Səbətə əlavə et',
+      TranslationKeys.wishlist: 'Seçilmişlər',
     },
   };
 }
