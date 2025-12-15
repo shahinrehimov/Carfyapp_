@@ -73,6 +73,8 @@ import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
 import 'package:carfy/domain/use_cases/product/get_products_use_case.dart'
     as _i603;
+import 'package:carfy/domain/use_cases/product/get_wishlist_use_case.dart'
+    as _i409;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
@@ -138,6 +140,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i603.GetProductsUseCase>(
       () => _i603.GetProductsUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i409.GetWishlistUseCase>(
+      () => _i409.GetWishlistUseCase(gh<_i39.ProductRepository>()),
     );
     gh.factory<_i202.GetCategoriesUseCase>(
       () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),

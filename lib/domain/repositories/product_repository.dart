@@ -6,4 +6,6 @@ import 'package:dartz/dartz.dart';
 
 abstract class ProductRepository {
   Future<Either<Failure, PaginationResponse<Product>>> getProducts(ProductListParams params);
+
+  Future<Either<Failure, PaginationResponse<Product>>> getWishlist(ProductListParams params);
 }

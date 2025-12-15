@@ -38,4 +38,7 @@ class EndpointPaths {
 
   // Group Endpoints
   static String groupProducts(String slug) => '/app/groups/single/$slug/products/load';
+
+  // Wishlist Endpoints
+  static const wishlist = '/app/wishlist/load';
 }
