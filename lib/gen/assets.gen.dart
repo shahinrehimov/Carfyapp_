@@ -32,6 +32,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google-icon-logo.svg
   String get googleIconLogo => 'assets/icons/google-icon-logo.svg';
 
+  /// File path: assets/icons/heart-filled.svg
+  String get heartFilled => 'assets/icons/heart-filled.svg';
+
+  /// File path: assets/icons/heart.svg
+  String get heart => 'assets/icons/heart.svg';
+
   /// File path: assets/icons/location-icon.svg
   String get locationIcon => 'assets/icons/location-icon.svg';
 
@@ -70,6 +76,8 @@ class $AssetsIconsGen {
     eyeOff,
     filters,
     googleIconLogo,
+    heartFilled,
+    heart,
     locationIcon,
     logoWhite,
     logo,

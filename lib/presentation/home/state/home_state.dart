@@ -5,12 +5,16 @@ class HomeState extends Equatable {
   final List<Category> categories;
   final StateStatus productsStatus;
   final List<Product> products;
+  final StateStatus bestSellerStatus;
+  final Group? bestSeller;
 
   const HomeState({
     required this.categoriesStatus,
     required this.categories,
     required this.productsStatus,
     required this.products,
+    required this.bestSellerStatus,
+    this.bestSeller,
   });
 
   factory HomeState.initial() => HomeState(
@@ -18,6 +22,8 @@ class HomeState extends Equatable {
     categories: [],
     productsStatus: StateStatus.initial(),
     products: [],
+    bestSellerStatus: StateStatus.initial(),
+    bestSeller: null,
   );
 
   HomeState copyWith({
@@ -25,15 +31,19 @@ class HomeState extends Equatable {
     List<Category>? categories,
     StateStatus? productsStatus,
     List<Product>? products,
+    StateStatus? bestSellerStatus,
+    Group? bestSeller,
   }) {
     return HomeState(
       categoriesStatus: categoriesStatus ?? this.categoriesStatus,
       categories: categories ?? this.categories,
       productsStatus: productsStatus ?? this.productsStatus,
       products: products ?? this.products,
+      bestSellerStatus: bestSellerStatus ?? this.bestSellerStatus,
+      bestSeller: bestSeller ?? this.bestSeller,
     );
   }
 
   @override
-  List<Object?> get props => [categoriesStatus, categories, productsStatus, products];
+  List<Object?> get props => [categoriesStatus, categories, productsStatus, products, bestSellerStatus, bestSeller];
 }

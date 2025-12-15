@@ -20,6 +20,8 @@ part '../widget/app_bar.dart';
 
 part '../widget/categories_section.dart';
 
+part '../widget/group_section.dart';
+
 part '../widget/products_section.dart';
 
 @RoutePage()
@@ -47,6 +49,16 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
             ),
             SizedBox(height: 8),
             _CategoriesSection(),
+            SizedBox(height: 24),
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) => previous.bestSeller != current.bestSeller,
+              builder: (context, state) {
+                final title = state.bestSeller?.title ?? '';
+                return _Heading(header: title, onTap: () {});
+              },
+            ),
+            SizedBox(height: 12),
+            _GroupSection(),
             SizedBox(height: 24),
             _Heading(header: context.localization.allProducts, onTap: () {}),
             SizedBox(height: 12),

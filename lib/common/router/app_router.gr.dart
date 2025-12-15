@@ -184,22 +184,6 @@ class CompletePhoneRegisterRouteArgs {
 }
 
 /// generated route for
-/// [FavoritesPage]
-class FavoritesRoute extends PageRouteInfo<void> {
-  const FavoritesRoute({List<PageRouteInfo>? children})
-    : super(FavoritesRoute.name, initialChildren: children);
-
-  static const String name = 'FavoritesRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const FavoritesPage();
-    },
-  );
-}
-
-/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})
@@ -549,4 +533,20 @@ class VerifyEmailRouteArgs {
 
   @override
   int get hashCode => key.hashCode ^ email.hashCode ^ userUuid.hashCode;
+}
+
+/// generated route for
+/// [WishlistPage]
+class WishlistRoute extends PageRouteInfo<void> {
+  const WishlistRoute({List<PageRouteInfo>? children})
+    : super(WishlistRoute.name, initialChildren: children);
+
+  static const String name = 'WishlistRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const WishlistPage();
+    },
+  );
 }

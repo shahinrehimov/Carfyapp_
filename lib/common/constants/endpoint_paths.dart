@@ -35,4 +35,7 @@ class EndpointPaths {
 
   // Product Endpoints
   static const products = '/app/products/load';
+
+  // Group Endpoints
+  static String groupProducts(String slug) => '/app/groups/single/$slug/products/load';
 }

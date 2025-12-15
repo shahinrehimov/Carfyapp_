@@ -13,7 +13,7 @@ import '../../presentation/auth/register/ui/page/registered_successfully_page.da
 import '../../presentation/auth/register/ui/page/verify_email_page.dart';
 import '../../presentation/basket/ui/page/basket_page.dart';
 import '../../presentation/categories/ui/page/category_dialog_page.dart';
-import '../../presentation/favorites/ui/page/favorites_page.dart';
+import '../../presentation/wishlist/ui/page/wishlist_page.dart';
 import '../../presentation/home/ui/page/home_page.dart';
 import '../../presentation/main/ui/page/main_page.dart';
 import '../../presentation/messages/ui/page/messages_page.dart';
@@ -33,7 +33,7 @@ class AppRouter extends RootStackRouter {
       children: [
         AutoRoute(page: HomeRoute.page, initial: true),
         AutoRoute(page: MessagesRoute.page),
-        AutoRoute(page: FavoritesRoute.page),
+        AutoRoute(page: WishlistRoute.page),
         AutoRoute(page: BasketRoute.page),
         AutoRoute(page: ProfileRoute.page),
       ],

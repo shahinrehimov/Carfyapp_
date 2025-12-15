@@ -13,6 +13,7 @@ import 'package:carfy/common/network/network_manager.dart' as _i597;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
 import 'package:carfy/data/datasources/category_remote_data_source.dart'
     as _i861;
+import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
 import 'package:carfy/data/datasources/product_remote_data_source.dart'
     as _i881;
 import 'package:carfy/data/datasources/translation_local_data_source.dart'
@@ -23,15 +24,18 @@ import 'package:carfy/data/datasources/version_remote_data_source.dart'
     as _i713;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
 import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
+import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
 import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
+import 'package:carfy/data/repositories/group_repository_impl.dart' as _i294;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
 import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
+import 'package:carfy/domain/repositories/group_repository.dart' as _i1037;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
@@ -66,6 +70,7 @@ import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
     as _i346;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
+import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
 import 'package:carfy/domain/use_cases/product/get_products_use_case.dart'
     as _i603;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
@@ -104,11 +109,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1053.TranslationLocalDataSource>(
       () => _i1053.TranslationLocalDataSourceImpl(),
     );
+    gh.factory<_i874.GroupRemoteDataSource>(
+      () => _i874.GroupRemoteDataSourceImpl(),
+    );
     gh.factory<_i250.AuthRemoteDataSource>(
       () => _i250.AuthRemoteDataSourceImpl(),
     );
     gh.factory<_i387.TranslationRemoteDataSource>(
       () => _i387.TranslationRemoteDataSourceImpl(),
+    );
+    gh.factory<_i12.GroupMapper>(
+      () => _i12.GroupMapper(gh<_i344.ProductMapper>()),
     );
     gh.factory<_i745.VersionRepository>(
       () => _i235.VersionRepositoryImpl(gh<_i713.VersionRemoteDataSource>()),
@@ -142,6 +153,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i387.TranslationRemoteDataSource>(),
         gh<_i1053.TranslationLocalDataSource>(),
       ),
+    );
+    gh.factory<_i1037.GroupRepository>(
+      () => _i294.GroupRepositoryImpl(
+        gh<_i874.GroupRemoteDataSource>(),
+        gh<_i12.GroupMapper>(),
+      ),
+    );
+    gh.factory<_i442.GetGroupUseCase>(
+      () => _i442.GetGroupUseCase(gh<_i1037.GroupRepository>()),
     );
     gh.factory<_i450.GetVersionsUseCase>(
       () => _i450.GetVersionsUseCase(gh<_i745.VersionRepository>()),

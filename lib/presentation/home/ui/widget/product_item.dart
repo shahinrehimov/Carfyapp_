@@ -29,8 +29,18 @@ class ProductItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 8),
-          Center(
-            child: CachedNetworkImage(imageUrl: product.product.hoverImage!, height: 118, fit: BoxFit.cover),
+          Stack(
+            children: [
+              Center(
+                child: CachedNetworkImage(imageUrl: product.product.hoverImage!, height: 118, fit: BoxFit.cover),
+              ),
+              SizedBox(width: double.maxFinite),
+              Positioned(
+                right: 10,
+                top: 6,
+                child: SvgPicture.asset(product.inWishlist ? Assets.icons.heartFilled : Assets.icons.heart),
+              ),
+            ],
           ),
           SizedBox(height: 6),
           Row(
