@@ -53,6 +53,8 @@ abstract interface class ColorScheme {
 
   Color get border;
 
+  Color get border2;
+
   Color get bg;
 
   Color get divider;
@@ -100,6 +102,9 @@ class _LightColors extends ColorScheme {
 
   @override
   Color get border => Color(0xFFD8D7D7);
+
+  @override
+  Color get border2 => Color(0xFFE7F2FC);
 
   @override
   Color get bg => Color(0xFFF7FBFE);

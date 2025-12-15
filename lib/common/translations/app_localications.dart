@@ -113,4 +113,11 @@ class AppLocalizations {
   String get emailAlreadyInUse => _tr(TranslationKeys.emailAlreadyInUse);
 
   String get successfullyRegistered => _tr(TranslationKeys.successfullyRegistered);
+
+  // Home
+  String get search => _tr(TranslationKeys.search);
+
+  String get categories => _tr(TranslationKeys.categories);
+
+  String get seeAll => _tr(TranslationKeys.seeAll);
 }

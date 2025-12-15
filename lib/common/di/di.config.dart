@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:carfy/common/network/network_manager.dart' as _i597;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
+import 'package:carfy/data/datasources/category_remote_data_source.dart'
+    as _i861;
 import 'package:carfy/data/datasources/translation_local_data_source.dart'
     as _i1053;
 import 'package:carfy/data/datasources/translation_remote_data_source.dart'
@@ -18,11 +20,14 @@ import 'package:carfy/data/datasources/translation_remote_data_source.dart'
 import 'package:carfy/data/datasources/version_remote_data_source.dart'
     as _i713;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
+import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
+import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
+import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
@@ -54,6 +59,8 @@ import 'package:carfy/domain/use_cases/auth/third_party_login_use_case.dart'
     as _i401;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
     as _i346;
+import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
+    as _i202;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
@@ -74,10 +81,14 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i163.AuthMapper>(() => _i163.AuthMapper());
+    gh.factory<_i109.CategoryMapper>(() => _i109.CategoryMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.singleton<_i420.MainCubit>(() => _i420.MainCubit());
     gh.factory<_i713.VersionRemoteDataSource>(
       () => _i713.VersionRemoteDataSourceImpl(),
+    );
+    gh.factory<_i861.CategoryRemoteDataSource>(
+      () => _i861.CategoryRemoteDataSourceImpl(),
     );
     gh.factory<_i1053.TranslationLocalDataSource>(
       () => _i1053.TranslationLocalDataSourceImpl(),
@@ -90,6 +101,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i745.VersionRepository>(
       () => _i235.VersionRepositoryImpl(gh<_i713.VersionRemoteDataSource>()),
+    );
+    gh.factory<_i557.CategoryRepository>(
+      () => _i395.CategoryRepositoryImpl(
+        gh<_i861.CategoryRemoteDataSource>(),
+        gh<_i109.CategoryMapper>(),
+      ),
+    );
+    gh.factory<_i202.GetCategoriesUseCase>(
+      () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),
     );
     gh.factory<_i655.AuthRepository>(
       () => _i407.AuthRepositoryImpl(

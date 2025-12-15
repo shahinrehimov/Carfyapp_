@@ -20,11 +20,26 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-narrow-left.svg
   String get arrowNarrowLeft => 'assets/icons/arrow-narrow-left.svg';
 
+  /// File path: assets/icons/chevron-right.svg
+  String get chevronRight => 'assets/icons/chevron-right.svg';
+
   /// File path: assets/icons/eye-off.svg
   String get eyeOff => 'assets/icons/eye-off.svg';
 
+  /// File path: assets/icons/filters.svg
+  String get filters => 'assets/icons/filters.svg';
+
   /// File path: assets/icons/google-icon-logo.svg
   String get googleIconLogo => 'assets/icons/google-icon-logo.svg';
+
+  /// File path: assets/icons/location-icon.svg
+  String get locationIcon => 'assets/icons/location-icon.svg';
+
+  /// File path: assets/icons/logo-white.svg
+  String get logoWhite => 'assets/icons/logo-white.svg';
+
+  /// File path: assets/icons/logo.svg
+  String get logo => 'assets/icons/logo.svg';
 
   /// File path: assets/icons/main-basket.svg
   String get mainBasket => 'assets/icons/main-basket.svg';
@@ -41,17 +56,30 @@ class $AssetsIconsGen {
   /// File path: assets/icons/main-profile.svg
   String get mainProfile => 'assets/icons/main-profile.svg';
 
+  /// File path: assets/icons/notification.svg
+  String get notification => 'assets/icons/notification.svg';
+
+  /// File path: assets/icons/search.svg
+  String get search => 'assets/icons/search.svg';
+
   /// List of all assets
   List<String> get values => [
     appleIconLogo,
     arrowNarrowLeft,
+    chevronRight,
     eyeOff,
+    filters,
     googleIconLogo,
+    locationIcon,
+    logoWhite,
+    logo,
     mainBasket,
     mainFavorite,
     mainHome,
     mainMessage,
     mainProfile,
+    notification,
+    search,
   ];
 }
 

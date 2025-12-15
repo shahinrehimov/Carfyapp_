@@ -29,4 +29,7 @@ class EndpointPaths {
   static const versions = '/versions';
 
   static translations(String languageCode) => '/app/local-translations/$languageCode';
+
+  // Category Endpoints
+  static const categories = '/app/categories/list?with_subs=yes&with_image=yes';
 }

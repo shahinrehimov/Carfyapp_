@@ -27,6 +27,38 @@ class BasketRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CategoriesPage]
+class CategoriesRoute extends PageRouteInfo<void> {
+  const CategoriesRoute({List<PageRouteInfo>? children})
+    : super(CategoriesRoute.name, initialChildren: children);
+
+  static const String name = 'CategoriesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CategoriesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CategoryDialogPage]
+class CategoryDialogRoute extends PageRouteInfo<void> {
+  const CategoryDialogRoute({List<PageRouteInfo>? children})
+    : super(CategoryDialogRoute.name, initialChildren: children);
+
+  static const String name = 'CategoryDialogRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CategoryDialogPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CompleteEmailRegisterPage]
 class CompleteEmailRegisterRoute
     extends PageRouteInfo<CompleteEmailRegisterRouteArgs> {
@@ -194,7 +226,7 @@ class HomeRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const HomePage();
+      return WrappedRoute(child: const HomePage());
     },
   );
 }
@@ -408,6 +440,53 @@ class SplashRoute extends PageRouteInfo<void> {
       return const SplashPage();
     },
   );
+}
+
+/// generated route for
+/// [SubCategoriesPage]
+class SubCategoriesRoute extends PageRouteInfo<SubCategoriesRouteArgs> {
+  SubCategoriesRoute({
+    required Category category,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SubCategoriesRoute.name,
+         args: SubCategoriesRouteArgs(category: category, key: key),
+         initialChildren: children,
+       );
+
+  static const String name = 'SubCategoriesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SubCategoriesRouteArgs>();
+      return SubCategoriesPage(category: args.category, key: args.key);
+    },
+  );
+}
+
+class SubCategoriesRouteArgs {
+  const SubCategoriesRouteArgs({required this.category, this.key});
+
+  final Category category;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SubCategoriesRouteArgs{category: $category, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SubCategoriesRouteArgs) return false;
+    return category == other.category && key == other.key;
+  }
+
+  @override
+  int get hashCode => category.hashCode ^ key.hashCode;
 }
 
 /// generated route for

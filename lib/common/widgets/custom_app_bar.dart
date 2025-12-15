@@ -9,6 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ShapeBorder? shape;
   final bool centerTitle;
   final double? height;
+  final Widget? flexibleSpace;
 
   const CustomAppBar({
     super.key,
@@ -19,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.shape,
     this.centerTitle = true,
     this.height,
+    this.flexibleSpace,
   });
 
   /// copyWith method
@@ -31,6 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ShapeBorder? shape,
     bool? centerTitle,
     double? height,
+    Widget? flexibleSpace,
   }) {
     return CustomAppBar(
       title: title ?? this.title,
@@ -40,6 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: shape ?? this.shape,
       centerTitle: centerTitle ?? this.centerTitle,
       height: height ?? this.height,
+      flexibleSpace: flexibleSpace ?? this.flexibleSpace
     );
   }
 
@@ -53,6 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: elevation,
       shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(24))),
       centerTitle: centerTitle,
+      flexibleSpace: flexibleSpace,
     );
   }
 

@@ -48,6 +48,9 @@ class TranslationDefaults {
       TranslationKeys.enterRepeatPassword: 'Şifrənin təkrarını daxil edin',
       TranslationKeys.emailAlreadyInUse: 'Bu elektron poçt ünvanı artıq istifadə olunub',
       TranslationKeys.successfullyRegistered: 'Qeydiyyatınız ugurla tamamlandı',
+      TranslationKeys.search: 'Axtarış',
+      TranslationKeys.seeAll: 'Hamısına bax',
+      TranslationKeys.categories: 'Kateqoriyalar',
     },
   };
 }

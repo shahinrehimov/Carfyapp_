@@ -31,6 +31,11 @@ class NetworkManager {
           if (guestIdentifier != null && guestIdentifier.isNotEmpty) {
             options.headers["identifier"] = guestIdentifier;
           }
+
+          final authToken = PrefUtil.getString(AppPreferenceKeys.authToken);
+          if (authToken != null && authToken.isNotEmpty) {
+            options.headers["Authentication"] = 'Bearer $authToken';
+          }
           return handler.next(options);
         },
       ),

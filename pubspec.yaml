@@ -28,6 +28,8 @@ dependencies:
   pinput: ^6.0.1
   hive_ce: ^2.15.1
   hive_ce_flutter: ^2.3.3
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:

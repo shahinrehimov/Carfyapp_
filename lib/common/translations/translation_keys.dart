@@ -36,6 +36,7 @@ class TranslationKeys {
   static const String alreadyHaveAccount = 'already_have_account';
   static const String login = 'login';
   static const String name = 'name';
+  static const String search = 'search';
   static const String surname = 'surname';
   static const String gender = 'gender';
   static const String birthDate = 'birth_date';
@@ -44,4 +45,6 @@ class TranslationKeys {
   static const String enterRepeatPassword = 'enter_repeat_password';
   static const String emailAlreadyInUse = 'email_already_in_use';
   static const String successfullyRegistered = 'successfully_registered';
+  static const String categories = 'categories';
+  static const String seeAll = 'see_all';
 }

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../domain/entities/categories/category.dart';
 import '../../presentation/auth/forgot_password/ui/page/forgot_password_page.dart';
 import '../../presentation/auth/login/ui/page/login_page.dart';
 import '../../presentation/auth/login/ui/page/login_phone_verify_page.dart';
@@ -11,6 +12,7 @@ import '../../presentation/auth/register/ui/page/register_page.dart';
 import '../../presentation/auth/register/ui/page/registered_successfully_page.dart';
 import '../../presentation/auth/register/ui/page/verify_email_page.dart';
 import '../../presentation/basket/ui/page/basket_page.dart';
+import '../../presentation/categories/ui/page/category_dialog_page.dart';
 import '../../presentation/favorites/ui/page/favorites_page.dart';
 import '../../presentation/home/ui/page/home_page.dart';
 import '../../presentation/main/ui/page/main_page.dart';
@@ -47,5 +49,14 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: CompleteEmailRegisterRoute.page),
     AutoRoute(page: VerifyEmailRoute.page),
     AutoRoute(page: RegisteredSuccessfullyRoute.page),
+
+    AutoRoute(
+      page: CategoryDialogRoute.page,
+      fullscreenDialog: true,
+      children: [
+        AutoRoute(initial: true, page: CategoriesRoute.page),
+        AutoRoute(page: SubCategoriesRoute.page),
+      ],
+    ),
   ];
 }
