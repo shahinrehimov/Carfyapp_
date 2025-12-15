@@ -10,7 +10,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
 import '../../../../../gen/assets.gen.dart';
 
 @RoutePage()

@@ -2,7 +2,6 @@ import 'package:carfy/common/constants/constants.dart';
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/error/exceptions.dart';
 import '../../common/mixin/datasource_mixin.dart';
 import '../../common/network/network_manager.dart';
 import '../../common/di/di.dart';
@@ -17,7 +16,6 @@ import '../dtos/auth/login_with_email_request_dto.dart';
 import '../dtos/auth/login_with_phone_otp_request_dto.dart';
 import '../dtos/auth/login_with_phone_submit_request_dto.dart';
 import '../dtos/auth/third_party_login_request_dto.dart';
-import '../dtos/auth/reset_password_request_dto.dart';
 import '../dtos/auth/forgot_password_request_dto.dart';
 
 import '../models/auth/google_auth_redirect_model.dart';

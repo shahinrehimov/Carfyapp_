@@ -16,7 +16,6 @@ import '../../../../../../common/theme/theme.dart';
 import '../../../../../../common/widgets/state_status_toast.dart';
 import '../../../../../../gen/assets.gen.dart';
 import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
 
 part '../widget/common.dart';
 

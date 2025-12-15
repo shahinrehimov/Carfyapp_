@@ -120,4 +120,8 @@ class AppLocalizations {
   String get categories => _tr(TranslationKeys.categories);
 
   String get seeAll => _tr(TranslationKeys.seeAll);
+
+  String get allProducts => _tr(TranslationKeys.allProducts);
+
+  String get addToBasket => _tr(TranslationKeys.addToBasket);
 }

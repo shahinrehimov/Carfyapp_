@@ -12,7 +12,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../common/state/state_status.dart';
 import '../../../../../common/theme/theme.dart';
 import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
 import '../../../../../common/widgets/custom_button.dart';
 import '../../../../../domain/enums/gender.dart';
 import '../../../../../gen/assets.gen.dart';

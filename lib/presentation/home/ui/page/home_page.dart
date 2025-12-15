@@ -4,7 +4,10 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
+import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/domain/entities/products/product.dart';
+import 'package:carfy/presentation/home/ui/widget/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +19,8 @@ import '../../state/home_cubit.dart';
 part '../widget/app_bar.dart';
 
 part '../widget/categories_section.dart';
+
+part '../widget/products_section.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget implements AutoRouteWrapper {
@@ -29,18 +34,25 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
       appBar: CustomAppBar(height: 130, flexibleSpace: const _AppBar()),
-      body: Column(
-        children: [
-          SizedBox(height: 16),
-          _Heading(
-            header: context.localization.categories,
-            onTap: () {
-              context.router.push(CategoriesRoute());
-            },
-          ),
-          SizedBox(height: 8),
-          _CategoriesSection(),
-        ],
+      body: PaginationScrollWrapper(
+        onLoadMore: () => context.read<HomeCubit>().loadNextProducts(),
+        child: Column(
+          children: [
+            SizedBox(height: 16),
+            _Heading(
+              header: context.localization.categories,
+              onTap: () {
+                context.router.push(CategoriesRoute());
+              },
+            ),
+            SizedBox(height: 8),
+            _CategoriesSection(),
+            SizedBox(height: 24),
+            _Heading(header: context.localization.allProducts, onTap: () {}),
+            SizedBox(height: 12),
+            _ProductsSection(),
+          ],
+        ),
       ),
     );
   }

@@ -23,11 +23,7 @@ mixin DataSourceMixin {
 
       if (response.statusCode == 200) {
         if (map != null) {
-          try {
-            return map(response.data);
-          } catch (e) {
-            throw ParseException();
-          }
+          return map(response.data);
         }
         return response.data;
       } else if (response.statusCode == 400) {

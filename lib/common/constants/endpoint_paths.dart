@@ -32,4 +32,7 @@ class EndpointPaths {
 
   // Category Endpoints
   static const categories = '/app/categories/list?with_subs=yes&with_image=yes';
+
+  // Product Endpoints
+  static const products = '/app/products/load';
 }

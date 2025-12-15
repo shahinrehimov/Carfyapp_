@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common/theme/theme.dart';
 import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
 import '../../../../../gen/assets.gen.dart';
 
 @RoutePage()

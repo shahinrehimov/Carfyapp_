@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../gen/assets.gen.dart';
 import '../translations/translation_context_extension.dart';
-import '../translations/translation_keys.dart';
 
 enum NotLoggedPage { messages, favorites, basket, profile }
 

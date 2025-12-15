@@ -2,7 +2,6 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/translations/translation_context_extension.dart';
-import '../../../../common/translations/translation_keys.dart';
 import '../../../../gen/assets.gen.dart';
 import '../enum/main_pages.dart';
 import 'navbar_item.dart';

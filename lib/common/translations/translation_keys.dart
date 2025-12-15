@@ -47,4 +47,6 @@ class TranslationKeys {
   static const String successfullyRegistered = 'successfully_registered';
   static const String categories = 'categories';
   static const String seeAll = 'see_all';
+  static const String allProducts = 'all_products';
+  static const String addToBasket = 'add_to_basket';
 }
