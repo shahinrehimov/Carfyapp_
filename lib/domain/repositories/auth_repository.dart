@@ -1,3 +1,4 @@
+import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:dartz/dartz.dart';
 
@@ -56,4 +57,6 @@ abstract class AuthRepository {
   Future<Either<Failure, ForgotPasswordResponse>> forgotPassword({required ForgotPasswordParams params});
 
   Future<Either<Failure, GuestIdentifierResponse>> generateGuestIdentifier();
+
+  Future<Either<Failure, AuthUser>> getProfile();
 }

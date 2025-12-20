@@ -30,7 +30,7 @@ class NotLoggedView extends StatelessWidget {
         Image.asset(data.$2, height: 168),
         Text(data.$1, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
         SizedBox(height: 24),
-        CustomButton(onPressed: () {}, text: 'Daxil ol', width: 268),
+        CustomButton(onPressed: () {}, text: context.localization.login, width: 268),
         if (page == NotLoggedPage.profile) ...[
           SizedBox(height: 12),
           Padding(
@@ -55,7 +55,7 @@ class NotLoggedView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             color: context.theme.colors.secondary,
             outlineColor: context.theme.colors.secondary,
-            text: 'Qeydiyyatdan keç',
+            text: context.localization.signUp,
             width: 268,
           ),
         ],

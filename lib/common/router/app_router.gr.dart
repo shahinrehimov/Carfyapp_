@@ -323,7 +323,7 @@ class ProfileRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ProfilePage();
+      return WrappedRoute(child: const ProfilePage());
     },
   );
 }

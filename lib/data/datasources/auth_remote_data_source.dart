@@ -18,6 +18,7 @@ import '../dtos/auth/login_with_phone_submit_request_dto.dart';
 import '../dtos/auth/third_party_login_request_dto.dart';
 import '../dtos/auth/forgot_password_request_dto.dart';
 
+import '../models/auth/auth_user_model.dart';
 import '../models/auth/google_auth_redirect_model.dart';
 import '../models/auth/register_email_response_model.dart';
 import '../models/auth/register_phone_response_model.dart';
@@ -60,6 +61,8 @@ abstract class AuthRemoteDataSource {
   Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto);
 
   Future<GuestIdentifierResponseModel> generateGuestIdentifier();
+
+  Future<AuthUserModel> getProfile();
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -188,6 +191,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': Constants.deviceType}),
       map: (json) => GuestIdentifierResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<AuthUserModel> getProfile() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.profileMe),
+      map: (json) => AuthUserModel.fromJson(json['data']),
     );
   }
 }

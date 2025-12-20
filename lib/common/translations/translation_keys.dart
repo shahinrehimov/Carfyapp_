@@ -49,5 +49,4 @@ class TranslationKeys {
   static const String seeAll = 'see_all';
   static const String allProducts = 'all_products';
   static const String addToBasket = 'add_to_basket';
-  static const String wishlist = 'wishlist';
 }

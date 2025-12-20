@@ -23,7 +23,7 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
       appBar: CustomAppBar(
-        title: context.localization.wishlist,
+        title: context.localization.mainFavorite,
         actions: [
           IconButton(
             onPressed: () {},

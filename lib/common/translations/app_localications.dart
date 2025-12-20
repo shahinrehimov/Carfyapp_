@@ -125,5 +125,5 @@ class AppLocalizations {
 
   String get addToBasket => _tr(TranslationKeys.addToBasket);
 
-  String get wishlist => _tr(TranslationKeys.wishlist);
+  // Profile
 }

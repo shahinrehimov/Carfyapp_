@@ -5,6 +5,7 @@ class AuthUser {
   final String name;
   final String surname;
   final String? gender;
+  final String? genderLabel;
   final String? birthDate;
   final bool emailIsVerified;
   final bool phoneIsVerified;
@@ -17,9 +18,12 @@ class AuthUser {
     required this.name,
     required this.surname,
     this.gender,
+    this.genderLabel,
     this.birthDate,
     required this.emailIsVerified,
     required this.phoneIsVerified,
     this.token,
   });
+
+  String get fullName => '$name $surname';
 }

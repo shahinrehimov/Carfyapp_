@@ -48,6 +48,7 @@ import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.d
     as _i593;
 import 'package:carfy/domain/use_cases/auth/get_google_auth_redirect_use_case.dart'
     as _i559;
+import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart' as _i2;
 import 'package:carfy/domain/use_cases/auth/login_with_email_use_case.dart'
     as _i601;
 import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart'
@@ -185,6 +186,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i559.GetGoogleAuthRedirectUseCase>(
       () => _i559.GetGoogleAuthRedirectUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i2.GetProfileUseCase>(
+      () => _i2.GetProfileUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i601.LoginWithEmailUseCase>(
       () => _i601.LoginWithEmailUseCase(gh<_i655.AuthRepository>()),

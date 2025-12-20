@@ -41,4 +41,7 @@ class EndpointPaths {
 
   // Wishlist Endpoints
   static const wishlist = '/app/wishlist/load';
+
+  // Profile Endpoints
+  static const profileMe = '/app/profile/me';
 }

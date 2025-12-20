@@ -32,6 +32,7 @@ class AuthMapper {
     name: model.name,
     surname: model.surname,
     gender: model.gender,
+    genderLabel: model.genderLabel,
     birthDate: model.birthDate,
     emailIsVerified: model.emailIsVerified,
     phoneIsVerified: model.phoneIsVerified,
