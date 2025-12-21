@@ -9,8 +9,8 @@ import 'package:carfy/domain/use_cases/version/get_versions_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/enums/language.dart';
-import '../../../../domain/entities/translation/translations.dart';
+import 'package:carfy/common/enums/language.dart';
+import 'package:carfy/domain/entities/translation/translations.dart';
 
 part 'localization_state.dart';
 

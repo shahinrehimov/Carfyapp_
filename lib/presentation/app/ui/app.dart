@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../../../common/theme/theme.dart';
-import '../../../common/translations/delegate.dart';
-import '../state/localization/localization_cubit.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/delegate.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 
 class CarfyApp extends StatelessWidget {
   const CarfyApp({super.key});

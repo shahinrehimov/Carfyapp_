@@ -53,6 +53,13 @@ class TranslationDefaults {
       TranslationKeys.categories: 'Kateqoriyalar',
       TranslationKeys.allProducts: 'Bütün məhsullar',
       TranslationKeys.addToBasket: 'Səbətə əlavə et',
+      TranslationKeys.paymentDetails: 'Ödəniş detalları',
+      TranslationKeys.amount: 'Məbləğ',
+      TranslationKeys.productCount: 'Məhsul sayı',
+      TranslationKeys.deliveryFee: 'Çatdırılma haqqı',
+      TranslationKeys.discount: 'Endirim',
+      TranslationKeys.total: 'Cəmi',
+      TranslationKeys.formOrder: 'Sifarişi formalaşdır',
     },
   };
 }

@@ -10,7 +10,7 @@ class _GroupSection extends StatelessWidget {
       builder: (context, state) {
         return state.bestSellerStatus.maybeWhen(
           success: () => _GroupProductsList(products: state.bestSeller!.products),
-          orElse: () => _GroupProductsLoading(),
+          orElse: () => const _GroupProductsLoading(),
         );
       },
     );
@@ -28,9 +28,9 @@ class _GroupProductsList extends StatelessWidget {
       height: 267,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: products.length,
-        separatorBuilder: (context, index) => SizedBox(width: 12),
+        separatorBuilder: (context, index) => const SizedBox(width: 12),
         itemBuilder: (context, index) => ProductItem(product: products[index]),
       ),
     );
@@ -46,10 +46,10 @@ class _GroupProductsLoading extends StatelessWidget {
       height: 267,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: 5,
-        separatorBuilder: (context, index) => SizedBox(width: 12),
-        itemBuilder: (context, index) => ProductItemLoading(),
+        separatorBuilder: (context, index) => const SizedBox(width: 12),
+        itemBuilder: (context, index) => const ProductItemLoading(),
       ),
     );
   }

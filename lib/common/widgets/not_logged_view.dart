@@ -2,8 +2,8 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../gen/assets.gen.dart';
-import '../translations/translation_context_extension.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
 
 enum NotLoggedPage { messages, favorites, basket, profile }
 
@@ -29,12 +29,12 @@ class NotLoggedView extends StatelessWidget {
       children: [
         Image.asset(data.$2, height: 168),
         Text(data.$1, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         CustomButton(onPressed: () {}, text: context.localization.login, width: 268),
         if (page == NotLoggedPage.profile) ...[
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 26),
+            padding: const EdgeInsetsGeometry.symmetric(horizontal: 26),
             child: Row(
               children: [
                 Expanded(child: Divider(color: context.theme.colors.divider, thickness: 1)),
@@ -49,7 +49,7 @@ class NotLoggedView extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           CustomButton(
             onPressed: () {},
             backgroundColor: Colors.transparent,

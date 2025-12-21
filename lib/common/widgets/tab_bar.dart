@@ -43,7 +43,7 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFFCEE5F8).withValues(alpha: 0.38),
+        color: const Color(0xFFCEE5F8).withValues(alpha: 0.38),
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
@@ -53,28 +53,28 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
             padding: EdgeInsets.zero,
             indicatorPadding: EdgeInsets.zero,
             indicatorWeight: 0,
-            indicator: BoxDecoration(
+            indicator: const BoxDecoration(
               color: Colors.white,
               boxShadow: [BoxShadow(color: Color(0x29000000), offset: Offset(0, 1), blurRadius: 8, spreadRadius: 0)],
               borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
             ),
-            splashBorderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+            splashBorderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
             labelStyle: TextStyle(color: context.theme.colors.primary, fontWeight: FontWeight.w500, fontSize: 14),
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF313131), fontSize: 14),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF313131), fontSize: 14),
             tabs: widget.titles.map((e) => Tab(text: e, height: 60)).toList(),
           ),
           Expanded(
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               width: double.maxFinite,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
-                  BoxShadow(color: Color(0x29000000), offset: Offset(0, 10), blurRadius: 10, spreadRadius: 0),
+                  const BoxShadow(color: Color(0x29000000), offset: Offset(0, 10), blurRadius: 10, spreadRadius: 0),
                 ],
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40),
+                  bottomLeft: const Radius.circular(40),
+                  bottomRight: const Radius.circular(40),
                   topLeft: Radius.circular(
                     _cornerPosition == TabBarCornerPosition.left || _cornerPosition == TabBarCornerPosition.both
                         ? 40
@@ -89,7 +89,7 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
               ),
               child: TabBarView(
                 controller: _tabController,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: widget.children,
               ),
             ),

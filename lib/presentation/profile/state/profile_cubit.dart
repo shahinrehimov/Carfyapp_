@@ -17,14 +17,16 @@ class ProfileCubit extends Cubit<ProfileState> with StateMapHelper {
     : _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
       super(ProfileState.initial());
 
-  Future<void> init() async {
+  void init() {
     _checkAuthenticated();
-    await _loadProfile();
   }
 
   void _checkAuthenticated() {
     final bool authenticated = PrefUtil.getBool(AppPreferenceKeys.authToken) != null;
     emit(state.copyWith(authenticated: authenticated));
+    if (authenticated) {
+      _loadProfile();
+    }
   }
 
   Future<void> _loadProfile() async {

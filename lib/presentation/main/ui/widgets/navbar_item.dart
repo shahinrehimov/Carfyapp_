@@ -56,7 +56,7 @@ class _NavBarItemState extends State<NavBarItem> with SingleTickerProviderStateM
                   ),
                 ),
               ),
-              SizedBox(height: 9),
+              const SizedBox(height: 9),
               Text(
                 widget.text,
                 style: TextStyle(

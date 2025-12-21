@@ -3,7 +3,7 @@ import 'package:carfy/domain/repositories/category_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 @injectable
 class GetCategoriesUseCase {

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../common/router/app_router.dart';
-import '../../../../common/theme/theme.dart';
-import '../../../../common/translations/translation_context_extension.dart';
-import '../../../../common/widgets/shimmer_wrapper.dart';
-import '../../../../gen/assets.gen.dart';
-import '../widget/category_item.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
 
 @RoutePage()
 class CategoryDialogPage extends StatelessWidget {
@@ -48,8 +48,8 @@ class CategoriesPage extends StatelessWidget {
           return state.categoriesStatus.maybeWhen(
             success: () => GridView.builder(
               itemCount: state.categories.length,
-              padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 20),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 20),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
@@ -62,7 +62,7 @@ class CategoriesPage extends StatelessWidget {
                 child: CategoryItem(category: state.categories[index]),
               ),
             ),
-            orElse: () => _CategoriesLoading(),
+            orElse: () => const _CategoriesLoading(),
           );
         },
       ),
@@ -95,7 +95,7 @@ class SubCategoriesPage extends StatelessWidget {
       ),
       body: ListView.builder(
         itemCount: category.subs.length,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) => _SubCategoryItem(subCategory: category.subs[index]),
       ),
     );
@@ -115,7 +115,7 @@ class _SubCategoryItem extends StatelessWidget {
       },
       child: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
@@ -124,8 +124,8 @@ class _SubCategoryItem extends StatelessWidget {
               SvgPicture.asset(Assets.icons.chevronRight, width: 26),
             ],
           ),
-          SizedBox(height: 20),
-          Divider(thickness: 1, height: 1),
+          const SizedBox(height: 20),
+          const Divider(thickness: 1, height: 1),
         ],
       ),
     );
@@ -139,9 +139,9 @@ class _CategoriesLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: 5,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
@@ -150,7 +150,7 @@ class _CategoriesLoading extends StatelessWidget {
       itemBuilder: (context, index) => ShimmerWrapper(
         child: Container(
           width: 124,
-          margin: EdgeInsets.only(right: 8),
+          margin: const EdgeInsets.only(right: 8),
           decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),

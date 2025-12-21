@@ -1,4 +1,4 @@
-import 'auth_user_model.dart';
+import 'package:carfy/data/models/auth/auth_user_model.dart';
 
 class LoginResponseModel {
   final AuthUserModel data;

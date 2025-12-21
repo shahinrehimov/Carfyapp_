@@ -4,9 +4,10 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/domain/params/product/product_list_params.dart';
-import 'package:carfy/domain/use_cases/product/get_wishlist_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:carfy/domain/use_cases/wishlist/get_wishlist_use_case.dart';
 
 part 'wishlist_state.dart';
 
@@ -28,9 +29,7 @@ class WishlistCubit extends Cubit<WishlistState> with StateMapHelper {
     emit(state.copyWith(status: _paginationHelper.getLoadingStatus()));
     _paginationHelper.onLoadStart();
 
-    final result = await _getWishlistUseCase(
-      ProductListParams(page: _paginationHelper.currentPage, limit: 10),
-    );
+    final result = await _getWishlistUseCase(ProductListParams(page: _paginationHelper.currentPage, limit: 10));
     result.fold(
       (failure) {
         emit(state.copyWith(status: mapFailure(failure)));
@@ -45,5 +44,22 @@ class WishlistCubit extends Cubit<WishlistState> with StateMapHelper {
 
   Future<void> loadNextPage() async {
     await _loadWishlist();
+  }
+
+  Future<void> refresh() async {
+    _paginationHelper.reset();
+    if (!_paginationHelper.shouldLoad()) return;
+    _paginationHelper.onLoadStart();
+
+    final result = await _getWishlistUseCase(ProductListParams(page: _paginationHelper.currentPage, limit: 10));
+    result.fold(
+      (failure) {
+        emit(state.copyWith(status: mapFailure(failure)));
+      },
+      (response) {
+        _paginationHelper.onLoadEnd(response.lastPage);
+        emit(state.copyWith(status: StateStatus.success(), products: response.data));
+      },
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../common/theme/theme.dart';
+import 'package:carfy/common/theme/theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
@@ -177,7 +177,7 @@ class CustomTextField extends StatelessWidget {
         prefixIconConstraints: prefixIconConstraints,
         hintText: hint,
         suffixIcon: suffix,
-        contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        contentPadding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         hintStyle:
             hintStyle ?? TextStyle(color: context.theme.colors.textLight, fontSize: 14, fontWeight: FontWeight.w300),
         labelText: label,

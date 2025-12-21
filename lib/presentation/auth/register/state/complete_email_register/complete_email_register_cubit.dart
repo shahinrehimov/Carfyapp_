@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../common/error/failure.dart';
-import '../../../../../domain/params/auth/register_with_email_params.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/params/auth/register_with_email_params.dart';
 
 part 'complete_email_register_state.dart';
 

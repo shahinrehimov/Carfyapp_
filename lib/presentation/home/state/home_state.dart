@@ -18,11 +18,11 @@ class HomeState extends Equatable {
   });
 
   factory HomeState.initial() => HomeState(
-    categoriesStatus: StateStatus.initial(),
+    categoriesStatus: StateStatus.loading(),
     categories: [],
-    productsStatus: StateStatus.initial(),
+    productsStatus: StateStatus.loading(),
     products: [],
-    bestSellerStatus: StateStatus.initial(),
+    bestSellerStatus: StateStatus.loading(),
     bestSeller: null,
   );
 

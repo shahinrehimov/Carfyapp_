@@ -2,7 +2,7 @@ import 'package:carfy/common/translations/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../presentation/app/state/localization/localization_cubit.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 
 class AppLocalizations {
   final BuildContext context;
@@ -125,5 +125,19 @@ class AppLocalizations {
 
   String get addToBasket => _tr(TranslationKeys.addToBasket);
 
-  // Profile
+  // Payment
+  String get paymentDetails => _tr(TranslationKeys.paymentDetails);
+
+  String get amount => _tr(TranslationKeys.amount);
+
+  String get productCount => _tr(TranslationKeys.productCount);
+
+  String get deliveryFee => _tr(TranslationKeys.deliveryFee);
+
+  String get discount => _tr(TranslationKeys.discount);
+
+  String get total => _tr(TranslationKeys.total);
+
+  String get formOrder => _tr(TranslationKeys.formOrder);
+
 }

@@ -2,32 +2,32 @@ import 'package:carfy/common/constants/constants.dart';
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/mixin/datasource_mixin.dart';
-import '../../common/network/network_manager.dart';
-import '../../common/di/di.dart';
+import 'package:carfy/common/mixin/datasource_mixin.dart';
+import 'package:carfy/common/network/network_manager.dart';
+import 'package:carfy/common/di/di.dart';
 
-import '../dtos/auth/check_email_request_dto.dart';
-import '../dtos/auth/register_with_email_request_dto.dart';
-import '../dtos/auth/verify_email_otp_request_dto.dart';
-import '../dtos/auth/send_phone_otp_request_dto.dart';
-import '../dtos/auth/check_phone_otp_request_dto.dart';
-import '../dtos/auth/register_with_phone_request_dto.dart';
-import '../dtos/auth/login_with_email_request_dto.dart';
-import '../dtos/auth/login_with_phone_otp_request_dto.dart';
-import '../dtos/auth/login_with_phone_submit_request_dto.dart';
-import '../dtos/auth/third_party_login_request_dto.dart';
-import '../dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/verify_email_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/send_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_phone_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
+import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 
-import '../models/auth/auth_user_model.dart';
-import '../models/auth/google_auth_redirect_model.dart';
-import '../models/auth/register_email_response_model.dart';
-import '../models/auth/register_phone_response_model.dart';
-import '../models/auth/simple_message_model.dart';
-import '../models/auth/check_phone_otp_model.dart';
-import '../models/auth/login_response_model.dart';
-import '../models/auth/logout_response_model.dart';
+import 'package:carfy/data/models/auth/auth_user_model.dart';
+import 'package:carfy/data/models/auth/google_auth_redirect_model.dart';
+import 'package:carfy/data/models/auth/register_email_response_model.dart';
+import 'package:carfy/data/models/auth/register_phone_response_model.dart';
+import 'package:carfy/data/models/auth/simple_message_model.dart';
+import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
+import 'package:carfy/data/models/auth/login_response_model.dart';
+import 'package:carfy/data/models/auth/logout_response_model.dart';
 
-import '../../common/constants/endpoint_paths.dart';
+import 'package:carfy/common/constants/endpoint_paths.dart';
 
 abstract class AuthRemoteDataSource {
   Future<GoogleAuthRedirectModel> getGoogleAuthRedirect();

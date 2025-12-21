@@ -16,7 +16,7 @@ class _AppBar extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.asset(Assets.icons.locationIcon),
-                      SizedBox(width: 6),
+                      const SizedBox(width: 6),
                       Text('Baki', style: TextStyle(color: context.theme.colors.white)),
                     ],
                   ),
@@ -27,7 +27,7 @@ class _AppBar extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 22),
+            const SizedBox(height: 22),
             Row(
               children: [
                 Expanded(
@@ -38,7 +38,7 @@ class _AppBar extends StatelessWidget {
                     prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 20)),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
                   width: 48,
                   height: 48,

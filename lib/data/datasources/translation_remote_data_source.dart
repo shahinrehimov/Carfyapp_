@@ -3,8 +3,8 @@ import 'package:carfy/common/mixin/datasource_mixin.dart';
 import 'package:carfy/common/network/network_manager.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/constants/endpoint_paths.dart';
-import '../models/translation/translations_model.dart';
+import 'package:carfy/common/constants/endpoint_paths.dart';
+import 'package:carfy/data/models/translation/translations_model.dart';
 
 abstract class TranslationRemoteDataSource {
   Future<TranslationModel> getTranslations(String languageCode);

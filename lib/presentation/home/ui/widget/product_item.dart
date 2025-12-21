@@ -7,7 +7,7 @@ import 'package:carfy/domain/entities/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../gen/assets.gen.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -24,17 +24,17 @@ class ProductItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(width: 1, color: context.theme.colors.border2),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Stack(
             children: [
               Center(
                 child: CachedNetworkImage(imageUrl: product.product.hoverImage!, height: 118, fit: BoxFit.cover),
               ),
-              SizedBox(width: double.maxFinite),
+              const SizedBox(width: double.maxFinite),
               Positioned(
                 right: 10,
                 top: 6,
@@ -42,7 +42,7 @@ class ProductItem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Row(
             children: [
               Text(
@@ -50,7 +50,7 @@ class ProductItem extends StatelessWidget {
                 style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
               ),
               if (product.hasDiscount) ...[
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   '${product.price.toString()} ₼',
                   style: TextStyle(
@@ -63,15 +63,15 @@ class ProductItem extends StatelessWidget {
               ],
             ],
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Text(
             product.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: context.theme.colors.textDark, fontSize: 10, fontWeight: FontWeight.w400),
           ),
-          SizedBox(height: 6),
-          Spacer(),
+          const SizedBox(height: 6),
+          const Spacer(),
           CustomButton(
             onPressed: () {},
             text: context.localization.addToBasket,
@@ -84,7 +84,7 @@ class ProductItem extends StatelessWidget {
             height: 40,
             fontSize: 12,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
         ],
       ),
     );

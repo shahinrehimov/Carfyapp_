@@ -49,4 +49,11 @@ class TranslationKeys {
   static const String seeAll = 'see_all';
   static const String allProducts = 'all_products';
   static const String addToBasket = 'add_to_basket';
+  static const String paymentDetails = 'payment_details';
+  static const String amount = 'amount';
+  static const String productCount = 'product_count';
+  static const String deliveryFee = 'delivery_fee';
+  static const String discount = 'discount';
+  static const String total = 'total';
+  static const String formOrder = 'form_order';
 }

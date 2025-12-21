@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:carfy/common/network/network_manager.dart' as _i597;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
+import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
 import 'package:carfy/data/datasources/category_remote_data_source.dart'
     as _i861;
 import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
@@ -22,23 +23,30 @@ import 'package:carfy/data/datasources/translation_remote_data_source.dart'
     as _i387;
 import 'package:carfy/data/datasources/version_remote_data_source.dart'
     as _i713;
+import 'package:carfy/data/datasources/wishlist_remote_data_source.dart'
+    as _i685;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
+import 'package:carfy/data/mappers/basket_mapper.dart' as _i751;
 import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
+import 'package:carfy/data/repositories/basket_repository_impl.dart' as _i522;
 import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
 import 'package:carfy/data/repositories/group_repository_impl.dart' as _i294;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
+import 'package:carfy/data/repositories/wishlist_repository_impl.dart' as _i224;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
+import 'package:carfy/domain/repositories/basket_repository.dart' as _i449;
 import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
 import 'package:carfy/domain/repositories/group_repository.dart' as _i1037;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
+import 'package:carfy/domain/repositories/wishlist_repository.dart' as _i54;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_phone_otp_use_case.dart'
     as _i818;
@@ -69,13 +77,12 @@ import 'package:carfy/domain/use_cases/auth/third_party_login_use_case.dart'
     as _i401;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
     as _i346;
+import 'package:carfy/domain/use_cases/basket/get_basket_use_case.dart' as _i7;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
 import 'package:carfy/domain/use_cases/product/get_products_use_case.dart'
     as _i603;
-import 'package:carfy/domain/use_cases/product/get_wishlist_use_case.dart'
-    as _i409;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
@@ -84,6 +91,8 @@ import 'package:carfy/domain/use_cases/translations/save_translations_use_case.d
     as _i740;
 import 'package:carfy/domain/use_cases/version/get_versions_use_case.dart'
     as _i450;
+import 'package:carfy/domain/use_cases/wishlist/get_wishlist_use_case.dart'
+    as _i676;
 import 'package:carfy/presentation/main/state/main_cubit.dart' as _i420;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -100,11 +109,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.singleton<_i420.MainCubit>(() => _i420.MainCubit());
+    gh.factory<_i490.BasketRemoteDataSource>(
+      () => _i490.BasketRemoteDataSourceImpl(),
+    );
+    gh.factory<_i685.WishlistRemoteDataSource>(
+      () => _i685.WishlistRemoteDataSourceImpl(),
+    );
     gh.factory<_i713.VersionRemoteDataSource>(
       () => _i713.VersionRemoteDataSourceImpl(),
     );
     gh.factory<_i881.ProductRemoteDataSource>(
       () => _i881.ProductRemoteDataSourceImpl(),
+    );
+    gh.factory<_i54.WishlistRepository>(
+      () => _i224.WishlistRepositoryImpl(
+        gh<_i685.WishlistRemoteDataSource>(),
+        gh<_i344.ProductMapper>(),
+      ),
+    );
+    gh.factory<_i676.GetWishlistUseCase>(
+      () => _i676.GetWishlistUseCase(gh<_i54.WishlistRepository>()),
     );
     gh.factory<_i861.CategoryRemoteDataSource>(
       () => _i861.CategoryRemoteDataSourceImpl(),
@@ -120,6 +144,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i387.TranslationRemoteDataSource>(
       () => _i387.TranslationRemoteDataSourceImpl(),
+    );
+    gh.factory<_i751.BasketMapper>(
+      () => _i751.BasketMapper(gh<_i344.ProductMapper>()),
     );
     gh.factory<_i12.GroupMapper>(
       () => _i12.GroupMapper(gh<_i344.ProductMapper>()),
@@ -142,9 +169,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i603.GetProductsUseCase>(
       () => _i603.GetProductsUseCase(gh<_i39.ProductRepository>()),
     );
-    gh.factory<_i409.GetWishlistUseCase>(
-      () => _i409.GetWishlistUseCase(gh<_i39.ProductRepository>()),
-    );
     gh.factory<_i202.GetCategoriesUseCase>(
       () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),
     );
@@ -158,6 +182,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i35.TranslationsRepositoryImpl(
         gh<_i387.TranslationRemoteDataSource>(),
         gh<_i1053.TranslationLocalDataSource>(),
+      ),
+    );
+    gh.factory<_i449.BasketRepository>(
+      () => _i522.BasketRepositoryImpl(
+        gh<_i490.BasketRemoteDataSource>(),
+        gh<_i751.BasketMapper>(),
       ),
     );
     gh.factory<_i1037.GroupRepository>(
@@ -222,6 +252,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i346.VerifyEmailOtpUseCase>(
       () => _i346.VerifyEmailOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i7.GetBasketUseCase>(
+      () => _i7.GetBasketUseCase(gh<_i449.BasketRepository>()),
     );
     gh.factory<_i187.GetCachedTranslationsUseCase>(
       () =>

@@ -13,10 +13,10 @@ class _CategoriesSection extends StatelessWidget {
             success: () => ListView.builder(
               itemCount: state.categories.length,
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: 16),
+              padding: const EdgeInsets.only(left: 16),
               itemBuilder: (context, index) => CategoryItem(category: state.categories[index]),
             ),
-            orElse: () => _CategoriesLoading(),
+            orElse: () => const _CategoriesLoading(),
           );
         },
       ),
@@ -32,12 +32,12 @@ class _CategoriesLoading extends StatelessWidget {
     return ListView.builder(
       itemCount: 5,
       scrollDirection: Axis.horizontal,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.only(left: 16),
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(left: 16),
       itemBuilder: (context, index) => ShimmerWrapper(
         child: Container(
           width: 124,
-          margin: EdgeInsets.only(right: 8),
+          margin: const EdgeInsets.only(right: 8),
           decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),

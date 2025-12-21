@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../theme/theme.dart';
+import 'package:carfy/common/theme/theme.dart';
 
 class ShimmerWrapper extends StatelessWidget {
   final Widget child;

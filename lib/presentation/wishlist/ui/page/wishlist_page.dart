@@ -3,10 +3,12 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
+import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/home/ui/widget/product_item.dart';
 import 'package:carfy/presentation/wishlist/state/wishlist_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,23 +26,23 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
       backgroundColor: context.theme.colors.bg,
       appBar: CustomAppBar(
         title: context.localization.mainFavorite,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(Assets.icons.notification),
-          ),
-        ],
+        actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
       ),
-      body: PaginationScrollWrapper(
-        onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
-        child: BlocBuilder<WishlistCubit, WishlistState>(
-          builder: (context, state) {
-            return state.status.maybeWhen(
-              success: () => _WishlistGrid(products: state.products),
-              paginationLoading: () => _WishlistGrid(products: state.products, isLoadingMore: true),
-              orElse: () => _WishlistLoading(),
-            );
-          },
+      body: PullToRefreshWrapper(
+        onRefresh: () async {
+          await context.read<WishlistCubit>().refresh();
+        },
+        child: PaginationScrollWrapper(
+          onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
+          child: BlocBuilder<WishlistCubit, WishlistState>(
+            builder: (context, state) {
+              return state.status.maybeWhen(
+                success: () => _WishlistGrid(products: state.products),
+                paginationLoading: () => _WishlistGrid(products: state.products, isLoadingMore: true),
+                orElse: () => const _WishlistLoading(),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -57,22 +59,22 @@ class _WishlistGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         GridView.builder(
           itemCount: products.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             childAspectRatio: 179 / 267,
           ),
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          physics: NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => ProductItem(product: products[index]),
         ),
         if (isLoadingMore)
-          Padding(padding: const EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator.adaptive()),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator.adaptive()),
       ],
     );
   }
@@ -86,7 +88,7 @@ class _WishlistLoading extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
@@ -94,9 +96,9 @@ class _WishlistLoading extends StatelessWidget {
         ),
         itemCount: 10,
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => ProductItemLoading(),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => const ProductItemLoading(),
       ),
     );
   }

@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../common/theme/theme.dart';
-import '../../../../common/translations/translation_context_extension.dart';
-import '../../../../common/widgets/custom_app_bar.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_app_bar.dart';
 
 @RoutePage()
 class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
@@ -25,7 +25,7 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
         if (!state.authenticated) {
           return Scaffold(
             backgroundColor: context.theme.colors.bg,
-            body: Center(child: NotLoggedView(page: NotLoggedPage.profile)),
+            body: const Center(child: NotLoggedView(page: NotLoggedPage.profile)),
           );
         }
         return Scaffold(
@@ -34,9 +34,9 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
             title: context.localization.mainProfile,
             height: 100,
             actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
-            flexibleSpace: SafeArea(child: _ProfileFlexibleSpace()),
+            flexibleSpace: const SafeArea(child: _ProfileFlexibleSpace()),
           ),
-          body: Center(child: Text('profile')),
+          body: const Center(child: Text('profile')),
         );
       },
     );
@@ -52,7 +52,7 @@ class _ProfileFlexibleSpace extends StatelessWidget {
       builder: (context, state) {
         return state.status.maybeWhen(
           success: () => _ProfileName(name: state.user?.fullName ?? ''),
-          orElse: () => _ProfileNameShimmer(),
+          orElse: () => const _ProfileNameShimmer(),
         );
       },
     );
@@ -68,7 +68,7 @@ class _ProfileName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomLeft,
-      padding: EdgeInsets.only(bottom: 16, left: 16, right: 16),
+      padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -94,7 +94,7 @@ class _ProfileNameShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomLeft,
-      padding: EdgeInsets.only(bottom: 16, left: 16),
+      padding: const EdgeInsets.only(bottom: 16, left: 16),
       child: ShimmerWrapper(
         child: Container(
           width: 120,

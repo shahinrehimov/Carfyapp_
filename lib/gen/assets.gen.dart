@@ -23,6 +23,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/chevron-right.svg
   String get chevronRight => 'assets/icons/chevron-right.svg';
 
+  /// File path: assets/icons/close-square.svg
+  String get closeSquare => 'assets/icons/close-square.svg';
+
   /// File path: assets/icons/eye-off.svg
   String get eyeOff => 'assets/icons/eye-off.svg';
 
@@ -62,8 +65,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/main-profile.svg
   String get mainProfile => 'assets/icons/main-profile.svg';
 
+  /// File path: assets/icons/minus.svg
+  String get minus => 'assets/icons/minus.svg';
+
   /// File path: assets/icons/notification.svg
   String get notification => 'assets/icons/notification.svg';
+
+  /// File path: assets/icons/plus.svg
+  String get plus => 'assets/icons/plus.svg';
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
@@ -73,6 +82,7 @@ class $AssetsIconsGen {
     appleIconLogo,
     arrowNarrowLeft,
     chevronRight,
+    closeSquare,
     eyeOff,
     filters,
     googleIconLogo,
@@ -86,7 +96,9 @@ class $AssetsIconsGen {
     mainHome,
     mainMessage,
     mainProfile,
+    minus,
     notification,
+    plus,
     search,
   ];
 }

@@ -12,7 +12,7 @@ import 'package:carfy/domain/use_cases/auth/send_phone_login_otp_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 part 'login_state.dart';
 
@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       (success) {
         emit(state.copyWith(emailLoginState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replaceAll([MainRoute()]);
+        _appRouter.replaceAll([const MainRoute()]);
       },
     );
   }

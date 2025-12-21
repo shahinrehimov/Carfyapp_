@@ -5,10 +5,10 @@ import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common/di/di.dart';
-import '../../../../../common/router/app_router.dart';
-import '../../../../../common/state/state_map_helper.dart';
-import '../../../../../common/state/state_status.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/state_map_helper.dart';
+import 'package:carfy/common/state/state_status.dart';
 
 part 'email_verify_otp_state.dart';
 
@@ -42,7 +42,7 @@ class EmailVerifyOtpCubit extends Cubit<EmailVerifyOtpState> with StateMapHelper
       },
       (success) {
         emit(state.copyWith(verifyState: StateStatus.success()));
-        _appRouter.replace(RegisteredSuccessfullyRoute());
+        _appRouter.replace(const RegisteredSuccessfullyRoute());
       },
     );
   }

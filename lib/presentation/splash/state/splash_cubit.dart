@@ -7,7 +7,7 @@ import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.d
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 part 'splash_state.dart';
 
@@ -31,7 +31,7 @@ class SplashCubit extends Cubit<SplashState> {
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (!firstEnter) {
-      _appRouter.replaceAll([MainRoute()]);
+      _appRouter.replaceAll([const MainRoute()]);
     }
   }
 
@@ -50,7 +50,7 @@ class SplashCubit extends Cubit<SplashState> {
       },
       (success) {
         PrefUtil.setString(AppPreferenceKeys.guestIdentifier, success.identifier);
-        _appRouter.replaceAll([MainRoute()]);
+        _appRouter.replaceAll([const MainRoute()]);
       },
     );
   }

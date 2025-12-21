@@ -9,7 +9,7 @@ import 'package:carfy/domain/use_cases/auth/register_with_phone_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 part 'complete_phone_register_state.dart';
 
@@ -64,7 +64,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
       },
       (success) {
         emit(state.copyWith(registerState: StateStatus.success()));
-        _appRouter.replaceAll([RegisteredSuccessfullyRoute()]);
+        _appRouter.replaceAll([const RegisteredSuccessfullyRoute()]);
       },
     );
   }

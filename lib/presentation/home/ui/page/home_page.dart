@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../gen/assets.gen.dart';
-import '../../../categories/ui/widget/category_item.dart';
-import '../../state/home_cubit.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
+import 'package:carfy/presentation/home/state/home_cubit.dart';
 
 part '../widget/app_bar.dart';
 
@@ -35,21 +35,21 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
-      appBar: CustomAppBar(height: 130, flexibleSpace: const _AppBar()),
+      appBar: const CustomAppBar(height: 130, flexibleSpace: _AppBar()),
       body: PaginationScrollWrapper(
         onLoadMore: () => context.read<HomeCubit>().loadNextProducts(),
         child: Column(
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _Heading(
               header: context.localization.categories,
               onTap: () {
-                context.router.push(CategoriesRoute());
+                context.router.push(const CategoriesRoute());
               },
             ),
-            SizedBox(height: 8),
-            _CategoriesSection(),
-            SizedBox(height: 24),
+            const SizedBox(height: 8),
+            const _CategoriesSection(),
+            const SizedBox(height: 24),
             BlocBuilder<HomeCubit, HomeState>(
               buildWhen: (previous, current) => previous.bestSeller != current.bestSeller,
               builder: (context, state) {
@@ -57,12 +57,12 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
                 return _Heading(header: title, onTap: () {});
               },
             ),
-            SizedBox(height: 12),
-            _GroupSection(),
-            SizedBox(height: 24),
+            const SizedBox(height: 12),
+            const _GroupSection(),
+            const SizedBox(height: 24),
             _Heading(header: context.localization.allProducts, onTap: () {}),
-            SizedBox(height: 12),
-            _ProductsSection(),
+            const SizedBox(height: 12),
+            const _ProductsSection(),
           ],
         ),
       ),

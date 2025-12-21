@@ -1,24 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../domain/entities/categories/category.dart';
-import '../../presentation/auth/forgot_password/ui/page/forgot_password_page.dart';
-import '../../presentation/auth/login/ui/page/login_page.dart';
-import '../../presentation/auth/login/ui/page/login_phone_verify_page.dart';
-import '../../presentation/auth/register/ui/page/complete_email_register_page.dart';
-import '../../presentation/auth/register/ui/page/complete_phone_register_page.dart';
-import '../../presentation/auth/register/ui/page/register_phone_otp_verify.dart';
-import '../../presentation/auth/register/ui/page/register_page.dart';
-import '../../presentation/auth/register/ui/page/registered_successfully_page.dart';
-import '../../presentation/auth/register/ui/page/verify_email_page.dart';
-import '../../presentation/basket/ui/page/basket_page.dart';
-import '../../presentation/categories/ui/page/category_dialog_page.dart';
-import '../../presentation/wishlist/ui/page/wishlist_page.dart';
-import '../../presentation/home/ui/page/home_page.dart';
-import '../../presentation/main/ui/page/main_page.dart';
-import '../../presentation/messages/ui/page/messages_page.dart';
-import '../../presentation/profile/ui/page/profile_page.dart';
-import '../../presentation/splash/ui/page/splash_page.dart';
+import 'package:carfy/domain/entities/categories/category.dart';
+import 'package:carfy/presentation/auth/forgot_password/ui/page/forgot_password_page.dart';
+import 'package:carfy/presentation/auth/login/ui/page/login_page.dart';
+import 'package:carfy/presentation/auth/login/ui/page/login_phone_verify_page.dart';
+import 'package:carfy/presentation/auth/register/ui/page/complete_email_register_page.dart';
+import 'package:carfy/presentation/auth/register/ui/page/complete_phone_register_page.dart';
+import 'package:carfy/presentation/auth/register/ui/page/register_phone_otp_verify.dart';
+import 'package:carfy/presentation/auth/register/ui/page/register_page.dart';
+import 'package:carfy/presentation/auth/register/ui/page/registered_successfully_page.dart';
+import 'package:carfy/presentation/auth/register/ui/page/verify_email_page.dart';
+import 'package:carfy/presentation/basket/ui/page/basket_page.dart';
+import 'package:carfy/presentation/categories/ui/page/category_dialog_page.dart';
+import 'package:carfy/presentation/wishlist/ui/page/wishlist_page.dart';
+import 'package:carfy/presentation/home/ui/page/home_page.dart';
+import 'package:carfy/presentation/main/ui/page/main_page.dart';
+import 'package:carfy/presentation/messages/ui/page/messages_page.dart';
+import 'package:carfy/presentation/profile/ui/page/profile_page.dart';
+import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
 
 part 'app_router.gr.dart';
 

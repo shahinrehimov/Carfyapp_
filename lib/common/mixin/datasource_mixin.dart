@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../error/exceptions.dart';
+import 'package:carfy/common/error/exceptions.dart';
 
 mixin DataSourceMixin {
   Exception handleException(Exception e) {

@@ -4,48 +4,48 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
-import '../../common/error/failure.dart';
-import '../../common/mixin/repository_safe_call_mixin.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/common/mixin/repository_safe_call_mixin.dart';
 
-import '../../domain/entities/auth/google_auth_redirect.dart';
-import '../../domain/entities/auth/check_email_response.dart';
-import '../../domain/entities/auth/register_email_response.dart';
-import '../../domain/entities/auth/verify_otp_response.dart';
-import '../../domain/entities/auth/send_phone_otp_response.dart';
-import '../../domain/entities/auth/check_phone_otp_response.dart';
-import '../../domain/entities/auth/register_phone_response.dart';
-import '../../domain/entities/auth/login_response.dart';
-import '../../domain/entities/auth/logout_response.dart';
-import '../../domain/entities/auth/forgot_password_response.dart';
+import 'package:carfy/domain/entities/auth/google_auth_redirect.dart';
+import 'package:carfy/domain/entities/auth/check_email_response.dart';
+import 'package:carfy/domain/entities/auth/register_email_response.dart';
+import 'package:carfy/domain/entities/auth/verify_otp_response.dart';
+import 'package:carfy/domain/entities/auth/send_phone_otp_response.dart';
+import 'package:carfy/domain/entities/auth/check_phone_otp_response.dart';
+import 'package:carfy/domain/entities/auth/register_phone_response.dart';
+import 'package:carfy/domain/entities/auth/login_response.dart';
+import 'package:carfy/domain/entities/auth/logout_response.dart';
+import 'package:carfy/domain/entities/auth/forgot_password_response.dart';
 
-import '../../domain/params/auth/check_email_params.dart';
-import '../../domain/params/auth/register_with_email_params.dart';
-import '../../domain/params/auth/verify_email_otp_params.dart';
-import '../../domain/params/auth/send_phone_otp_params.dart';
-import '../../domain/params/auth/check_phone_otp_params.dart';
-import '../../domain/params/auth/register_with_phone_params.dart';
-import '../../domain/params/auth/login_with_email_params.dart';
-import '../../domain/params/auth/login_with_phone_otp_params.dart';
-import '../../domain/params/auth/login_with_phone_submit_params.dart';
-import '../../domain/params/auth/third_party_login_params.dart';
-import '../../domain/params/auth/forgot_password_params.dart';
+import 'package:carfy/domain/params/auth/check_email_params.dart';
+import 'package:carfy/domain/params/auth/register_with_email_params.dart';
+import 'package:carfy/domain/params/auth/verify_email_otp_params.dart';
+import 'package:carfy/domain/params/auth/send_phone_otp_params.dart';
+import 'package:carfy/domain/params/auth/check_phone_otp_params.dart';
+import 'package:carfy/domain/params/auth/register_with_phone_params.dart';
+import 'package:carfy/domain/params/auth/login_with_email_params.dart';
+import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
+import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
+import 'package:carfy/domain/params/auth/third_party_login_params.dart';
+import 'package:carfy/domain/params/auth/forgot_password_params.dart';
 
-import '../../domain/repositories/auth_repository.dart';
+import 'package:carfy/domain/repositories/auth_repository.dart';
 
-import '../datasources/auth_remote_data_source.dart';
-import '../mappers/auth_mapper.dart';
+import 'package:carfy/data/datasources/auth_remote_data_source.dart';
+import 'package:carfy/data/mappers/auth_mapper.dart';
 
-import '../dtos/auth/check_email_request_dto.dart';
-import '../dtos/auth/register_with_email_request_dto.dart';
-import '../dtos/auth/verify_email_otp_request_dto.dart';
-import '../dtos/auth/send_phone_otp_request_dto.dart';
-import '../dtos/auth/check_phone_otp_request_dto.dart';
-import '../dtos/auth/register_with_phone_request_dto.dart';
-import '../dtos/auth/login_with_email_request_dto.dart';
-import '../dtos/auth/login_with_phone_otp_request_dto.dart';
-import '../dtos/auth/login_with_phone_submit_request_dto.dart';
-import '../dtos/auth/third_party_login_request_dto.dart';
-import '../dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/verify_email_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/send_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_phone_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
+import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {

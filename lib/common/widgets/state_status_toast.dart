@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../state/state_status.dart';
-import '../translations/translation_context_extension.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
 
 void showStateStatusToast(BuildContext context, StateStatus state) {
   switch (state) {

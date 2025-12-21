@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/theme.dart';
+import 'package:carfy/common/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({

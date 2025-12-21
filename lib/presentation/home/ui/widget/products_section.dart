@@ -10,7 +10,7 @@ class _ProductsSection extends StatelessWidget {
         return state.productsStatus.maybeWhen(
           success: () => _ProductsGrid(products: state.products),
           paginationLoading: () => _ProductsGrid(products: state.products, isLoadingMore: true),
-          orElse: () => _ProductsLoading(),
+          orElse: () => const _ProductsLoading(),
         );
       },
     );
@@ -29,19 +29,19 @@ class _ProductsGrid extends StatelessWidget {
       children: [
         GridView.builder(
           itemCount: products.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             childAspectRatio: 179 / 267,
           ),
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          physics: NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => ProductItem(product: products[index]),
         ),
         if (isLoadingMore)
-          Padding(padding: const EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator.adaptive()),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator.adaptive()),
       ],
     );
   }
@@ -53,7 +53,7 @@ class _ProductsLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
@@ -61,9 +61,9 @@ class _ProductsLoading extends StatelessWidget {
       ),
       itemCount: 10,
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => ProductItemLoading(),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => const ProductItemLoading(),
     );
   }
 }

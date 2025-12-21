@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/theme/theme.dart';
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/widgets/state_status_toast.dart';
-import '../../../../../gen/assets.gen.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/state_status_toast.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 part '../widget/common.dart';
 
@@ -32,14 +32,14 @@ class LoginPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => LoginCubit(),
       child: Scaffold(
-        appBar: CustomAppBar().copyWith(),
+        appBar: const CustomAppBar().copyWith(),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 32, 16, 0),
             child: CustomTabBar(
               titles: [context.localization.withNumber, context.localization.withEmail],
-              children: [_LoginWithNumber(), _LoginWithEmail()],
+              children: [const _LoginWithNumber(), const _LoginWithEmail()],
             ),
           ),
         ),

@@ -12,7 +12,7 @@ import 'package:carfy/domain/use_cases/product/get_products_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/helper/pagination_helper.dart';
+import 'package:carfy/common/helper/pagination_helper.dart';
 
 part 'home_state.dart';
 

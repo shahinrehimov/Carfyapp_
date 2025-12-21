@@ -3,9 +3,9 @@ import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../common/theme/theme.dart';
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../gen/assets.gen.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class RegisteredSuccessfullyPage extends StatelessWidget {
@@ -18,15 +18,15 @@ class RegisteredSuccessfullyPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(width: double.maxFinite),
+          const SizedBox(width: double.maxFinite),
           Image.asset(Assets.images.successfullyRegistered.path, height: 139),
           Text(
             context.localization.successfullyRegistered,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: context.theme.colors.textDark),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           CustomButton(
-            onPressed: () => context.router.replaceAll([LoginRoute()]),
+            onPressed: () => context.router.replaceAll([const LoginRoute()]),
             width: 268,
             text: context.localization.login,
           ),

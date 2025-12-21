@@ -4,9 +4,9 @@ import 'package:carfy/common/mixin/datasource_mixin.dart';
 import 'package:carfy/data/models/version/version_model.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/constants/endpoint_paths.dart';
-import '../../common/di/di.dart';
-import '../../common/network/network_manager.dart';
+import 'package:carfy/common/constants/endpoint_paths.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/network/network_manager.dart';
 
 abstract class VersionRemoteDataSource {
   Future<VersionModel> getCurrentVersion();

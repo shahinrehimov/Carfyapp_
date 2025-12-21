@@ -5,9 +5,9 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../state/main_cubit.dart';
-import '../enum/main_pages.dart';
-import '../widgets/custom_bottom_nav.dart';
+import 'package:carfy/presentation/main/state/main_cubit.dart';
+import 'package:carfy/presentation/main/ui/enum/main_pages.dart';
+import 'package:carfy/presentation/main/ui/widgets/custom_bottom_nav.dart';
 
 @RoutePage()
 class MainPage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import 'package:carfy/common/theme/theme.dart';
 
 class CustomDropdownField<T> extends StatefulWidget {
   final List<T> items;
@@ -149,11 +149,12 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> with Si
                     opacity: _animationController,
                     child: Container(
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.white),
-                      constraints: BoxConstraints(maxHeight: 300),
+                      constraints: const BoxConstraints(maxHeight: 300),
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemCount: widget.items.length,
+
                         itemBuilder: (context, index) {
                           final item = widget.items[index];
                           final isSelected = _selectedValue == item;
@@ -166,7 +167,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> with Si
                             },
                             child: Container(
                               color: isSelected
-                                  ? (widget.focusedBorderColor ?? context.theme.colors.secondary).withOpacity(0.1)
+                                  ? (widget.focusedBorderColor ?? context.theme.colors.secondary).withValues(alpha: 0.1)
                                   : Colors.transparent,
                               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                               child:

@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/theme/theme.dart';
-import '../../../../../gen/assets.gen.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
@@ -48,7 +48,7 @@ class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
                 context.localization.passwordRecovery,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                 builder: (context, state) {
                   return CustomTextField(
@@ -59,7 +59,7 @@ class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                 builder: (context, state) {
                   return CustomButton(
@@ -69,7 +69,7 @@ class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
                   );
                 },
               ),
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
             ],
           ),
         ),

@@ -21,7 +21,7 @@ class BasketRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const BasketPage();
+      return WrappedRoute(child: const BasketPage());
     },
   );
 }

@@ -10,7 +10,7 @@ class WishlistState extends Equatable {
   });
 
   factory WishlistState.initial() => WishlistState(
-    status: StateStatus.initial(),
+    status: StateStatus.loading(),
     products: [],
   );
 

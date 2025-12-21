@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_localications.dart';
+import 'package:carfy/common/translations/app_localizations.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   final BuildContext context;

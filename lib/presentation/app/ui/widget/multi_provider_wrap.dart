@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../state/localization/localization_cubit.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 
 class MultiProviderWrap extends StatelessWidget {
   final Widget child;
