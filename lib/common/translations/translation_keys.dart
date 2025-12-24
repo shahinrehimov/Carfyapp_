@@ -56,4 +56,5 @@ class TranslationKeys {
   static const String discount = 'discount';
   static const String total = 'total';
   static const String formOrder = 'form_order';
+  static const String piece = 'piece';
 }

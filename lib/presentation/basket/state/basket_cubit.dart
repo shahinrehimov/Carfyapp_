@@ -13,8 +13,8 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
   final GetBasketUseCase _getBasketUseCase;
 
   BasketCubit({GetBasketUseCase? getBasketUseCase})
-    : _getBasketUseCase = getBasketUseCase ?? getIt<GetBasketUseCase>(),
-      super(BasketState.initial());
+      : _getBasketUseCase = getBasketUseCase ?? getIt<GetBasketUseCase>(),
+        super(BasketState.initial());
 
   Future<void> init() async {
     _loadBasket();
@@ -38,5 +38,13 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
 
   Future<void> refresh() async {
     await _loadBasket();
+  }
+
+  void setActionStatus(StateStatus status) {
+    emit(state.copyWith(basketActionStatus: status));
+  }
+
+  void clearActionStatus() {
+    emit(state.copyWith(basketActionStatus: StateStatus.initial()));
   }
 }

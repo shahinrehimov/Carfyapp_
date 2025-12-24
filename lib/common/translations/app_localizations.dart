@@ -140,4 +140,5 @@ class AppLocalizations {
 
   String get formOrder => _tr(TranslationKeys.formOrder);
 
+  String get piece => _tr(TranslationKeys.piece);
 }

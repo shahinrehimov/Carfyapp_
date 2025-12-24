@@ -47,4 +47,8 @@ class EndpointPaths {
 
   // Basket Endpoints
   static const basketLoad = '/app/basket/load';
+  static String basketAdd(int productId) => '/app/basket/add/$productId';
+  static String basketRemove(int productId) => '/app/basket/remove/$productId';
+  static String basketIncrement(int productId) => '/app/basket/increment/$productId';
+  static String basketDecrement(int productId) => '/app/basket/decrement/$productId';
 }

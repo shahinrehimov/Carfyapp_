@@ -60,6 +60,7 @@ class TranslationDefaults {
       TranslationKeys.discount: 'Endirim',
       TranslationKeys.total: 'Cəmi',
       TranslationKeys.formOrder: 'Sifarişi formalaşdır',
+      TranslationKeys.piece: 'ədəd',
     },
   };
 }

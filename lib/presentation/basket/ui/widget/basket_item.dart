@@ -3,7 +3,9 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BasketItem extends StatelessWidget {
@@ -67,6 +69,7 @@ class BasketItem extends StatelessWidget {
                     ],
                   ],
                 ),
+                // Quantity
                 Container(
                   width: 68,
                   height: 22,
@@ -78,14 +81,17 @@ class BasketItem extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 18,
-                        height: 18,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: context.theme.colors.secondary.withValues(alpha: 0.5),
+                      GestureDetector(
+                        onTap: () => context.read<BasketManagerCubit>().decrementQuantity(basketProduct.product.id),
+                        child: Container(
+                          width: 18,
+                          height: 18,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: context.theme.colors.secondary.withValues(alpha: 0.5),
+                          ),
+                          child: Center(child: SvgPicture.asset(Assets.icons.minus, width: 7)),
                         ),
-                        child: Center(child: SvgPicture.asset(Assets.icons.minus, width: 7)),
                       ),
                       Text(
                         basketProduct.basketQuantity.toString(),
@@ -95,14 +101,17 @@ class BasketItem extends StatelessWidget {
                           color: context.theme.colors.textDark,
                         ),
                       ),
-                      Container(
-                        width: 18,
-                        height: 18,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: context.theme.colors.secondary,
+                      GestureDetector(
+                        onTap: () => context.read<BasketManagerCubit>().incrementQuantity(basketProduct.product.id),
+                        child: Container(
+                          width: 18,
+                          height: 18,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: context.theme.colors.secondary,
+                          ),
+                          child: Center(child: SvgPicture.asset(Assets.icons.plus, width: 7)),
                         ),
-                        child: Center(child: SvgPicture.asset(Assets.icons.plus, width: 7)),
                       ),
                     ],
                   ),
@@ -113,7 +122,7 @@ class BasketItem extends StatelessWidget {
           Column(
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () => context.read<BasketManagerCubit>().removeFromBasket(basketProduct.product.id),
                 child: Padding(padding: const EdgeInsets.all(2.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
               ),
               const SizedBox(height: 22),

@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/products/product.dart';
+import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:carfy/gen/assets.gen.dart';
@@ -72,17 +76,41 @@ class ProductItem extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           const Spacer(),
-          CustomButton(
-            onPressed: () {},
-            text: context.localization.addToBasket,
-            prefix: SvgPicture.asset(
-              Assets.icons.mainBasket,
-              width: 18,
-              colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-            ),
-            prefixPadding: 8,
-            height: 40,
-            fontSize: 12,
+          BlocConsumer<BasketManagerCubit, BasketManagerState>(
+            listenWhen: (previous, current) {
+              final prevStatus = previous.getStatus(product.id);
+              final currStatus = current.getStatus(product.id);
+              return prevStatus != currStatus && currStatus != null && currStatus is! StateStatusLoading;
+            },
+            listener: (context, state) {
+              final status = state.getStatus(product.id);
+              if (status != null) {
+                showStateStatusToast(context, status);
+                context.read<BasketManagerCubit>().clearProductState(product.id);
+              }
+            },
+            builder: (context, state) {
+              final isLoading = state.isLoading(product.id);
+              return CustomButton(
+                onPressed: isLoading
+                    ? () {}
+                    : () {
+                        context.read<BasketManagerCubit>().addToBasket(product.id);
+                      },
+                loading: isLoading,
+                text: context.localization.addToBasket,
+                prefix: isLoading
+                    ? null
+                    : SvgPicture.asset(
+                        Assets.icons.mainBasket,
+                        width: 18,
+                        colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                      ),
+                prefixPadding: 8,
+                height: 40,
+                fontSize: 12,
+              );
+            },
           ),
           const SizedBox(height: 12),
         ],

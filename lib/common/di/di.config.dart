@@ -77,7 +77,15 @@ import 'package:carfy/domain/use_cases/auth/third_party_login_use_case.dart'
     as _i401;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
     as _i346;
+import 'package:carfy/domain/use_cases/basket/add_to_basket_use_case.dart'
+    as _i307;
+import 'package:carfy/domain/use_cases/basket/decrement_quantity_use_case.dart'
+    as _i828;
 import 'package:carfy/domain/use_cases/basket/get_basket_use_case.dart' as _i7;
+import 'package:carfy/domain/use_cases/basket/increment_quantity_use_case.dart'
+    as _i685;
+import 'package:carfy/domain/use_cases/basket/remove_from_basket_use_case.dart'
+    as _i509;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
@@ -253,8 +261,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i346.VerifyEmailOtpUseCase>(
       () => _i346.VerifyEmailOtpUseCase(gh<_i655.AuthRepository>()),
     );
+    gh.factory<_i307.AddToBasketUseCase>(
+      () => _i307.AddToBasketUseCase(gh<_i449.BasketRepository>()),
+    );
+    gh.factory<_i828.DecrementQuantityUseCase>(
+      () => _i828.DecrementQuantityUseCase(gh<_i449.BasketRepository>()),
+    );
     gh.factory<_i7.GetBasketUseCase>(
       () => _i7.GetBasketUseCase(gh<_i449.BasketRepository>()),
+    );
+    gh.factory<_i685.IncrementQuantityUseCase>(
+      () => _i685.IncrementQuantityUseCase(gh<_i449.BasketRepository>()),
+    );
+    gh.factory<_i509.RemoveFromBasketUseCase>(
+      () => _i509.RemoveFromBasketUseCase(gh<_i449.BasketRepository>()),
     );
     gh.factory<_i187.GetCachedTranslationsUseCase>(
       () =>
