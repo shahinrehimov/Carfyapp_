@@ -12,6 +12,7 @@
 import 'package:carfy/common/network/network_manager.dart' as _i597;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
 import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
+import 'package:carfy/data/datasources/car_remote_data_source.dart' as _i304;
 import 'package:carfy/data/datasources/category_remote_data_source.dart'
     as _i861;
 import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
@@ -27,11 +28,13 @@ import 'package:carfy/data/datasources/wishlist_remote_data_source.dart'
     as _i685;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
 import 'package:carfy/data/mappers/basket_mapper.dart' as _i751;
+import 'package:carfy/data/mappers/car_mapper.dart' as _i407;
 import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
 import 'package:carfy/data/repositories/basket_repository_impl.dart' as _i522;
+import 'package:carfy/data/repositories/car_repository_impl.dart' as _i663;
 import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
 import 'package:carfy/data/repositories/group_repository_impl.dart' as _i294;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
@@ -41,6 +44,7 @@ import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
 import 'package:carfy/data/repositories/wishlist_repository_impl.dart' as _i224;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
 import 'package:carfy/domain/repositories/basket_repository.dart' as _i449;
+import 'package:carfy/domain/repositories/car_repository.dart' as _i194;
 import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
 import 'package:carfy/domain/repositories/group_repository.dart' as _i1037;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
@@ -86,6 +90,24 @@ import 'package:carfy/domain/use_cases/basket/increment_quantity_use_case.dart'
     as _i685;
 import 'package:carfy/domain/use_cases/basket/remove_from_basket_use_case.dart'
     as _i509;
+import 'package:carfy/domain/use_cases/car/add_car_use_case.dart' as _i325;
+import 'package:carfy/domain/use_cases/car/delete_car_photo_use_case.dart'
+    as _i256;
+import 'package:carfy/domain/use_cases/car/delete_car_use_case.dart' as _i881;
+import 'package:carfy/domain/use_cases/car/get_brand_models_use_case.dart'
+    as _i84;
+import 'package:carfy/domain/use_cases/car/get_brands_use_case.dart' as _i774;
+import 'package:carfy/domain/use_cases/car/get_car_types_use_case.dart'
+    as _i411;
+import 'package:carfy/domain/use_cases/car/get_car_use_case.dart' as _i229;
+import 'package:carfy/domain/use_cases/car/get_cars_use_case.dart' as _i1057;
+import 'package:carfy/domain/use_cases/car/get_engine_volumes_use_case.dart'
+    as _i323;
+import 'package:carfy/domain/use_cases/car/get_fuel_types_use_case.dart'
+    as _i392;
+import 'package:carfy/domain/use_cases/car/get_transmission_types_use_case.dart'
+    as _i1004;
+import 'package:carfy/domain/use_cases/car/update_car_use_case.dart' as _i936;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
@@ -113,12 +135,16 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i163.AuthMapper>(() => _i163.AuthMapper());
+    gh.factory<_i407.CarMapper>(() => _i407.CarMapper());
     gh.factory<_i109.CategoryMapper>(() => _i109.CategoryMapper());
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.singleton<_i420.MainCubit>(() => _i420.MainCubit());
     gh.factory<_i490.BasketRemoteDataSource>(
       () => _i490.BasketRemoteDataSourceImpl(),
+    );
+    gh.factory<_i304.CarRemoteDataSource>(
+      () => _i304.CarRemoteDataSourceImpl(),
     );
     gh.factory<_i685.WishlistRemoteDataSource>(
       () => _i685.WishlistRemoteDataSourceImpl(),
@@ -153,6 +179,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i387.TranslationRemoteDataSource>(
       () => _i387.TranslationRemoteDataSourceImpl(),
     );
+    gh.factory<_i194.CarRepository>(
+      () => _i663.CarRepositoryImpl(
+        gh<_i304.CarRemoteDataSource>(),
+        gh<_i407.CarMapper>(),
+      ),
+    );
     gh.factory<_i751.BasketMapper>(
       () => _i751.BasketMapper(gh<_i344.ProductMapper>()),
     );
@@ -179,6 +211,42 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i202.GetCategoriesUseCase>(
       () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),
+    );
+    gh.factory<_i325.AddCarUseCase>(
+      () => _i325.AddCarUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i256.DeleteCarPhotoUseCase>(
+      () => _i256.DeleteCarPhotoUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i881.DeleteCarUseCase>(
+      () => _i881.DeleteCarUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i84.GetBrandModelsUseCase>(
+      () => _i84.GetBrandModelsUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i774.GetBrandsUseCase>(
+      () => _i774.GetBrandsUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i411.GetCarTypesUseCase>(
+      () => _i411.GetCarTypesUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i229.GetCarUseCase>(
+      () => _i229.GetCarUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i1057.GetCarsUseCase>(
+      () => _i1057.GetCarsUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i323.GetEngineVolumesUseCase>(
+      () => _i323.GetEngineVolumesUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i392.GetFuelTypesUseCase>(
+      () => _i392.GetFuelTypesUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i1004.GetTransmissionTypesUseCase>(
+      () => _i1004.GetTransmissionTypesUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i936.UpdateCarUseCase>(
+      () => _i936.UpdateCarUseCase(gh<_i194.CarRepository>()),
     );
     gh.factory<_i655.AuthRepository>(
       () => _i407.AuthRepositoryImpl(

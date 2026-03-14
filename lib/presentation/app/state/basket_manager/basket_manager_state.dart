@@ -1,7 +1,7 @@
 part of 'basket_manager_cubit.dart';
 
 class BasketManagerState extends Equatable {
-  final Map<int, StateStatus> productLoadingStates;
+  final Map<String, StateStatus> productLoadingStates;
   final StateStatus basketActionStatus;
 
   const BasketManagerState({
@@ -14,14 +14,14 @@ class BasketManagerState extends Equatable {
         basketActionStatus: StateStatus.initial(),
       );
 
-  bool isLoading(int productId) => productLoadingStates[productId] is StateStatusLoading;
+  bool isLoading(String cpvUuid) => productLoadingStates[cpvUuid] is StateStatusLoading;
 
   bool get isBasketActionLoading => basketActionStatus is StateStatusLoading;
 
-  StateStatus? getStatus(int productId) => productLoadingStates[productId];
+  StateStatus? getStatus(String cpvUuid) => productLoadingStates[cpvUuid];
 
   BasketManagerState copyWith({
-    Map<int, StateStatus>? productLoadingStates,
+    Map<String, StateStatus>? productLoadingStates,
     StateStatus? basketActionStatus,
   }) {
     return BasketManagerState(

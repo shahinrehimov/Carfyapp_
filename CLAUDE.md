@@ -312,6 +312,90 @@ Other statuses (loading, success, empty, etc.) are silently ignored.
 
 ---
 
+## API: Multi-Seller Marketplace (Breaking Changes)
+
+> Full details in `api-docs/FRONTEND_CHANGES.md`
+
+The backend was refactored to a multi-seller model. Each product variant now has seller-specific listings called **CPV (CompanyProductVariant)**.
+
+### Key Concepts
+
+- `ProductVariant` no longer stores price/stock — these come from the seller's CPV
+- Every product response includes a `seller` object with the cheapest (or selected) seller's data
+- `seller.uuid` = CPV UUID — **use this** for all basket/wishlist actions (not the variant UUID)
+- `in_wishlist` / `in_basket` are now CPV-level flags
+
+### Breaking Changes
+
+**Basket endpoints** — URL param changed from `{productVariantUuid}` to `{cpvUuid}`:
+```
+POST /basket/add/{cpvUuid}
+POST /basket/remove/{cpvUuid}
+POST /basket/increment/{cpvUuid}
+POST /basket/decrement/{cpvUuid}
+```
+
+**Wishlist endpoints** — same change:
+```
+POST /wishlist/add/{cpvUuid}
+POST /wishlist/remove/{cpvUuid}
+```
+
+### New Response Fields (Product List & Detail)
+
+```json
+{
+  "seller": {
+    "id": 3,
+    "uuid": "cpv-uuid-here",
+    "city": { "id": 1, "title": "Baku" },
+    "images": [{ "id": 10, "url": "https://..." }]
+  },
+  "sellers_count": 3
+}
+```
+
+### Product Detail — New Query Params
+
+| Param | Description |
+|-------|-------------|
+| `seller` | CPV UUID — load a specific seller's listing |
+| `other_sellers` | `true` to include `other_sellers` array in response |
+
+Other sellers endpoint: `GET /products/{productVariantId}/other-sellers`
+
+---
+
+## API: User Cars
+
+> Full details in `api-docs/car.md`
+
+Base: `/app/profile/cars/` — requires Bearer auth token.
+
+| Action | Method | Endpoint |
+|--------|--------|----------|
+| List | GET | `/app/profile/cars/load` |
+| Show | GET | `/app/profile/cars/show/{id}` |
+| Add | POST (multipart) | `/app/profile/cars/add` |
+| Update | POST (multipart) | `/app/profile/cars/update/{id}` |
+| Delete | DELETE | `/app/profile/cars/delete/{id}` |
+| Delete photo | DELETE | `/app/profile/cars/delete-photo/{id}` |
+
+**Add/Update fields:** `brand_model_id`*, `car_type_id`*, `year`*, `engine_volume_id`, `fuel_type_id`, `transmission_type_id`, `engine_number`, `vin_number`, `photo`
+
+**Car library dropdowns** (public, no auth):
+
+| Data | Endpoint |
+|------|----------|
+| Fuel types | `GET /app/car-libraries/fuel-types` |
+| Transmission types | `GET /app/car-libraries/transmission-types` |
+| Car types | `GET /app/car-libraries/car-types` |
+| Engine volumes | `GET /app/car-libraries/engine-volumes` |
+| Brands | `GET /control/brands/list` |
+| Models by brand | `GET /control/brands/{brandId}/models/list` |
+
+---
+
 ## Features / Pages
 
 | Feature | Route | Bottom Nav |

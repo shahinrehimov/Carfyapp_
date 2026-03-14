@@ -27,24 +27,24 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
         _decrementQuantityUseCase = decrementQuantityUseCase ?? getIt<DecrementQuantityUseCase>(),
         super(BasketManagerState.initial());
 
-  Future<void> addToBasket(int productId) async {
-    _setProductState(productId, StateStatus.loading());
-    final result = await _addToBasketUseCase(productId);
+  Future<void> addToBasket(String cpvUuid) async {
+    _setProductState(cpvUuid, StateStatus.loading());
+    final result = await _addToBasketUseCase(cpvUuid);
     result.fold(
       (failure) {
-        _setProductState(productId, mapFailure(failure));
+        _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
-        _setProductState(productId, StateStatus.successWithMessage(response.message));
+        _setProductState(cpvUuid, StateStatus.successWithMessage(response.message));
         _setBasketActionStatus(StateStatus.success());
       },
     );
   }
 
-  Future<void> removeFromBasket(int productId) async {
+  Future<void> removeFromBasket(String cpvUuid) async {
     _setBasketActionStatus(StateStatus.loading());
 
-    final result = await _removeFromBasketUseCase(productId);
+    final result = await _removeFromBasketUseCase(cpvUuid);
     result.fold(
       (failure) {
         _setBasketActionStatus(mapFailure(failure));
@@ -55,10 +55,10 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     );
   }
 
-  Future<void> incrementQuantity(int productId) async {
+  Future<void> incrementQuantity(String cpvUuid) async {
     _setBasketActionStatus(StateStatus.loading());
 
-    final result = await _incrementQuantityUseCase(productId);
+    final result = await _incrementQuantityUseCase(cpvUuid);
     result.fold(
       (failure) {
         _setBasketActionStatus(mapFailure(failure));
@@ -69,10 +69,10 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     );
   }
 
-  Future<void> decrementQuantity(int productId) async {
+  Future<void> decrementQuantity(String cpvUuid) async {
     _setBasketActionStatus(StateStatus.loading());
 
-    final result = await _decrementQuantityUseCase(productId);
+    final result = await _decrementQuantityUseCase(cpvUuid);
     result.fold(
       (failure) {
         _setBasketActionStatus(mapFailure(failure));
@@ -83,9 +83,9 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     );
   }
 
-  void _setProductState(int productId, StateStatus status) {
-    final updatedStates = Map<int, StateStatus>.from(state.productLoadingStates);
-    updatedStates[productId] = status;
+  void _setProductState(String cpvUuid, StateStatus status) {
+    final updatedStates = Map<String, StateStatus>.from(state.productLoadingStates);
+    updatedStates[cpvUuid] = status;
     emit(state.copyWith(productLoadingStates: updatedStates));
   }
 
@@ -93,9 +93,9 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     emit(state.copyWith(basketActionStatus: status));
   }
 
-  void clearProductState(int productId) {
-    final updatedStates = Map<int, StateStatus>.from(state.productLoadingStates);
-    updatedStates.remove(productId);
+  void clearProductState(String cpvUuid) {
+    final updatedStates = Map<String, StateStatus>.from(state.productLoadingStates);
+    updatedStates.remove(cpvUuid);
     emit(state.copyWith(productLoadingStates: updatedStates));
   }
 

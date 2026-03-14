@@ -22,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> with StateMapHelper {
   }
 
   void _checkAuthenticated() {
-    final bool authenticated = PrefUtil.getBool(AppPreferenceKeys.authToken) != null;
+    final bool authenticated = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
     emit(state.copyWith(authenticated: authenticated));
     if (authenticated) {
       _loadProfile();

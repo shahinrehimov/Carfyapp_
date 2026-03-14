@@ -16,6 +16,7 @@ class ProductModel {
   final double discount;
   final bool inWishlist;
   final bool inBasket;
+  final String? sellerUuid;
   final ProductDetailModel product;
 
   ProductModel({
@@ -34,6 +35,7 @@ class ProductModel {
     required this.discount,
     required this.inWishlist,
     required this.inBasket,
+    this.sellerUuid,
     required this.product,
   });
 
@@ -54,6 +56,7 @@ class ProductModel {
       discount: (json['discount'] as num).toDouble(),
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
+      sellerUuid: (json['seller'] as Map<String, dynamic>?)?['uuid'] as String?,
       product: ProductDetailModel.fromJson(json['product'] as Map<String, dynamic>),
     );
   }

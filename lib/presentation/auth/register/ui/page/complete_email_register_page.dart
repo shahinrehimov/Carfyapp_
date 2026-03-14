@@ -3,6 +3,7 @@ import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/util/input_formatters.dart';
 import 'package:carfy/common/widgets/custom_date_picker.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
+import 'package:carfy/common/widgets/custom_phone_field.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,13 +79,9 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.phoneValidationState != newState.phoneValidationState,
                 builder: (context, state) {
-                  return CustomTextField(
+                  return CustomPhoneField(
                     controller: cubit.phoneController,
-                    hint: context.localization.mobileNumber,
                     errorText: state.phoneValidationState.message,
-                    inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
-                    keyboardType: TextInputType.number,
-                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.call)),
                   );
                 },
               ),

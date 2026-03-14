@@ -30,6 +30,7 @@ class ProductMapper {
     discount: model.discount,
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
+    sellerUuid: model.sellerUuid,
     product: mapProductDetail(model.product),
   );
 

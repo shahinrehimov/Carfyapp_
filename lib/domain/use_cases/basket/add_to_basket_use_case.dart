@@ -10,7 +10,7 @@ class AddToBasketUseCase {
 
   AddToBasketUseCase(this._repository);
 
-  Future<Either<Failure, BasketActionResponse>> call(int productId, {int quantity = 1}) async {
-    return await _repository.addToBasket(productId, quantity: quantity);
+  Future<Either<Failure, BasketActionResponse>> call(String cpvUuid, {int quantity = 1}) async {
+    return await _repository.addToBasket(cpvUuid, quantity: quantity);
   }
 }

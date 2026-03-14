@@ -10,7 +10,7 @@ class DecrementQuantityUseCase {
 
   DecrementQuantityUseCase(this._repository);
 
-  Future<Either<Failure, BasketQuantityResponse>> call(int productId) async {
-    return await _repository.decrementQuantity(productId);
+  Future<Either<Failure, BasketQuantityResponse>> call(String cpvUuid) async {
+    return await _repository.decrementQuantity(cpvUuid);
   }
 }

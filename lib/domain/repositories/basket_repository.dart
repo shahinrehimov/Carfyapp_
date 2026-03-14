@@ -7,11 +7,11 @@ import 'package:dartz/dartz.dart';
 abstract class BasketRepository {
   Future<Either<Failure, BasketResponse>> getBasket();
 
-  Future<Either<Failure, BasketActionResponse>> addToBasket(int productId, {int quantity = 1});
+  Future<Either<Failure, BasketActionResponse>> addToBasket(String cpvUuid, {int quantity = 1});
 
-  Future<Either<Failure, BasketActionResponse>> removeFromBasket(int productId);
+  Future<Either<Failure, BasketActionResponse>> removeFromBasket(String cpvUuid);
 
-  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(int productId);
+  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(String cpvUuid);
 
-  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(int productId);
+  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(String cpvUuid);
 }

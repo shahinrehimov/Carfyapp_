@@ -47,8 +47,26 @@ class EndpointPaths {
 
   // Basket Endpoints
   static const basketLoad = '/app/basket/load';
-  static String basketAdd(int productId) => '/app/basket/add/$productId';
-  static String basketRemove(int productId) => '/app/basket/remove/$productId';
-  static String basketIncrement(int productId) => '/app/basket/increment/$productId';
-  static String basketDecrement(int productId) => '/app/basket/decrement/$productId';
+  static String basketAdd(String cpvUuid) => '/app/basket/add/$cpvUuid';
+  static String basketRemove(String cpvUuid) => '/app/basket/remove/$cpvUuid';
+  static String basketIncrement(String cpvUuid) => '/app/basket/increment/$cpvUuid';
+  static String basketDecrement(String cpvUuid) => '/app/basket/decrement/$cpvUuid';
+
+  // Car Endpoints
+  static const carsLoad = '/app/profile/cars/load';
+  static String carShow(int id) => '/app/profile/cars/show/$id';
+  static const carsAdd = '/app/profile/cars/add';
+  static String carUpdate(int id) => '/app/profile/cars/update/$id';
+  static String carDelete(int id) => '/app/profile/cars/delete/$id';
+  static String carDeletePhoto(int id) => '/app/profile/cars/delete-photo/$id';
+
+  // Car Library Endpoints (public)
+  static const carLibraryFuelTypes = '/app/car-libraries/fuel-types';
+  static const carLibraryTransmissionTypes = '/app/car-libraries/transmission-types';
+  static const carLibraryCarTypes = '/app/car-libraries/car-types';
+  static const carLibraryEngineVolumes = '/app/car-libraries/engine-volumes';
+
+  // Brand Endpoints
+  static const brands = '/control/brands/list';
+  static String brandModels(int brandId) => '/control/brands/$brandId/models/list';
 }

@@ -78,24 +78,29 @@ class ProductItem extends StatelessWidget {
           const Spacer(),
           BlocConsumer<BasketManagerCubit, BasketManagerState>(
             listenWhen: (previous, current) {
-              final prevStatus = previous.getStatus(product.id);
-              final currStatus = current.getStatus(product.id);
+              final cpvUuid = product.sellerUuid;
+              if (cpvUuid == null) return false;
+              final prevStatus = previous.getStatus(cpvUuid);
+              final currStatus = current.getStatus(cpvUuid);
               return prevStatus != currStatus && currStatus != null && currStatus is! StateStatusLoading;
             },
             listener: (context, state) {
-              final status = state.getStatus(product.id);
+              final cpvUuid = product.sellerUuid;
+              if (cpvUuid == null) return;
+              final status = state.getStatus(cpvUuid);
               if (status != null) {
                 showStateStatusToast(context, status);
-                context.read<BasketManagerCubit>().clearProductState(product.id);
+                context.read<BasketManagerCubit>().clearProductState(cpvUuid);
               }
             },
             builder: (context, state) {
-              final isLoading = state.isLoading(product.id);
+              final cpvUuid = product.sellerUuid;
+              final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
               return CustomButton(
-                onPressed: isLoading
+                onPressed: isLoading || cpvUuid == null
                     ? () {}
                     : () {
-                        context.read<BasketManagerCubit>().addToBasket(product.id);
+                        context.read<BasketManagerCubit>().addToBasket(cpvUuid);
                       },
                 loading: isLoading,
                 text: context.localization.addToBasket,

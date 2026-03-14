@@ -4,6 +4,7 @@ import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/util/input_formatters.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/common/widgets/custom_phone_field.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:carfy/common/widgets/tab_bar.dart';
 import 'package:carfy/presentation/auth/register/state/register_cubit.dart';

@@ -82,7 +82,10 @@ class BasketItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () => context.read<BasketManagerCubit>().decrementQuantity(basketProduct.product.id),
+                        onTap: () {
+                          final cpvUuid = basketProduct.product.sellerUuid;
+                          if (cpvUuid != null) context.read<BasketManagerCubit>().decrementQuantity(cpvUuid);
+                        },
                         child: Container(
                           width: 18,
                           height: 18,
@@ -102,7 +105,10 @@ class BasketItem extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => context.read<BasketManagerCubit>().incrementQuantity(basketProduct.product.id),
+                        onTap: () {
+                          final cpvUuid = basketProduct.product.sellerUuid;
+                          if (cpvUuid != null) context.read<BasketManagerCubit>().incrementQuantity(cpvUuid);
+                        },
                         child: Container(
                           width: 18,
                           height: 18,
@@ -122,7 +128,10 @@ class BasketItem extends StatelessWidget {
           Column(
             children: [
               GestureDetector(
-                onTap: () => context.read<BasketManagerCubit>().removeFromBasket(basketProduct.product.id),
+                onTap: () {
+                  final cpvUuid = basketProduct.product.sellerUuid;
+                  if (cpvUuid != null) context.read<BasketManagerCubit>().removeFromBasket(cpvUuid);
+                },
                 child: Padding(padding: const EdgeInsets.all(2.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
               ),
               const SizedBox(height: 22),

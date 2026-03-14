@@ -25,33 +25,33 @@ class BasketRepositoryImpl extends BasketRepository with RepositorySafeCallMixin
   }
 
   @override
-  Future<Either<Failure, BasketActionResponse>> addToBasket(int productId, {int quantity = 1}) {
+  Future<Either<Failure, BasketActionResponse>> addToBasket(String cpvUuid, {int quantity = 1}) {
     return safeCall(() async {
-      final res = await _remoteDataSource.addToBasket(productId, quantity: quantity);
+      final res = await _remoteDataSource.addToBasket(cpvUuid, quantity: quantity);
       return _mapper.mapBasketActionResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketActionResponse>> removeFromBasket(int productId) {
+  Future<Either<Failure, BasketActionResponse>> removeFromBasket(String cpvUuid) {
     return safeCall(() async {
-      final res = await _remoteDataSource.removeFromBasket(productId);
+      final res = await _remoteDataSource.removeFromBasket(cpvUuid);
       return _mapper.mapBasketActionResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(int productId) {
+  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(String cpvUuid) {
     return safeCall(() async {
-      final res = await _remoteDataSource.incrementQuantity(productId);
+      final res = await _remoteDataSource.incrementQuantity(cpvUuid);
       return _mapper.mapBasketQuantityResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(int productId) {
+  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(String cpvUuid) {
     return safeCall(() async {
-      final res = await _remoteDataSource.decrementQuantity(productId);
+      final res = await _remoteDataSource.decrementQuantity(cpvUuid);
       return _mapper.mapBasketQuantityResponse(res);
     });
   }

@@ -17,6 +17,7 @@ class Product {
   final double discount;
   final bool inWishlist;
   final bool inBasket;
+  final String? sellerUuid;
   final ProductDetail product;
 
   Product({
@@ -35,6 +36,7 @@ class Product {
     required this.discount,
     required this.inWishlist,
     required this.inBasket,
+    this.sellerUuid,
     required this.product,
   });
 }
