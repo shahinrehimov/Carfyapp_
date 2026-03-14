@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pinput/pinput.dart';
 
 import 'package:carfy/common/state/state_status.dart';
@@ -9,7 +8,6 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
-import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/auth/register/state/email_verify_otp/email_verify_otp_cubit.dart';
 
 @RoutePage()

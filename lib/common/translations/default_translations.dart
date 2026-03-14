@@ -61,6 +61,15 @@ class TranslationDefaults {
       TranslationKeys.total: 'Cəmi',
       TranslationKeys.formOrder: 'Sifarişi formalaşdır',
       TranslationKeys.piece: 'ədəd',
+      TranslationKeys.profileMyCars: 'Avtomobillərim',
+      TranslationKeys.profileMyOrders: 'Sifarişlərim',
+      TranslationKeys.profileMyAddresses: 'Ünvanlarım',
+      TranslationKeys.profileReferrals: 'Referallar və bonuslar',
+      TranslationKeys.profileSettings: 'Parametrlər',
+      TranslationKeys.profileActiveSessions: 'Aktiv seanslar',
+      TranslationKeys.profileLanguage: 'Dil',
+      TranslationKeys.profileCurrentLanguage: 'Azərbaycan',
+      TranslationKeys.profileSupport: 'Dəstək',
     },
   };
 }

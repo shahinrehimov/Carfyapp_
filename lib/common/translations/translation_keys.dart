@@ -57,4 +57,15 @@ class TranslationKeys {
   static const String total = 'total';
   static const String formOrder = 'form_order';
   static const String piece = 'piece';
+
+  // Profile page
+  static const String profileMyCars = 'profile_my_cars';
+  static const String profileMyOrders = 'profile_my_orders';
+  static const String profileMyAddresses = 'profile_my_addresses';
+  static const String profileReferrals = 'profile_referrals';
+  static const String profileSettings = 'profile_settings';
+  static const String profileActiveSessions = 'profile_active_sessions';
+  static const String profileLanguage = 'profile_language';
+  static const String profileCurrentLanguage = 'profile_current_language';
+  static const String profileSupport = 'profile_support';
 }

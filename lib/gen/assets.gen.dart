@@ -14,17 +14,26 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/address-pin-location.svg
+  String get addressPinLocation => 'assets/icons/address-pin-location.svg';
+
   /// File path: assets/icons/apple-icon-logo.svg
   String get appleIconLogo => 'assets/icons/apple-icon-logo.svg';
 
   /// File path: assets/icons/arrow-narrow-left.svg
   String get arrowNarrowLeft => 'assets/icons/arrow-narrow-left.svg';
 
+  /// File path: assets/icons/box.svg
+  String get box => 'assets/icons/box.svg';
+
   /// File path: assets/icons/calendar.svg
   String get calendar => 'assets/icons/calendar.svg';
 
   /// File path: assets/icons/call.svg
   String get call => 'assets/icons/call.svg';
+
+  /// File path: assets/icons/car-hatchback.svg
+  String get carHatchback => 'assets/icons/car-hatchback.svg';
 
   /// File path: assets/icons/chevron-right.svg
   String get chevronRight => 'assets/icons/chevron-right.svg';
@@ -40,6 +49,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/gender.svg
   String get gender => 'assets/icons/gender.svg';
+
+  /// File path: assets/icons/globe-2.svg
+  String get globe2 => 'assets/icons/globe-2.svg';
 
   /// File path: assets/icons/google-icon-logo.svg
   String get googleIconLogo => 'assets/icons/google-icon-logo.svg';
@@ -80,6 +92,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/minus.svg
   String get minus => 'assets/icons/minus.svg';
 
+  /// File path: assets/icons/mobile.svg
+  String get mobile => 'assets/icons/mobile.svg';
+
   /// File path: assets/icons/notification.svg
   String get notification => 'assets/icons/notification.svg';
 
@@ -92,20 +107,30 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   String get profile => 'assets/icons/profile.svg';
 
+  /// File path: assets/icons/sale-square.svg
+  String get saleSquare => 'assets/icons/sale-square.svg';
+
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
 
+  /// File path: assets/icons/support.svg
+  String get support => 'assets/icons/support.svg';
+
   /// List of all assets
   List<String> get values => [
+    addressPinLocation,
     appleIconLogo,
     arrowNarrowLeft,
+    box,
     calendar,
     call,
+    carHatchback,
     chevronRight,
     closeSquare,
     eyeOff,
     filters,
     gender,
+    globe2,
     googleIconLogo,
     heartFilled,
     heart,
@@ -119,11 +144,14 @@ class $AssetsIconsGen {
     mainProfile,
     message,
     minus,
+    mobile,
     notification,
     password,
     plus,
     profile,
+    saleSquare,
     search,
+    support,
   ];
 }
 

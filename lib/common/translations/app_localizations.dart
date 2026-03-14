@@ -141,4 +141,23 @@ class AppLocalizations {
   String get formOrder => _tr(TranslationKeys.formOrder);
 
   String get piece => _tr(TranslationKeys.piece);
+
+  // Profile page
+  String get profileMyCars => _tr(TranslationKeys.profileMyCars);
+
+  String get profileMyOrders => _tr(TranslationKeys.profileMyOrders);
+
+  String get profileMyAddresses => _tr(TranslationKeys.profileMyAddresses);
+
+  String get profileReferrals => _tr(TranslationKeys.profileReferrals);
+
+  String get profileSettings => _tr(TranslationKeys.profileSettings);
+
+  String get profileActiveSessions => _tr(TranslationKeys.profileActiveSessions);
+
+  String get profileLanguage => _tr(TranslationKeys.profileLanguage);
+
+  String get profileCurrentLanguage => _tr(TranslationKeys.profileCurrentLanguage);
+
+  String get profileSupport => _tr(TranslationKeys.profileSupport);
 }

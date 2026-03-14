@@ -11,6 +11,11 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 
+part '../widget/profile_flexible_space.dart';
+part '../widget/profile_body.dart';
+part '../widget/profile_menu_card.dart';
+part '../widget/profile_section_card.dart';
+
 @RoutePage()
 class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
   const ProfilePage({super.key});
@@ -32,76 +37,13 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
           backgroundColor: context.theme.colors.bg,
           appBar: CustomAppBar(
             title: context.localization.mainProfile,
-            height: 100,
+            height: 140,
             actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
             flexibleSpace: const SafeArea(child: _ProfileFlexibleSpace()),
           ),
-          body: const Center(child: Text('profile')),
+          body: const _ProfileBody(),
         );
       },
-    );
-  }
-}
-
-class _ProfileFlexibleSpace extends StatelessWidget {
-  const _ProfileFlexibleSpace();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        return state.status.maybeWhen(
-          success: () => _ProfileName(name: state.user?.fullName ?? ''),
-          orElse: () => const _ProfileNameShimmer(),
-        );
-      },
-    );
-  }
-}
-
-class _ProfileName extends StatelessWidget {
-  final String name;
-
-  const _ProfileName({required this.name});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            name,
-            style: TextStyle(color: context.theme.colors.white, fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-          SvgPicture.asset(
-            Assets.icons.chevronRight,
-            height: 26,
-            colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfileNameShimmer extends StatelessWidget {
-  const _ProfileNameShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(bottom: 16, left: 16),
-      child: ShimmerWrapper(
-        child: Container(
-          width: 120,
-          height: 22,
-          decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(4)),
-        ),
-      ),
     );
   }
 }
