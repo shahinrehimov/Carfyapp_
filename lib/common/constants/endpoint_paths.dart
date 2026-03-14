@@ -67,6 +67,6 @@ class EndpointPaths {
   static const carLibraryEngineVolumes = '/app/car-libraries/engine-volumes';
 
   // Brand Endpoints
-  static const brands = '/control/brands/list';
-  static String brandModels(int brandId) => '/control/brands/$brandId/models/list';
+  static const brands = '/app/car-libraries/brands';
+  static String brandModels(int brandId) => '/app/car-libraries/brands/$brandId/models';
 }

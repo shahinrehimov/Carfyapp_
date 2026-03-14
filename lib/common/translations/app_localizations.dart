@@ -167,6 +167,25 @@ class AppLocalizations {
 
   String get profileMyCarsEmpty => _tr(TranslationKeys.profileMyCarsEmpty);
 
+  // General actions
+  String get cancel => _tr(TranslationKeys.cancel);
+
+  String get delete => _tr(TranslationKeys.delete);
+
+  // Car delete confirmation
+  String get carDeleteConfirmTitle => _tr(TranslationKeys.carDeleteConfirmTitle);
+
+  String get carDeleteConfirmDescription => _tr(TranslationKeys.carDeleteConfirmDescription);
+
+  // Car form validation
+  String get carFormBrandRequired => _tr(TranslationKeys.carFormBrandRequired);
+
+  String get carFormModelRequired => _tr(TranslationKeys.carFormModelRequired);
+
+  String get carFormCarTypeRequired => _tr(TranslationKeys.carFormCarTypeRequired);
+
+  String get carFormYearRequired => _tr(TranslationKeys.carFormYearRequired);
+
   // Car form
   String get carFormAddTitle => _tr(TranslationKeys.carFormAddTitle);
 

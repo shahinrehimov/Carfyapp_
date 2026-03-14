@@ -47,5 +47,9 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Avtomobilinizin şəklini seçmək üçün qalereyanıza giriş lazımdır.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Avtomobilinizin şəklini saxlamaq üçün qalereyanıza giriş lazımdır.</string>
 	</dict>
 </plist>

@@ -12,16 +12,27 @@ import 'package:injectable/injectable.dart';
 
 abstract class CarRemoteDataSource {
   Future<List<UserCarModel>> getCars({int? limit});
+
   Future<UserCarModel> getCar(int id);
+
   Future<UserCarModel> addCar(AddCarParams params);
+
   Future<UserCarModel> updateCar(UpdateCarParams params);
+
   Future<String> deleteCar(int id);
+
   Future<String> deleteCarPhoto(int id);
+
   Future<List<CarLibraryItemModel>> getFuelTypes();
+
   Future<List<CarLibraryItemModel>> getTransmissionTypes();
+
   Future<List<CarLibraryItemModel>> getCarTypes();
+
   Future<List<EngineVolumeModel>> getEngineVolumes();
+
   Future<List<CarLibraryItemModel>> getBrands();
+
   Future<List<CarLibraryItemModel>> getBrandModels(int brandId);
 }
 
@@ -33,9 +44,8 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
   Future<List<UserCarModel>> getCars({int? limit}) {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.carsLoad, queryParams: {if (limit != null) 'limit': limit}),
-      map: (json) => (json['data'] as List<dynamic>)
-          .map((item) => UserCarModel.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      map: (json) =>
+          (json['data'] as List<dynamic>).map((item) => UserCarModel.fromJson(item as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -65,7 +75,7 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
     }
     return handleResponse(
       () => _networkManager.post(EndpointPaths.carsAdd, data: formData),
-      map: (json) => UserCarModel.fromJson(json['data']['data'] as Map<String, dynamic>),
+      map: (json) => UserCarModel.fromJson(json['data']as Map<String, dynamic>),
     );
   }
 
@@ -87,7 +97,7 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
     }
     return handleResponse(
       () => _networkManager.post(EndpointPaths.carUpdate(params.carId), data: formData),
-      map: (json) => UserCarModel.fromJson(json['data']['data'] as Map<String, dynamic>),
+      map: (json) => UserCarModel.fromJson(json['data'] as Map<String, dynamic>),
     );
   }
 
@@ -95,7 +105,7 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
   Future<String> deleteCar(int id) {
     return handleResponse(
       () => _networkManager.delete(EndpointPaths.carDelete(id)),
-      map: (json) => json['data']['message'] as String,
+      map: (json) => json['message'] as String,
     );
   }
 
@@ -103,7 +113,7 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
   Future<String> deleteCarPhoto(int id) {
     return handleResponse(
       () => _networkManager.delete(EndpointPaths.carDeletePhoto(id)),
-      map: (json) => json['data']['message'] as String,
+      map: (json) => json['message'] as String,
     );
   }
 

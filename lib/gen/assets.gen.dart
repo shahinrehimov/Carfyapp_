@@ -41,6 +41,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close-square.svg
   String get closeSquare => 'assets/icons/close-square.svg';
 
+  /// File path: assets/icons/delete.svg
+  String get delete => 'assets/icons/delete.svg';
+
+  /// File path: assets/icons/edit-3.svg
+  String get edit3 => 'assets/icons/edit-3.svg';
+
   /// File path: assets/icons/eye-off.svg
   String get eyeOff => 'assets/icons/eye-off.svg';
 
@@ -127,6 +133,8 @@ class $AssetsIconsGen {
     carHatchback,
     chevronRight,
     closeSquare,
+    delete,
+    edit3,
     eyeOff,
     filters,
     gender,

@@ -39,7 +39,7 @@ class NetworkManager {
           return handler.next(options);
         },
       ),
-      if (kDebugMode) CurlLoggingInterceptor(showResponseLog: true, showRequestLog: true),
+      if (kDebugMode) CurlLoggingInterceptor(showResponseLog: true, showRequestLog: false),
     ]);
   }
 

@@ -1,4 +1,7 @@
 import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/car/car_library_item.dart';
@@ -7,6 +10,7 @@ import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:carfy/domain/params/car/add_car_params.dart';
 import 'package:carfy/domain/params/car/update_car_params.dart';
 import 'package:carfy/domain/use_cases/car/add_car_use_case.dart';
+import 'package:carfy/domain/use_cases/car/delete_car_photo_use_case.dart';
 import 'package:carfy/domain/use_cases/car/delete_car_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_brand_models_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_brands_use_case.dart';
@@ -30,6 +34,7 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
   final AddCarUseCase _addCarUseCase;
   final UpdateCarUseCase _updateCarUseCase;
   final DeleteCarUseCase _deleteCarUseCase;
+  final DeleteCarPhotoUseCase _deleteCarPhotoUseCase;
 
   CarFormCubit({
     GetBrandsUseCase? getBrandsUseCase,
@@ -41,30 +46,34 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
     AddCarUseCase? addCarUseCase,
     UpdateCarUseCase? updateCarUseCase,
     DeleteCarUseCase? deleteCarUseCase,
-  })  : _getBrandsUseCase = getBrandsUseCase ?? getIt<GetBrandsUseCase>(),
-        _getBrandModelsUseCase = getBrandModelsUseCase ?? getIt<GetBrandModelsUseCase>(),
-        _getEngineVolumesUseCase = getEngineVolumesUseCase ?? getIt<GetEngineVolumesUseCase>(),
-        _getFuelTypesUseCase = getFuelTypesUseCase ?? getIt<GetFuelTypesUseCase>(),
-        _getTransmissionTypesUseCase = getTransmissionTypesUseCase ?? getIt<GetTransmissionTypesUseCase>(),
-        _getCarTypesUseCase = getCarTypesUseCase ?? getIt<GetCarTypesUseCase>(),
-        _addCarUseCase = addCarUseCase ?? getIt<AddCarUseCase>(),
-        _updateCarUseCase = updateCarUseCase ?? getIt<UpdateCarUseCase>(),
-        _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
-        super(CarFormState.initial());
+    DeleteCarPhotoUseCase? deleteCarPhotoUseCase,
+  }) : _getBrandsUseCase = getBrandsUseCase ?? getIt<GetBrandsUseCase>(),
+       _getBrandModelsUseCase = getBrandModelsUseCase ?? getIt<GetBrandModelsUseCase>(),
+       _getEngineVolumesUseCase = getEngineVolumesUseCase ?? getIt<GetEngineVolumesUseCase>(),
+       _getFuelTypesUseCase = getFuelTypesUseCase ?? getIt<GetFuelTypesUseCase>(),
+       _getTransmissionTypesUseCase = getTransmissionTypesUseCase ?? getIt<GetTransmissionTypesUseCase>(),
+       _getCarTypesUseCase = getCarTypesUseCase ?? getIt<GetCarTypesUseCase>(),
+       _addCarUseCase = addCarUseCase ?? getIt<AddCarUseCase>(),
+       _updateCarUseCase = updateCarUseCase ?? getIt<UpdateCarUseCase>(),
+       _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
+       _deleteCarPhotoUseCase = deleteCarPhotoUseCase ?? getIt<DeleteCarPhotoUseCase>(),
+       super(CarFormState.initial());
 
   Future<void> init(UserCar? car) async {
     if (car != null) {
-      emit(state.copyWith(
-        selectedBrand: car.brand,
-        selectedModel: car.brandModel,
-        selectedEngineVolume: car.engineVolume,
-        selectedFuelType: car.fuelType,
-        selectedTransmissionType: car.transmissionType,
-        selectedCarType: car.carType,
-        year: car.year.toString(),
-        engineNumber: car.engineNumber ?? '',
-        vinNumber: car.vinNumber ?? '',
-      ));
+      emit(
+        state.copyWith(
+          selectedBrand: car.brand,
+          selectedModel: car.brandModel,
+          selectedEngineVolume: car.engineVolume,
+          selectedFuelType: car.fuelType,
+          selectedTransmissionType: car.transmissionType,
+          selectedCarType: car.carType,
+          year: car.year.toString(),
+          engineNumber: car.engineNumber ?? '',
+          vinNumber: car.vinNumber ?? '',
+        ),
+      );
     }
     await Future.wait([
       _loadBrands(),
@@ -86,6 +95,21 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
       (brands) => emit(state.copyWith(brandsStatus: StateStatus.success(), brands: brands)),
     );
   }
+
+  Future<void> retryBrands() => _loadBrands();
+
+  Future<void> retryModels() async {
+    final brand = state.selectedBrand;
+    if (brand != null) await _loadBrandModels(brand.id);
+  }
+
+  Future<void> retryEngineVolumes() => _loadEngineVolumes();
+
+  Future<void> retryFuelTypes() => _loadFuelTypes();
+
+  Future<void> retryTransmissionTypes() => _loadTransmissionTypes();
+
+  Future<void> retryCarTypes() => _loadCarTypes();
 
   Future<void> _loadBrandModels(int brandId) async {
     emit(state.copyWith(modelsStatus: StateStatus.loading(), models: []));
@@ -133,7 +157,9 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
   }
 
   void selectBrand(CarLibraryItem brand) {
-    emit(state.copyWith(selectedBrand: brand, clearSelectedModel: true, models: [], modelsStatus: StateStatus.initial()));
+    emit(
+      state.copyWith(selectedBrand: brand, clearSelectedModel: true, models: [], modelsStatus: StateStatus.initial()),
+    );
     _loadBrandModels(brand.id);
   }
 
@@ -153,13 +179,35 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
 
   void setVinNumber(String value) => emit(state.copyWith(vinNumber: value));
 
+  Future<void> pickPhoto() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    if (picked != null) {
+      emit(state.copyWith(selectedPhotoPath: picked.path, deleteExistingPhoto: false));
+    }
+  }
+
+  void removePhoto() => emit(state.copyWith(clearSelectedPhoto: true, deleteExistingPhoto: true));
+
   Future<void> save({UserCar? car}) async {
-    final selectedBrand = state.selectedBrand;
     final selectedModel = state.selectedModel;
     final selectedCarType = state.selectedCarType;
     final year = int.tryParse(state.year);
 
-    if (selectedModel == null || selectedCarType == null || year == null) return;
+    emit(
+      state.copyWith(
+        brandError: state.selectedBrand == null ? CarFormFieldError.required : null,
+        clearBrandError: state.selectedBrand != null,
+        modelError: selectedModel == null ? CarFormFieldError.required : null,
+        clearModelError: selectedModel != null,
+        carTypeError: selectedCarType == null ? CarFormFieldError.required : null,
+        clearCarTypeError: selectedCarType != null,
+        yearError: state.year.isEmpty || year == null ? CarFormFieldError.required : null,
+        clearYearError: state.year.isNotEmpty && year != null,
+      ),
+    );
+
+    if (state.selectedBrand == null || selectedModel == null || selectedCarType == null || year == null) return;
 
     emit(state.copyWith(submitStatus: StateStatus.loading()));
 
@@ -173,13 +221,17 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
         transmissionTypeId: state.selectedTransmissionType?.id,
         engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
         vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
+        photoPath: state.selectedPhotoPath,
       );
       final result = await _addCarUseCase(params);
-      result.fold(
-        (failure) => emit(state.copyWith(submitStatus: mapFailure(failure))),
-        (_) => emit(state.copyWith(submitStatus: StateStatus.success())),
-      );
+      result.fold((failure) {
+        emit(state.copyWith(submitStatus: mapFailure(failure)));
+        if (failure is ValidationFailure) _emitValidationErrors(failure);
+      }, (_) => emit(state.copyWith(submitStatus: StateStatus.success())));
     } else {
+      if (state.deleteExistingPhoto && car.photo != null) {
+        await _deleteCarPhotoUseCase(car.id);
+      }
       final params = UpdateCarParams(
         carId: car.id,
         brandModelId: selectedModel.id,
@@ -190,13 +242,26 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
         transmissionTypeId: state.selectedTransmissionType?.id,
         engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
         vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
+        photoPath: state.selectedPhotoPath,
       );
       final result = await _updateCarUseCase(params);
-      result.fold(
-        (failure) => emit(state.copyWith(submitStatus: mapFailure(failure))),
-        (_) => emit(state.copyWith(submitStatus: StateStatus.success())),
-      );
+      result.fold((failure) {
+        emit(state.copyWith(submitStatus: mapFailure(failure)));
+        if (failure is ValidationFailure) _emitValidationErrors(failure);
+      }, (_) => emit(state.copyWith(submitStatus: StateStatus.success())));
     }
+  }
+
+  void _emitValidationErrors(ValidationFailure failure) {
+    emit(
+      state.copyWith(
+        brandModelValidationState: mapValidationFailure('brand_model_id', failure),
+        carTypeValidationState: mapValidationFailure('car_type_id', failure),
+        yearValidationState: mapValidationFailure('year', failure),
+        engineNumberValidationState: mapValidationFailure('engine_number', failure),
+        vinNumberValidationState: mapValidationFailure('vin_number', failure),
+      ),
+    );
   }
 
   Future<void> deleteCar(int carId) async {

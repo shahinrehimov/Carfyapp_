@@ -7,6 +7,7 @@ import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/common/widgets/confirmation_dialog.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:carfy/gen/assets.gen.dart';
@@ -33,33 +34,39 @@ class MyCarsPage extends StatelessWidget implements AutoRouteWrapper {
       body: BlocListener<MyCarsCubit, MyCarsState>(
         listenWhen: (prev, curr) => prev.status != curr.status,
         listener: (context, state) => showStateStatusToast(context, state.status),
-        child: BlocBuilder<MyCarsCubit, MyCarsState>(
-          builder: (context, state) {
-            return state.status.maybeWhen(
-              loading: () => const _CarListShimmer(),
-              orElse: () => state.cars.isEmpty ? const _EmptyCarsView() : _CarList(cars: state.cars, cubit: cubit),
-            );
-          },
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(67, 8, 67, 16),
-          child: CustomButton(
-            onPressed: () async {
-              final result = await context.pushRoute(CarFormRoute());
-              if (result == true) cubit.refresh();
-            },
-            backgroundColor: Colors.transparent,
-            outlineColor: context.theme.colors.primary,
-            color: context.theme.colors.primary,
-            prefix: SvgPicture.asset(
-              Assets.icons.plus,
-              height: 23,
-              colorFilter: ColorFilter.mode(context.theme.colors.primary, BlendMode.srcIn),
+        child: Column(
+          children: [
+            Expanded(
+              child: BlocBuilder<MyCarsCubit, MyCarsState>(
+                builder: (context, state) {
+                  return state.status.maybeWhen(
+                    loading: () => const _CarListShimmer(),
+                    orElse: () => state.cars.isEmpty ? const _EmptyCarsView() : _CarList(cars: state.cars, cubit: cubit),
+                  );
+                },
+              ),
             ),
-            text: context.localization.profileMyCarsAddBtn,
-          ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(67, 8, 67, 16),
+                child: CustomButton(
+                  onPressed: () async {
+                    final result = await context.pushRoute(CarFormRoute());
+                    if (result == true) cubit.refresh();
+                  },
+                  backgroundColor: Colors.transparent,
+                  outlineColor: context.theme.colors.primary,
+                  color: context.theme.colors.primary,
+                  prefix: SvgPicture.asset(
+                    Assets.icons.plus,
+                    height: 23,
+                    colorFilter: ColorFilter.mode(context.theme.colors.primary, BlendMode.srcIn),
+                  ),
+                  text: context.localization.profileMyCarsAddBtn,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -83,12 +90,21 @@ class _CarList extends StatelessWidget {
         builder: (context, state) => CarItem(
           car: cars[index],
           isDeleting: state.deleteStatus[cars[index].id] is StateStatusLoading,
-          onDelete: () => cubit.deleteCar(cars[index].id),
+          onDelete: () => showConfirmationDialog(
+            context: context,
+            title: context.localization.carDeleteConfirmTitle,
+            description: context.localization.carDeleteConfirmDescription,
+            confirmText: context.localization.delete,
+            cancelText: context.localization.cancel,
+            onConfirm: () => cubit.deleteCar(cars[index].id),
+          ),
           onEdit: () async {
             final result = await context.pushRoute(CarFormRoute(car: cars[index]));
             if (result == true) cubit.refresh();
           },
-          onSearch: () {},
+          onSearch: () {
+            // TODO: navigate to search/home with this car pre-selected
+          },
         ),
       ),
     );

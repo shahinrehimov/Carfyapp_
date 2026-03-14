@@ -136,39 +136,82 @@ DELETE /{provider}/profile/cars/delete-photo/{id}
 
 ## Dropdown məlumatları — Car Libraries
 
-Formu doldurarkən dropdown siyahılar üçün aşağıdakı **public** endpoint-lər istifadə edilir (auth tələb etmir):
+Bütün endpointlər **public**-dir (auth tələb etmir). Base prefix: `/{provider}/car-libraries/`
 
-| Sahə | Endpoint |
-|------|----------|
-| Yanacaq növü | `GET /{provider}/car-libraries/fuel-types` |
-| Ötürücü qutusu | `GET /{provider}/car-libraries/transmission-types` |
-| Avtomobil tipi | `GET /{provider}/car-libraries/car-types` |
-| Mühərrik həcmi | `GET /{provider}/car-libraries/engine-volumes` |
+### Brands — marka siyahısı
+```
+GET /{provider}/car-libraries/brands
+GET /{provider}/car-libraries/brands?with_models=yes
+```
 
-**Response formatı (hamısı eynidir):**
+`with_models=yes` göndərildikdə hər brandin modelləri də daxildir:
 ```json
 {
   "data": [
-    { "id": 1, "title": "Premium benzin" }
+    {
+      "id": 1,
+      "uuid": "abc-123",
+      "slug": "audi",
+      "title": "Audi",
+      "image": "https://...",
+      "brand_models": [
+        { "id": 3, "title": "R8" },
+        { "id": 4, "title": "A4" }
+      ]
+    }
   ]
 }
 ```
 
-Engine volumes üçün əlavə sahələr var:
+`with_models` olmadan `brand_models` qaytarılmır.
+
+### Brand Models — model siyahısı (brand üzrə)
+```
+GET /{provider}/car-libraries/brands/{brandId}/models
+```
+
 ```json
 {
   "data": [
-    { "id": 1, "title": "2.0L (1,998 sm³)", "value_liters": "2.0", "value_cc": 1998 }
+    { "id": 3, "title": "R8" },
+    { "id": 4, "title": "A4" }
   ]
 }
 ```
 
-**Brand / Model siyahıları** (admin endpoint-lərindən):
+### Yanacaq növü
+```
+GET /{provider}/car-libraries/fuel-types
+```
+```json
+{ "data": [ { "id": 1, "title": "Premium benzin" } ] }
+```
 
-| Sahə | Endpoint |
-|------|----------|
-| Marka | `GET /control/brands/list` |
-| Model | `GET /control/brands/{brandId}/models/list` |
+### Ötürücü qutusu
+```
+GET /{provider}/car-libraries/transmission-types
+```
+```json
+{ "data": [ { "id": 2, "title": "Avtomatik" } ] }
+```
+
+### Avtomobil tipi
+```
+GET /{provider}/car-libraries/car-types
+```
+```json
+{ "data": [ { "id": 2, "title": "Kupe" } ] }
+```
+
+### Mühərrik həcmi
+```
+GET /{provider}/car-libraries/engine-volumes
+```
+```json
+{ "data": [ { "id": 1, "title": "2.0L (1,998 sm³)", "value_liters": "2.0", "value_cc": 1998 } ] }
+```
+
+> **Product filters** (`GET /{provider}/products/filters`) endpointindəki `brands` sahəsi də artıq modellər daxil olmaqla qaytarır.
 
 ---
 
