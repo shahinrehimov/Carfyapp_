@@ -71,4 +71,18 @@ class TranslationKeys {
   static const String profileMyCarsSearchBtn = 'profile_my_cars_search_btn';
   static const String profileMyCarsAddBtn = 'profile_my_cars_add_btn';
   static const String profileMyCarsEmpty = 'profile_my_cars_empty';
+
+  // Car form
+  static const String carFormAddTitle = 'car_form_add_title';
+  static const String carFormSave = 'car_form_save';
+  static const String carFormDelete = 'car_form_delete';
+  static const String carFormBrand = 'car_form_brand';
+  static const String carFormModel = 'car_form_model';
+  static const String carFormYear = 'car_form_year';
+  static const String carFormEngineVolume = 'car_form_engine_volume';
+  static const String carFormFuelType = 'car_form_fuel_type';
+  static const String carFormTransmissionType = 'car_form_transmission_type';
+  static const String carFormCarType = 'car_form_car_type';
+  static const String carFormEngineNumber = 'car_form_engine_number';
+  static const String carFormVinNumber = 'car_form_vin_number';
 }

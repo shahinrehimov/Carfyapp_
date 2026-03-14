@@ -77,7 +77,6 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
               CustomDropdownField<Gender>(
                 items: [Gender.male, Gender.female],
                 hint: context.localization.gender,
-                required: true,
                 onChanged: (value) {
                   if (value != null) {
                     cubit.selectGender(value);

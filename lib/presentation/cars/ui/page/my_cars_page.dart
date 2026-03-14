@@ -3,13 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:carfy/gen/assets.gen.dart';
-import 'package:carfy/presentation/cars/state/my_cars_cubit.dart';
+import 'package:carfy/presentation/cars/state/my_cars/my_cars_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +46,10 @@ class MyCarsPage extends StatelessWidget implements AutoRouteWrapper {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(67, 8, 67, 16),
           child: CustomButton(
-            onPressed: () {},
+            onPressed: () async {
+              final result = await context.pushRoute(CarFormRoute());
+              if (result == true) cubit.refresh();
+            },
             backgroundColor: Colors.transparent,
             outlineColor: context.theme.colors.primary,
             color: context.theme.colors.primary,
@@ -80,7 +84,10 @@ class _CarList extends StatelessWidget {
           car: cars[index],
           isDeleting: state.deleteStatus[cars[index].id] is StateStatusLoading,
           onDelete: () => cubit.deleteCar(cars[index].id),
-          onEdit: () {},
+          onEdit: () async {
+            final result = await context.pushRoute(CarFormRoute(car: cars[index]));
+            if (result == true) cubit.refresh();
+          },
           onSearch: () {},
         ),
       ),

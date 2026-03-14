@@ -73,6 +73,18 @@ class TranslationDefaults {
       TranslationKeys.profileMyCarsSearchBtn: 'Avtomobilimə görə axtar',
       TranslationKeys.profileMyCarsAddBtn: 'Maşın əlavə et',
       TranslationKeys.profileMyCarsEmpty: 'Hələ ki maşın əlavə edilməyib',
+      TranslationKeys.carFormAddTitle: 'Maşın əlavə et',
+      TranslationKeys.carFormSave: 'Yadda saxla',
+      TranslationKeys.carFormDelete: 'Sil',
+      TranslationKeys.carFormBrand: 'Marka',
+      TranslationKeys.carFormModel: 'Model',
+      TranslationKeys.carFormYear: 'İl',
+      TranslationKeys.carFormEngineVolume: 'Mühərrik həcmi',
+      TranslationKeys.carFormFuelType: 'Yanacaq növü',
+      TranslationKeys.carFormTransmissionType: 'Sürət qutusu',
+      TranslationKeys.carFormCarType: 'Avtomobil tipi',
+      TranslationKeys.carFormEngineNumber: 'Mühərrik nömrəsi',
+      TranslationKeys.carFormVinNumber: 'Şassi (VIN) nömrəsi',
     },
   };
 }

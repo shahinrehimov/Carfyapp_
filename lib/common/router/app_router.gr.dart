@@ -27,6 +27,54 @@ class BasketRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CarFormPage]
+class CarFormRoute extends PageRouteInfo<CarFormRouteArgs> {
+  CarFormRoute({Key? key, UserCar? car, List<PageRouteInfo>? children})
+    : super(
+        CarFormRoute.name,
+        args: CarFormRouteArgs(key: key, car: car),
+        initialChildren: children,
+      );
+
+  static const String name = 'CarFormRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CarFormRouteArgs>(
+        orElse: () => const CarFormRouteArgs(),
+      );
+      return WrappedRoute(
+        child: CarFormPage(key: args.key, car: args.car),
+      );
+    },
+  );
+}
+
+class CarFormRouteArgs {
+  const CarFormRouteArgs({this.key, this.car});
+
+  final Key? key;
+
+  final UserCar? car;
+
+  @override
+  String toString() {
+    return 'CarFormRouteArgs{key: $key, car: $car}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CarFormRouteArgs) return false;
+    return key == other.key && car == other.car;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ car.hashCode;
+}
+
+/// generated route for
 /// [CategoriesPage]
 class CategoriesRoute extends PageRouteInfo<void> {
   const CategoriesRoute({List<PageRouteInfo>? children})

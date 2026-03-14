@@ -166,4 +166,29 @@ class AppLocalizations {
   String get profileMyCarsAddBtn => _tr(TranslationKeys.profileMyCarsAddBtn);
 
   String get profileMyCarsEmpty => _tr(TranslationKeys.profileMyCarsEmpty);
+
+  // Car form
+  String get carFormAddTitle => _tr(TranslationKeys.carFormAddTitle);
+
+  String get carFormSave => _tr(TranslationKeys.carFormSave);
+
+  String get carFormDelete => _tr(TranslationKeys.carFormDelete);
+
+  String get carFormBrand => _tr(TranslationKeys.carFormBrand);
+
+  String get carFormModel => _tr(TranslationKeys.carFormModel);
+
+  String get carFormYear => _tr(TranslationKeys.carFormYear);
+
+  String get carFormEngineVolume => _tr(TranslationKeys.carFormEngineVolume);
+
+  String get carFormFuelType => _tr(TranslationKeys.carFormFuelType);
+
+  String get carFormTransmissionType => _tr(TranslationKeys.carFormTransmissionType);
+
+  String get carFormCarType => _tr(TranslationKeys.carFormCarType);
+
+  String get carFormEngineNumber => _tr(TranslationKeys.carFormEngineNumber);
+
+  String get carFormVinNumber => _tr(TranslationKeys.carFormVinNumber);
 }
