@@ -70,6 +70,9 @@ class TranslationDefaults {
       TranslationKeys.profileLanguage: 'Dil',
       TranslationKeys.profileCurrentLanguage: 'Azərbaycan',
       TranslationKeys.profileSupport: 'Dəstək',
+      TranslationKeys.profileMyCarsSearchBtn: 'Avtomobilimə görə axtar',
+      TranslationKeys.profileMyCarsAddBtn: 'Maşın əlavə et',
+      TranslationKeys.profileMyCarsEmpty: 'Hələ ki maşın əlavə edilməyib',
     },
   };
 }

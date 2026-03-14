@@ -12,7 +12,7 @@ class _ProfileBody extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileMyCars, icon: Assets.icons.carHatchback, onTap: () {}),
+                child: _ProfileMenuCard(label: context.localization.profileMyCars, icon: Assets.icons.carHatchback, onTap: () => context.pushRoute(const MyCarsRoute())),
               ),
               const SizedBox(width: 8),
               Expanded(

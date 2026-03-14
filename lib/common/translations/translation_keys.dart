@@ -68,4 +68,7 @@ class TranslationKeys {
   static const String profileLanguage = 'profile_language';
   static const String profileCurrentLanguage = 'profile_current_language';
   static const String profileSupport = 'profile_support';
+  static const String profileMyCarsSearchBtn = 'profile_my_cars_search_btn';
+  static const String profileMyCarsAddBtn = 'profile_my_cars_add_btn';
+  static const String profileMyCarsEmpty = 'profile_my_cars_empty';
 }

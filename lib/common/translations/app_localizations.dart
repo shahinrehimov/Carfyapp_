@@ -160,4 +160,10 @@ class AppLocalizations {
   String get profileCurrentLanguage => _tr(TranslationKeys.profileCurrentLanguage);
 
   String get profileSupport => _tr(TranslationKeys.profileSupport);
+
+  String get profileMyCarsSearchBtn => _tr(TranslationKeys.profileMyCarsSearchBtn);
+
+  String get profileMyCarsAddBtn => _tr(TranslationKeys.profileMyCarsAddBtn);
+
+  String get profileMyCarsEmpty => _tr(TranslationKeys.profileMyCarsEmpty);
 }

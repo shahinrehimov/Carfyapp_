@@ -3,14 +3,14 @@ import 'package:carfy/domain/entities/categories/category.dart';
 import 'package:carfy/presentation/categories/state/category_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class CategoryDialogPage extends StatelessWidget {
@@ -30,19 +30,7 @@ class CategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.white,
-      appBar: AppBar(
-        title: Text(
-          context.localization.categories,
-          style: TextStyle(fontWeight: FontWeight.w500, color: context.theme.colors.black, fontSize: 14),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: context.theme.colors.white,
-        leading: InkWell(
-          onTap: () => context.maybePop(),
-          child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 22)),
-        ),
-      ),
+      appBar: CustomAppBarWhite(title: context.localization.categories),
       body: BlocBuilder<CategoryCubit, CategoryState>(
         builder: (context, state) {
           return state.categoriesStatus.maybeWhen(
@@ -80,19 +68,7 @@ class SubCategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.white,
-      appBar: AppBar(
-        title: Text(
-          category.title,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.w500, color: context.theme.colors.black, fontSize: 14),
-        ),
-        elevation: 0,
-        backgroundColor: context.theme.colors.white,
-        leading: InkWell(
-          onTap: () => context.router.maybePop(),
-          child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 22)),
-        ),
-      ),
+      appBar: CustomAppBarWhite(title: category.title),
       body: ListView.builder(
         itemCount: category.subs.length,
         padding: const EdgeInsets.symmetric(horizontal: 16),

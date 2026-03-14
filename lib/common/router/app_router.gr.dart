@@ -313,6 +313,22 @@ class MessagesRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MyCarsPage]
+class MyCarsRoute extends PageRouteInfo<void> {
+  const MyCarsRoute({List<PageRouteInfo>? children})
+    : super(MyCarsRoute.name, initialChildren: children);
+
+  static const String name = 'MyCarsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const MyCarsPage());
+    },
+  );
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})

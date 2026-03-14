@@ -17,6 +17,7 @@ import 'package:carfy/presentation/wishlist/ui/page/wishlist_page.dart';
 import 'package:carfy/presentation/home/ui/page/home_page.dart';
 import 'package:carfy/presentation/main/ui/page/main_page.dart';
 import 'package:carfy/presentation/messages/ui/page/messages_page.dart';
+import 'package:carfy/presentation/cars/ui/page/my_cars_page.dart';
 import 'package:carfy/presentation/profile/ui/page/profile_page.dart';
 import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
 
@@ -49,6 +50,8 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: CompleteEmailRegisterRoute.page),
     AutoRoute(page: VerifyEmailRoute.page),
     AutoRoute(page: RegisteredSuccessfullyRoute.page),
+
+    AutoRoute(page: MyCarsRoute.page),
 
     AutoRoute(
       page: CategoryDialogRoute.page,
