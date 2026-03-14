@@ -78,6 +78,26 @@ class InputFormatter {
     });
   }
 
+  static TextInputFormatter getLocalPhoneFormatter() {
+    return TextInputFormatter.withFunction((oldValue, newValue) {
+      final digits = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+      final limited = digits.length > 9 ? digits.substring(0, 9) : digits;
+
+      // Format: XX XXX XX XX (spaces at index 2, 5, 7)
+      final buffer = StringBuffer();
+      for (int i = 0; i < limited.length; i++) {
+        if (i == 2 || i == 5 || i == 7) buffer.write(' ');
+        buffer.write(limited[i]);
+      }
+
+      final formatted = buffer.toString();
+      return TextEditingValue(
+        text: formatted,
+        selection: TextSelection.collapsed(offset: formatted.length),
+      );
+    });
+  }
+
   static TextInputFormatter getPasswordFormatter() {
     return FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z\d!@#$%^&*()-_+=]'));
   }

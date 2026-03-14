@@ -128,6 +128,7 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       autofocus: false,
       enableSuggestions: false,
+      autocorrect: false,
       readOnly: readOnly,
       focusNode: focusNode,
       style: TextStyle(fontSize: fontSize ?? 14, color: color ?? context.theme.colors.textDark, fontWeight: fontWeight),

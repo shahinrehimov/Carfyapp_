@@ -77,9 +77,17 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
       },
       (success) {
         emit(state.copyWith(registerState: StateStatus.success()));
-        _appRouter.replaceAll([VerifyEmailRoute(email: email, userUuid: success.user.uuid)]);
+        _appRouter.push(VerifyEmailRoute(email: email, userUuid: success.user.uuid));
       },
     );
+  }
+
+  void toggleObscurePassword() {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
+  }
+
+  void toggleObscureRepeatPassword() {
+    emit(state.copyWith(obscureRepeatPassword: !state.obscureRepeatPassword));
   }
 
   void clearValidations() {

@@ -20,6 +20,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-narrow-left.svg
   String get arrowNarrowLeft => 'assets/icons/arrow-narrow-left.svg';
 
+  /// File path: assets/icons/calendar.svg
+  String get calendar => 'assets/icons/calendar.svg';
+
+  /// File path: assets/icons/call.svg
+  String get call => 'assets/icons/call.svg';
+
   /// File path: assets/icons/chevron-right.svg
   String get chevronRight => 'assets/icons/chevron-right.svg';
 
@@ -31,6 +37,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/filters.svg
   String get filters => 'assets/icons/filters.svg';
+
+  /// File path: assets/icons/gender.svg
+  String get gender => 'assets/icons/gender.svg';
 
   /// File path: assets/icons/google-icon-logo.svg
   String get googleIconLogo => 'assets/icons/google-icon-logo.svg';
@@ -65,14 +74,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/main-profile.svg
   String get mainProfile => 'assets/icons/main-profile.svg';
 
+  /// File path: assets/icons/message.svg
+  String get message => 'assets/icons/message.svg';
+
   /// File path: assets/icons/minus.svg
   String get minus => 'assets/icons/minus.svg';
 
   /// File path: assets/icons/notification.svg
   String get notification => 'assets/icons/notification.svg';
 
+  /// File path: assets/icons/password.svg
+  String get password => 'assets/icons/password.svg';
+
   /// File path: assets/icons/plus.svg
   String get plus => 'assets/icons/plus.svg';
+
+  /// File path: assets/icons/profile.svg
+  String get profile => 'assets/icons/profile.svg';
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
@@ -81,10 +99,13 @@ class $AssetsIconsGen {
   List<String> get values => [
     appleIconLogo,
     arrowNarrowLeft,
+    calendar,
+    call,
     chevronRight,
     closeSquare,
     eyeOff,
     filters,
+    gender,
     googleIconLogo,
     heartFilled,
     heart,
@@ -96,9 +117,12 @@ class $AssetsIconsGen {
     mainHome,
     mainMessage,
     mainProfile,
+    message,
     minus,
     notification,
+    password,
     plus,
+    profile,
     search,
   ];
 }

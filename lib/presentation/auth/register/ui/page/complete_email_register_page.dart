@@ -57,6 +57,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.name,
                     errorText: state.nameValidationState.message,
                     inputFormatters: [InputFormatter.getPersonNameFormatter()],
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.profile)),
                   );
                 },
               ),
@@ -69,6 +70,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.surname,
                     errorText: state.surnameValidationState.message,
                     inputFormatters: [InputFormatter.getPersonNameFormatter()],
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.profile)),
                   );
                 },
               ),
@@ -82,6 +84,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     errorText: state.phoneValidationState.message,
                     inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
                     keyboardType: TextInputType.number,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.call)),
                   );
                 },
               ),
@@ -99,6 +102,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                   Gender.male => context.localization.male,
                   Gender.female => context.localization.female,
                 },
+                prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.gender)),
               ),
               const SizedBox(height: 16),
               CustomDatePickerField(
@@ -108,6 +112,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     cubit.selectBirthDate(date);
                   }
                 },
+                prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.calendar)),
               ),
               const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
@@ -118,29 +123,47 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.email,
                     errorText: state.emailValidationState.message,
                     inputFormatters: [InputFormatter.getEmailFormatter()],
-                  );
-                },
-              ),
-              const SizedBox(height: 16),
-              BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
-                buildWhen: (oldState, newState) => oldState.passwordValidationState != newState.passwordValidationState,
-                builder: (context, state) {
-                  return CustomTextField(
-                    controller: cubit.passwordController,
-                    hint: context.localization.password,
-                    errorText: state.passwordValidationState.message,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.message)),
                   );
                 },
               ),
               const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) =>
+                    oldState.obscurePassword != newState.obscurePassword ||
+                    oldState.passwordValidationState != newState.passwordValidationState,
+                builder: (context, state) {
+                  return CustomTextField(
+                    controller: cubit.passwordController,
+                    hint: context.localization.password,
+                    errorText: state.passwordValidationState.message,
+                    obscureText: state.obscurePassword,
+                    maxLines: 1,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.password)),
+                    suffix: GestureDetector(
+                      onTap: () => cubit.toggleObscurePassword(),
+                      child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.eyeOff, width: 24, height: 24)),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
+                buildWhen: (oldState, newState) =>
+                    oldState.obscureRepeatPassword != newState.obscureRepeatPassword ||
                     oldState.repeatPasswordValidationState != newState.repeatPasswordValidationState,
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.repeatPasswordController,
                     hint: context.localization.enterRepeatPassword,
                     errorText: state.repeatPasswordValidationState.message,
+                    obscureText: state.obscureRepeatPassword,
+                    maxLines: 1,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.password)),
+                    suffix: GestureDetector(
+                      onTap: () => cubit.toggleObscureRepeatPassword(),
+                      child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.eyeOff, width: 24, height: 24)),
+                    ),
                   );
                 },
               ),

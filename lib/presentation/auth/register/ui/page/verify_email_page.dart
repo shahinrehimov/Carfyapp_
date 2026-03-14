@@ -33,10 +33,6 @@ class VerifyEmailPage extends StatelessWidget implements AutoRouteWrapper {
           'OTP',
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
-        leading: InkWell(
-          onTap: () => context.maybePop(),
-          child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 24, height: 24)),
-        ),
       ),
       backgroundColor: context.theme.colors.white,
       body: BlocListener<EmailVerifyOtpCubit, EmailVerifyOtpState>(

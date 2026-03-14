@@ -25,12 +25,9 @@ class _LoginWithNumber extends StatelessWidget {
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.phoneValidationState != newState.phoneValidationState,
                 builder: (context, state) {
-                  return CustomTextField(
+                  return CustomPhoneField(
                     controller: cubit.phoneController,
-                    hint: context.localization.mobileNumber,
                     errorText: state.phoneValidationState.message,
-                    inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
-                    keyboardType: TextInputType.number,
                   );
                 },
               ),
