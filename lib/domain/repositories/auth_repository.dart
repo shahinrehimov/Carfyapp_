@@ -1,5 +1,6 @@
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
+import 'package:carfy/domain/entities/auth/sessions_response.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:carfy/common/error/failure.dart';
@@ -62,4 +63,8 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthUser>> getProfile();
 
   Future<Either<Failure, AuthUser>> updateProfile({required UpdateProfileParams params});
+
+  Future<Either<Failure, SessionsResponse>> getSessions();
+
+  Future<Either<Failure, String>> logoutSession(int tokenId);
 }

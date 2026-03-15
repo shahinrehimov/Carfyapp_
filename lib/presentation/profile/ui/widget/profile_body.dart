@@ -35,7 +35,7 @@ class _ProfileBody extends StatelessWidget {
           const SizedBox(height: 16),
           _ProfileSectionCard(
             title: context.localization.profileSettings,
-            items: [_ProfileRowItem(label: context.localization.profileActiveSessions, icon: Assets.icons.mobile, onTap: () {})],
+            items: [_ProfileRowItem(label: context.localization.profileActiveSessions, icon: Assets.icons.mobile, onTap: () => context.pushRoute(const SessionsRoute()))],
           ),
           const SizedBox(height: 8),
           _ProfileSectionCard(

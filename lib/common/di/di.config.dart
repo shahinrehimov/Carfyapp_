@@ -80,11 +80,15 @@ import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.d
 import 'package:carfy/domain/use_cases/auth/get_google_auth_redirect_use_case.dart'
     as _i559;
 import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart' as _i2;
+import 'package:carfy/domain/use_cases/auth/get_sessions_use_case.dart'
+    as _i236;
 import 'package:carfy/domain/use_cases/auth/login_with_email_use_case.dart'
     as _i601;
 import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart'
     as _i963;
 import 'package:carfy/domain/use_cases/auth/logout_all_use_case.dart' as _i311;
+import 'package:carfy/domain/use_cases/auth/logout_session_use_case.dart'
+    as _i521;
 import 'package:carfy/domain/use_cases/auth/logout_use_case.dart' as _i992;
 import 'package:carfy/domain/use_cases/auth/register_with_email_use_case.dart'
     as _i401;
@@ -348,6 +352,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i2.GetProfileUseCase>(
       () => _i2.GetProfileUseCase(gh<_i655.AuthRepository>()),
     );
+    gh.factory<_i236.GetSessionsUseCase>(
+      () => _i236.GetSessionsUseCase(gh<_i655.AuthRepository>()),
+    );
     gh.factory<_i601.LoginWithEmailUseCase>(
       () => _i601.LoginWithEmailUseCase(gh<_i655.AuthRepository>()),
     );
@@ -356,6 +363,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i311.LogoutAllUseCase>(
       () => _i311.LogoutAllUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i521.LogoutSessionUseCase>(
+      () => _i521.LogoutSessionUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i992.LogoutUseCase>(
       () => _i992.LogoutUseCase(gh<_i655.AuthRepository>()),

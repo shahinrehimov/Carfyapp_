@@ -271,4 +271,15 @@ class AppLocalizations {
   String get logoutConfirmDescription => _tr(TranslationKeys.logoutConfirmDescription);
   String get deleteAccountConfirmTitle => _tr(TranslationKeys.deleteAccountConfirmTitle);
   String get deleteAccountConfirmDescription => _tr(TranslationKeys.deleteAccountConfirmDescription);
+
+  // Sessions
+  String get sessionsTitle => _tr(TranslationKeys.sessionsTitle);
+  String get sessionsCurrentSession => _tr(TranslationKeys.sessionsCurrentSession);
+  String get sessionsOtherSessions => _tr(TranslationKeys.sessionsOtherSessions);
+  String get sessionsTerminate => _tr(TranslationKeys.sessionsTerminate);
+  String get sessionsTerminateConfirmTitle => _tr(TranslationKeys.sessionsTerminateConfirmTitle);
+  String get sessionsTerminateConfirmDescription => _tr(TranslationKeys.sessionsTerminateConfirmDescription);
+  String get sessionsTerminatedSuccess => _tr(TranslationKeys.sessionsTerminatedSuccess);
+  String get sessionsEmpty => _tr(TranslationKeys.sessionsEmpty);
+  String get sessionsThisDevice => _tr(TranslationKeys.sessionsThisDevice);
 }

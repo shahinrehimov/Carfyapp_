@@ -1,5 +1,9 @@
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
+import 'package:carfy/data/models/auth/session_model.dart';
+import 'package:carfy/data/models/auth/sessions_response_model.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
+import 'package:carfy/domain/entities/auth/session.dart';
+import 'package:carfy/domain/entities/auth/sessions_response.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:carfy/domain/entities/auth/auth_user.dart';
@@ -71,4 +75,18 @@ class AuthMapper {
 
   GuestIdentifierResponse mapGuestIdentifier(GuestIdentifierResponseModel model) =>
       GuestIdentifierResponse(identifier: model.identifier, message: model.message);
+
+  Session mapSession(SessionModel model) => Session(
+    id: model.id,
+    deviceName: model.deviceName,
+    ipAddress: model.ipAddress,
+    location: model.location,
+    createdAt: model.createdAt,
+    isCurrent: model.isCurrent,
+  );
+
+  SessionsResponse mapSessions(SessionsResponseModel model) => SessionsResponse(
+    currentSession: mapSession(model.currentSession),
+    otherSessions: model.otherSessions.map(mapSession).toList(),
+  );
 }

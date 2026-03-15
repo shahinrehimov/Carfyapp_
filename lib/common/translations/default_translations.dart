@@ -135,6 +135,17 @@ class TranslationDefaults {
       TranslationKeys.logoutConfirmDescription: 'Hesabdan çıxmaq istəyirsiniz?',
       TranslationKeys.deleteAccountConfirmTitle: 'Hesabı sil',
       TranslationKeys.deleteAccountConfirmDescription: 'Hesabınızı silmək istəyirsiniz? Bu əməliyyat geri qaytarıla bilməz.',
+
+      // Sessions
+      TranslationKeys.sessionsTitle: 'Aktiv seanslar',
+      TranslationKeys.sessionsCurrentSession: 'Hal hazırda daxil olduğunuz cihaz',
+      TranslationKeys.sessionsOtherSessions: 'Digər cihazlar',
+      TranslationKeys.sessionsTerminate: 'Çıxış et',
+      TranslationKeys.sessionsTerminateConfirmTitle: 'Çıxış',
+      TranslationKeys.sessionsTerminateConfirmDescription: 'Bu cihazdan çıxmaq istəyirsiniz?',
+      TranslationKeys.sessionsTerminatedSuccess: 'Seans uğurla sonlandırıldı',
+      TranslationKeys.sessionsEmpty: 'Digər aktiv cihaz yoxdur',
+      TranslationKeys.sessionsThisDevice: 'Bu cihaz',
     },
   };
 }

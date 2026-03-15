@@ -45,6 +45,8 @@ class EndpointPaths {
   // Profile Endpoints
   static const profileMe = '/app/profile/me';
   static const profileUpdate = '/app/profile/update';
+  static const sessionsLoad = '/app/profile/sessions/load';
+  static String sessionLogout(int tokenId) => '/app/profile/sessions/$tokenId/logout';
 
   // Basket Endpoints
   static const basketLoad = '/app/basket/load';

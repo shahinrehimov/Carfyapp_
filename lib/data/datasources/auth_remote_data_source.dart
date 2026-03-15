@@ -27,6 +27,7 @@ import 'package:carfy/data/models/auth/simple_message_model.dart';
 import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
 import 'package:carfy/data/models/auth/login_response_model.dart';
 import 'package:carfy/data/models/auth/logout_response_model.dart';
+import 'package:carfy/data/models/auth/sessions_response_model.dart';
 
 import 'package:carfy/common/constants/endpoint_paths.dart';
 
@@ -66,6 +67,10 @@ abstract class AuthRemoteDataSource {
   Future<AuthUserModel> getProfile();
 
   Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto);
+
+  Future<SessionsResponseModel> getSessions();
+
+  Future<String> logoutSession(int tokenId);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -210,6 +215,22 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.post(EndpointPaths.profileUpdate, data: dto.toJson()),
       map: (json) => AuthUserModel.fromJson(json['user']),
+    );
+  }
+
+  @override
+  Future<SessionsResponseModel> getSessions() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.sessionsLoad),
+      map: (json) => SessionsResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<String> logoutSession(int tokenId) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.sessionLogout(tokenId)),
+      map: (json) => json['message'] as String? ?? '',
     );
   }
 }

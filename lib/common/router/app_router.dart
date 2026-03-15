@@ -25,6 +25,7 @@ import 'package:carfy/presentation/map_picker/map_picker_page.dart';
 import 'package:carfy/presentation/cars/ui/page/my_cars_page.dart';
 import 'package:carfy/presentation/profile/ui/page/profile_page.dart';
 import 'package:carfy/presentation/profile/ui/page/profile_update_page.dart';
+import 'package:carfy/presentation/sessions/ui/page/sessions_page.dart';
 import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
 
 part 'app_router.gr.dart';
@@ -62,6 +63,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: MyAddressesRoute.page),
     AutoRoute(page: MapPickerRoute.page),
     AutoRoute(page: ProfileUpdateRoute.page),
+    AutoRoute(page: SessionsRoute.page),
 
     AutoRoute(
       page: CategoryDialogRoute.page,

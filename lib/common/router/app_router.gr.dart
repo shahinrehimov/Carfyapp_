@@ -609,6 +609,22 @@ class RegisteredSuccessfullyRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SessionsPage]
+class SessionsRoute extends PageRouteInfo<void> {
+  const SessionsRoute({List<PageRouteInfo>? children})
+    : super(SessionsRoute.name, initialChildren: children);
+
+  static const String name = 'SessionsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const SessionsPage());
+    },
+  );
+}
+
+/// generated route for
 /// [SplashPage]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})

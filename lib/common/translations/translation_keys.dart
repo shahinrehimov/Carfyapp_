@@ -140,4 +140,15 @@ class TranslationKeys {
   static const String logoutConfirmDescription = 'logout_confirm_description';
   static const String deleteAccountConfirmTitle = 'delete_account_confirm_title';
   static const String deleteAccountConfirmDescription = 'delete_account_confirm_description';
+
+  // Sessions
+  static const String sessionsTitle = 'sessions_title';
+  static const String sessionsCurrentSession = 'sessions_current_session';
+  static const String sessionsOtherSessions = 'sessions_other_sessions';
+  static const String sessionsTerminate = 'sessions_terminate';
+  static const String sessionsTerminateConfirmTitle = 'sessions_terminate_confirm_title';
+  static const String sessionsTerminateConfirmDescription = 'sessions_terminate_confirm_description';
+  static const String sessionsTerminatedSuccess = 'sessions_terminated_success';
+  static const String sessionsEmpty = 'sessions_empty';
+  static const String sessionsThisDevice = 'sessions_this_device';
 }
