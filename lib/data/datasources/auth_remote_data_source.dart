@@ -17,6 +17,7 @@ import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
 import 'package:carfy/data/models/auth/auth_user_model.dart';
 import 'package:carfy/data/models/auth/google_auth_redirect_model.dart';
@@ -63,6 +64,8 @@ abstract class AuthRemoteDataSource {
   Future<GuestIdentifierResponseModel> generateGuestIdentifier();
 
   Future<AuthUserModel> getProfile();
+
+  Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -199,6 +202,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.get(EndpointPaths.profileMe),
       map: (json) => AuthUserModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.profileUpdate, data: dto.toJson()),
+      map: (json) => AuthUserModel.fromJson(json['user']),
     );
   }
 }

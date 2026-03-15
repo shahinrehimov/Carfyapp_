@@ -20,6 +20,7 @@ class CustomDropdownField<T> extends StatefulWidget {
   final bool enabled;
   final double borderRadius;
   final String? sheetTitle;
+  final String? title;
 
   const CustomDropdownField({
     super.key,
@@ -39,6 +40,7 @@ class CustomDropdownField<T> extends StatefulWidget {
     this.enabled = true,
     this.borderRadius = 40,
     this.sheetTitle,
+    this.title,
   });
 
   @override
@@ -120,15 +122,20 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.title != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(widget.title!, style: TextStyle(color: context.theme.colors.textLight, fontSize: 14)),
+          ),
+          const SizedBox(height: 8),
+        ],
         GestureDetector(
           onTap: widget.enabled ? _openBottomSheet : null,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.borderRadius),
-              border: Border.all(
-                color: hasError ? context.theme.colors.error : context.theme.colors.border,
-              ),
+              border: Border.all(color: hasError ? context.theme.colors.error : context.theme.colors.border),
             ),
             child: Row(
               children: [
@@ -151,10 +158,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
         if (hasError)
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 16),
-            child: Text(
-              widget.errorText!,
-              style: TextStyle(color: context.theme.colors.error, fontSize: 12),
-            ),
+            child: Text(widget.errorText!, style: TextStyle(color: context.theme.colors.error, fontSize: 12)),
           ),
       ],
     );
@@ -214,9 +218,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
       setState(() {
         _filtered = q.isEmpty
             ? widget.itemsNotifier.value
-            : widget.itemsNotifier.value
-                .where((item) => widget.labelOf(item).toLowerCase().contains(q))
-                .toList();
+            : widget.itemsNotifier.value.where((item) => widget.labelOf(item).toLowerCase().contains(q)).toList();
       });
     });
   }
@@ -226,9 +228,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
     setState(() {
       _filtered = q.isEmpty
           ? widget.itemsNotifier.value
-          : widget.itemsNotifier.value
-              .where((item) => widget.labelOf(item).toLowerCase().contains(q))
-              .toList();
+          : widget.itemsNotifier.value.where((item) => widget.labelOf(item).toLowerCase().contains(q)).toList();
     });
   }
 
@@ -265,11 +265,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Text(
                     widget.title!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: context.theme.colors.textDark,
-                    ),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.textDark),
                   ),
                 ),
               // Search field
@@ -286,10 +282,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                       filled: true,
                       fillColor: context.theme.colors.bg,
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40),
-                        borderSide: BorderSide.none,
-                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(40), borderSide: BorderSide.none),
                     ),
                   ),
                 ),
@@ -319,9 +312,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                                   decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [Color(0xFF3696E7), Color(0xFF00569C)],
-                                    ),
+                                    gradient: const LinearGradient(colors: [Color(0xFF3696E7), Color(0xFF00569C)]),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   child: const Text(
@@ -352,7 +343,8 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                         final isSelected = widget.selectedValue == item;
                         return InkWell(
                           onTap: () => Navigator.pop(context, item),
-                          child: widget.itemWidgetBuilder?.call(item) ??
+                          child:
+                              widget.itemWidgetBuilder?.call(item) ??
                               Container(
                                 color: isSelected
                                     ? context.theme.colors.secondary.withValues(alpha: 0.08)
@@ -372,8 +364,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                                         ),
                                       ),
                                     ),
-                                    if (isSelected)
-                                      Icon(Icons.check, size: 18, color: context.theme.colors.secondary),
+                                    if (isSelected) Icon(Icons.check, size: 18, color: context.theme.colors.secondary),
                                   ],
                                 ),
                               ),
@@ -402,10 +393,7 @@ class _ShimmerList extends StatelessWidget {
         child: ShimmerWrapper(
           child: Container(
             height: 20,
-            decoration: BoxDecoration(
-              color: context.theme.colors.border,
-              borderRadius: BorderRadius.circular(8),
-            ),
+            decoration: BoxDecoration(color: context.theme.colors.border, borderRadius: BorderRadius.circular(8)),
           ),
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:carfy/common/theme/theme.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.onPressed,
+    this.onPressed,
     this.prefix,
     this.suffix,
     required this.text,
@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
     this.child,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? height;
   final double? width;
   final double? fontSize;
@@ -43,6 +43,8 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.theme.colors; // assuming you have primary & secondary there
 
+    final isDisabled = onPressed == null && loading != true;
+
     return SizedBox(
       height: height ?? 48,
       width: width,
@@ -62,13 +64,14 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Ink(
           decoration: BoxDecoration(
-            gradient: backgroundColor == null
-                ? LinearGradient(
-                    colors: [colors.secondary, colors.primary],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  )
-                : null,
+            color: isDisabled ? const Color(0xFFD0D0D0) : backgroundColor,
+            gradient: isDisabled || backgroundColor != null
+                ? null
+                : LinearGradient(
+              colors: [colors.secondary, colors.primary],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
             borderRadius: BorderRadius.circular(borderRadius ?? 40),
           ),
           child: Container(
@@ -76,22 +79,22 @@ class CustomButton extends StatelessWidget {
             child: loading == true
                 ? CircularProgressIndicator.adaptive(valueColor: AlwaysStoppedAnimation<Color>(colors.white))
                 : child ??
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (prefix != null) ...[prefix!, SizedBox(width: prefixPadding ?? 10)],
-                          Text(
-                            text!,
-                            style: TextStyle(
-                              fontWeight: fontWeight ?? FontWeight.w400,
-                              fontSize: fontSize ?? 16,
-                              color: color ?? colors.white,
-                            ),
-                          ),
-                          if (suffix != null) ...[SizedBox(width: suffixPadding ?? 10), suffix!],
-                        ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (prefix != null) ...[prefix!, SizedBox(width: prefixPadding ?? 10)],
+                    Text(
+                      text!,
+                      style: TextStyle(
+                        fontWeight: fontWeight ?? FontWeight.w400,
+                        fontSize: fontSize ?? 16,
+                        color: isDisabled ? const Color(0xFF9E9E9E) : (color ?? colors.white),
                       ),
+                    ),
+                    if (suffix != null) ...[SizedBox(width: suffixPadding ?? 10), suffix!],
+                  ],
+                ),
           ),
         ),
       ),

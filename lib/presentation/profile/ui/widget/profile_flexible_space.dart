@@ -23,7 +23,20 @@ class _ProfileName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final user = context.read<ProfileCubit>().state.user;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: user == null
+          ? null
+          : () async {
+              final updated = await context.pushRoute<dynamic>(
+                ProfileUpdateRoute(user: user),
+              );
+              if (updated != null && context.mounted) {
+                context.read<ProfileCubit>().init();
+              }
+            },
+      child: Container(
       alignment: Alignment.bottomLeft,
       padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
       child: Row(
@@ -53,6 +66,7 @@ class _ProfileName extends StatelessWidget {
             colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
           ),
         ],
+      ),
       ),
     );
   }

@@ -29,6 +29,7 @@ import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
 import 'package:carfy/domain/params/auth/third_party_login_params.dart';
 import 'package:carfy/domain/params/auth/forgot_password_params.dart';
+import 'package:carfy/domain/params/auth/update_profile_params.dart';
 
 import 'package:carfy/domain/repositories/auth_repository.dart';
 
@@ -46,6 +47,7 @@ import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
@@ -215,6 +217,20 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   Future<Either<Failure, AuthUser>> getProfile() {
     return safeCall(() async {
       final res = await _dataSource.getProfile();
+      return _mapper.mapUser(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, AuthUser>> updateProfile({required UpdateProfileParams params}) {
+    return safeCall(() async {
+      final dto = UpdateProfileRequestDto(
+        name: params.name,
+        surname: params.surname,
+        gender: params.gender,
+        birthDate: params.birthDate,
+      );
+      final res = await _dataSource.updateProfile(dto);
       return _mapper.mapUser(res);
     });
   }

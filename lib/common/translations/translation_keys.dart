@@ -125,4 +125,19 @@ class TranslationKeys {
   static const String addressFormDelete = 'address_form_delete';
   static const String mapPickerTitle = 'map_picker_title';
   static const String mapPickerConfirm = 'map_picker_confirm';
+
+  // Profile update
+  static const String profileUpdateTitle = 'profile_update_title';
+  static const String profileUpdateSave = 'profile_update_save';
+  static const String profileUpdateNameRequired = 'profile_update_name_required';
+  static const String profileUpdateSurnameRequired = 'profile_update_surname_required';
+  static const String profileUpdateSuccess = 'profile_update_success';
+  static const String profileUpdateSelectGender = 'profile_update_select_gender';
+  static const String profileUpdateSelectBirthDate = 'profile_update_select_birth_date';
+  static const String profileLogout = 'profile_logout';
+  static const String profileDeleteAccount = 'profile_delete_account';
+  static const String logoutConfirmTitle = 'logout_confirm_title';
+  static const String logoutConfirmDescription = 'logout_confirm_description';
+  static const String deleteAccountConfirmTitle = 'delete_account_confirm_title';
+  static const String deleteAccountConfirmDescription = 'delete_account_confirm_description';
 }

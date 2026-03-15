@@ -66,7 +66,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       (success) {
         emit(state.copyWith(emailLoginState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replaceAll([const MainRoute()]);
+        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
+        _appRouter.pushAndPopUntil(const MainRoute(), predicate: (_) => false);
       },
     );
   }
@@ -74,11 +75,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
   Future<void> loginWithNumber() async {
     emit(state.copyWith(phoneLoginState: StateStatus.loading()));
 
-    emit(
-      state.copyWith(
-        phoneValidationState: FieldValidationState.pure(),
-      ),
-    );
+    emit(state.copyWith(phoneValidationState: FieldValidationState.pure()));
     final phone = phoneController.text.trim().replaceAll(' ', '');
 
     final result = await _sendPhoneLoginOtpUseCase(LoginWithPhoneOtpParams(phone: phone));

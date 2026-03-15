@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -23,6 +24,7 @@ import 'package:carfy/presentation/cars/ui/page/car_form_page.dart';
 import 'package:carfy/presentation/map_picker/map_picker_page.dart';
 import 'package:carfy/presentation/cars/ui/page/my_cars_page.dart';
 import 'package:carfy/presentation/profile/ui/page/profile_page.dart';
+import 'package:carfy/presentation/profile/ui/page/profile_update_page.dart';
 import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
 
 part 'app_router.gr.dart';
@@ -59,6 +61,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: CarFormRoute.page),
     AutoRoute(page: MyAddressesRoute.page),
     AutoRoute(page: MapPickerRoute.page),
+    AutoRoute(page: ProfileUpdateRoute.page),
 
     AutoRoute(
       page: CategoryDialogRoute.page,

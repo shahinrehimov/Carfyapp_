@@ -98,6 +98,8 @@ import 'package:carfy/domain/use_cases/auth/send_verification_email_use_case.dar
     as _i25;
 import 'package:carfy/domain/use_cases/auth/third_party_login_use_case.dart'
     as _i401;
+import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart'
+    as _i915;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
     as _i346;
 import 'package:carfy/domain/use_cases/basket/add_to_basket_use_case.dart'
@@ -375,6 +377,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i401.ThirdPartyLoginUseCase>(
       () => _i401.ThirdPartyLoginUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i915.UpdateProfileUseCase>(
+      () => _i915.UpdateProfileUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i346.VerifyEmailOtpUseCase>(
       () => _i346.VerifyEmailOtpUseCase(gh<_i655.AuthRepository>()),

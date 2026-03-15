@@ -73,6 +73,7 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
       (success) {
         emit(state.copyWith(verifyState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
+        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
         _appRouter.replaceAll([const MainRoute()]);
       },
     );

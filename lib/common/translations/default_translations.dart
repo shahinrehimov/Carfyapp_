@@ -120,6 +120,21 @@ class TranslationDefaults {
       TranslationKeys.addressFormDelete: 'Sil',
       TranslationKeys.mapPickerTitle: 'Yer seçin',
       TranslationKeys.mapPickerConfirm: 'Təsdiqlə',
+
+      // Profile update
+      TranslationKeys.profileUpdateTitle: 'Hesab',
+      TranslationKeys.profileUpdateSave: 'Yadda saxla',
+      TranslationKeys.profileUpdateNameRequired: 'Ad daxil edilməlidir',
+      TranslationKeys.profileUpdateSurnameRequired: 'Soyad daxil edilməlidir',
+      TranslationKeys.profileUpdateSuccess: 'Profil uğurla yeniləndi',
+      TranslationKeys.profileUpdateSelectGender: 'Cinsiyyət seçin',
+      TranslationKeys.profileUpdateSelectBirthDate: 'Doğum tarixini seçin',
+      TranslationKeys.profileLogout: 'Çıxış',
+      TranslationKeys.profileDeleteAccount: 'Hesabı sil',
+      TranslationKeys.logoutConfirmTitle: 'Çıxış',
+      TranslationKeys.logoutConfirmDescription: 'Hesabdan çıxmaq istəyirsiniz?',
+      TranslationKeys.deleteAccountConfirmTitle: 'Hesabı sil',
+      TranslationKeys.deleteAccountConfirmDescription: 'Hesabınızı silmək istəyirsiniz? Bu əməliyyat geri qaytarıla bilməz.',
     },
   };
 }

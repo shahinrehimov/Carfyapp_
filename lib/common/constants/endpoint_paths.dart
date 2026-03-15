@@ -44,6 +44,7 @@ class EndpointPaths {
 
   // Profile Endpoints
   static const profileMe = '/app/profile/me';
+  static const profileUpdate = '/app/profile/update';
 
   // Basket Endpoints
   static const basketLoad = '/app/basket/load';

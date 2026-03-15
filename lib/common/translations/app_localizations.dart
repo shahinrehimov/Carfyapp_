@@ -257,4 +257,18 @@ class AppLocalizations {
   String get mapPickerTitle => _tr(TranslationKeys.mapPickerTitle);
 
   String get mapPickerConfirm => _tr(TranslationKeys.mapPickerConfirm);
+
+  String get profileUpdateTitle => _tr(TranslationKeys.profileUpdateTitle);
+  String get profileUpdateSave => _tr(TranslationKeys.profileUpdateSave);
+  String get profileUpdateNameRequired => _tr(TranslationKeys.profileUpdateNameRequired);
+  String get profileUpdateSurnameRequired => _tr(TranslationKeys.profileUpdateSurnameRequired);
+  String get profileUpdateSuccess => _tr(TranslationKeys.profileUpdateSuccess);
+  String get profileUpdateSelectGender => _tr(TranslationKeys.profileUpdateSelectGender);
+  String get profileUpdateSelectBirthDate => _tr(TranslationKeys.profileUpdateSelectBirthDate);
+  String get profileLogout => _tr(TranslationKeys.profileLogout);
+  String get profileDeleteAccount => _tr(TranslationKeys.profileDeleteAccount);
+  String get logoutConfirmTitle => _tr(TranslationKeys.logoutConfirmTitle);
+  String get logoutConfirmDescription => _tr(TranslationKeys.logoutConfirmDescription);
+  String get deleteAccountConfirmTitle => _tr(TranslationKeys.deleteAccountConfirmTitle);
+  String get deleteAccountConfirmDescription => _tr(TranslationKeys.deleteAccountConfirmDescription);
 }
