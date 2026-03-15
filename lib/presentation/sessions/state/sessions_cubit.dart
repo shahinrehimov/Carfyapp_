@@ -4,7 +4,6 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/entities/auth/session.dart';
-import 'package:carfy/domain/entities/auth/sessions_response.dart';
 import 'package:carfy/domain/use_cases/auth/get_sessions_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/logout_session_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/logout_use_case.dart';

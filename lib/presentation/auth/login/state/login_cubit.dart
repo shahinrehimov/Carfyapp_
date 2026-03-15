@@ -1,5 +1,6 @@
 import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
@@ -50,7 +51,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       ),
     );
 
-    final result = await _loginWithEmailUseCase(LoginWithEmailParams(email: email, password: password));
+    final deviceName = await DeviceUtil.getDeviceName();
+    final result = await _loginWithEmailUseCase(LoginWithEmailParams(email: email, password: password, deviceName: deviceName));
     result.fold(
       (failure) {
         emit(state.copyWith(emailLoginState: mapFailure(failure)));

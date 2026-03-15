@@ -8,6 +8,8 @@ class RegisterWithEmailParams {
   final String password;
   final String passwordConfirmation;
 
+  final String deviceName;
+
   RegisterWithEmailParams({
     required this.name,
     required this.surname,
@@ -17,5 +19,6 @@ class RegisterWithEmailParams {
     required this.phone,
     required this.password,
     required this.passwordConfirmation,
+    required this.deviceName,
   });
 }

@@ -1,5 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
@@ -49,6 +50,7 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
     final password = passwordController.text;
     final repeatPassword = repeatPasswordController.text;
     final phone = phoneController.text.replaceAll(' ', '');
+    final deviceName = await DeviceUtil.getDeviceName();
 
     final params = RegisterWithEmailParams(
       name: name,
@@ -59,6 +61,7 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
       phone: phone,
       password: password,
       passwordConfirmation: repeatPassword,
+      deviceName: deviceName,
     );
 
     emit(state.copyWith(registerState: StateStatus.loading()));

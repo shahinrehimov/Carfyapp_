@@ -1,5 +1,7 @@
 import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/util/device_util.dart';
+import 'package:carfy/domain/params/auth/generate_guest_identifier_params.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/util/pref_util.dart';
@@ -43,7 +45,8 @@ class SplashCubit extends Cubit<SplashState> {
 
   void generateGuestIdentifier() async {
     emit(state.copyWith(guestIdentifierState: StateStatus.loading()));
-    final result = await _generateGuestIdentifierUseCase();
+    final deviceName = await DeviceUtil.getDeviceName();
+    final result = await _generateGuestIdentifierUseCase(GenerateGuestIdentifierParams(deviceName: deviceName));
     result.fold(
       (failure) {
         if (failure is ConnectionFailure) {

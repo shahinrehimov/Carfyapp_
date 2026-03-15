@@ -1,6 +1,7 @@
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
+import 'package:carfy/domain/params/auth/generate_guest_identifier_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
@@ -86,6 +87,7 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
           phone: params.phone,
           password: params.password,
           passwordConfirmation: params.passwordConfirmation,
+          deviceName: params.deviceName,
         ),
       );
       return _mapper.mapRegisterEmail(res);
@@ -131,6 +133,7 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
           phone: params.phone,
           phoneConfirmationToken: params.phoneConfirmationToken,
           otp: params.otp,
+          deviceName: params.deviceName,
         ),
       );
       return _mapper.mapRegisterPhone(res);
@@ -141,7 +144,7 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   Future<Either<Failure, LoginResponse>> loginWithEmail({required LoginWithEmailParams params}) {
     return safeCall(() async {
       final res = await _dataSource.loginWithEmail(
-        LoginWithEmailRequestDto(email: params.email, password: params.password),
+        LoginWithEmailRequestDto(email: params.email, password: params.password, deviceName: params.deviceName),
       );
       return _mapper.mapLogin(res);
     });
@@ -159,7 +162,7 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   Future<Either<Failure, LoginResponse>> loginWithPhone({required LoginWithPhoneSubmitParams params}) {
     return safeCall(() async {
       final res = await _dataSource.loginWithPhone(
-        LoginWithPhoneSubmitRequestDto(phone: params.phone, otp: params.otp),
+        LoginWithPhoneSubmitRequestDto(phone: params.phone, otp: params.otp, deviceName: params.deviceName),
       );
       return _mapper.mapLogin(res);
     });
@@ -207,9 +210,9 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   }
 
   @override
-  Future<Either<Failure, GuestIdentifierResponse>> generateGuestIdentifier() {
+  Future<Either<Failure, GuestIdentifierResponse>> generateGuestIdentifier({required GenerateGuestIdentifierParams params}) {
     return safeCall(() async {
-      final res = await _dataSource.generateGuestIdentifier();
+      final res = await _dataSource.generateGuestIdentifier(params.deviceName);
       return _mapper.mapGuestIdentifier(res);
     });
   }

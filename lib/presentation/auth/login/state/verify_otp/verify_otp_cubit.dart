@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
 import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,7 +65,8 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
   Future<void> verifyWithOtp(String phone, String otp) async {
     emit(state.copyWith(verifyState: StateStatus.loading()));
 
-    final result = await _loginWithPhoneUseCase(LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp)));
+    final deviceName = await DeviceUtil.getDeviceName();
+    final result = await _loginWithPhoneUseCase(LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp), deviceName: deviceName));
 
     result.fold(
       (failure) {

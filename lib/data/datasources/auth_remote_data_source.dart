@@ -1,4 +1,3 @@
-import 'package:carfy/common/constants/constants.dart';
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
@@ -62,7 +61,7 @@ abstract class AuthRemoteDataSource {
 
   Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto);
 
-  Future<GuestIdentifierResponseModel> generateGuestIdentifier();
+  Future<GuestIdentifierResponseModel> generateGuestIdentifier(String deviceName);
 
   Future<AuthUserModel> getProfile();
 
@@ -195,9 +194,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<GuestIdentifierResponseModel> generateGuestIdentifier() {
+  Future<GuestIdentifierResponseModel> generateGuestIdentifier(String deviceName) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': Constants.deviceType}),
+      () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': deviceName}),
       map: (json) => GuestIdentifierResponseModel.fromJson(json),
     );
   }

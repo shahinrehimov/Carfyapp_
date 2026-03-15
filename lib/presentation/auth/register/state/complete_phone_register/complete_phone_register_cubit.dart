@@ -1,5 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
@@ -38,6 +39,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
     final name = nameController.text;
     final surname = surnameController.text;
     final email = emailController.text;
+    final deviceName = await DeviceUtil.getDeviceName();
 
     final params = RegisterWithPhoneParams(
       name: name,
@@ -48,6 +50,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
       phone: phone,
       phoneConfirmationToken: phoneConfirmationToken,
       otp: otp,
+      deviceName: deviceName,
     );
 
     emit(state.copyWith(registerState: StateStatus.loading()));
