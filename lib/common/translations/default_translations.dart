@@ -94,6 +94,32 @@ class TranslationDefaults {
       TranslationKeys.carFormCarType: 'Avtomobil tipi',
       TranslationKeys.carFormEngineNumber: 'Mühərrik nömrəsi',
       TranslationKeys.carFormVinNumber: 'Şassi (VIN) nömrəsi',
+
+      // My Addresses
+      TranslationKeys.profileMyAddressesAddBtn: 'Ünvan əlavə et',
+      TranslationKeys.profileMyAddressesEmpty: 'Ünvan tapılmadı',
+      TranslationKeys.addressDeleteConfirmTitle: 'Ünvanı sil',
+      TranslationKeys.addressDeleteConfirmDescription: 'Bu əməliyyat geri qaytarıla bilməz.\nSeçilmiş ünvan silinəcək.',
+      TranslationKeys.defaultLabel: 'Əsas',
+
+      // Address form
+      TranslationKeys.addressFormAddTitle: 'Ünvan əlavə et',
+      TranslationKeys.addressFormEditTitle: 'Düzəliş et',
+      TranslationKeys.addressFormAddressType: 'Ünvan növü',
+      TranslationKeys.addressFormAddressTypeRequired: 'Ünvan növü seçilməlidir',
+      TranslationKeys.addressFormCity: 'Şəhər',
+      TranslationKeys.addressFormCityRequired: 'Şəhər seçilməlidir',
+      TranslationKeys.addressFormLine1: 'Ünvan 1',
+      TranslationKeys.addressFormLine1Required: 'Ünvan daxil edilməlidir',
+      TranslationKeys.addressFormLine2: 'Ünvan 2 (istəyə görə)',
+      TranslationKeys.addressFormPhone: 'Telefon nömrəsi',
+      TranslationKeys.addressFormPhoneRequired: 'Telefon nömrəsi daxil edilməlidir',
+      TranslationKeys.addressFormPickLocation: 'Xəritədən yer seçin',
+      TranslationKeys.addressFormLocationRequired: 'Xəritədən yer seçilməlidir',
+      TranslationKeys.addressFormSave: 'Təsdiqlə',
+      TranslationKeys.addressFormDelete: 'Sil',
+      TranslationKeys.mapPickerTitle: 'Yer seçin',
+      TranslationKeys.mapPickerConfirm: 'Təsdiqlə',
     },
   };
 }

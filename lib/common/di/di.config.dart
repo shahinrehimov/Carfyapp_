@@ -10,6 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:carfy/common/network/network_manager.dart' as _i597;
+import 'package:carfy/data/datasources/address_remote_data_source.dart'
+    as _i930;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
 import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
 import 'package:carfy/data/datasources/car_remote_data_source.dart' as _i304;
@@ -26,12 +28,14 @@ import 'package:carfy/data/datasources/version_remote_data_source.dart'
     as _i713;
 import 'package:carfy/data/datasources/wishlist_remote_data_source.dart'
     as _i685;
+import 'package:carfy/data/mappers/address_mapper.dart' as _i303;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
 import 'package:carfy/data/mappers/basket_mapper.dart' as _i751;
 import 'package:carfy/data/mappers/car_mapper.dart' as _i407;
 import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
+import 'package:carfy/data/repositories/address_repository_impl.dart' as _i1024;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
 import 'package:carfy/data/repositories/basket_repository_impl.dart' as _i522;
 import 'package:carfy/data/repositories/car_repository_impl.dart' as _i663;
@@ -42,6 +46,7 @@ import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
 import 'package:carfy/data/repositories/wishlist_repository_impl.dart' as _i224;
+import 'package:carfy/domain/repositories/address_repository.dart' as _i574;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
 import 'package:carfy/domain/repositories/basket_repository.dart' as _i449;
 import 'package:carfy/domain/repositories/car_repository.dart' as _i194;
@@ -51,6 +56,20 @@ import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
 import 'package:carfy/domain/repositories/wishlist_repository.dart' as _i54;
+import 'package:carfy/domain/use_cases/address/add_address_use_case.dart'
+    as _i374;
+import 'package:carfy/domain/use_cases/address/delete_address_use_case.dart'
+    as _i967;
+import 'package:carfy/domain/use_cases/address/get_address_types_use_case.dart'
+    as _i1062;
+import 'package:carfy/domain/use_cases/address/get_addresses_use_case.dart'
+    as _i956;
+import 'package:carfy/domain/use_cases/address/get_countries_with_cities_use_case.dart'
+    as _i684;
+import 'package:carfy/domain/use_cases/address/set_default_address_use_case.dart'
+    as _i358;
+import 'package:carfy/domain/use_cases/address/update_address_use_case.dart'
+    as _i438;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_phone_otp_use_case.dart'
     as _i818;
@@ -134,6 +153,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i303.AddressMapper>(() => _i303.AddressMapper());
     gh.factory<_i163.AuthMapper>(() => _i163.AuthMapper());
     gh.factory<_i407.CarMapper>(() => _i407.CarMapper());
     gh.factory<_i109.CategoryMapper>(() => _i109.CategoryMapper());
@@ -167,6 +187,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i861.CategoryRemoteDataSource>(
       () => _i861.CategoryRemoteDataSourceImpl(),
     );
+    gh.factory<_i930.AddressRemoteDataSource>(
+      () => _i930.AddressRemoteDataSourceImpl(),
+    );
     gh.factory<_i1053.TranslationLocalDataSource>(
       () => _i1053.TranslationLocalDataSourceImpl(),
     );
@@ -191,6 +214,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i12.GroupMapper>(
       () => _i12.GroupMapper(gh<_i344.ProductMapper>()),
     );
+    gh.factory<_i574.AddressRepository>(
+      () => _i1024.AddressRepositoryImpl(
+        gh<_i930.AddressRemoteDataSource>(),
+        gh<_i303.AddressMapper>(),
+      ),
+    );
     gh.factory<_i745.VersionRepository>(
       () => _i235.VersionRepositoryImpl(gh<_i713.VersionRemoteDataSource>()),
     );
@@ -205,6 +234,27 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i861.CategoryRemoteDataSource>(),
         gh<_i109.CategoryMapper>(),
       ),
+    );
+    gh.factory<_i374.AddAddressUseCase>(
+      () => _i374.AddAddressUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i967.DeleteAddressUseCase>(
+      () => _i967.DeleteAddressUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i1062.GetAddressTypesUseCase>(
+      () => _i1062.GetAddressTypesUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i956.GetAddressesUseCase>(
+      () => _i956.GetAddressesUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i684.GetCountriesWithCitiesUseCase>(
+      () => _i684.GetCountriesWithCitiesUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i358.SetDefaultAddressUseCase>(
+      () => _i358.SetDefaultAddressUseCase(gh<_i574.AddressRepository>()),
+    );
+    gh.factory<_i438.UpdateAddressUseCase>(
+      () => _i438.UpdateAddressUseCase(gh<_i574.AddressRepository>()),
     );
     gh.factory<_i603.GetProductsUseCase>(
       () => _i603.GetProductsUseCase(gh<_i39.ProductRepository>()),

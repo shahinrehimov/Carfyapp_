@@ -24,7 +24,7 @@ class _ProfileBody extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileMyAddresses, icon: Assets.icons.addressPinLocation, onTap: () {}),
+                child: _ProfileMenuCard(label: context.localization.profileMyAddresses, icon: Assets.icons.addressPinLocation, onTap: () => context.pushRoute(const MyAddressesRoute())),
               ),
               const SizedBox(width: 8),
               Expanded(

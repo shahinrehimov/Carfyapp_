@@ -56,7 +56,9 @@ class CarItem extends StatelessWidget {
                                 width: 52,
                                 height: 52,
                                 color: context.theme.colors.bg,
-                                child: Center(child: SvgPicture.asset(Assets.icons.carHatchback, width: 32, height: 32)),
+                                child: Center(
+                                  child: SvgPicture.asset(Assets.icons.carHatchback, width: 32, height: 32),
+                                ),
                               ),
                       ),
                       const SizedBox(width: 10),
@@ -85,11 +87,7 @@ class CarItem extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4),
                           child: isDeleting
-                              ? SizedBox(
-                                  width: 22,
-                                  height: 22,
-                                  child: CircularProgressIndicator(strokeWidth: 2, color: context.theme.colors.error),
-                                )
+                              ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator.adaptive())
                               : SvgPicture.asset(Assets.icons.delete),
                         ),
                       ),

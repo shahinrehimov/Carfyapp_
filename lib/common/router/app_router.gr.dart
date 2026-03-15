@@ -345,6 +345,75 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MapPickerPage]
+class MapPickerRoute extends PageRouteInfo<MapPickerRouteArgs> {
+  MapPickerRoute({
+    Key? key,
+    double? initialLatitude,
+    double? initialLongitude,
+    List<PageRouteInfo>? children,
+  }) : super(
+         MapPickerRoute.name,
+         args: MapPickerRouteArgs(
+           key: key,
+           initialLatitude: initialLatitude,
+           initialLongitude: initialLongitude,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'MapPickerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MapPickerRouteArgs>(
+        orElse: () => const MapPickerRouteArgs(),
+      );
+      return WrappedRoute(
+        child: MapPickerPage(
+          key: args.key,
+          initialLatitude: args.initialLatitude,
+          initialLongitude: args.initialLongitude,
+        ),
+      );
+    },
+  );
+}
+
+class MapPickerRouteArgs {
+  const MapPickerRouteArgs({
+    this.key,
+    this.initialLatitude,
+    this.initialLongitude,
+  });
+
+  final Key? key;
+
+  final double? initialLatitude;
+
+  final double? initialLongitude;
+
+  @override
+  String toString() {
+    return 'MapPickerRouteArgs{key: $key, initialLatitude: $initialLatitude, initialLongitude: $initialLongitude}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MapPickerRouteArgs) return false;
+    return key == other.key &&
+        initialLatitude == other.initialLatitude &&
+        initialLongitude == other.initialLongitude;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ initialLatitude.hashCode ^ initialLongitude.hashCode;
+}
+
+/// generated route for
 /// [MessagesPage]
 class MessagesRoute extends PageRouteInfo<void> {
   const MessagesRoute({List<PageRouteInfo>? children})
@@ -356,6 +425,22 @@ class MessagesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const MessagesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [MyAddressesPage]
+class MyAddressesRoute extends PageRouteInfo<void> {
+  const MyAddressesRoute({List<PageRouteInfo>? children})
+    : super(MyAddressesRoute.name, initialChildren: children);
+
+  static const String name = 'MyAddressesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const MyAddressesPage());
     },
   );
 }

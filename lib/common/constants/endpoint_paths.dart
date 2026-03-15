@@ -66,6 +66,15 @@ class EndpointPaths {
   static const carLibraryCarTypes = '/app/car-libraries/car-types';
   static const carLibraryEngineVolumes = '/app/car-libraries/engine-volumes';
 
+  // Address Endpoints
+  static const addressesLoad = '/app/profile/addresses/load';
+  static const addressesAdd = '/app/profile/addresses/add';
+  static String addressUpdate(int id) => '/app/profile/addresses/update/$id';
+  static String addressDelete(int id) => '/app/profile/addresses/delete/$id';
+  static String addressSetDefault(int id) => '/app/profile/addresses/set-default/$id';
+  static const addressTypes = '/app/services/load?services[0][key]=address_type';
+  static const countriesWithCities = '/app/services/load?services[0][key]=country_and_city';
+
   // Brand Endpoints
   static const brands = '/app/car-libraries/brands';
   static String brandModels(int brandId) => '/app/car-libraries/brands/$brandId/models';

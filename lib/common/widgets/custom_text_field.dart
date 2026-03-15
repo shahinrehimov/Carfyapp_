@@ -55,6 +55,7 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final FocusNode? focusNode;
   final Widget? titleWidget;
+  final double borderRadius;
 
   const CustomTextField({
     super.key,
@@ -111,6 +112,7 @@ class CustomTextField extends StatelessWidget {
     this.focusedBorderColor,
     this.titleWidget,
     this.readOnly = false,
+    this.borderRadius = 40,
   });
 
   @override
@@ -155,23 +157,23 @@ class CustomTextField extends StatelessWidget {
         alignLabelWithHint: true,
         counterText: '',
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? context.theme.colors.lightGray),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? context.theme.colors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: focusedBorderColor ?? context.theme.colors.secondary),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: context.theme.colors.error),
         ),
         prefixIcon: prefix,

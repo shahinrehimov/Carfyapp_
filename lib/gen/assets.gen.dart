@@ -92,6 +92,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/main-profile.svg
   String get mainProfile => 'assets/icons/main-profile.svg';
 
+  /// File path: assets/icons/map.svg
+  String get map => 'assets/icons/map.svg';
+
   /// File path: assets/icons/message.svg
   String get message => 'assets/icons/message.svg';
 
@@ -150,6 +153,7 @@ class $AssetsIconsGen {
     mainHome,
     mainMessage,
     mainProfile,
+    map,
     message,
     minus,
     mobile,

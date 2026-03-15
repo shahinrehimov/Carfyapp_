@@ -18,6 +18,8 @@ class CustomDropdownField<T> extends StatefulWidget {
   final VoidCallback? onRetry;
   final bool searchable;
   final bool enabled;
+  final double borderRadius;
+  final String? sheetTitle;
 
   const CustomDropdownField({
     super.key,
@@ -35,6 +37,8 @@ class CustomDropdownField<T> extends StatefulWidget {
     this.onRetry,
     this.searchable = false,
     this.enabled = true,
+    this.borderRadius = 40,
+    this.sheetTitle,
   });
 
   @override
@@ -99,6 +103,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
         searchable: widget.searchable,
         labelOf: _labelOf,
         itemWidgetBuilder: widget.itemWidgetBuilder,
+        title: widget.sheetTitle,
       ),
     );
     if (result != null) {
@@ -120,7 +125,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(widget.borderRadius),
               border: Border.all(
                 color: hasError ? context.theme.colors.error : context.theme.colors.border,
               ),
@@ -165,6 +170,7 @@ class _DropdownBottomSheet<T> extends StatefulWidget {
   final bool searchable;
   final String Function(T) labelOf;
   final Widget Function(T)? itemWidgetBuilder;
+  final String? title;
 
   const _DropdownBottomSheet({
     required this.itemsNotifier,
@@ -175,6 +181,7 @@ class _DropdownBottomSheet<T> extends StatefulWidget {
     required this.labelOf,
     this.onRetry,
     this.itemWidgetBuilder,
+    this.title,
   });
 
   @override
@@ -252,6 +259,19 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                   ),
                 ),
               ),
+              // Title
+              if (widget.title != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    widget.title!,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: context.theme.colors.textDark,
+                    ),
+                  ),
+                ),
               // Search field
               if (widget.searchable)
                 Padding(

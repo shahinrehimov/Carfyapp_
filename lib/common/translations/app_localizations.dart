@@ -210,4 +210,51 @@ class AppLocalizations {
   String get carFormEngineNumber => _tr(TranslationKeys.carFormEngineNumber);
 
   String get carFormVinNumber => _tr(TranslationKeys.carFormVinNumber);
+
+  // My Addresses
+
+  String get profileMyAddressesAddBtn => _tr(TranslationKeys.profileMyAddressesAddBtn);
+
+  String get profileMyAddressesEmpty => _tr(TranslationKeys.profileMyAddressesEmpty);
+
+  String get addressDeleteConfirmTitle => _tr(TranslationKeys.addressDeleteConfirmTitle);
+
+  String get addressDeleteConfirmDescription => _tr(TranslationKeys.addressDeleteConfirmDescription);
+
+  String get defaultLabel => _tr(TranslationKeys.defaultLabel);
+
+  // Address form
+  String get addressFormAddTitle => _tr(TranslationKeys.addressFormAddTitle);
+
+  String get addressFormEditTitle => _tr(TranslationKeys.addressFormEditTitle);
+
+  String get addressFormAddressType => _tr(TranslationKeys.addressFormAddressType);
+
+  String get addressFormAddressTypeRequired => _tr(TranslationKeys.addressFormAddressTypeRequired);
+
+  String get addressFormCity => _tr(TranslationKeys.addressFormCity);
+
+  String get addressFormCityRequired => _tr(TranslationKeys.addressFormCityRequired);
+
+  String get addressFormLine1 => _tr(TranslationKeys.addressFormLine1);
+
+  String get addressFormLine1Required => _tr(TranslationKeys.addressFormLine1Required);
+
+  String get addressFormLine2 => _tr(TranslationKeys.addressFormLine2);
+
+  String get addressFormPhone => _tr(TranslationKeys.addressFormPhone);
+
+  String get addressFormPhoneRequired => _tr(TranslationKeys.addressFormPhoneRequired);
+
+  String get addressFormPickLocation => _tr(TranslationKeys.addressFormPickLocation);
+
+  String get addressFormLocationRequired => _tr(TranslationKeys.addressFormLocationRequired);
+
+  String get addressFormSave => _tr(TranslationKeys.addressFormSave);
+
+  String get addressFormDelete => _tr(TranslationKeys.addressFormDelete);
+
+  String get mapPickerTitle => _tr(TranslationKeys.mapPickerTitle);
+
+  String get mapPickerConfirm => _tr(TranslationKeys.mapPickerConfirm);
 }
