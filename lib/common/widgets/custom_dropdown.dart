@@ -1,3 +1,4 @@
+import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -276,7 +277,7 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                     controller: _searchController,
                     autofocus: true,
                     decoration: InputDecoration(
-                      hintText: 'Axtar...',
+                      hintText: context.localization.searchHint,
                       hintStyle: TextStyle(color: context.theme.colors.textLight, fontSize: 14),
                       prefixIcon: Icon(Icons.search, color: context.theme.colors.textLight, size: 20),
                       filled: true,

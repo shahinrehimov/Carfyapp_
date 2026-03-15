@@ -29,7 +29,7 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'OTP',
+          context.localization.phoneVerification,
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
         leading: InkWell(
@@ -115,14 +115,14 @@ class TimerWidget extends StatelessWidget {
       children: [
         if (isTimerActive)
           Text(
-            'Resend OTP in ${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}',
+            context.localization.resendOtpIn('${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}'),
             style: TextStyle(fontSize: 12, color: context.theme.colors.darkGray, fontWeight: FontWeight.w500),
           )
         else
           GestureDetector(
             onTap: onResendTap,
             child: Text(
-              'Resend OTP',
+              context.localization.resendOtp,
               style: TextStyle(
                 fontSize: 12,
                 color: context.theme.colors.primary,

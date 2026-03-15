@@ -30,7 +30,7 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'OTP',
+          context.localization.phoneVerification,
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
         leading: InkWell(

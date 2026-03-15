@@ -1,7 +1,6 @@
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
-import 'package:carfy/domain/params/auth/generate_guest_identifier_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
@@ -210,9 +209,9 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   }
 
   @override
-  Future<Either<Failure, GuestIdentifierResponse>> generateGuestIdentifier({required GenerateGuestIdentifierParams params}) {
+  Future<Either<Failure, GuestIdentifierResponse>> generateGuestIdentifier() {
     return safeCall(() async {
-      final res = await _dataSource.generateGuestIdentifier(params.deviceName);
+      final res = await _dataSource.generateGuestIdentifier();
       return _mapper.mapGuestIdentifier(res);
     });
   }

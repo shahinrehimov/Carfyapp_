@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:carfy/common/constants/preference_keys.dart';
+import 'package:carfy/common/util/pref_util.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +44,7 @@ class MapPickerCubit extends Cubit<MapPickerState> {
           'limit': 7,
           'lat': pos.latitude,
           'lon': pos.longitude,
-          'lang': 'en',
+          'lang': PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? 'az',
         },
         options: Options(headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; CarfyApp/1.0)',

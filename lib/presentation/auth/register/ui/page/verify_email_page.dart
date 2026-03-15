@@ -28,7 +28,7 @@ class VerifyEmailPage extends StatelessWidget implements AutoRouteWrapper {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'OTP',
+          context.localization.emailVerification,
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ),

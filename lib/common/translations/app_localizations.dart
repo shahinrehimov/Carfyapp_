@@ -117,6 +117,14 @@ class AppLocalizations {
   // Home
   String get search => _tr(TranslationKeys.search);
 
+  String get searchHint => _tr(TranslationKeys.searchHint);
+
+  String resendOtpIn(String time) => _tr(TranslationKeys.resendOtpIn).replaceAll('{time}', time);
+
+  String get resendOtp => _tr(TranslationKeys.resendOtp);
+
+  String get mapPickerSearch => _tr(TranslationKeys.mapPickerSearch);
+
   String get categories => _tr(TranslationKeys.categories);
 
   String get seeAll => _tr(TranslationKeys.seeAll);
@@ -259,27 +267,47 @@ class AppLocalizations {
   String get mapPickerConfirm => _tr(TranslationKeys.mapPickerConfirm);
 
   String get profileUpdateTitle => _tr(TranslationKeys.profileUpdateTitle);
+
   String get profileUpdateSave => _tr(TranslationKeys.profileUpdateSave);
+
   String get profileUpdateNameRequired => _tr(TranslationKeys.profileUpdateNameRequired);
+
   String get profileUpdateSurnameRequired => _tr(TranslationKeys.profileUpdateSurnameRequired);
+
   String get profileUpdateSuccess => _tr(TranslationKeys.profileUpdateSuccess);
+
   String get profileUpdateSelectGender => _tr(TranslationKeys.profileUpdateSelectGender);
+
   String get profileUpdateSelectBirthDate => _tr(TranslationKeys.profileUpdateSelectBirthDate);
+
   String get profileLogout => _tr(TranslationKeys.profileLogout);
+
   String get profileDeleteAccount => _tr(TranslationKeys.profileDeleteAccount);
+
   String get logoutConfirmTitle => _tr(TranslationKeys.logoutConfirmTitle);
+
   String get logoutConfirmDescription => _tr(TranslationKeys.logoutConfirmDescription);
+
   String get deleteAccountConfirmTitle => _tr(TranslationKeys.deleteAccountConfirmTitle);
+
   String get deleteAccountConfirmDescription => _tr(TranslationKeys.deleteAccountConfirmDescription);
 
   // Sessions
   String get sessionsTitle => _tr(TranslationKeys.sessionsTitle);
+
   String get sessionsCurrentSession => _tr(TranslationKeys.sessionsCurrentSession);
+
   String get sessionsOtherSessions => _tr(TranslationKeys.sessionsOtherSessions);
+
   String get sessionsTerminate => _tr(TranslationKeys.sessionsTerminate);
+
   String get sessionsTerminateConfirmTitle => _tr(TranslationKeys.sessionsTerminateConfirmTitle);
+
   String get sessionsTerminateConfirmDescription => _tr(TranslationKeys.sessionsTerminateConfirmDescription);
+
   String get sessionsTerminatedSuccess => _tr(TranslationKeys.sessionsTerminatedSuccess);
+
   String get sessionsEmpty => _tr(TranslationKeys.sessionsEmpty);
+
   String get sessionsThisDevice => _tr(TranslationKeys.sessionsThisDevice);
 }

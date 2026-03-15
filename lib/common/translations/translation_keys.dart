@@ -37,6 +37,10 @@ class TranslationKeys {
   static const String login = 'login';
   static const String name = 'name';
   static const String search = 'search';
+  static const String searchHint = 'search_hint';
+  static const String resendOtpIn = 'resend_otp_in';
+  static const String resendOtp = 'resend_otp';
+  static const String mapPickerSearch = 'map_picker_search';
   static const String surname = 'surname';
   static const String gender = 'gender';
   static const String birthDate = 'birth_date';

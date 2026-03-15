@@ -113,7 +113,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
                         onSubmitted: _cubit.searchPlaces,
                         autocorrect: false,
                         decoration: InputDecoration(
-                          hintText: 'Yer axtar...',
+                          hintText: context.localization.mapPickerSearch,
                           hintStyle: TextStyle(fontSize: 14, color: context.theme.colors.textLight),
                           prefixIcon: state.isSearching
                               ? Padding(

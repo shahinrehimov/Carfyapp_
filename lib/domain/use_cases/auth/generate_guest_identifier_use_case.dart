@@ -1,5 +1,4 @@
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
-import 'package:carfy/domain/params/auth/generate_guest_identifier_params.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 
@@ -12,7 +11,7 @@ class GenerateGuestIdentifierUseCase {
 
   GenerateGuestIdentifierUseCase(this._repository);
 
-  Future<Either<Failure, GuestIdentifierResponse>> call(GenerateGuestIdentifierParams params) async {
-    return await _repository.generateGuestIdentifier(params: params);
+  Future<Either<Failure, GuestIdentifierResponse>> call() async {
+    return await _repository.generateGuestIdentifier();
   }
 }
