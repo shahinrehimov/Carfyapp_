@@ -276,6 +276,8 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                   child: TextField(
                     controller: _searchController,
                     autofocus: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       hintText: context.localization.searchHint,
                       hintStyle: TextStyle(color: context.theme.colors.textLight, fontSize: 14),

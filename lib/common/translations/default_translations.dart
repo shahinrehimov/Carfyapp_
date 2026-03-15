@@ -65,6 +65,9 @@ class TranslationDefaults {
       TranslationKeys.total: 'Cəmi',
       TranslationKeys.formOrder: 'Sifarişi formalaşdır',
       TranslationKeys.piece: 'ədəd',
+      TranslationKeys.messagesEmpty: 'Hələ ki mesajınız yoxdur',
+      TranslationKeys.wishlistEmpty: 'Seçilmişlər boşdur',
+      TranslationKeys.basketEmpty: 'Səbətiniz boşdur',
       TranslationKeys.profileMyCars: 'Avtomobillərim',
       TranslationKeys.profileMyOrders: 'Sifarişlərim',
       TranslationKeys.profileMyAddresses: 'Ünvanlarım',
@@ -101,7 +104,7 @@ class TranslationDefaults {
 
       // My Addresses
       TranslationKeys.profileMyAddressesAddBtn: 'Ünvan əlavə et',
-      TranslationKeys.profileMyAddressesEmpty: 'Ünvan tapılmadı',
+      TranslationKeys.profileMyAddressesEmpty: 'Hələ ki ünvan əlavə edilməyib',
       TranslationKeys.addressDeleteConfirmTitle: 'Ünvanı sil',
       TranslationKeys.addressDeleteConfirmDescription: 'Bu əməliyyat geri qaytarıla bilməz.\nSeçilmiş ünvan silinəcək.',
       TranslationKeys.defaultLabel: 'Əsas',

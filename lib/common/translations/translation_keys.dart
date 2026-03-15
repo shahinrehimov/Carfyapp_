@@ -61,6 +61,9 @@ class TranslationKeys {
   static const String total = 'total';
   static const String formOrder = 'form_order';
   static const String piece = 'piece';
+  static const String messagesEmpty = 'messages_empty';
+  static const String wishlistEmpty = 'wishlist_empty';
+  static const String basketEmpty = 'basket_empty';
 
   // Profile page
   static const String profileMyCars = 'profile_my_cars';

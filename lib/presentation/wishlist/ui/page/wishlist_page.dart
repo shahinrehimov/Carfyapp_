@@ -28,22 +28,25 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
         title: context.localization.mainFavorite,
         actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
       ),
-      body: PullToRefreshWrapper(
-        onRefresh: () async {
-          await context.read<WishlistCubit>().refresh();
-        },
-        child: PaginationScrollWrapper(
-          onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
-          child: BlocBuilder<WishlistCubit, WishlistState>(
-            builder: (context, state) {
-              return state.status.maybeWhen(
+      body: BlocBuilder<WishlistCubit, WishlistState>(
+        builder: (context, state) {
+          final isEmpty = state.status.maybeWhen(success: () => state.products.isEmpty, orElse: () => false);
+          if (isEmpty) return const _WishlistEmpty();
+
+          return PullToRefreshWrapper(
+            onRefresh: () async {
+              await context.read<WishlistCubit>().refresh();
+            },
+            child: PaginationScrollWrapper(
+              onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
+              child: state.status.maybeWhen(
                 success: () => _WishlistGrid(products: state.products),
                 paginationLoading: () => _WishlistGrid(products: state.products, isLoadingMore: true),
                 orElse: () => const _WishlistLoading(),
-              );
-            },
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -76,6 +79,27 @@ class _WishlistGrid extends StatelessWidget {
         if (isLoadingMore)
           const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CircularProgressIndicator.adaptive()),
       ],
+    );
+  }
+}
+
+class _WishlistEmpty extends StatelessWidget {
+  const _WishlistEmpty();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(Assets.images.favoriteNotLogged.path, height: 168),
+          const SizedBox(height: 16),
+          Text(
+            context.localization.wishlistEmpty,
+            style: TextStyle(fontSize: 18, color: context.theme.colors.black),
+          ),
+        ],
+      ),
     );
   }
 }

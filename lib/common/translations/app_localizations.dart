@@ -150,6 +150,12 @@ class AppLocalizations {
 
   String get piece => _tr(TranslationKeys.piece);
 
+  String get messagesEmpty => _tr(TranslationKeys.messagesEmpty);
+
+  String get wishlistEmpty => _tr(TranslationKeys.wishlistEmpty);
+
+  String get basketEmpty => _tr(TranslationKeys.basketEmpty);
+
   // Profile page
   String get profileMyCars => _tr(TranslationKeys.profileMyCars);
 

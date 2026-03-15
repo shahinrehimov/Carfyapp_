@@ -119,7 +119,7 @@ class _EmptyCarsView extends StatelessWidget {
     return Center(
       child: Text(
         context.localization.profileMyCarsEmpty,
-        style: TextStyle(color: context.theme.colors.darkGray, fontSize: 14),
+        style: TextStyle(fontSize: 18, color: context.theme.colors.black),
       ),
     );
   }

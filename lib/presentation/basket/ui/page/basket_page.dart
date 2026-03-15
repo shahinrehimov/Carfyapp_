@@ -107,7 +107,19 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                       ),
                     )
-                  : const Center(child: Text('empty')), // TODO
+                  : Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(Assets.images.basketNotLogged.path, height: 168),
+                          const SizedBox(height: 16),
+                          Text(
+                            context.localization.basketEmpty,
+                            style: TextStyle(fontSize: 18, color: context.theme.colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
               orElse: () => const _BasketLoading(),
             );
           },
