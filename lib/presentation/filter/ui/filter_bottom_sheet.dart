@@ -39,64 +39,50 @@ class FilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    const contentHeight = 760.0; // approximate content height
-    final initialSize = (contentHeight / screenHeight).clamp(0.5, 0.95);
-
-    return DraggableScrollableSheet(
-      initialChildSize: initialSize,
-      minChildSize: 0.4,
-      maxChildSize: 0.95,
-      expand: false,
-      builder: (context, scrollController) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-          child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Column(
-              children: [
-                // Drag handle
-                Padding(
-                  padding: const EdgeInsets.only(top: 11, bottom: 8),
-                  child: Container(
-                    width: 54,
-                    height: 3,
-                    decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
-                  ),
-                ),
-                // Title
-                Text(
-                  context.localization.filter,
-                  style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 16),
-                // Content
-                Expanded(
-                  child: BlocBuilder<FilterCubit, FilterState>(
-                    buildWhen: (prev, curr) => prev.loadStatus != curr.loadStatus,
-                    builder: (context, state) {
-                      return state.loadStatus.maybeWhen(
-                        success: () => _FilterContent(scrollController: scrollController),
-                        loading: () => const _FilterLoading(),
-                        orElse: () => const _FilterLoading(),
-                      );
-                    },
-                  ),
-                ),
-              ],
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            // Drag handle
+            Padding(
+              padding: const EdgeInsets.only(top: 11, bottom: 8),
+              child: Container(
+                width: 54,
+                height: 3,
+                decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
+              ),
             ),
-          ),
-        );
-      },
+            // Title
+            Text(
+              context.localization.filter,
+              style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 16),
+            // Content
+            Expanded(
+              child: BlocBuilder<FilterCubit, FilterState>(
+                buildWhen: (prev, curr) => prev.loadStatus != curr.loadStatus,
+                builder: (context, state) {
+                  return state.loadStatus.maybeWhen(
+                    success: () => const _FilterContent(),
+                    loading: () => const _FilterLoading(),
+                    orElse: () => const _FilterLoading(),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class _FilterContent extends StatelessWidget {
-  final ScrollController scrollController;
-
-  const _FilterContent({required this.scrollController});
+  const _FilterContent();
 
   List<int> _buildYearList(ProductFilters filters) {
     final yearRange = filters.yearRange;
@@ -112,7 +98,6 @@ class _FilterContent extends StatelessWidget {
         final cubit = context.read<FilterCubit>();
 
         return ListView(
-          controller: scrollController,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
           children: [
