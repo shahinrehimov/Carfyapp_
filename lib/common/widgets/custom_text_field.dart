@@ -115,17 +115,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (title != null) ...[
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(title!, style: TextStyle(color: context.theme.colors.textLight, fontSize: 14)),
-          ),
-          const SizedBox(height: 4),
-        ],
-        TextFormField(
+    final textField = TextFormField(
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
@@ -136,7 +126,7 @@ class CustomTextField extends StatelessWidget {
           textCapitalization: textCapitalization ?? TextCapitalization.none,
           initialValue: initialValue,
           validator: validator,
-          autofocus: false,
+          autofocus: autoFocus,
           enableSuggestions: false,
           autocorrect: false,
           readOnly: readOnly,
@@ -210,7 +200,19 @@ class CustomTextField extends StatelessWidget {
           minLines: minLines,
           maxLines: maxLines,
           maxLength: maxLength,
+        );
+
+    if (title == null) return textField;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(title!, style: TextStyle(color: context.theme.colors.textLight, fontSize: 14)),
         ),
+        const SizedBox(height: 4),
+        textField,
       ],
     );
   }

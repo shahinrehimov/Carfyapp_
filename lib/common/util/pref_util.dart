@@ -55,6 +55,14 @@ class PrefUtil {
     return preferences.getBool(key);
   }
 
+  static void setStringList(String key, List<String> value) {
+    preferences.setStringList(key, value);
+  }
+
+  static List<String>? getStringList(String key) {
+    return preferences.getStringList(key);
+  }
+
   static void remove(String key) {
     preferences.remove(key);
   }

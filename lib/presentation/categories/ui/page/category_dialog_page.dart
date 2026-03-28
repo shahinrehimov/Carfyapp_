@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/domain/entities/categories/category.dart';
 import 'package:carfy/presentation/categories/state/category_cubit.dart';
+import 'package:carfy/presentation/product_list/state/product_list_params_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carfy/common/router/app_router.dart';
@@ -43,11 +44,9 @@ class CategoriesPage extends StatelessWidget {
                 mainAxisSpacing: 8,
                 childAspectRatio: 181 / 104,
               ),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  context.router.push(SubCategoriesRoute(category: state.categories[index]));
-                },
-                child: CategoryItem(category: state.categories[index]),
+              itemBuilder: (context, index) => CategoryItem(
+                category: state.categories[index],
+                onTap: () => context.router.push(SubCategoriesRoute(category: state.categories[index])),
               ),
             ),
             orElse: () => const _CategoriesLoading(),
@@ -88,6 +87,9 @@ class _SubCategoryItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         context.router.root.pop();
+        context.router.root.push(ProductListRoute(
+          params: ProductListPageParams(subCategories: [subCategory.slug]),
+        ));
       },
       child: Column(
         children: [

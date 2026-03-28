@@ -10,6 +10,7 @@ import 'package:carfy/domain/entities/products/product_filters.dart';
 import 'package:carfy/domain/entities/products/filter_option.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
+import 'package:carfy/presentation/filter/ui/car_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -187,7 +188,14 @@ class _FilterContent extends StatelessWidget {
             const SizedBox(height: 16),
             // Search by car button
             CustomButton(
-              onPressed: () {}, // TODO: search by car
+              onPressed: () async {
+                final car = await CarPickerBottomSheet.show(context);
+                if (car != null && context.mounted) {
+                  cubit.selectByCar(car.brand.id, car.brandModel.id);
+                  cubit.apply();
+                  Navigator.pop(context, true);
+                }
+              },
               text: context.localization.filterSearchByCar,
               height: 48,
             ),
@@ -197,7 +205,6 @@ class _FilterContent extends StatelessWidget {
               onPressed: () {
                 cubit.apply();
                 Navigator.pop(context, true);
-                // TODO: navigate to filtered products page
               },
               text: context.localization.filterShow,
               height: 56,

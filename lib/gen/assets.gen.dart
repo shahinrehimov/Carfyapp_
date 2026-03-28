@@ -68,6 +68,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/heart.svg
   String get heart => 'assets/icons/heart.svg';
 
+  /// File path: assets/icons/list-1.svg
+  String get list1 => 'assets/icons/list-1.svg';
+
   /// File path: assets/icons/location-icon.svg
   String get locationIcon => 'assets/icons/location-icon.svg';
 
@@ -148,6 +151,7 @@ class $AssetsIconsGen {
     googleIconLogo,
     heartFilled,
     heart,
+    list1,
     locationIcon,
     logoWhite,
     logo,

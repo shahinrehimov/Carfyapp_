@@ -184,4 +184,21 @@ class TranslationKeys {
   static const String filterPriceMin = 'filter_price_min';
   static const String filterPriceMax = 'filter_price_max';
   static const String filterSearchByCar = 'filter_search_by_car';
+
+  // Product list
+  static const String productSearchHint = 'product_search_hint';
+  static const String productsFound = 'products_found';
+  static const String sorting = 'sorting';
+  static const String searchResults = 'search_results';
+  static const String productsEmpty = 'products_empty';
+  static const String productsEmptyDescription = 'products_empty_description';
+
+  // Car picker
+  static const String selectCarModel = 'select_car_model';
+  static const String carPickerCancel = 'car_picker_cancel';
+
+  // Search
+  static const String searchHistory = 'search_history';
+  static const String searchDelete = 'search_delete';
+  static const String searchCancel = 'search_cancel';
 }

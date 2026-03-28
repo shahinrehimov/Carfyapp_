@@ -31,16 +31,59 @@ class _AppBar extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: CustomTextField(
-                    controller: TextEditingController(),
-                    fillColor: Colors.white,
-                    hint: context.localization.search,
-                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 20)),
+                  child: GestureDetector(
+                    onTap: () async {
+                      final result = await context.pushRoute<String>(SearchRoute());
+                      if (result != null && result.isNotEmpty && context.mounted) {
+                        context.pushRoute(ProductListRoute(
+                          params: ProductListPageParams(search: result),
+                        ));
+                      }
+                    },
+                    child: Hero(
+                      tag: 'search_field_home',
+                      child: Material(
+                        color: Colors.transparent,
+                        child: AbsorbPointer(
+                          child: CustomTextField(
+                            controller: TextEditingController(),
+                            fillColor: Colors.white,
+                            hint: context.localization.productSearchHint,
+                            prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 20)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
-                  onTap: () => FilterBottomSheet.show(context),
+                  onTap: () async {
+                    final applied = await FilterBottomSheet.show(context);
+                    if (applied == true && context.mounted) {
+                      final filterState = context.read<FilterCubit>().state;
+                      context.pushRoute(
+                        ProductListRoute(
+                          params: ProductListPageParams(
+                            brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
+                            cityId: filterState.selectedCity?.id,
+                            colors: filterState.selectedColor != null ? [filterState.selectedColor!.slug] : null,
+                            conditions: filterState.selectedCondition != null
+                                ? [filterState.selectedCondition!.slug]
+                                : null,
+                            minYear: filterState.minYear,
+                            maxYear: filterState.maxYear,
+                            minPrice: filterState.minPrice != null && filterState.minPrice!.isNotEmpty
+                                ? double.tryParse(filterState.minPrice!)
+                                : null,
+                            maxPrice: filterState.maxPrice != null && filterState.maxPrice!.isNotEmpty
+                                ? double.tryParse(filterState.maxPrice!)
+                                : null,
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: Container(
                     width: 48,
                     height: 48,

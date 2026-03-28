@@ -555,6 +555,55 @@ class ProductDetailRouteArgs {
 }
 
 /// generated route for
+/// [ProductListPage]
+class ProductListRoute extends PageRouteInfo<ProductListRouteArgs> {
+  ProductListRoute({
+    Key? key,
+    required ProductListPageParams params,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ProductListRoute.name,
+         args: ProductListRouteArgs(key: key, params: params),
+         initialChildren: children,
+       );
+
+  static const String name = 'ProductListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ProductListRouteArgs>();
+      return WrappedRoute(
+        child: ProductListPage(key: args.key, params: args.params),
+      );
+    },
+  );
+}
+
+class ProductListRouteArgs {
+  const ProductListRouteArgs({this.key, required this.params});
+
+  final Key? key;
+
+  final ProductListPageParams params;
+
+  @override
+  String toString() {
+    return 'ProductListRouteArgs{key: $key, params: $params}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProductListRouteArgs) return false;
+    return key == other.key && params == other.params;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ params.hashCode;
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -699,6 +748,55 @@ class RegisteredSuccessfullyRoute extends PageRouteInfo<void> {
       return const RegisteredSuccessfullyPage();
     },
   );
+}
+
+/// generated route for
+/// [SearchPage]
+class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
+  SearchRoute({
+    Key? key,
+    String heroTag = 'search_field_home',
+    List<PageRouteInfo>? children,
+  }) : super(
+         SearchRoute.name,
+         args: SearchRouteArgs(key: key, heroTag: heroTag),
+         initialChildren: children,
+       );
+
+  static const String name = 'SearchRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SearchRouteArgs>(
+        orElse: () => const SearchRouteArgs(),
+      );
+      return SearchPage(key: args.key, heroTag: args.heroTag);
+    },
+  );
+}
+
+class SearchRouteArgs {
+  const SearchRouteArgs({this.key, this.heroTag = 'search_field_home'});
+
+  final Key? key;
+
+  final String heroTag;
+
+  @override
+  String toString() {
+    return 'SearchRouteArgs{key: $key, heroTag: $heroTag}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SearchRouteArgs) return false;
+    return key == other.key && heroTag == other.heroTag;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ heroTag.hashCode;
 }
 
 /// generated route for

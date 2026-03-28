@@ -362,4 +362,27 @@ class AppLocalizations {
   String get filterPriceMax => _tr(TranslationKeys.filterPriceMax);
 
   String get filterSearchByCar => _tr(TranslationKeys.filterSearchByCar);
+
+  // Product list
+  String get productSearchHint => _tr(TranslationKeys.productSearchHint);
+
+  String get productsFound => _tr(TranslationKeys.productsFound);
+
+  String get sorting => _tr(TranslationKeys.sorting);
+
+  String get searchResults => _tr(TranslationKeys.searchResults);
+
+  String get productsEmpty => _tr(TranslationKeys.productsEmpty);
+
+  String get productsEmptyDescription => _tr(TranslationKeys.productsEmptyDescription);
+
+  String get selectCarModel => _tr(TranslationKeys.selectCarModel);
+
+  String get carPickerCancel => _tr(TranslationKeys.carPickerCancel);
+
+  String get searchHistory => _tr(TranslationKeys.searchHistory);
+
+  String get searchDelete => _tr(TranslationKeys.searchDelete);
+
+  String get searchCancel => _tr(TranslationKeys.searchCancel);
 }

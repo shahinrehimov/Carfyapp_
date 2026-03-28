@@ -94,4 +94,21 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
   void restoreApplied(FilterState applied) {
     emit(applied.copyWith(loadStatus: state.loadStatus, filtersData: state.filtersData));
   }
+
+  void selectByCar(int brandId, int brandModelId) {
+    final filters = state.filtersData;
+    if (filters == null) return;
+
+    final brand = filters.brands.where((b) => b.id == brandId).firstOrNull;
+    if (brand == null) return;
+
+    final model = brand.models.where((m) => m.id == brandModelId).firstOrNull;
+
+    emit(state.copyWith(
+      selectedBrand: brand,
+      clearBrand: false,
+      selectedModel: model,
+      clearModel: model == null,
+    ));
+  }
 }

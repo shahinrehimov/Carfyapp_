@@ -179,6 +179,23 @@ class TranslationDefaults {
       TranslationKeys.filterPriceMin: 'Qiymət, min.',
       TranslationKeys.filterPriceMax: 'maks.',
       TranslationKeys.filterSearchByCar: 'Avtomobilimə görə axtar',
+
+      // Product list
+      TranslationKeys.productSearchHint: 'Məhsul axtar',
+      TranslationKeys.productsFound: 'məhsul tapılıb',
+      TranslationKeys.sorting: 'Sıralama',
+      TranslationKeys.searchResults: 'Axtarışın nəticələri',
+      TranslationKeys.productsEmpty: 'Məhsul tapılmadı',
+      TranslationKeys.productsEmptyDescription: 'Axtarış meyarlarınızı dəyişdirməyə çalışın',
+
+      // Car picker
+      TranslationKeys.selectCarModel: 'Avtomobil modelini seç',
+      TranslationKeys.carPickerCancel: 'İmtina',
+
+      // Search
+      TranslationKeys.searchHistory: 'Axtarış tarixçəsi',
+      TranslationKeys.searchDelete: 'Silmək',
+      TranslationKeys.searchCancel: 'İmtina',
     },
   };
 }

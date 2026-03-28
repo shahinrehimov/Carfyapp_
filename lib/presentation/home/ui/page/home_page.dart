@@ -15,8 +15,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
+import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/filter/ui/filter_bottom_sheet.dart';
 import 'package:carfy/presentation/home/state/home_cubit.dart';
+import 'package:carfy/presentation/product_list/state/product_list_params_ui.dart';
 
 part '../widget/app_bar.dart';
 
@@ -53,7 +55,12 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
             const _CategoriesSection(),
             const SizedBox(height: 24),
             const _GroupsSection(),
-            _Heading(header: context.localization.allProducts, onTap: () {}),
+            _Heading(
+              header: context.localization.allProducts,
+              onTap: () => context.pushRoute(ProductListRoute(
+                params: const ProductListPageParams(),
+              )),
+            ),
             const SizedBox(height: 12),
             const _ProductsSection(),
           ],
