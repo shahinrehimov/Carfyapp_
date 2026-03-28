@@ -13,6 +13,9 @@ abstract class BasketRemoteDataSource {
   Future<BasketActionResponseModel> removeFromBasket(String cpvUuid);
   Future<BasketQuantityResponseModel> incrementQuantity(String cpvUuid);
   Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid);
+  Future<BasketActionResponseModel> removeSetItem(String cpvUuid, int setItemId);
+  Future<BasketQuantityResponseModel> incrementSetItem(String cpvUuid, int setItemId);
+  Future<BasketQuantityResponseModel> decrementSetItem(String cpvUuid, int setItemId);
 }
 
 @Injectable(as: BasketRemoteDataSource)
@@ -55,6 +58,30 @@ class BasketRemoteDataSourceImpl extends BasketRemoteDataSource with DataSourceM
   Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid) {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.basketDecrement(cpvUuid)),
+      map: (json) => BasketQuantityResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<BasketActionResponseModel> removeSetItem(String cpvUuid, int setItemId) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.basketRemoveSet(cpvUuid, setItemId)),
+      map: (json) => BasketActionResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<BasketQuantityResponseModel> incrementSetItem(String cpvUuid, int setItemId) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.basketIncrementSet(cpvUuid, setItemId)),
+      map: (json) => BasketQuantityResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<BasketQuantityResponseModel> decrementSetItem(String cpvUuid, int setItemId) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.basketDecrementSet(cpvUuid, setItemId)),
       map: (json) => BasketQuantityResponseModel.fromJson(json),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/domain/entities/basket/basket_data.dart';
 import 'package:carfy/domain/use_cases/basket/add_to_basket_use_case.dart';
 import 'package:carfy/domain/use_cases/basket/decrement_quantity_use_case.dart';
 import 'package:carfy/domain/use_cases/basket/increment_quantity_use_case.dart';
@@ -42,45 +43,54 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
   }
 
   Future<void> removeFromBasket(String cpvUuid) async {
-    _setBasketActionStatus(StateStatus.loading());
+    _setProductState(cpvUuid, StateStatus.loading());
 
     final result = await _removeFromBasketUseCase(cpvUuid);
     result.fold(
       (failure) {
-        _setBasketActionStatus(mapFailure(failure));
+        _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
-        _setBasketActionStatus(StateStatus.successWithMessage(response.message));
+        _setProductState(cpvUuid, StateStatus.success());
+        _emitQuantityUpdate(cpvUuid, 0, response.basketData);
       },
     );
   }
 
   Future<void> incrementQuantity(String cpvUuid) async {
-    _setBasketActionStatus(StateStatus.loading());
+    _setProductState(cpvUuid, StateStatus.loading());
 
     final result = await _incrementQuantityUseCase(cpvUuid);
     result.fold(
       (failure) {
-        _setBasketActionStatus(mapFailure(failure));
+        _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
-        _setBasketActionStatus(StateStatus.successWithMessage(response.message));
+        _setProductState(cpvUuid, StateStatus.success());
+        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
       },
     );
   }
 
   Future<void> decrementQuantity(String cpvUuid) async {
-    _setBasketActionStatus(StateStatus.loading());
+    _setProductState(cpvUuid, StateStatus.loading());
 
     final result = await _decrementQuantityUseCase(cpvUuid);
     result.fold(
       (failure) {
-        _setBasketActionStatus(mapFailure(failure));
+        _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
-        _setBasketActionStatus(StateStatus.successWithMessage(response.message));
+        _setProductState(cpvUuid, StateStatus.success());
+        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
       },
     );
+  }
+
+  void _emitQuantityUpdate(String cpvUuid, int quantity, BasketData basketData) {
+    emit(state.copyWith(
+      quantityUpdate: QuantityUpdate(cpvUuid: cpvUuid, quantity: quantity, basketData: basketData),
+    ));
   }
 
   void _setProductState(String cpvUuid, StateStatus status) {
@@ -96,6 +106,14 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
   void clearProductState(String cpvUuid) {
     final updatedStates = Map<String, StateStatus>.from(state.productLoadingStates);
     updatedStates.remove(cpvUuid);
+    emit(state.copyWith(productLoadingStates: updatedStates));
+  }
+
+  void clearProductStates(List<String> cpvUuids) {
+    final updatedStates = Map<String, StateStatus>.from(state.productLoadingStates);
+    for (final uuid in cpvUuids) {
+      updatedStates.remove(uuid);
+    }
     emit(state.copyWith(productLoadingStates: updatedStates));
   }
 

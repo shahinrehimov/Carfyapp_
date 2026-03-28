@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/extensions/price_extension.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/dotted_line_painter.dart';
-import 'package:carfy/common/widgets/loading_dialog.dart';
 import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
-import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:carfy/presentation/basket/state/basket_cubit.dart';
@@ -42,69 +41,10 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
                       onRefresh: () async {
                         await context.read<BasketCubit>().refresh();
                       },
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              itemCount: state.items.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24),
-                              itemBuilder: (context, index) => BasketItem(basketProduct: state.items[index]),
-                            ),
-                            Container(
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: context.theme.colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              margin: const EdgeInsets.symmetric(horizontal: 16),
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    context.localization.paymentDetails,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: context.theme.colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  _buildDetailRow(
-                                    context,
-                                    context.localization.amount,
-                                    '${state.basketData!.totalPriceInBasket} ₼',
-                                  ),
-                                  _buildDetailRow(
-                                    context,
-                                    context.localization.productCount,
-                                    '${state.basketData!.totalBasketQuantity} ${context.localization.piece}',
-                                  ),
-                                  _buildDetailRow(
-                                    context,
-                                    context.localization.deliveryFee,
-                                    '${state.basketData!.shipping} ₼',
-                                  ),
-                                  _buildDetailRow(
-                                    context,
-                                    context.localization.discount,
-                                    '${state.basketData!.totalDiscountInBasket} ₼',
-                                  ),
-                                  _buildDetailRow(
-                                    context,
-                                    context.localization.total,
-                                    '${state.basketData!.totalPriceFinalInBasket} ₼',
-                                    isBold: true,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomButton(onPressed: () {}, text: context.localization.formOrder),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: ListView.builder(
+                        itemCount: state.items.length,
+                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24),
+                        itemBuilder: (context, index) => BasketItem(basketProduct: state.items[index]),
                       ),
                     )
                   : Center(
@@ -123,6 +63,60 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
               orElse: () => const _BasketLoading(),
             );
           },
+        ),
+        bottomNavigationBar: BlocBuilder<BasketCubit, BasketState>(
+          builder: (context, state) {
+            if (state.basketData == null || state.items.isEmpty) return const SizedBox.shrink();
+            return _PaymentDetailsBar(state: state, context: context);
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _PaymentDetailsBar extends StatelessWidget {
+  final BasketState state;
+  final BuildContext context;
+
+  const _PaymentDetailsBar({required this.state, required this.context});
+
+  @override
+  Widget build(BuildContext _) {
+    return Padding(
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.theme.colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 16, offset: Offset(0, -4))],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              context.localization.paymentDetails,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.black),
+            ),
+            const SizedBox(height: 12),
+            _buildDetailRow(context, context.localization.amount, state.basketData!.totalPrice.manatFormatted),
+            _buildDetailRow(
+              context,
+              context.localization.productCount,
+              '${state.basketData!.totalItems} ${context.localization.piece}',
+            ),
+            _buildDetailRow(context, context.localization.discount, state.basketData!.totalDiscount.manatFormatted),
+            _buildDetailRow(
+              context,
+              context.localization.total,
+              state.basketData!.totalPriceFinal.manatFormatted,
+              isBold: true,
+            ),
+            const SizedBox(height: 12),
+            CustomButton(onPressed: () {}, text: context.localization.formOrder),
+          ],
         ),
       ),
     );
@@ -176,47 +170,50 @@ class _BasketLoading extends StatelessWidget {
   }
 }
 
-class _BasketManagerListener extends StatefulWidget {
+class _BasketManagerListener extends StatelessWidget {
   final Widget child;
 
   const _BasketManagerListener({required this.child});
 
   @override
-  State<_BasketManagerListener> createState() => _BasketManagerListenerState();
-}
-
-class _BasketManagerListenerState extends State<_BasketManagerListener> {
-  bool _isDialogShowing = false;
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<BasketManagerCubit, BasketManagerState>(
-      listenWhen: (previous, current) => previous.basketActionStatus != current.basketActionStatus,
-      listener: (context, managerState) {
-        final status = managerState.basketActionStatus;
-
-        if (status is StateStatusLoading) {
-          _isDialogShowing = true;
-          LoadingDialog.show(context);
-        } else if (status is StateStatusSuccess || status is StateStatusSuccessWithMessage) {
-          if (_isDialogShowing) {
-            LoadingDialog.hide(context);
-            _isDialogShowing = false;
-          }
-          context.read<BasketCubit>().refresh();
-          context.read<BasketManagerCubit>().clearBasketActionStatus();
-        } else if (status is StateStatusFailure ||
-            status is StateStatusServerFailure ||
-            status is StateStatusNetworkFailure) {
-          if (_isDialogShowing) {
-            LoadingDialog.hide(context);
-            _isDialogShowing = false;
-          }
-          showStateStatusToast(context, status);
-          context.read<BasketManagerCubit>().clearBasketActionStatus();
-        }
-      },
-      child: widget.child,
+    return MultiBlocListener(
+      listeners: [
+        // Sync server data back to basket state after API responses
+        BlocListener<BasketManagerCubit, BasketManagerState>(
+          listenWhen: (prev, curr) => curr.quantityUpdate != null && prev.quantityUpdate != curr.quantityUpdate,
+          listener: (context, managerState) {
+            final update = managerState.quantityUpdate!;
+            if (update.quantity <= 0) {
+              context.read<BasketCubit>().removeItem(update.cpvUuid, update.basketData);
+            } else {
+              context.read<BasketCubit>().updateItemQuantity(update.cpvUuid, update.quantity, update.basketData);
+            }
+          },
+        ),
+        // Rollback optimistic update on error
+        BlocListener<BasketManagerCubit, BasketManagerState>(
+          listenWhen: (prev, curr) {
+            if (prev.productLoadingStates == curr.productLoadingStates) return false;
+            return curr.productLoadingStates.values.any((s) =>
+                s is StateStatusFailure || s is StateStatusServerFailure || s is StateStatusNetworkFailure);
+          },
+          listener: (context, _) {
+            context.read<BasketCubit>().rollback();
+          },
+        ),
+        // Refresh basket when add-to-basket succeeds from another page
+        BlocListener<BasketManagerCubit, BasketManagerState>(
+          listenWhen: (prev, curr) =>
+              prev.basketActionStatus != curr.basketActionStatus &&
+              (curr.basketActionStatus is StateStatusSuccess ||
+                  curr.basketActionStatus is StateStatusSuccessWithMessage),
+          listener: (context, _) {
+            context.read<BasketCubit>().refresh();
+          },
+        ),
+      ],
+      child: child,
     );
   }
 }

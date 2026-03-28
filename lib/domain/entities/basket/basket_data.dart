@@ -1,15 +1,13 @@
 class BasketData {
-  final double totalPriceInBasket;
-  final double totalPriceFinalInBasket;
-  final double totalDiscountInBasket;
-  final double shipping;
-  final int totalBasketQuantity;
+  final double totalPrice;
+  final double totalPriceFinal;
+  final double totalDiscount;
+  final int totalItems;
 
   BasketData({
-    required this.totalPriceInBasket,
-    required this.totalPriceFinalInBasket,
-    required this.totalDiscountInBasket,
-    required this.shipping,
-    required this.totalBasketQuantity,
+    required this.totalPrice,
+    required this.totalPriceFinal,
+    required this.totalDiscount,
+    required this.totalItems,
   });
 }

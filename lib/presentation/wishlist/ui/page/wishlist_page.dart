@@ -6,9 +6,9 @@ import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
 import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
 import 'package:carfy/presentation/home/ui/widget/product_item.dart';
 import 'package:carfy/presentation/wishlist/state/wishlist_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +22,12 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<WishlistManagerCubit, WishlistManagerState>(
+      listenWhen: (prev, curr) => prev.wishlistIds != curr.wishlistIds,
+      listener: (context, wishlistManagerState) {
+        context.read<WishlistCubit>().onWishlistIdsChanged(wishlistManagerState.wishlistIds);
+      },
+      child: Scaffold(
       backgroundColor: context.theme.colors.bg,
       appBar: CustomAppBar(
         title: context.localization.mainFavorite,
@@ -48,6 +53,7 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
           );
         },
       ),
+    ),
     );
   }
 }

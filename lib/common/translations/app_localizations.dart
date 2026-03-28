@@ -316,4 +316,50 @@ class AppLocalizations {
   String get sessionsEmpty => _tr(TranslationKeys.sessionsEmpty);
 
   String get sessionsThisDevice => _tr(TranslationKeys.sessionsThisDevice);
+
+  // Product detail
+  String get productDetail => _tr(TranslationKeys.productDetail);
+
+  String get productCode => _tr(TranslationKeys.productCode);
+
+  String get reviews => _tr(TranslationKeys.reviews);
+
+  String get showMore => _tr(TranslationKeys.showMore);
+
+  String get relatedProducts => _tr(TranslationKeys.relatedProducts);
+
+  String get contactUs => _tr(TranslationKeys.contactUs);
+
+  String get writeToCarfy => _tr(TranslationKeys.writeToCarfy);
+
+  String get callCarfy => _tr(TranslationKeys.callCarfy);
+
+  String get city => _tr(TranslationKeys.city);
+
+  String get brand => _tr(TranslationKeys.brand);
+
+  String get year => _tr(TranslationKeys.year);
+
+  // Filter
+  String get filter => _tr(TranslationKeys.filter);
+
+  String get filterShow => _tr(TranslationKeys.filterShow);
+
+  String get filterReset => _tr(TranslationKeys.filterReset);
+
+  String get filterModel => _tr(TranslationKeys.filterModel);
+
+  String get filterColor => _tr(TranslationKeys.filterColor);
+
+  String get filterCondition => _tr(TranslationKeys.filterCondition);
+
+  String get filterYearMin => _tr(TranslationKeys.filterYearMin);
+
+  String get filterYearMax => _tr(TranslationKeys.filterYearMax);
+
+  String get filterPriceMin => _tr(TranslationKeys.filterPriceMin);
+
+  String get filterPriceMax => _tr(TranslationKeys.filterPriceMax);
+
+  String get filterSearchByCar => _tr(TranslationKeys.filterSearchByCar);
 }

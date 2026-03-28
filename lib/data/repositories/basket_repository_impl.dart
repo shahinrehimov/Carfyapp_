@@ -55,4 +55,28 @@ class BasketRepositoryImpl extends BasketRepository with RepositorySafeCallMixin
       return _mapper.mapBasketQuantityResponse(res);
     });
   }
+
+  @override
+  Future<Either<Failure, BasketActionResponse>> removeSetItem(String cpvUuid, int setItemId) {
+    return safeCall(() async {
+      final res = await _remoteDataSource.removeSetItem(cpvUuid, setItemId);
+      return _mapper.mapBasketActionResponse(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, BasketQuantityResponse>> incrementSetItem(String cpvUuid, int setItemId) {
+    return safeCall(() async {
+      final res = await _remoteDataSource.incrementSetItem(cpvUuid, setItemId);
+      return _mapper.mapBasketQuantityResponse(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, BasketQuantityResponse>> decrementSetItem(String cpvUuid, int setItemId) {
+    return safeCall(() async {
+      final res = await _remoteDataSource.decrementSetItem(cpvUuid, setItemId);
+      return _mapper.mapBasketQuantityResponse(res);
+    });
+  }
 }

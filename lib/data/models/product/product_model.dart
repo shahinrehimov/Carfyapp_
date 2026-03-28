@@ -1,9 +1,11 @@
 import 'package:carfy/data/models/product/product_detail_model.dart';
+import 'package:carfy/data/models/product/seller_model.dart';
 
 class ProductModel {
-  final int id;
+  final int? id;
   final String uuid;
   final String slug;
+  final String? oemCode;
   final String title;
   final String? hoverImage;
   final bool isSet;
@@ -16,13 +18,14 @@ class ProductModel {
   final double discount;
   final bool inWishlist;
   final bool inBasket;
-  final String? sellerUuid;
+  final SellerModel? seller;
   final ProductDetailModel product;
 
   ProductModel({
-    required this.id,
+    this.id,
     required this.uuid,
     required this.slug,
+    this.oemCode,
     required this.title,
     this.hoverImage,
     required this.isSet,
@@ -35,15 +38,16 @@ class ProductModel {
     required this.discount,
     required this.inWishlist,
     required this.inBasket,
-    this.sellerUuid,
+    this.seller,
     required this.product,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       uuid: json['uuid'] as String,
-      slug: json['slug'] as String,
+      slug: (json['variant_slug'] ?? json['slug']) as String,
+      oemCode: json['oem_code'] as String?,
       title: json['title'] as String,
       hoverImage: json['hover_image'] as String?,
       isSet: json['is_set'] as bool,
@@ -56,7 +60,9 @@ class ProductModel {
       discount: (json['discount'] as num).toDouble(),
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
-      sellerUuid: (json['seller'] as Map<String, dynamic>?)?['uuid'] as String?,
+      seller: json['seller'] != null
+          ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>)
+          : null,
       product: ProductDetailModel.fromJson(json['product'] as Map<String, dynamic>),
     );
   }

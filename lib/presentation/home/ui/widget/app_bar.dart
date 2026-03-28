@@ -39,14 +39,17 @@ class _AppBar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: context.theme.colors.white.withValues(alpha: 0.6),
-                    borderRadius: BorderRadius.circular(30),
+                GestureDetector(
+                  onTap: () => FilterBottomSheet.show(context),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: context.theme.colors.white.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Center(child: SvgPicture.asset(Assets.icons.filters)),
                   ),
-                  child: Center(child: SvgPicture.asset(Assets.icons.filters)),
                 ),
               ],
             ),

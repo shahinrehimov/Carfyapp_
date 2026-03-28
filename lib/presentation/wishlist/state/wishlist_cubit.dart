@@ -62,4 +62,32 @@ class WishlistCubit extends Cubit<WishlistState> with StateMapHelper {
       },
     );
   }
+
+  void removeProduct(String cpvUuid) {
+    final updated = state.products.where((p) => p.seller?.uuid != cpvUuid).toList();
+    emit(state.copyWith(products: updated));
+  }
+
+  void onWishlistIdsChanged(Set<String> wishlistIds) {
+    if (state.status is! StateStatusSuccess) return;
+
+    final currentUuids = state.products.map((p) => p.seller?.uuid).whereType<String>().toSet();
+
+    // Remove products no longer in wishlist
+    final updated = state.products.where((p) {
+      final uuid = p.seller?.uuid;
+      return uuid != null && wishlistIds.contains(uuid);
+    }).toList();
+
+    final hasRemovals = updated.length != state.products.length;
+    final hasAdditions = wishlistIds.any((id) => !currentUuids.contains(id));
+
+    if (hasRemovals) {
+      emit(state.copyWith(products: updated));
+    }
+
+    if (hasAdditions) {
+      refresh();
+    }
+  }
 }

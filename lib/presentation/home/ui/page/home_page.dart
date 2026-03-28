@@ -6,6 +6,7 @@ import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/domain/entities/group/group.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/presentation/home/ui/widget/product_item.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
+import 'package:carfy/presentation/filter/ui/filter_bottom_sheet.dart';
 import 'package:carfy/presentation/home/state/home_cubit.dart';
 
 part '../widget/app_bar.dart';
@@ -50,16 +52,7 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
             const SizedBox(height: 8),
             const _CategoriesSection(),
             const SizedBox(height: 24),
-            BlocBuilder<HomeCubit, HomeState>(
-              buildWhen: (previous, current) => previous.bestSeller != current.bestSeller,
-              builder: (context, state) {
-                final title = state.bestSeller?.title ?? '';
-                return _Heading(header: title, onTap: () {});
-              },
-            ),
-            const SizedBox(height: 12),
-            const _GroupSection(),
-            const SizedBox(height: 24),
+            const _GroupsSection(),
             _Heading(header: context.localization.allProducts, onTap: () {}),
             const SizedBox(height: 12),
             const _ProductsSection(),

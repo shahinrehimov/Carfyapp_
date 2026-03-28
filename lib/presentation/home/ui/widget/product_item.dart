@@ -1,12 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/extensions/price_extension.dart';
+import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
-import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
+import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,9 +20,22 @@ class ProductItem extends StatelessWidget {
 
   const ProductItem({super.key, required this.product});
 
+  void _navigateToDetail(BuildContext context) {
+    final categorySlugs = product.product.categorySlugs;
+    context.pushRoute(ProductDetailRoute(
+      parentSlug: categorySlugs?.parentCategorySlug,
+      subSlug: categorySlugs?.subCategorySlug ?? '',
+      productSlug: product.product.slug,
+      variant: product.slug,
+      seller: product.seller?.storeCode,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () => _navigateToDetail(context),
+      child: Container(
       width: 179,
       height: 267,
       decoration: BoxDecoration(
@@ -42,7 +57,23 @@ class ProductItem extends StatelessWidget {
               Positioned(
                 right: 10,
                 top: 6,
-                child: SvgPicture.asset(product.inWishlist ? Assets.icons.heartFilled : Assets.icons.heart),
+                child: BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
+                  buildWhen: (prev, curr) {
+                    final cpvUuid = product.seller?.uuid;
+                    if (cpvUuid == null) return false;
+                    return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
+                  },
+                  builder: (context, wishlistState) {
+                    final cpvUuid = product.seller?.uuid;
+                    final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
+                    return GestureDetector(
+                      onTap: cpvUuid != null
+                          ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid)
+                          : null,
+                      child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -50,13 +81,13 @@ class ProductItem extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${product.priceFinal.toString()} ₼',
+                product.priceFinal.manatFormatted,
                 style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
               ),
               if (product.hasDiscount) ...[
                 const SizedBox(width: 8),
                 Text(
-                  '${product.price.toString()} ₼',
+                  product.price.manatFormatted,
                   style: TextStyle(
                     color: context.theme.colors.darkGray,
                     fontSize: 12,
@@ -69,32 +100,16 @@ class ProductItem extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            product.title,
+            product.product.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: context.theme.colors.textDark, fontSize: 10, fontWeight: FontWeight.w400),
           ),
           const SizedBox(height: 6),
           const Spacer(),
-          BlocConsumer<BasketManagerCubit, BasketManagerState>(
-            listenWhen: (previous, current) {
-              final cpvUuid = product.sellerUuid;
-              if (cpvUuid == null) return false;
-              final prevStatus = previous.getStatus(cpvUuid);
-              final currStatus = current.getStatus(cpvUuid);
-              return prevStatus != currStatus && currStatus != null && currStatus is! StateStatusLoading;
-            },
-            listener: (context, state) {
-              final cpvUuid = product.sellerUuid;
-              if (cpvUuid == null) return;
-              final status = state.getStatus(cpvUuid);
-              if (status != null) {
-                showStateStatusToast(context, status);
-                context.read<BasketManagerCubit>().clearProductState(cpvUuid);
-              }
-            },
+          BlocBuilder<BasketManagerCubit, BasketManagerState>(
             builder: (context, state) {
-              final cpvUuid = product.sellerUuid;
+              final cpvUuid = product.seller?.uuid;
               final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
               return CustomButton(
                 onPressed: isLoading || cpvUuid == null
@@ -120,6 +135,7 @@ class ProductItem extends StatelessWidget {
           const SizedBox(height: 12),
         ],
       ),
+    ),
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carfy/common/extensions/price_extension.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
+import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
+import 'package:carfy/presentation/basket/state/basket_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,13 +55,13 @@ class BasketItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${basketProduct.priceFinalInBasket.toString()} ₼',
+                      basketProduct.priceFinalInBasket.manatFormatted,
                       style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     if (basketProduct.product.hasDiscount) ...[
                       const SizedBox(width: 8),
                       Text(
-                        '${basketProduct.priceInBasket.toString()} ₼',
+                        basketProduct.priceInBasket.manatFormatted,
                         style: TextStyle(
                           color: context.theme.colors.darkGray,
                           fontSize: 12,
@@ -83,15 +86,19 @@ class BasketItem extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          final cpvUuid = basketProduct.product.sellerUuid;
-                          if (cpvUuid != null) context.read<BasketManagerCubit>().decrementQuantity(cpvUuid);
+                          final cpvUuid = basketProduct.product.seller?.uuid;
+                          if (cpvUuid == null || basketProduct.basketQuantity <= 1) return;
+                          context.read<BasketCubit>().optimisticDecrement(cpvUuid);
+                          context.read<BasketManagerCubit>().decrementQuantity(cpvUuid);
                         },
                         child: Container(
                           width: 18,
                           height: 18,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: context.theme.colors.secondary.withValues(alpha: 0.5),
+                            color: basketProduct.basketQuantity > 1
+                                ? context.theme.colors.secondary
+                                : context.theme.colors.secondary.withValues(alpha: 0.5),
                           ),
                           child: Center(child: SvgPicture.asset(Assets.icons.minus, width: 7)),
                         ),
@@ -106,8 +113,10 @@ class BasketItem extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          final cpvUuid = basketProduct.product.sellerUuid;
-                          if (cpvUuid != null) context.read<BasketManagerCubit>().incrementQuantity(cpvUuid);
+                          final cpvUuid = basketProduct.product.seller?.uuid;
+                          if (cpvUuid == null) return;
+                          context.read<BasketCubit>().optimisticIncrement(cpvUuid);
+                          context.read<BasketManagerCubit>().incrementQuantity(cpvUuid);
                         },
                         child: Container(
                           width: 18,
@@ -129,13 +138,30 @@ class BasketItem extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  final cpvUuid = basketProduct.product.sellerUuid;
-                  if (cpvUuid != null) context.read<BasketManagerCubit>().removeFromBasket(cpvUuid);
+                  final cpvUuid = basketProduct.product.seller?.uuid;
+                  if (cpvUuid == null) return;
+                  context.read<BasketCubit>().optimisticRemove(cpvUuid);
+                  context.read<BasketManagerCubit>().removeFromBasket(cpvUuid);
                 },
-                child: Padding(padding: const EdgeInsets.all(2.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
+                behavior: HitTestBehavior.opaque,
+                child: Padding(padding: const EdgeInsets.all(5.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
               ),
               const SizedBox(height: 22),
-              SvgPicture.asset(basketProduct.product.inWishlist ? Assets.icons.heartFilled : Assets.icons.heart),
+              BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
+                buildWhen: (prev, curr) {
+                  final cpvUuid = basketProduct.product.seller?.uuid;
+                  if (cpvUuid == null) return false;
+                  return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
+                },
+                builder: (context, wishlistState) {
+                  final cpvUuid = basketProduct.product.seller?.uuid;
+                  final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
+                  return GestureDetector(
+                    onTap: cpvUuid != null ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid) : null,
+                    child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
+                  );
+                },
+              ),
             ],
           ),
         ],

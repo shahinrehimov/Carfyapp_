@@ -153,6 +153,32 @@ class TranslationDefaults {
       TranslationKeys.sessionsTerminatedSuccess: 'Seans uğurla sonlandırıldı',
       TranslationKeys.sessionsEmpty: 'Digər aktiv cihaz yoxdur',
       TranslationKeys.sessionsThisDevice: 'Bu cihaz',
+
+      // Product detail
+      TranslationKeys.productDetail: 'Məhsul haqqında',
+      TranslationKeys.productCode: 'Məhsul kodu',
+      TranslationKeys.reviews: 'rəy',
+      TranslationKeys.showMore: 'Daha çox göstər',
+      TranslationKeys.relatedProducts: 'Bənzər məhsullar',
+      TranslationKeys.contactUs: 'Daha ətraflı məlumat üçün bizimlə əlaqə qurun.',
+      TranslationKeys.writeToCarfy: 'Carfy\'ə yaz',
+      TranslationKeys.callCarfy: 'Carfy\'ə zəng et',
+      TranslationKeys.city: 'Şəhər',
+      TranslationKeys.brand: 'Marka',
+      TranslationKeys.year: 'İl',
+
+      // Filter
+      TranslationKeys.filter: 'Filter',
+      TranslationKeys.filterShow: 'Göstər',
+      TranslationKeys.filterReset: 'Sıfırla',
+      TranslationKeys.filterModel: 'Model',
+      TranslationKeys.filterColor: 'Rəng',
+      TranslationKeys.filterCondition: 'Vəziyyət',
+      TranslationKeys.filterYearMin: 'İl, min.',
+      TranslationKeys.filterYearMax: 'maks.',
+      TranslationKeys.filterPriceMin: 'Qiymət, min.',
+      TranslationKeys.filterPriceMax: 'maks.',
+      TranslationKeys.filterSearchByCar: 'Avtomobilimə görə axtar',
     },
   };
 }

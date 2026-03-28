@@ -1,18 +1,45 @@
 part of '../page/home_page.dart';
 
-class _GroupSection extends StatelessWidget {
-  const _GroupSection();
+class _GroupsSection extends StatelessWidget {
+  const _GroupsSection();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) => previous.bestSellerStatus != current.bestSellerStatus,
+      buildWhen: (previous, current) =>
+          previous.groupsStatus != current.groupsStatus || previous.groups != current.groups,
       builder: (context, state) {
-        return state.bestSellerStatus.maybeWhen(
-          success: () => _GroupProductsList(products: state.bestSeller!.products),
-          orElse: () => const _GroupProductsLoading(),
+        return state.groupsStatus.maybeWhen(
+          success: () => Column(
+            children: state.groups.map((group) => _GroupItem(group: group)).toList(),
+          ),
+          orElse: () => Column(
+            children: [
+              const SizedBox(height: 12),
+              const _GroupProductsLoading(),
+              const SizedBox(height: 24),
+            ],
+          ),
         );
       },
+    );
+  }
+}
+
+class _GroupItem extends StatelessWidget {
+  final Group group;
+
+  const _GroupItem({required this.group});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _Heading(header: group.title, onTap: () {}),
+        const SizedBox(height: 12),
+        _GroupProductsList(products: group.products),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }

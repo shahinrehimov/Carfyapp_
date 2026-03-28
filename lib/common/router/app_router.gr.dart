@@ -462,6 +462,99 @@ class MyCarsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProductDetailPage]
+class ProductDetailRoute extends PageRouteInfo<ProductDetailRouteArgs> {
+  ProductDetailRoute({
+    Key? key,
+    String? parentSlug,
+    required String subSlug,
+    required String productSlug,
+    String? variant,
+    String? seller,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ProductDetailRoute.name,
+         args: ProductDetailRouteArgs(
+           key: key,
+           parentSlug: parentSlug,
+           subSlug: subSlug,
+           productSlug: productSlug,
+           variant: variant,
+           seller: seller,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'ProductDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ProductDetailRouteArgs>();
+      return WrappedRoute(
+        child: ProductDetailPage(
+          key: args.key,
+          parentSlug: args.parentSlug,
+          subSlug: args.subSlug,
+          productSlug: args.productSlug,
+          variant: args.variant,
+          seller: args.seller,
+        ),
+      );
+    },
+  );
+}
+
+class ProductDetailRouteArgs {
+  const ProductDetailRouteArgs({
+    this.key,
+    this.parentSlug,
+    required this.subSlug,
+    required this.productSlug,
+    this.variant,
+    this.seller,
+  });
+
+  final Key? key;
+
+  final String? parentSlug;
+
+  final String subSlug;
+
+  final String productSlug;
+
+  final String? variant;
+
+  final String? seller;
+
+  @override
+  String toString() {
+    return 'ProductDetailRouteArgs{key: $key, parentSlug: $parentSlug, subSlug: $subSlug, productSlug: $productSlug, variant: $variant, seller: $seller}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProductDetailRouteArgs) return false;
+    return key == other.key &&
+        parentSlug == other.parentSlug &&
+        subSlug == other.subSlug &&
+        productSlug == other.productSlug &&
+        variant == other.variant &&
+        seller == other.seller;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      parentSlug.hashCode ^
+      subSlug.hashCode ^
+      productSlug.hashCode ^
+      variant.hashCode ^
+      seller.hashCode;
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})

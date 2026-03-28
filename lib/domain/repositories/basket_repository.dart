@@ -14,4 +14,10 @@ abstract class BasketRepository {
   Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(String cpvUuid);
 
   Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(String cpvUuid);
+
+  Future<Either<Failure, BasketActionResponse>> removeSetItem(String cpvUuid, int setItemId);
+
+  Future<Either<Failure, BasketQuantityResponse>> incrementSetItem(String cpvUuid, int setItemId);
+
+  Future<Either<Failure, BasketQuantityResponse>> decrementSetItem(String cpvUuid, int setItemId);
 }

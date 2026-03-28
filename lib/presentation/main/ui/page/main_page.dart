@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/presentation/app/ui/widget/basket_manager_listener.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BasketManagerListener(
+      child: BlocProvider(
       create: (_) => MainCubit(),
       child: AutoTabsScaffold(
         lazyLoad: true,
@@ -41,6 +43,7 @@ class MainPage extends StatelessWidget {
           );
         },
       ),
+    ),
     );
   }
 }

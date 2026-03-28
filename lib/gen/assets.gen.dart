@@ -116,6 +116,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   String get profile => 'assets/icons/profile.svg';
 
+  /// File path: assets/icons/reset-1.svg
+  String get reset1 => 'assets/icons/reset-1.svg';
+
   /// File path: assets/icons/sale-square.svg
   String get saleSquare => 'assets/icons/sale-square.svg';
 
@@ -161,6 +164,7 @@ class $AssetsIconsGen {
     password,
     plus,
     profile,
+    reset1,
     saleSquare,
     search,
     support,

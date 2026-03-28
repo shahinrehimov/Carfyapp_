@@ -18,11 +18,10 @@ class BasketMapper {
   BasketMapper(this._productMapper);
 
   BasketData mapBasketData(BasketDataModel model) => BasketData(
-        totalPriceInBasket: model.totalPriceInBasket,
-        totalPriceFinalInBasket: model.totalPriceFinalInBasket,
-        totalDiscountInBasket: model.totalDiscountInBasket,
-        shipping: model.shipping,
-        totalBasketQuantity: model.totalBasketQuantity,
+        totalPrice: model.totalPrice,
+        totalPriceFinal: model.totalPriceFinal,
+        totalDiscount: model.totalDiscount,
+        totalItems: model.totalItems,
       );
 
   BasketProduct mapBasketProduct(BasketProductModel model) => BasketProduct(

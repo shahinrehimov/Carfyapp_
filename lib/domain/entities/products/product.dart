@@ -1,10 +1,12 @@
 import 'package:carfy/domain/entities/products/product_detail.dart';
+import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/enums/discount_type.dart';
 
 class Product {
-  final int id;
+  final int? id;
   final String uuid;
   final String slug;
+  final String? oemCode;
   final String title;
   final String? hoverImage;
   final bool isSet;
@@ -17,13 +19,14 @@ class Product {
   final double discount;
   final bool inWishlist;
   final bool inBasket;
-  final String? sellerUuid;
+  final Seller? seller;
   final ProductDetail product;
 
   Product({
-    required this.id,
+    this.id,
     required this.uuid,
     required this.slug,
+    this.oemCode,
     required this.title,
     this.hoverImage,
     required this.isSet,
@@ -36,7 +39,7 @@ class Product {
     required this.discount,
     required this.inWishlist,
     required this.inBasket,
-    this.sellerUuid,
+    this.seller,
     required this.product,
   });
 }

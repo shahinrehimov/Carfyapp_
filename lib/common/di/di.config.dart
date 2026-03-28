@@ -110,11 +110,17 @@ import 'package:carfy/domain/use_cases/basket/add_to_basket_use_case.dart'
     as _i307;
 import 'package:carfy/domain/use_cases/basket/decrement_quantity_use_case.dart'
     as _i828;
+import 'package:carfy/domain/use_cases/basket/decrement_set_item_use_case.dart'
+    as _i712;
 import 'package:carfy/domain/use_cases/basket/get_basket_use_case.dart' as _i7;
 import 'package:carfy/domain/use_cases/basket/increment_quantity_use_case.dart'
     as _i685;
+import 'package:carfy/domain/use_cases/basket/increment_set_item_use_case.dart'
+    as _i861;
 import 'package:carfy/domain/use_cases/basket/remove_from_basket_use_case.dart'
     as _i509;
+import 'package:carfy/domain/use_cases/basket/remove_set_item_use_case.dart'
+    as _i853;
 import 'package:carfy/domain/use_cases/car/add_car_use_case.dart' as _i325;
 import 'package:carfy/domain/use_cases/car/delete_car_photo_use_case.dart'
     as _i256;
@@ -136,8 +142,22 @@ import 'package:carfy/domain/use_cases/car/update_car_use_case.dart' as _i936;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
+import 'package:carfy/domain/use_cases/group/get_groups_bulk_use_case.dart'
+    as _i863;
+import 'package:carfy/domain/use_cases/group/get_groups_list_use_case.dart'
+    as _i321;
+import 'package:carfy/domain/use_cases/product/get_other_sellers_use_case.dart'
+    as _i854;
+import 'package:carfy/domain/use_cases/product/get_product_filters_use_case.dart'
+    as _i250;
+import 'package:carfy/domain/use_cases/product/get_product_show_use_case.dart'
+    as _i309;
 import 'package:carfy/domain/use_cases/product/get_products_use_case.dart'
     as _i603;
+import 'package:carfy/domain/use_cases/product/load_reviews_use_case.dart'
+    as _i303;
+import 'package:carfy/domain/use_cases/product/store_review_use_case.dart'
+    as _i139;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
@@ -146,8 +166,14 @@ import 'package:carfy/domain/use_cases/translations/save_translations_use_case.d
     as _i740;
 import 'package:carfy/domain/use_cases/version/get_versions_use_case.dart'
     as _i450;
+import 'package:carfy/domain/use_cases/wishlist/add_to_wishlist_use_case.dart'
+    as _i456;
+import 'package:carfy/domain/use_cases/wishlist/get_wishlist_ids_use_case.dart'
+    as _i214;
 import 'package:carfy/domain/use_cases/wishlist/get_wishlist_use_case.dart'
     as _i676;
+import 'package:carfy/domain/use_cases/wishlist/remove_from_wishlist_use_case.dart'
+    as _i904;
 import 'package:carfy/presentation/main/state/main_cubit.dart' as _i420;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -187,8 +213,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i344.ProductMapper>(),
       ),
     );
+    gh.factory<_i456.AddToWishlistUseCase>(
+      () => _i456.AddToWishlistUseCase(gh<_i54.WishlistRepository>()),
+    );
+    gh.factory<_i214.GetWishlistIdsUseCase>(
+      () => _i214.GetWishlistIdsUseCase(gh<_i54.WishlistRepository>()),
+    );
     gh.factory<_i676.GetWishlistUseCase>(
       () => _i676.GetWishlistUseCase(gh<_i54.WishlistRepository>()),
+    );
+    gh.factory<_i904.RemoveFromWishlistUseCase>(
+      () => _i904.RemoveFromWishlistUseCase(gh<_i54.WishlistRepository>()),
     );
     gh.factory<_i861.CategoryRemoteDataSource>(
       () => _i861.CategoryRemoteDataSourceImpl(),
@@ -262,8 +297,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i438.UpdateAddressUseCase>(
       () => _i438.UpdateAddressUseCase(gh<_i574.AddressRepository>()),
     );
+    gh.factory<_i854.GetOtherSellersUseCase>(
+      () => _i854.GetOtherSellersUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i250.GetProductFiltersUseCase>(
+      () => _i250.GetProductFiltersUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i309.GetProductShowUseCase>(
+      () => _i309.GetProductShowUseCase(gh<_i39.ProductRepository>()),
+    );
     gh.factory<_i603.GetProductsUseCase>(
       () => _i603.GetProductsUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i303.LoadReviewsUseCase>(
+      () => _i303.LoadReviewsUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i139.StoreReviewUseCase>(
+      () => _i139.StoreReviewUseCase(gh<_i39.ProductRepository>()),
     );
     gh.factory<_i202.GetCategoriesUseCase>(
       () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),
@@ -330,6 +380,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i442.GetGroupUseCase>(
       () => _i442.GetGroupUseCase(gh<_i1037.GroupRepository>()),
+    );
+    gh.factory<_i863.GetGroupsBulkUseCase>(
+      () => _i863.GetGroupsBulkUseCase(gh<_i1037.GroupRepository>()),
+    );
+    gh.factory<_i321.GetGroupsListUseCase>(
+      () => _i321.GetGroupsListUseCase(gh<_i1037.GroupRepository>()),
     );
     gh.factory<_i450.GetVersionsUseCase>(
       () => _i450.GetVersionsUseCase(gh<_i745.VersionRepository>()),
@@ -400,14 +456,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i828.DecrementQuantityUseCase>(
       () => _i828.DecrementQuantityUseCase(gh<_i449.BasketRepository>()),
     );
+    gh.factory<_i712.DecrementSetItemUseCase>(
+      () => _i712.DecrementSetItemUseCase(gh<_i449.BasketRepository>()),
+    );
     gh.factory<_i7.GetBasketUseCase>(
       () => _i7.GetBasketUseCase(gh<_i449.BasketRepository>()),
     );
     gh.factory<_i685.IncrementQuantityUseCase>(
       () => _i685.IncrementQuantityUseCase(gh<_i449.BasketRepository>()),
     );
+    gh.factory<_i861.IncrementSetItemUseCase>(
+      () => _i861.IncrementSetItemUseCase(gh<_i449.BasketRepository>()),
+    );
     gh.factory<_i509.RemoveFromBasketUseCase>(
       () => _i509.RemoveFromBasketUseCase(gh<_i449.BasketRepository>()),
+    );
+    gh.factory<_i853.RemoveSetItemUseCase>(
+      () => _i853.RemoveSetItemUseCase(gh<_i449.BasketRepository>()),
     );
     gh.factory<_i187.GetCachedTranslationsUseCase>(
       () =>

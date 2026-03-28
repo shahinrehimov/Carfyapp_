@@ -35,12 +35,25 @@ class EndpointPaths {
 
   // Product Endpoints
   static const products = '/app/products/load';
+  static const productFilters = '/app/products/filters';
+  static String productShow(String parentSlug, String subSlug, String productSlug) =>
+      '/app/products/show/$parentSlug/$subSlug/$productSlug';
+  static String productShowTwoPart(String subSlug, String productSlug) =>
+      '/app/products/show/$subSlug/$productSlug';
+  static String otherSellers(int variantId) => '/app/products/$variantId/other-sellers';
+  static String reviewStore(String cpvUuid) => '/app/products/$cpvUuid/reviews/store';
+  static String reviewsLoad(String cpvUuid) => '/app/products/$cpvUuid/reviews/load';
 
   // Group Endpoints
+  static const groupsList = '/app/groups/list';
   static String groupProducts(String slug) => '/app/groups/single/$slug/products/load';
+  static const groupsBulkProducts = '/app/groups/bulk/products/load';
 
   // Wishlist Endpoints
   static const wishlist = '/app/wishlist/load';
+  static const wishlistIds = '/app/wishlist/ids';
+  static String wishlistAdd(String cpvUuid) => '/app/wishlist/add/$cpvUuid';
+  static String wishlistRemove(String cpvUuid) => '/app/wishlist/remove/$cpvUuid';
 
   // Profile Endpoints
   static const profileMe = '/app/profile/me';
@@ -54,6 +67,9 @@ class EndpointPaths {
   static String basketRemove(String cpvUuid) => '/app/basket/remove/$cpvUuid';
   static String basketIncrement(String cpvUuid) => '/app/basket/increment/$cpvUuid';
   static String basketDecrement(String cpvUuid) => '/app/basket/decrement/$cpvUuid';
+  static String basketRemoveSet(String cpvUuid, int setItemId) => '/app/basket/remove/$cpvUuid/set/$setItemId';
+  static String basketIncrementSet(String cpvUuid, int setItemId) => '/app/basket/increment/$cpvUuid/set/$setItemId';
+  static String basketDecrementSet(String cpvUuid, int setItemId) => '/app/basket/decrement/$cpvUuid/set/$setItemId';
 
   // Car Endpoints
   static const carsLoad = '/app/profile/cars/load';

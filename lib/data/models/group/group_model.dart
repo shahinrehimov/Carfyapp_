@@ -24,9 +24,11 @@ class GroupModel {
       title: json['title'] as String,
       description: json['description'] as String?,
       image: json['image'] as String?,
-      products: (json['product_variants'] as List<dynamic>)
-          .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      products: json['product_variants'] != null
+          ? (json['product_variants'] as List<dynamic>)
+              .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
+              .toList()
+          : [],
     );
   }
 }

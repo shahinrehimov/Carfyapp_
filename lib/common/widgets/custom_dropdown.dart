@@ -236,8 +236,8 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.6,
-      minChildSize: 0.4,
+      initialChildSize: 0.7,
+      minChildSize: 0.5,
       maxChildSize: 0.9,
       expand: false,
       builder: (_, scrollController) {
@@ -275,8 +275,9 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                   child: TextField(
                     controller: _searchController,
-                    autofocus: true,
+                    autofocus: false,
                     enableSuggestions: false,
+                    onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                     autocorrect: false,
                     decoration: InputDecoration(
                       hintText: context.localization.searchHint,

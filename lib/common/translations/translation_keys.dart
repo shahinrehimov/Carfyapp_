@@ -158,4 +158,30 @@ class TranslationKeys {
   static const String sessionsTerminatedSuccess = 'sessions_terminated_success';
   static const String sessionsEmpty = 'sessions_empty';
   static const String sessionsThisDevice = 'sessions_this_device';
+
+  // Product detail
+  static const String productDetail = 'product_detail';
+  static const String productCode = 'product_code';
+  static const String reviews = 'reviews';
+  static const String showMore = 'show_more';
+  static const String relatedProducts = 'related_products';
+  static const String contactUs = 'contact_us';
+  static const String writeToCarfy = 'write_to_carfy';
+  static const String callCarfy = 'call_carfy';
+  static const String city = 'city';
+  static const String brand = 'brand';
+  static const String year = 'year';
+
+  // Filter
+  static const String filter = 'filter';
+  static const String filterShow = 'filter_show';
+  static const String filterReset = 'filter_reset';
+  static const String filterModel = 'filter_model';
+  static const String filterColor = 'filter_color';
+  static const String filterCondition = 'filter_condition';
+  static const String filterYearMin = 'filter_year_min';
+  static const String filterYearMax = 'filter_year_max';
+  static const String filterPriceMin = 'filter_price_min';
+  static const String filterPriceMax = 'filter_price_max';
+  static const String filterSearchByCar = 'filter_search_by_car';
 }
