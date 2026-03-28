@@ -38,26 +38,46 @@ class ProductListAppBar extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: GestureDetector(
-              onTap: () async {
-                final result = await context.pushRoute<String>(SearchRoute(heroTag: 'search_field_list'));
-                if (result != null && result.isNotEmpty && context.mounted) {
-                  context.read<ProductListCubit>().init(search: result);
-                }
-              },
-              child: Hero(
-                tag: 'search_field_list',
-                child: Material(
-                  color: Colors.transparent,
-                  child: AbsorbPointer(
-                    child: CustomTextField(
-                      controller: TextEditingController(),
-                      hint: context.localization.productSearchHint,
-                      prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 18)),
+            child: BlocBuilder<ProductListCubit, ProductListState>(
+              buildWhen: (prev, curr) => prev.search != curr.search,
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: () async {
+                    final result = await context.pushRoute<String>(
+                      SearchRoute(heroTag: 'search_field_list', initialQuery: state.search),
+                    );
+                    if (result != null && context.mounted) {
+                      context.read<ProductListCubit>().applySearch(result.isEmpty ? null : result);
+                    }
+                  },
+                  child: Hero(
+                    tag: 'search_field_list',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          AbsorbPointer(
+                            child: CustomTextField(
+                              controller: TextEditingController(text: state.search ?? ''),
+                              hint: context.localization.productSearchHint,
+                              prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 18)),
+                            ),
+                          ),
+                          if (state.search != null && state.search!.isNotEmpty)
+                            GestureDetector(
+                              onTap: () => context.read<ProductListCubit>().applySearch(null),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: SvgPicture.asset(Assets.icons.closeSquare, width: 14),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ],

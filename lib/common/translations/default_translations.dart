@@ -196,6 +196,11 @@ class TranslationDefaults {
       TranslationKeys.searchHistory: 'Axtarış tarixçəsi',
       TranslationKeys.searchDelete: 'Silmək',
       TranslationKeys.searchCancel: 'İmtina',
+
+      // Category picker
+      TranslationKeys.selectCategory: 'Kateqoriya seç',
+      TranslationKeys.categoryDone: 'Təsdiqlə',
+      TranslationKeys.categoriesSelected: 'kateqoriya seçilib',
     },
   };
 }

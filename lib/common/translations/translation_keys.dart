@@ -201,4 +201,9 @@ class TranslationKeys {
   static const String searchHistory = 'search_history';
   static const String searchDelete = 'search_delete';
   static const String searchCancel = 'search_cancel';
+
+  // Category picker
+  static const String selectCategory = 'select_category';
+  static const String categoryDone = 'category_done';
+  static const String categoriesSelected = 'categories_selected';
 }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/product_list/state/product_list_cubit.dart';
 import 'package:carfy/presentation/product_list/state/product_list_params_ui.dart';
 import 'package:carfy/presentation/product_list/ui/widget/product_list_app_bar.dart';
@@ -16,23 +17,34 @@ class ProductListPage extends StatelessWidget implements AutoRouteWrapper {
   const ProductListPage({super.key, required this.params});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (_) => ProductListCubit()
-      ..init(
-        search: params.search,
-        categories: params.categories,
-        subCategories: params.subCategories,
-        brands: params.brands,
-        cityId: params.cityId,
-        colors: params.colors,
-        conditions: params.conditions,
-        minYear: params.minYear,
-        maxYear: params.maxYear,
-        minPrice: params.minPrice,
-        maxPrice: params.maxPrice,
-      ),
-    child: this,
-  );
+  Widget wrappedRoute(BuildContext context) {
+    // Sync initial params to global FilterCubit
+    final filterCubit = context.read<FilterCubit>();
+    if (params.categories != null || params.subCategories != null) {
+      filterCubit.setCategories(
+        params.categories?.toSet() ?? {},
+        params.subCategories?.toSet() ?? {},
+      );
+    }
+
+    return BlocProvider(
+      create: (_) => ProductListCubit()
+        ..init(
+          search: params.search,
+          categories: params.categories,
+          subCategories: params.subCategories,
+          brands: params.brands,
+          cityId: params.cityId,
+          colors: params.colors,
+          conditions: params.conditions,
+          minYear: params.minYear,
+          maxYear: params.maxYear,
+          minPrice: params.minPrice,
+          maxPrice: params.maxPrice,
+        ),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

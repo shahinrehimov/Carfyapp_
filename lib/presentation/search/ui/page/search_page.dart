@@ -10,8 +10,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 @RoutePage()
 class SearchPage extends StatefulWidget {
   final String heroTag;
+  final String? initialQuery;
 
-  const SearchPage({super.key, this.heroTag = 'search_field_home'});
+  const SearchPage({super.key, this.heroTag = 'search_field_home', this.initialQuery});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -28,6 +29,9 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _loadHistory();
+    if (widget.initialQuery != null) {
+      _controller.text = widget.initialQuery!;
+    }
   }
 
   @override
@@ -59,8 +63,9 @@ class _SearchPageState extends State<SearchPage> {
 
   void _submit(String query) {
     final trimmed = query.trim();
-    if (trimmed.isEmpty) return;
-    _saveHistory(trimmed);
+    if (trimmed.isNotEmpty) {
+      _saveHistory(trimmed);
+    }
     Navigator.pop(context, trimmed);
   }
 
@@ -82,20 +87,31 @@ class _SearchPageState extends State<SearchPage> {
                 tag: widget.heroTag,
                 child: Material(
                   color: Colors.transparent,
-                  child: CustomTextField(
-                    controller: _controller,
-                    autoFocus: true,
-                    textInputAction: TextInputAction.search,
-                    onFieldSubmitted: _submit,
-                    hint: context.localization.productSearchHint,
-                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 20)),
+                  child: ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _controller,
+                    builder: (context, value, _) {
+                      return CustomTextField(
+                        controller: _controller,
+                        autoFocus: true,
+                        textInputAction: TextInputAction.search,
+                        onFieldSubmitted: _submit,
+                        hint: context.localization.productSearchHint,
+                        prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.search, width: 20)),
+                        suffix: value.text.isNotEmpty
+                            ? GestureDetector(
+                                onTap: () => _controller.clear(),
+                                child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.closeSquare, width: 14)),
+                              )
+                            : null,
+                      );
+                    },
                   ),
                 ),
               ),
             ),
             const SizedBox(width: 12),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () => context.router.maybePop(),
               child: Text(
                 context.localization.searchCancel,
                 style: const TextStyle(color: Color(0xFFFE764C), fontSize: 12, fontWeight: FontWeight.w500),

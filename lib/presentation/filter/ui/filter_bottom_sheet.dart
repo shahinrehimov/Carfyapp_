@@ -11,6 +11,7 @@ import 'package:carfy/domain/entities/products/filter_option.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/filter/ui/car_picker_bottom_sheet.dart';
+import 'package:carfy/presentation/filter/ui/category_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,6 +116,49 @@ class _FilterContent extends StatelessWidget {
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
           children: [
+            // Brand
+            // Category
+            GestureDetector(
+              onTap: () async {
+                final result = await CategoryPickerBottomSheet.show(
+                  context,
+                  categories: filters.categories,
+                  initialCategories: state.selectedCategories,
+                  initialSubCategories: state.selectedSubCategories,
+                );
+                if (result != null) {
+                  cubit.setCategories(result.categories, result.subCategories);
+                }
+              },
+              child: Container(
+                height: 48,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(color: context.theme.colors.border),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        state.selectedCategoryCount > 0
+                            ? '${state.selectedCategoryCount} ${context.localization.categoriesSelected}'
+                            : context.localization.categories,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: state.selectedCategoryCount > 0
+                              ? context.theme.colors.textDark
+                              : context.theme.colors.textLight,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.arrow_drop_down, color: context.theme.colors.textDark),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             // Brand
             CustomDropdownField<FilterBrand>(
               items: filters.brands,

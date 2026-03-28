@@ -68,6 +68,10 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     emit(state.copyWith(selectedCondition: condition, clearCondition: condition == null));
   }
 
+  void setCategories(Set<String> categories, Set<String> subCategories) {
+    emit(state.copyWith(selectedCategories: categories, selectedSubCategories: subCategories));
+  }
+
   void selectMinYear(int? year) {
     emit(state.copyWith(minYear: year, clearMinYear: year == null));
   }

@@ -16,8 +16,8 @@ class FilterCategoryModel {
       id: json['id'] as int,
       slug: json['slug'] as String,
       title: json['title'] as String,
-      children: json['children'] != null
-          ? (json['children'] as List).map((e) => FilterCategoryModel.fromJson(e)).toList()
+      children: json['subs'] != null
+          ? (json['subs'] as List).map((e) => FilterCategoryModel.fromJson(e)).toList()
           : [],
     );
   }

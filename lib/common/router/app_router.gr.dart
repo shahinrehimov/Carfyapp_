@@ -756,10 +756,15 @@ class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
   SearchRoute({
     Key? key,
     String heroTag = 'search_field_home',
+    String? initialQuery,
     List<PageRouteInfo>? children,
   }) : super(
          SearchRoute.name,
-         args: SearchRouteArgs(key: key, heroTag: heroTag),
+         args: SearchRouteArgs(
+           key: key,
+           heroTag: heroTag,
+           initialQuery: initialQuery,
+         ),
          initialChildren: children,
        );
 
@@ -771,32 +776,44 @@ class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
       final args = data.argsAs<SearchRouteArgs>(
         orElse: () => const SearchRouteArgs(),
       );
-      return SearchPage(key: args.key, heroTag: args.heroTag);
+      return SearchPage(
+        key: args.key,
+        heroTag: args.heroTag,
+        initialQuery: args.initialQuery,
+      );
     },
   );
 }
 
 class SearchRouteArgs {
-  const SearchRouteArgs({this.key, this.heroTag = 'search_field_home'});
+  const SearchRouteArgs({
+    this.key,
+    this.heroTag = 'search_field_home',
+    this.initialQuery,
+  });
 
   final Key? key;
 
   final String heroTag;
 
+  final String? initialQuery;
+
   @override
   String toString() {
-    return 'SearchRouteArgs{key: $key, heroTag: $heroTag}';
+    return 'SearchRouteArgs{key: $key, heroTag: $heroTag, initialQuery: $initialQuery}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! SearchRouteArgs) return false;
-    return key == other.key && heroTag == other.heroTag;
+    return key == other.key &&
+        heroTag == other.heroTag &&
+        initialQuery == other.initialQuery;
   }
 
   @override
-  int get hashCode => key.hashCode ^ heroTag.hashCode;
+  int get hashCode => key.hashCode ^ heroTag.hashCode ^ initialQuery.hashCode;
 }
 
 /// generated route for

@@ -385,4 +385,10 @@ class AppLocalizations {
   String get searchDelete => _tr(TranslationKeys.searchDelete);
 
   String get searchCancel => _tr(TranslationKeys.searchCancel);
+
+  String get selectCategory => _tr(TranslationKeys.selectCategory);
+
+  String get categoryDone => _tr(TranslationKeys.categoryDone);
+
+  String get categoriesSelected => _tr(TranslationKeys.categoriesSelected);
 }
