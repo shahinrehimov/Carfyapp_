@@ -241,11 +241,9 @@ class _DropdownBottomSheetState<T> extends State<_DropdownBottomSheet<T>> {
       maxChildSize: 0.9,
       expand: false,
       builder: (_, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: context.theme.colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          ),
+        return Material(
+          color: context.theme.colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           child: Column(
             children: [
               // Drag handle

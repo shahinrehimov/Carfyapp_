@@ -68,8 +68,8 @@ class _AppBar extends StatelessWidget {
                             brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
                             categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
                             subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
-                            cityId: filterState.selectedCity?.id,
-                            colors: filterState.selectedColor != null ? [filterState.selectedColor!.slug] : null,
+                            cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
+                            colors: filterState.selectedColorSlugs.isNotEmpty ? filterState.selectedColorSlugs.toList() : null,
                             conditions: filterState.selectedCondition != null
                                 ? [filterState.selectedCondition!.slug]
                                 : null,

@@ -1,7 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/domain/entities/products/city.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/filter_option.dart';
@@ -56,12 +55,12 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     emit(state.copyWith(selectedModel: model, clearModel: model == null));
   }
 
-  void selectCity(City? city) {
-    emit(state.copyWith(selectedCity: city, clearCity: city == null));
+  void setCities(Set<int> cityIds) {
+    emit(state.copyWith(selectedCityIds: cityIds));
   }
 
-  void selectColor(FilterOption? color) {
-    emit(state.copyWith(selectedColor: color, clearColor: color == null));
+  void setColors(Set<String> colorSlugs) {
+    emit(state.copyWith(selectedColorSlugs: colorSlugs));
   }
 
   void selectCondition(FilterOption? condition) {

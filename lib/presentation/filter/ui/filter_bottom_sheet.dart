@@ -3,7 +3,6 @@ import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
-import 'package:carfy/domain/entities/products/city.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
@@ -12,6 +11,7 @@ import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/filter/ui/car_picker_bottom_sheet.dart';
 import 'package:carfy/presentation/filter/ui/category_picker_bottom_sheet.dart';
+import 'package:carfy/presentation/filter/ui/multi_select_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -166,22 +166,37 @@ class _FilterContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // City
-            CustomDropdownField<City>(
-              items: filters.cities,
-              value: state.selectedCity,
+            _MultiSelectField(
               hint: context.localization.city,
-              searchable: true,
-              itemLabelBuilder: (c) => c.title,
-              onChanged: (c) => cubit.selectCity(c),
+              selectedCount: state.selectedCityIds.length,
+              onTap: () async {
+                final result = await MultiSelectPickerBottomSheet.show<int>(
+                  context,
+                  title: context.localization.city,
+                  doneText: context.localization.categoryDone,
+                  items: filters.cities.map((c) => c.id).toList(),
+                  initialSelected: state.selectedCityIds,
+                  labelBuilder: (id) => filters.cities.firstWhere((c) => c.id == id).title,
+                );
+                if (result != null) cubit.setCities(result);
+              },
             ),
             const SizedBox(height: 12),
             // Color
-            CustomDropdownField<FilterOption>(
-              items: filters.colors,
-              value: state.selectedColor,
+            _MultiSelectField(
               hint: context.localization.filterColor,
-              itemLabelBuilder: (c) => c.title,
-              onChanged: (c) => cubit.selectColor(c),
+              selectedCount: state.selectedColorSlugs.length,
+              onTap: () async {
+                final result = await MultiSelectPickerBottomSheet.show<String>(
+                  context,
+                  title: context.localization.filterColor,
+                  doneText: context.localization.categoryDone,
+                  items: filters.colors.map((c) => c.slug).toList(),
+                  initialSelected: state.selectedColorSlugs,
+                  labelBuilder: (slug) => filters.colors.firstWhere((c) => c.slug == slug).title,
+                );
+                if (result != null) cubit.setColors(result);
+              },
             ),
             const SizedBox(height: 12),
             // Year range
@@ -479,6 +494,50 @@ class _SplitDropdownRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _MultiSelectField extends StatelessWidget {
+  final String hint;
+  final int selectedCount;
+  final VoidCallback onTap;
+
+  const _MultiSelectField({
+    required this.hint,
+    required this.selectedCount,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(color: context.theme.colors.border),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                selectedCount > 0 ? '$selectedCount seçilib' : hint,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: selectedCount > 0
+                      ? context.theme.colors.textDark
+                      : context.theme.colors.textLight,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            Icon(Icons.arrow_drop_down, color: context.theme.colors.textDark),
+          ],
+        ),
       ),
     );
   }
