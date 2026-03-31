@@ -3,7 +3,6 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
-import 'package:carfy/domain/entities/products/filter_option.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
 import 'package:carfy/domain/use_cases/product/get_product_filters_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -63,8 +62,8 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     emit(state.copyWith(selectedColorSlugs: colorSlugs));
   }
 
-  void selectCondition(FilterOption? condition) {
-    emit(state.copyWith(selectedCondition: condition, clearCondition: condition == null));
+  void setConditions(Set<String> conditionSlugs) {
+    emit(state.copyWith(selectedConditionSlugs: conditionSlugs));
   }
 
   void setCategories(Set<String> categories, Set<String> subCategories) {

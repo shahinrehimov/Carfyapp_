@@ -7,7 +7,7 @@ class FilterState extends Equatable {
   final BrandModelItem? selectedModel;
   final Set<int> selectedCityIds;
   final Set<String> selectedColorSlugs;
-  final FilterOption? selectedCondition;
+  final Set<String> selectedConditionSlugs;
   final Set<String> selectedCategories;
   final Set<String> selectedSubCategories;
   final int? minYear;
@@ -22,7 +22,7 @@ class FilterState extends Equatable {
     this.selectedModel,
     this.selectedCityIds = const {},
     this.selectedColorSlugs = const {},
-    this.selectedCondition,
+    this.selectedConditionSlugs = const {},
     this.selectedCategories = const {},
     this.selectedSubCategories = const {},
     this.minYear,
@@ -40,7 +40,7 @@ class FilterState extends Equatable {
       selectedModel != null ||
       selectedCityIds.isNotEmpty ||
       selectedColorSlugs.isNotEmpty ||
-      selectedCondition != null ||
+      selectedConditionSlugs.isNotEmpty ||
       selectedCategories.isNotEmpty ||
       selectedSubCategories.isNotEmpty ||
       minYear != null ||
@@ -57,8 +57,7 @@ class FilterState extends Equatable {
     bool clearModel = false,
     Set<int>? selectedCityIds,
     Set<String>? selectedColorSlugs,
-    FilterOption? selectedCondition,
-    bool clearCondition = false,
+    Set<String>? selectedConditionSlugs,
     Set<String>? selectedCategories,
     Set<String>? selectedSubCategories,
     int? minYear,
@@ -77,7 +76,7 @@ class FilterState extends Equatable {
       selectedModel: clearModel ? null : (selectedModel ?? this.selectedModel),
       selectedCityIds: selectedCityIds ?? this.selectedCityIds,
       selectedColorSlugs: selectedColorSlugs ?? this.selectedColorSlugs,
-      selectedCondition: clearCondition ? null : (selectedCondition ?? this.selectedCondition),
+      selectedConditionSlugs: selectedConditionSlugs ?? this.selectedConditionSlugs,
       selectedCategories: selectedCategories ?? this.selectedCategories,
       selectedSubCategories: selectedSubCategories ?? this.selectedSubCategories,
       minYear: clearMinYear ? null : (minYear ?? this.minYear),
@@ -90,7 +89,7 @@ class FilterState extends Equatable {
   @override
   List<Object?> get props => [
     loadStatus, filtersData, selectedBrand, selectedModel, selectedCityIds,
-    selectedColorSlugs, selectedCondition, selectedCategories, selectedSubCategories,
+    selectedColorSlugs, selectedConditionSlugs, selectedCategories, selectedSubCategories,
     minYear, maxYear, minPrice, maxPrice,
   ];
 }

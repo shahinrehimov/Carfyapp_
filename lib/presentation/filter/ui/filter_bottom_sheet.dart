@@ -6,7 +6,6 @@ import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
-import 'package:carfy/domain/entities/products/filter_option.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/filter/ui/car_picker_bottom_sheet.dart';
@@ -222,12 +221,20 @@ class _FilterContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // Condition
-            CustomDropdownField<FilterOption>(
-              items: filters.conditions,
-              value: state.selectedCondition,
+            _MultiSelectField(
               hint: context.localization.filterCondition,
-              itemLabelBuilder: (c) => c.title,
-              onChanged: (c) => cubit.selectCondition(c),
+              selectedCount: state.selectedConditionSlugs.length,
+              onTap: () async {
+                final result = await MultiSelectPickerBottomSheet.show<String>(
+                  context,
+                  title: context.localization.filterCondition,
+                  doneText: context.localization.categoryDone,
+                  items: filters.conditions.map((c) => c.slug).toList(),
+                  initialSelected: state.selectedConditionSlugs,
+                  labelBuilder: (slug) => filters.conditions.firstWhere((c) => c.slug == slug).title,
+                );
+                if (result != null) cubit.setConditions(result);
+              },
             ),
             const SizedBox(height: 16),
             // Search by car button

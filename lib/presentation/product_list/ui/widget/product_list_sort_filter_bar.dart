@@ -56,7 +56,7 @@ class ProductListSortFilterBar extends StatelessWidget {
                           subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
                           cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
                           colors: filterState.selectedColorSlugs.isNotEmpty ? filterState.selectedColorSlugs.toList() : null,
-                          conditions: filterState.selectedCondition != null ? [filterState.selectedCondition!.slug] : null,
+                          conditions: filterState.selectedConditionSlugs.isNotEmpty ? filterState.selectedConditionSlugs.toList() : null,
                           minYear: filterState.minYear,
                           maxYear: filterState.maxYear,
                           minPrice: filterState.minPrice != null && filterState.minPrice!.isNotEmpty

@@ -22,13 +22,15 @@ class ProductItem extends StatelessWidget {
 
   void _navigateToDetail(BuildContext context) {
     final categorySlugs = product.product.categorySlugs;
-    context.pushRoute(ProductDetailRoute(
-      parentSlug: categorySlugs?.parentCategorySlug,
-      subSlug: categorySlugs?.subCategorySlug ?? '',
-      productSlug: product.product.slug,
-      variant: product.slug,
-      seller: product.seller?.storeCode,
-    ));
+    context.pushRoute(
+      ProductDetailRoute(
+        parentSlug: categorySlugs?.parentCategorySlug,
+        subSlug: categorySlugs?.subCategorySlug ?? '',
+        productSlug: product.product.slug,
+        variant: product.slug,
+        seller: product.seller?.storeCode,
+      ),
+    );
   }
 
   @override
@@ -36,106 +38,104 @@ class ProductItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToDetail(context),
       child: Container(
-      width: 179,
-      height: 267,
-      decoration: BoxDecoration(
-        color: context.theme.colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(width: 1, color: context.theme.colors.border2),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 8),
-          Stack(
-            children: [
-              Center(
-                child: CachedNetworkImage(imageUrl: product.product.hoverImage!, height: 118, fit: BoxFit.cover),
-              ),
-              const SizedBox(width: double.maxFinite),
-              Positioned(
-                right: 10,
-                top: 6,
-                child: BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
-                  buildWhen: (prev, curr) {
-                    final cpvUuid = product.seller?.uuid;
-                    if (cpvUuid == null) return false;
-                    return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
-                  },
-                  builder: (context, wishlistState) {
-                    final cpvUuid = product.seller?.uuid;
-                    final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
-                    return GestureDetector(
-                      onTap: cpvUuid != null
-                          ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid)
-                          : null,
-                      child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
-                    );
-                  },
+        width: 179,
+        height: 267,
+        decoration: BoxDecoration(
+          color: context.theme.colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(width: 1, color: context.theme.colors.border2),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8),
+            Stack(
+              children: [
+                Center(
+                  child: CachedNetworkImage(imageUrl: product.hoverImage!, height: 118, fit: BoxFit.cover),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Text(
-                product.priceFinal.manatFormatted,
-                style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
-              ),
-              if (product.hasDiscount) ...[
-                const SizedBox(width: 8),
-                Text(
-                  product.price.manatFormatted,
-                  style: TextStyle(
-                    color: context.theme.colors.darkGray,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    decoration: TextDecoration.lineThrough,
+                const SizedBox(width: double.maxFinite),
+                Positioned(
+                  right: 10,
+                  top: 6,
+                  child: BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
+                    buildWhen: (prev, curr) {
+                      final cpvUuid = product.seller?.uuid;
+                      if (cpvUuid == null) return false;
+                      return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
+                    },
+                    builder: (context, wishlistState) {
+                      final cpvUuid = product.seller?.uuid;
+                      final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
+                      return GestureDetector(
+                        onTap: cpvUuid != null ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid) : null,
+                        child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
+                      );
+                    },
                   ),
                 ),
               ],
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            product.product.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: context.theme.colors.textDark, fontSize: 10, fontWeight: FontWeight.w400),
-          ),
-          const SizedBox(height: 6),
-          const Spacer(),
-          BlocBuilder<BasketManagerCubit, BasketManagerState>(
-            builder: (context, state) {
-              final cpvUuid = product.seller?.uuid;
-              final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
-              return CustomButton(
-                onPressed: isLoading || cpvUuid == null
-                    ? () {}
-                    : () {
-                        context.read<BasketManagerCubit>().addToBasket(cpvUuid);
-                      },
-                loading: isLoading,
-                text: context.localization.addToBasket,
-                prefix: isLoading
-                    ? null
-                    : SvgPicture.asset(
-                        Assets.icons.mainBasket,
-                        width: 18,
-                        colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-                      ),
-                prefixPadding: 8,
-                height: 40,
-                fontSize: 12,
-              );
-            },
-          ),
-          const SizedBox(height: 12),
-        ],
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                Text(
+                  product.priceFinal.manatFormatted,
+                  style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+                if (product.hasDiscount) ...[
+                  const SizedBox(width: 8),
+                  Text(
+                    product.price.manatFormatted,
+                    style: TextStyle(
+                      color: context.theme.colors.darkGray,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              product.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: context.theme.colors.textDark, fontSize: 10, fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 6),
+            const Spacer(),
+            BlocBuilder<BasketManagerCubit, BasketManagerState>(
+              builder: (context, state) {
+                final cpvUuid = product.seller?.uuid;
+                final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
+                return CustomButton(
+                  onPressed: isLoading || cpvUuid == null
+                      ? () {}
+                      : () {
+                          context.read<BasketManagerCubit>().addToBasket(cpvUuid);
+                        },
+                  loading: isLoading,
+                  text: context.localization.addToBasket,
+                  prefix: isLoading
+                      ? null
+                      : SvgPicture.asset(
+                          Assets.icons.mainBasket,
+                          width: 18,
+                          colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                        ),
+                  prefixPadding: 8,
+                  height: 40,
+                  fontSize: 12,
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
