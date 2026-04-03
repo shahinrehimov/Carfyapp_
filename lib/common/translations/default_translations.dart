@@ -158,6 +158,9 @@ class TranslationDefaults {
       TranslationKeys.productDetail: 'Məhsul haqqında',
       TranslationKeys.productCode: 'Məhsul kodu',
       TranslationKeys.reviews: 'rəy',
+      TranslationKeys.reviewsAndRatings: 'Məhsul haqqında rəylər və reytinq',
+      TranslationKeys.writeReview: 'Rəy yaz',
+      TranslationKeys.noReviews: 'Hələ ki rəy yazılmayıb. İlk rəyi siz yazın!',
       TranslationKeys.showMore: 'Daha çox göstər',
       TranslationKeys.relatedProducts: 'Bənzər məhsullar',
       TranslationKeys.contactUs: 'Daha ətraflı məlumat üçün bizimlə əlaqə qurun.',
@@ -166,6 +169,7 @@ class TranslationDefaults {
       TranslationKeys.city: 'Şəhər',
       TranslationKeys.brand: 'Marka',
       TranslationKeys.year: 'İl',
+      TranslationKeys.category: 'Kateqoriya',
 
       // Filter
       TranslationKeys.filter: 'Filter',

@@ -12,17 +12,22 @@ class ProductDetailsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final rows = <_DetailRow>[];
 
-    if (product.city != null) {
-      rows.add(_DetailRow(label: context.localization.city, value: product.city!.title));
+    if (product.seller?.city != null) {
+      rows.add(_DetailRow(label: context.localization.city, value: product.seller!.city!.title));
     }
-    for (final option in product.options) {
-      rows.add(_DetailRow(label: option.option.title, value: option.item.title));
+    if (product.product?.mainCategory != null) {
+      rows.add(
+        _DetailRow(label: context.localization.category, value: product.product?.mainCategory?.title ?? ''),
+      );
     }
     if (product.product?.brand != null) {
       rows.add(_DetailRow(label: context.localization.brand, value: product.product!.brand!.title));
     }
     if (product.year != null) {
       rows.add(_DetailRow(label: context.localization.year, value: product.year.toString()));
+    }
+    for (final option in product.options) {
+      rows.add(_DetailRow(label: option.label, value: option.value));
     }
 
     if (rows.isEmpty) return const SizedBox.shrink();

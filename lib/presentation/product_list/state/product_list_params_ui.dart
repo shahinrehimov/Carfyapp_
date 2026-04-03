@@ -1,4 +1,5 @@
 class ProductListPageParams {
+  final bool fromFilter;
   final String? search;
   final List<String>? categories;
   final List<String>? subCategories;
@@ -12,6 +13,7 @@ class ProductListPageParams {
   final double? maxPrice;
 
   const ProductListPageParams({
+    this.fromFilter = false,
     this.search,
     this.categories,
     this.subCategories,

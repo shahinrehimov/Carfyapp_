@@ -1,4 +1,4 @@
-import 'package:carfy/data/models/product/product_detail_model.dart';
+import 'package:carfy/data/models/product/product_info_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
 
 class ProductModel {
@@ -19,7 +19,7 @@ class ProductModel {
   final bool inWishlist;
   final bool inBasket;
   final SellerModel? seller;
-  final ProductDetailModel product;
+  final ProductInfoModel product;
 
   ProductModel({
     this.id,
@@ -63,7 +63,7 @@ class ProductModel {
       seller: json['seller'] != null
           ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>)
           : null,
-      product: ProductDetailModel.fromJson(json['product'] as Map<String, dynamic>),
+      product: ProductInfoModel.fromJson(json['product'] as Map<String, dynamic>),
     );
   }
 }

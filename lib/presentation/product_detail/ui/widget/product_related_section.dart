@@ -29,6 +29,7 @@ class ProductRelatedSection extends StatelessWidget {
               crossAxisSpacing: 12,
               childAspectRatio: 179 / 267,
             ),
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => ProductItem(product: product.relatedProducts[index]),

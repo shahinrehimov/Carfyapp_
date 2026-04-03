@@ -11,19 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class ProductListPage extends StatelessWidget implements AutoRouteWrapper {
+class ProductListPage extends StatefulWidget implements AutoRouteWrapper {
   final ProductListPageParams params;
 
   const ProductListPage({super.key, required this.params});
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    // Sync initial params to global FilterCubit
-    final filterCubit = context.read<FilterCubit>();
-    if (params.categories != null || params.subCategories != null) {
-      filterCubit.setCategories(
-        params.categories?.toSet() ?? {},
-        params.subCategories?.toSet() ?? {},
+    // Sync FilterCubit with page params
+    if (!params.fromFilter) {
+      context.read<FilterCubit>().syncFromParams(
+        categories: params.categories?.toSet(),
+        subCategories: params.subCategories?.toSet(),
       );
     }
 
@@ -44,6 +43,25 @@ class ProductListPage extends StatelessWidget implements AutoRouteWrapper {
         ),
       child: this,
     );
+  }
+
+  @override
+  State<ProductListPage> createState() => _ProductListPageState();
+}
+
+class _ProductListPageState extends State<ProductListPage> {
+  late final FilterCubit _filterCubit;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _filterCubit = context.read<FilterCubit>();
+  }
+
+  @override
+  void dispose() {
+    _filterCubit.reset();
+    super.dispose();
   }
 
   @override

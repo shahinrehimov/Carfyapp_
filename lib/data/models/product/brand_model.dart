@@ -21,8 +21,8 @@ class BrandModel {
       uuid: json['uuid'] as String?,
       slug: json['slug'] as String,
       title: json['title'] as String,
-      models: json['models'] != null
-          ? (json['models'] as List<dynamic>)
+      models: (json['brand_models'] ?? json['models']) != null
+          ? ((json['brand_models'] ?? json['models']) as List<dynamic>)
               .map((item) => BrandModelItemModel.fromJson(item as Map<String, dynamic>))
               .toList()
           : [],

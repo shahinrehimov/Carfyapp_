@@ -20,8 +20,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/apple-icon-logo.svg
   String get appleIconLogo => 'assets/icons/apple-icon-logo.svg';
 
+  /// File path: assets/icons/arrow-left-circle.svg
+  String get arrowLeftCircle => 'assets/icons/arrow-left-circle.svg';
+
   /// File path: assets/icons/arrow-narrow-left.svg
   String get arrowNarrowLeft => 'assets/icons/arrow-narrow-left.svg';
+
+  /// File path: assets/icons/arrow-right-circle.svg
+  String get arrowRightCircle => 'assets/icons/arrow-right-circle.svg';
 
   /// File path: assets/icons/box.svg
   String get box => 'assets/icons/box.svg';
@@ -40,6 +46,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/close-square.svg
   String get closeSquare => 'assets/icons/close-square.svg';
+
+  /// File path: assets/icons/comment-5.svg
+  String get comment5 => 'assets/icons/comment-5.svg';
 
   /// File path: assets/icons/delete.svg
   String get delete => 'assets/icons/delete.svg';
@@ -131,17 +140,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/support.svg
   String get support => 'assets/icons/support.svg';
 
+  /// File path: assets/icons/write-carfy.svg
+  String get writeCarfy => 'assets/icons/write-carfy.svg';
+
   /// List of all assets
   List<String> get values => [
     addressPinLocation,
     appleIconLogo,
+    arrowLeftCircle,
     arrowNarrowLeft,
+    arrowRightCircle,
     box,
     calendar,
     call,
     carHatchback,
     chevronRight,
     closeSquare,
+    comment5,
     delete,
     edit3,
     eyeOff,
@@ -172,6 +187,7 @@ class $AssetsIconsGen {
     saleSquare,
     search,
     support,
+    writeCarfy,
   ];
 }
 

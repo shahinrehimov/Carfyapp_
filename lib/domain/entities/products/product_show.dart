@@ -1,5 +1,4 @@
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
-import 'package:carfy/domain/entities/products/city.dart';
 import 'package:carfy/domain/entities/products/gallery_image.dart';
 import 'package:carfy/domain/entities/products/other_seller.dart';
 import 'package:carfy/domain/entities/products/product.dart';
@@ -31,7 +30,6 @@ class ProductShow {
   final int? year;
   final bool inWishlist;
   final bool inBasket;
-  final City? city;
   final List<BrandModelItem> brandModels;
   final List<ProductOption> options;
   final ProductRatings? ratings;
@@ -64,7 +62,6 @@ class ProductShow {
     this.year,
     required this.inWishlist,
     required this.inBasket,
-    this.city,
     this.brandModels = const [],
     this.options = const [],
     this.ratings,

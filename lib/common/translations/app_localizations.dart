@@ -324,6 +324,12 @@ class AppLocalizations {
 
   String get reviews => _tr(TranslationKeys.reviews);
 
+  String get reviewsAndRatings => _tr(TranslationKeys.reviewsAndRatings);
+
+  String get writeReview => _tr(TranslationKeys.writeReview);
+
+  String get noReviews => _tr(TranslationKeys.noReviews);
+
   String get showMore => _tr(TranslationKeys.showMore);
 
   String get relatedProducts => _tr(TranslationKeys.relatedProducts);
@@ -339,6 +345,8 @@ class AppLocalizations {
   String get brand => _tr(TranslationKeys.brand);
 
   String get year => _tr(TranslationKeys.year);
+
+  String get category => _tr(TranslationKeys.category);
 
   // Filter
   String get filter => _tr(TranslationKeys.filter);

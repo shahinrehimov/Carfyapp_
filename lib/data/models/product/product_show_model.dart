@@ -1,5 +1,4 @@
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
-import 'package:carfy/data/models/product/city_model.dart';
 import 'package:carfy/data/models/product/gallery_image_model.dart';
 import 'package:carfy/data/models/product/other_seller_model.dart';
 import 'package:carfy/data/models/product/product_detail_model.dart';
@@ -30,7 +29,6 @@ class ProductShowModel {
   final int? year;
   final bool inWishlist;
   final bool inBasket;
-  final CityModel? city;
   final List<BrandModelItemModel> brandModels;
   final List<ProductOptionModel> options;
   final ProductRatingsModel? ratings;
@@ -63,7 +61,6 @@ class ProductShowModel {
     this.year,
     required this.inWishlist,
     required this.inBasket,
-    this.city,
     this.brandModels = const [],
     this.options = const [],
     this.ratings,
@@ -88,7 +85,7 @@ class ProductShowModel {
       images: json['images'] != null
           ? (json['images'] as List<dynamic>).map((e) => e as String).toList()
           : [],
-      isSet: json['is_set'] as bool,
+      isSet: json['is_set'] as bool? ?? false,
       sets: json['sets'] != null
           ? (json['sets'] as List<dynamic>)
               .map((e) => SetItemModel.fromJson(e as Map<String, dynamic>))
@@ -104,9 +101,6 @@ class ProductShowModel {
       year: json['year'] as int?,
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
-      city: json['city'] != null
-          ? CityModel.fromJson(json['city'] as Map<String, dynamic>)
-          : null,
       brandModels: json['brand_models'] != null
           ? (json['brand_models'] as List<dynamic>)
               .map((e) => BrandModelItemModel.fromJson(e as Map<String, dynamic>))
@@ -114,7 +108,6 @@ class ProductShowModel {
           : [],
       options: json['options'] != null
           ? (json['options'] as List<dynamic>)
-              .where((e) => e['option'] != null && e['item'] != null)
               .map((e) => ProductOptionModel.fromJson(e as Map<String, dynamic>))
               .toList()
           : [],

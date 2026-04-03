@@ -13,14 +13,60 @@ class ProductReviewsSection extends StatelessWidget {
     return BlocBuilder<ProductDetailCubit, ProductDetailState>(
       buildWhen: (prev, curr) => prev.reviewsStatus != curr.reviewsStatus || prev.reviews != curr.reviews,
       builder: (context, state) {
-        if (state.reviews.isEmpty) return const SizedBox.shrink();
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
               const Divider(color: Color(0xFFE3E3E3), height: 1),
               const SizedBox(height: 16),
+              // Header row
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      context.localization.reviewsAndRatings,
+                      style: TextStyle(
+                        color: context.theme.colors.textDark,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 36,
+                    child: OutlinedButton(
+                      onPressed: () {}, // TODO: navigate to write review page
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: context.theme.colors.secondary),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                      child: Text(
+                        context.localization.writeReview,
+                        style: TextStyle(
+                          color: context.theme.colors.secondary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              if (state.reviews.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Text(
+                    context.localization.noReviews,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: context.theme.colors.textDark,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ...state.reviews.map((review) => _ReviewItem(review: review)),
               if (state.totalReviews > state.reviews.length) ...[
                 const SizedBox(height: 16),

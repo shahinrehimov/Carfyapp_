@@ -65,6 +65,7 @@ class _AppBar extends StatelessWidget {
                       context.pushRoute(
                         ProductListRoute(
                           params: ProductListPageParams(
+                            fromFilter: true,
                             brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
                             categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
                             subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,

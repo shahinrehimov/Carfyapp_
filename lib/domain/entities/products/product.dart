@@ -1,4 +1,4 @@
-import 'package:carfy/domain/entities/products/product_detail.dart';
+import 'package:carfy/domain/entities/products/product_info.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/enums/discount_type.dart';
 
@@ -20,7 +20,7 @@ class Product {
   final bool inWishlist;
   final bool inBasket;
   final Seller? seller;
-  final ProductDetail product;
+  final ProductInfo product;
 
   Product({
     this.id,

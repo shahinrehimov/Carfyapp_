@@ -163,6 +163,9 @@ class TranslationKeys {
   static const String productDetail = 'product_detail';
   static const String productCode = 'product_code';
   static const String reviews = 'reviews';
+  static const String reviewsAndRatings = 'reviews_and_ratings';
+  static const String writeReview = 'write_review';
+  static const String noReviews = 'no_reviews';
   static const String showMore = 'show_more';
   static const String relatedProducts = 'related_products';
   static const String contactUs = 'contact_us';
@@ -171,6 +174,7 @@ class TranslationKeys {
   static const String city = 'city';
   static const String brand = 'brand';
   static const String year = 'year';
+  static const String category = 'category';
 
   // Filter
   static const String filter = 'filter';

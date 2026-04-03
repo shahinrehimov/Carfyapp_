@@ -11,8 +11,10 @@ import 'package:carfy/data/models/product/filter_option_model.dart';
 import 'package:carfy/data/models/product/gallery_image_model.dart';
 import 'package:carfy/data/models/product/other_seller_model.dart';
 import 'package:carfy/data/models/product/price_range_model.dart';
+import 'package:carfy/data/models/product/product_category_model.dart';
 import 'package:carfy/data/models/product/product_detail_model.dart';
 import 'package:carfy/data/models/product/product_filters_model.dart';
+import 'package:carfy/data/models/product/product_info_model.dart';
 import 'package:carfy/data/models/product/product_model.dart';
 import 'package:carfy/data/models/product/product_option_model.dart';
 import 'package:carfy/data/models/product/product_ratings_model.dart';
@@ -32,8 +34,10 @@ import 'package:carfy/domain/entities/products/gallery_image.dart';
 import 'package:carfy/domain/entities/products/other_seller.dart';
 import 'package:carfy/domain/entities/products/price_range.dart';
 import 'package:carfy/domain/entities/products/product.dart';
+import 'package:carfy/domain/entities/products/product_category.dart';
 import 'package:carfy/domain/entities/products/product_detail.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
+import 'package:carfy/domain/entities/products/product_info.dart';
 import 'package:carfy/domain/entities/products/product_option.dart';
 import 'package:carfy/domain/entities/products/product_ratings.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
@@ -64,10 +68,10 @@ class ProductMapper {
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
     seller: model.seller != null ? mapSeller(model.seller!) : null,
-    product: mapProductDetail(model.product),
+    product: mapProductInfo(model.product),
   );
 
-  ProductDetail mapProductDetail(ProductDetailModel model) => ProductDetail(
+  ProductInfo mapProductInfo(ProductInfoModel model) => ProductInfo(
     id: model.id,
     uuid: model.uuid,
     slug: model.slug,
@@ -77,6 +81,33 @@ class ProductMapper {
     hoverImage: model.hoverImage,
     isSet: model.isSet,
     brand: model.brand != null ? mapBrand(model.brand!) : null,
+  );
+
+  ProductDetail mapProductDetail(ProductDetailModel model) => ProductDetail(
+    id: model.id,
+    uuid: model.uuid,
+    slug: model.slug,
+    categorySlugs: model.categorySlugs != null ? mapCategorySlugs(model.categorySlugs!) : null,
+    mainCategory: model.mainCategory != null ? mapProductCategory(model.mainCategory!) : null,
+    categories: model.categories.map(mapProductCategory).toList(),
+    title: model.title,
+    descriptionShort: model.descriptionShort,
+    description: model.description,
+    delivery: model.delivery,
+    note: model.note,
+    mainImage: model.mainImage,
+    hoverImage: model.hoverImage,
+    images: model.images,
+    isSet: model.isSet,
+    brand: model.brand != null ? mapBrand(model.brand!) : null,
+  );
+
+  ProductCategory mapProductCategory(ProductCategoryModel model) => ProductCategory(
+    id: model.id,
+    uuid: model.uuid,
+    slug: model.slug,
+    title: model.title,
+    parent: model.parent != null ? mapProductCategory(model.parent!) : null,
   );
 
   CategorySlugs mapCategorySlugs(CategorySlugsModel model) =>
@@ -155,8 +186,9 @@ class ProductMapper {
   );
 
   ProductOption mapProductOption(ProductOptionModel model) => ProductOption(
-    option: OptionInfo(id: model.option.id, title: model.option.title),
-    item: OptionItem(id: model.item.id, title: model.item.title),
+    name: model.optionName,
+    label: model.optionLabel,
+    value: model.value,
   );
 
   ProductRatings mapProductRatings(ProductRatingsModel model) => ProductRatings(
@@ -213,7 +245,6 @@ class ProductMapper {
     year: model.year,
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
-    city: model.city != null ? mapCity(model.city!) : null,
     brandModels: model.brandModels.map(mapBrandModelItem).toList(),
     options: model.options.map(mapProductOption).toList(),
     ratings: model.ratings != null ? mapProductRatings(model.ratings!) : null,

@@ -1,7 +1,9 @@
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductContactSection extends StatelessWidget {
   const ProductContactSection({super.key});
@@ -18,8 +20,7 @@ class ProductContactSection extends StatelessWidget {
             decoration: BoxDecoration(color: const Color(0xFFE8F4FF), borderRadius: BorderRadius.circular(32)),
             child: Column(
               children: [
-                // TODO: use proper contact icon
-                Icon(Icons.headset_mic_outlined, size: 40, color: context.theme.colors.primary),
+                SvgPicture.asset(Assets.icons.writeCarfy, width: 40, height: 40),
                 const SizedBox(height: 8),
                 Text(
                   context.localization.contactUs,

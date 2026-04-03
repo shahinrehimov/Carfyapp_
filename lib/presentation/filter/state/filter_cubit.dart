@@ -93,6 +93,16 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     ));
   }
 
+  void syncFromParams({
+    Set<String>? categories,
+    Set<String>? subCategories,
+  }) {
+    reset();
+    if (categories != null && categories.isNotEmpty || subCategories != null && subCategories.isNotEmpty) {
+      setCategories(categories ?? {}, subCategories ?? {});
+    }
+  }
+
   void restoreApplied(FilterState applied) {
     emit(applied.copyWith(loadStatus: state.loadStatus, filtersData: state.filtersData));
   }
