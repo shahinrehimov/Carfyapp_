@@ -50,21 +50,32 @@ class ProductBottomBar extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Expanded(
-            child: CustomButton(
-              onPressed: () {
+            child: BlocBuilder<BasketManagerCubit, BasketManagerState>(
+              buildWhen: (prev, curr) {
                 final cpvUuid = product.seller?.uuid;
-                if (cpvUuid != null) {
-                  context.read<BasketManagerCubit>().addToBasket(cpvUuid);
-                }
+                if (cpvUuid == null) return false;
+                return prev.isLoading(cpvUuid) != curr.isLoading(cpvUuid);
               },
-              text: context.localization.addToBasket,
-              height: 48,
-              prefix: SvgPicture.asset(
-                Assets.icons.mainBasket,
-                width: 24,
-                colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-              ),
-              prefixPadding: 8,
+              builder: (context, state) {
+                final cpvUuid = product.seller?.uuid;
+                final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
+                return CustomButton(
+                  onPressed: isLoading || cpvUuid == null
+                      ? () {}
+                      : () => context.read<BasketManagerCubit>().addToBasket(cpvUuid),
+                  loading: isLoading,
+                  text: context.localization.addToBasket,
+                  height: 48,
+                  prefix: isLoading
+                      ? null
+                      : SvgPicture.asset(
+                          Assets.icons.mainBasket,
+                          width: 24,
+                          colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                        ),
+                  prefixPadding: 8,
+                );
+              },
             ),
           ),
         ],
