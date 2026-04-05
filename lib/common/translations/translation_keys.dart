@@ -106,6 +106,8 @@ class TranslationKeys {
   static const String carFormCarType = 'car_form_car_type';
   static const String carFormEngineNumber = 'car_form_engine_number';
   static const String carFormVinNumber = 'car_form_vin_number';
+  static const String carFormColor = 'car_form_color';
+  static const String carFormSeatCount = 'car_form_seat_count';
 
   // My Addresses
   static const String profileMyAddressesAddBtn = 'profile_my_addresses_add_btn';
@@ -210,4 +212,14 @@ class TranslationKeys {
   static const String selectCategory = 'select_category';
   static const String categoryDone = 'category_done';
   static const String categoriesSelected = 'categories_selected';
+
+  // Write review
+  static const String rateProduct = 'rate_product';
+  static const String giveRating = 'give_rating';
+  static const String writeReviewHint = 'write_review_hint';
+  static const String addPhotos = 'add_photos';
+  static const String reviewConsent = 'review_consent';
+  static const String send = 'send';
+  static const String reviewSubmitSuccess = 'review_submit_success';
+  static const String ratingLabel = 'rating_label';
 }

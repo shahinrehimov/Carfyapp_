@@ -1,4 +1,5 @@
 import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/car/car_library_item.dart';
 import 'package:carfy/domain/entities/car/engine_volume.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
@@ -18,6 +19,7 @@ abstract class CarRepository {
   Future<Either<Failure, List<CarLibraryItem>>> getTransmissionTypes();
   Future<Either<Failure, List<CarLibraryItem>>> getCarTypes();
   Future<Either<Failure, List<EngineVolume>>> getEngineVolumes();
+  Future<Either<Failure, List<CarColor>>> getCarColors();
   Future<Either<Failure, List<CarLibraryItem>>> getBrands();
   Future<Either<Failure, List<CarLibraryItem>>> getBrandModels(int brandId);
 }

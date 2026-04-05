@@ -28,10 +28,14 @@ class ProductInfoSection extends StatelessWidget {
                 Row(
                   children: [
                     ...List.generate(5, (index) {
-                      return Icon(
-                        index < product.ratings!.average.round() ? Icons.star : Icons.star_border,
-                        size: 21,
-                        color: const Color(0xFFF6683C),
+                      return SvgPicture.asset(
+                        Assets.icons.star,
+                        width: 21,
+                        height: 21,
+                        colorFilter: ColorFilter.mode(
+                          index < product.ratings!.average.round() ? const Color(0xFFFE764C) : const Color(0xFFDFDFDF),
+                          BlendMode.srcIn,
+                        ),
                       );
                     }),
                     const SizedBox(width: 8),

@@ -101,6 +101,8 @@ class TranslationDefaults {
       TranslationKeys.carFormCarType: 'Avtomobil tipi',
       TranslationKeys.carFormEngineNumber: 'Mühərrik nömrəsi',
       TranslationKeys.carFormVinNumber: 'Şassi (VIN) nömrəsi',
+      TranslationKeys.carFormColor: 'Rəng',
+      TranslationKeys.carFormSeatCount: 'Oturacaq sayı',
 
       // My Addresses
       TranslationKeys.profileMyAddressesAddBtn: 'Ünvan əlavə et',
@@ -205,6 +207,16 @@ class TranslationDefaults {
       TranslationKeys.selectCategory: 'Kateqoriya seç',
       TranslationKeys.categoryDone: 'Təsdiqlə',
       TranslationKeys.categoriesSelected: 'kateqoriya seçilib',
+
+      // Write review
+      TranslationKeys.rateProduct: 'Məhsulu qiymətləndir',
+      TranslationKeys.giveRating: 'Məhsula qiymət verin',
+      TranslationKeys.writeReviewHint: 'Rəy yaz',
+      TranslationKeys.addPhotos: 'Məhsulun şəkillərini əlavə et',
+      TranslationKeys.reviewConsent: 'Rəylərdə adımın göstərilməsinə və rəy məlumatlarımın platforma miqyasında istifadəsinə razılıq verirəm.',
+      TranslationKeys.send: 'Göndər',
+      TranslationKeys.reviewSubmitSuccess: 'Rəyiniz uğurla göndərildi',
+      TranslationKeys.ratingLabel: 'reytinq',
     },
   };
 }

@@ -1,4 +1,5 @@
 import 'package:carfy/domain/entities/products/product_info.dart';
+import 'package:carfy/domain/entities/products/product_ratings.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/enums/discount_type.dart';
 
@@ -21,6 +22,7 @@ class Product {
   final bool inBasket;
   final Seller? seller;
   final ProductInfo product;
+  final ProductRatings? ratings;
 
   Product({
     this.id,
@@ -41,5 +43,6 @@ class Product {
     required this.inBasket,
     this.seller,
     required this.product,
+    this.ratings,
   });
 }

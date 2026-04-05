@@ -137,6 +137,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
 
+  /// File path: assets/icons/star.svg
+  String get star => 'assets/icons/star.svg';
+
   /// File path: assets/icons/support.svg
   String get support => 'assets/icons/support.svg';
 
@@ -186,6 +189,7 @@ class $AssetsIconsGen {
     reset1,
     saleSquare,
     search,
+    star,
     support,
     writeCarfy,
   ];

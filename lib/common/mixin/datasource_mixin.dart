@@ -21,7 +21,7 @@ mixin DataSourceMixin {
     try {
       final response = await call();
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         if (map != null) {
           return map(response.data);
         }

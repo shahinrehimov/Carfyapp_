@@ -2,6 +2,7 @@ import 'package:carfy/common/constants/endpoint_paths.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/mixin/datasource_mixin.dart';
 import 'package:carfy/common/network/network_manager.dart';
+import 'package:carfy/data/models/car/car_color_model.dart';
 import 'package:carfy/data/models/car/car_library_item_model.dart';
 import 'package:carfy/data/models/car/engine_volume_model.dart';
 import 'package:carfy/data/models/car/user_car_model.dart';
@@ -30,6 +31,8 @@ abstract class CarRemoteDataSource {
   Future<List<CarLibraryItemModel>> getCarTypes();
 
   Future<List<EngineVolumeModel>> getEngineVolumes();
+
+  Future<List<CarColorModel>> getCarColors();
 
   Future<List<CarLibraryItemModel>> getBrands();
 
@@ -67,6 +70,8 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
       if (params.engineVolumeId != null) MapEntry('engine_volume_id', params.engineVolumeId.toString()),
       if (params.fuelTypeId != null) MapEntry('fuel_type_id', params.fuelTypeId.toString()),
       if (params.transmissionTypeId != null) MapEntry('transmission_type_id', params.transmissionTypeId.toString()),
+      if (params.carColorId != null) MapEntry('car_color_id', params.carColorId.toString()),
+      if (params.seatCount != null) MapEntry('seat_count', params.seatCount.toString()),
       if (params.engineNumber != null) MapEntry('engine_number', params.engineNumber!),
       if (params.vinNumber != null) MapEntry('vin_number', params.vinNumber!),
     ]);
@@ -89,6 +94,8 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
       if (params.engineVolumeId != null) MapEntry('engine_volume_id', params.engineVolumeId.toString()),
       if (params.fuelTypeId != null) MapEntry('fuel_type_id', params.fuelTypeId.toString()),
       if (params.transmissionTypeId != null) MapEntry('transmission_type_id', params.transmissionTypeId.toString()),
+      if (params.carColorId != null) MapEntry('car_color_id', params.carColorId.toString()),
+      if (params.seatCount != null) MapEntry('seat_count', params.seatCount.toString()),
       if (params.engineNumber != null) MapEntry('engine_number', params.engineNumber!),
       if (params.vinNumber != null) MapEntry('vin_number', params.vinNumber!),
     ]);
@@ -153,6 +160,16 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
       () => _networkManager.get(EndpointPaths.carLibraryEngineVolumes),
       map: (json) => (json['data'] as List<dynamic>)
           .map((item) => EngineVolumeModel.fromJson(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  @override
+  Future<List<CarColorModel>> getCarColors() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.carLibraryCarColors),
+      map: (json) => (json['data'] as List<dynamic>)
+          .map((item) => CarColorModel.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }

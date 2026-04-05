@@ -1,6 +1,11 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/domain/entities/products/review.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carfy/presentation/product_detail/state/product_detail_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +16,10 @@ class ProductReviewsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductDetailCubit, ProductDetailState>(
-      buildWhen: (prev, curr) => prev.reviewsStatus != curr.reviewsStatus || prev.reviews != curr.reviews,
+      buildWhen: (prev, curr) =>
+          prev.reviewsStatus != curr.reviewsStatus ||
+          prev.reviews != curr.reviews ||
+          prev.totalReviews != curr.totalReviews,
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,7 +43,19 @@ class ProductReviewsSection extends StatelessWidget {
                   SizedBox(
                     height: 36,
                     child: OutlinedButton(
-                      onPressed: () {}, // TODO: navigate to write review page
+                      onPressed: () async {
+                        final product = state.product;
+                        if (product == null) return;
+                        final cubit = context.read<ProductDetailCubit>();
+                        final result = await context.pushRoute<bool>(WriteReviewRoute(
+                          cpvUuid: product.seller?.uuid ?? product.uuid,
+                          productTitle: product.title,
+                          productImage: product.mainImage ?? product.hoverImage,
+                        ));
+                        if (result == true) {
+                          cubit.reloadReviews();
+                        }
+                      },
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: context.theme.colors.secondary),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
@@ -70,18 +90,27 @@ class ProductReviewsSection extends StatelessWidget {
               ...state.reviews.map((review) => _ReviewItem(review: review)),
               if (state.totalReviews > state.reviews.length) ...[
                 const SizedBox(height: 16),
-                GestureDetector(
-                  onTap: () {}, // TODO: navigate to all reviews
-                  child: Text(
-                    context.localization.showMore,
-                    style: TextStyle(
-                      color: context.theme.colors.secondary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline,
+                if (state.reviewsStatus is StateStatusPaginationLoading)
+                  const Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                else
+                  GestureDetector(
+                    onTap: () => context.read<ProductDetailCubit>().loadMoreReviews(),
+                    child: Text(
+                      context.localization.showMore,
+                      style: TextStyle(
+                        color: context.theme.colors.secondary,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
-                ),
               ],
               const SizedBox(height: 16),
             ],
@@ -117,15 +146,19 @@ class _ReviewItem extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  '${review.name[0]}*****',
+                  '${review.name} ${review.surname}',
                   style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w400),
                 ),
               ),
               ...List.generate(5, (index) {
-                return Icon(
-                  index < review.rating ? Icons.star : Icons.star_border,
-                  size: 16,
-                  color: const Color(0xFFF6683C),
+                return SvgPicture.asset(
+                  Assets.icons.star,
+                  width: 16,
+                  height: 16,
+                  colorFilter: ColorFilter.mode(
+                    index < review.rating ? const Color(0xFFFE764C) : const Color(0xFFDFDFDF),
+                    BlendMode.srcIn,
+                  ),
                 );
               }),
               const SizedBox(width: 4),

@@ -128,6 +128,8 @@ import 'package:carfy/domain/use_cases/car/delete_car_use_case.dart' as _i881;
 import 'package:carfy/domain/use_cases/car/get_brand_models_use_case.dart'
     as _i84;
 import 'package:carfy/domain/use_cases/car/get_brands_use_case.dart' as _i774;
+import 'package:carfy/domain/use_cases/car/get_car_colors_use_case.dart'
+    as _i47;
 import 'package:carfy/domain/use_cases/car/get_car_types_use_case.dart'
     as _i411;
 import 'package:carfy/domain/use_cases/car/get_car_use_case.dart' as _i229;
@@ -332,6 +334,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i774.GetBrandsUseCase>(
       () => _i774.GetBrandsUseCase(gh<_i194.CarRepository>()),
+    );
+    gh.factory<_i47.GetCarColorsUseCase>(
+      () => _i47.GetCarColorsUseCase(gh<_i194.CarRepository>()),
     );
     gh.factory<_i411.GetCarTypesUseCase>(
       () => _i411.GetCarTypesUseCase(gh<_i194.CarRepository>()),

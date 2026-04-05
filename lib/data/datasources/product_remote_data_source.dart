@@ -12,6 +12,7 @@ import 'package:carfy/data/models/product/product_filters_model.dart';
 import 'package:carfy/data/models/product/product_model.dart';
 import 'package:carfy/data/models/product/product_show_model.dart';
 import 'package:carfy/data/models/product/review_model.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:carfy/common/constants/endpoint_paths.dart';
@@ -62,9 +63,20 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource with DataSourc
   }
 
   @override
-  Future<ReviewModel> storeReview(String cpvUuid, StoreReviewDto dto) {
+  Future<ReviewModel> storeReview(String cpvUuid, StoreReviewDto dto) async {
+    final formData = FormData();
+    formData.fields.addAll([
+      MapEntry('rating', dto.rating.toString()),
+      MapEntry('name', dto.name),
+      MapEntry('surname', dto.surname),
+      MapEntry('email', dto.email),
+      MapEntry('review', dto.review),
+    ]);
+    for (final path in dto.imagePaths) {
+      formData.files.add(MapEntry('images[]', await MultipartFile.fromFile(path)));
+    }
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.reviewStore(cpvUuid), data: dto.toJson()),
+      () => _networkManager.post(EndpointPaths.reviewStore(cpvUuid), data: formData),
       map: (json) => ReviewModel.fromJson(json['data'] as Map<String, dynamic>),
     );
   }

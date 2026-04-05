@@ -107,6 +107,35 @@ class ProductItem extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             const Spacer(),
+            if (product.ratings != null) ...[
+              Row(
+                children: [
+                  ...List.generate(5, (index) {
+                    return SvgPicture.asset(
+                      Assets.icons.star,
+                      width: 12,
+                      height: 12,
+                      colorFilter: ColorFilter.mode(
+                        index < product.ratings!.average.round()
+                            ? const Color(0xFFFE764C)
+                            : const Color(0xFFDFDFDF),
+                        BlendMode.srcIn,
+                      ),
+                    );
+                  }),
+                  const SizedBox(width: 6),
+                  Text(
+                    '(${product.ratings!.count} ${context.localization.ratingLabel})',
+                    style: TextStyle(
+                      color: context.theme.colors.textDark,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+            ],
             BlocBuilder<BasketManagerCubit, BasketManagerState>(
               builder: (context, state) {
                 final cpvUuid = product.seller?.uuid;

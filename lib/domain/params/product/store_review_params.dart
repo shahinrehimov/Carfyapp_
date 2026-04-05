@@ -5,6 +5,7 @@ class StoreReviewParams {
   final String surname;
   final String email;
   final String review;
+  final List<String> imagePaths;
 
   StoreReviewParams({
     required this.cpvUuid,
@@ -13,5 +14,6 @@ class StoreReviewParams {
     required this.surname,
     required this.email,
     required this.review,
+    this.imagePaths = const [],
   });
 }

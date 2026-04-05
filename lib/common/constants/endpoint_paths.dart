@@ -84,6 +84,7 @@ class EndpointPaths {
   static const carLibraryTransmissionTypes = '/app/car-libraries/transmission-types';
   static const carLibraryCarTypes = '/app/car-libraries/car-types';
   static const carLibraryEngineVolumes = '/app/car-libraries/engine-volumes';
+  static const carLibraryCarColors = '/app/car-libraries/car-colors';
 
   // Address Endpoints
   static const addressesLoad = '/app/profile/addresses/load';

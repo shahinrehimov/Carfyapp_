@@ -1,4 +1,5 @@
 import 'package:carfy/data/models/product/product_info_model.dart';
+import 'package:carfy/data/models/product/product_ratings_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
 
 class ProductModel {
@@ -20,6 +21,7 @@ class ProductModel {
   final bool inBasket;
   final SellerModel? seller;
   final ProductInfoModel product;
+  final ProductRatingsModel? ratings;
 
   ProductModel({
     this.id,
@@ -40,6 +42,7 @@ class ProductModel {
     required this.inBasket,
     this.seller,
     required this.product,
+    this.ratings,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -64,6 +67,9 @@ class ProductModel {
           ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>)
           : null,
       product: ProductInfoModel.fromJson(json['product'] as Map<String, dynamic>),
+      ratings: json['ratings'] != null
+          ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

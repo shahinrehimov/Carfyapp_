@@ -31,6 +31,7 @@ import 'package:carfy/presentation/product_list/state/product_list_params_ui.dar
 import 'package:carfy/presentation/product_list/ui/page/product_list_page.dart';
 import 'package:carfy/presentation/search/ui/page/search_page.dart';
 import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
+import 'package:carfy/presentation/write_review/ui/page/write_review_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -71,6 +72,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: ProductDetailRoute.page),
     AutoRoute(page: ProductListRoute.page),
     CustomRoute(page: SearchRoute.page, transitionsBuilder: TransitionsBuilders.noTransition),
+    AutoRoute(page: WriteReviewRoute.page),
     AutoRoute(
       page: CategoryDialogRoute.page,
       fullscreenDialog: true,

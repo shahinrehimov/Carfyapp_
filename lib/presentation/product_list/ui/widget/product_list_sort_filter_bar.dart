@@ -2,6 +2,7 @@ import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 import 'package:carfy/presentation/filter/ui/filter_bottom_sheet.dart';
+import 'package:carfy/presentation/filter/ui/sort_bottom_sheet.dart';
 import 'package:carfy/presentation/product_list/state/product_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,18 @@ class ProductListSortFilterBar extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () {}, // TODO: sort bottom sheet
+                    onTap: () async {
+                      final listCubit = context.read<ProductListCubit>();
+                      final current = listCubit.state;
+                      final result = await SortBottomSheet.show(
+                        context,
+                        currentSort: current.sort,
+                        currentSortType: current.sortType,
+                      );
+                      if (result != null) {
+                        listCubit.updateSort(result.sort, result.sortType);
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

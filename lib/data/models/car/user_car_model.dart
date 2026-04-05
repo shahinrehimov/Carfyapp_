@@ -1,3 +1,4 @@
+import 'package:carfy/data/models/car/car_color_model.dart';
 import 'package:carfy/data/models/car/car_library_item_model.dart';
 import 'package:carfy/data/models/car/engine_volume_model.dart';
 
@@ -10,6 +11,8 @@ class UserCarModel {
   final EngineVolumeModel? engineVolume;
   final CarLibraryItemModel? fuelType;
   final CarLibraryItemModel? transmissionType;
+  final CarColorModel? carColor;
+  final int? seatCount;
   final int year;
   final String? engineNumber;
   final String? vinNumber;
@@ -24,6 +27,8 @@ class UserCarModel {
     this.engineVolume,
     this.fuelType,
     this.transmissionType,
+    this.carColor,
+    this.seatCount,
     required this.year,
     this.engineNumber,
     this.vinNumber,
@@ -46,6 +51,10 @@ class UserCarModel {
       transmissionType: json['transmission_type'] != null
           ? CarLibraryItemModel.fromJson(json['transmission_type'] as Map<String, dynamic>)
           : null,
+      carColor: json['car_color'] != null
+          ? CarColorModel.fromJson(json['car_color'] as Map<String, dynamic>)
+          : null,
+      seatCount: json['seat_count'] as int?,
       year: json['year'] as int,
       engineNumber: json['engine_number'] as String?,
       vinNumber: json['vin_number'] as String?,

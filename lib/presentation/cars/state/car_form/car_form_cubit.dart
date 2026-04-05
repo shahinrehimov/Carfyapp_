@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/car/car_library_item.dart';
 import 'package:carfy/domain/entities/car/engine_volume.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
@@ -14,6 +15,7 @@ import 'package:carfy/domain/use_cases/car/delete_car_photo_use_case.dart';
 import 'package:carfy/domain/use_cases/car/delete_car_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_brand_models_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_brands_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_car_colors_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_car_types_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_engine_volumes_use_case.dart';
 import 'package:carfy/domain/use_cases/car/get_fuel_types_use_case.dart';
@@ -31,6 +33,7 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
   final GetFuelTypesUseCase _getFuelTypesUseCase;
   final GetTransmissionTypesUseCase _getTransmissionTypesUseCase;
   final GetCarTypesUseCase _getCarTypesUseCase;
+  final GetCarColorsUseCase _getCarColorsUseCase;
   final AddCarUseCase _addCarUseCase;
   final UpdateCarUseCase _updateCarUseCase;
   final DeleteCarUseCase _deleteCarUseCase;
@@ -43,6 +46,7 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
     GetFuelTypesUseCase? getFuelTypesUseCase,
     GetTransmissionTypesUseCase? getTransmissionTypesUseCase,
     GetCarTypesUseCase? getCarTypesUseCase,
+    GetCarColorsUseCase? getCarColorsUseCase,
     AddCarUseCase? addCarUseCase,
     UpdateCarUseCase? updateCarUseCase,
     DeleteCarUseCase? deleteCarUseCase,
@@ -53,6 +57,7 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
        _getFuelTypesUseCase = getFuelTypesUseCase ?? getIt<GetFuelTypesUseCase>(),
        _getTransmissionTypesUseCase = getTransmissionTypesUseCase ?? getIt<GetTransmissionTypesUseCase>(),
        _getCarTypesUseCase = getCarTypesUseCase ?? getIt<GetCarTypesUseCase>(),
+       _getCarColorsUseCase = getCarColorsUseCase ?? getIt<GetCarColorsUseCase>(),
        _addCarUseCase = addCarUseCase ?? getIt<AddCarUseCase>(),
        _updateCarUseCase = updateCarUseCase ?? getIt<UpdateCarUseCase>(),
        _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
@@ -69,9 +74,11 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
           selectedFuelType: car.fuelType,
           selectedTransmissionType: car.transmissionType,
           selectedCarType: car.carType,
+          selectedCarColor: car.carColor,
           year: car.year.toString(),
           engineNumber: car.engineNumber ?? '',
           vinNumber: car.vinNumber ?? '',
+          seatCount: car.seatCount?.toString() ?? '',
         ),
       );
     }
@@ -81,6 +88,7 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
       _loadFuelTypes(),
       _loadTransmissionTypes(),
       _loadCarTypes(),
+      _loadCarColors(),
     ]);
     if (car != null) {
       await _loadBrandModels(car.brand.id);
@@ -110,6 +118,8 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
   Future<void> retryTransmissionTypes() => _loadTransmissionTypes();
 
   Future<void> retryCarTypes() => _loadCarTypes();
+
+  Future<void> retryCarColors() => _loadCarColors();
 
   Future<void> _loadBrandModels(int brandId) async {
     emit(state.copyWith(modelsStatus: StateStatus.loading(), models: []));
@@ -156,6 +166,15 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
     );
   }
 
+  Future<void> _loadCarColors() async {
+    emit(state.copyWith(carColorsStatus: StateStatus.loading()));
+    final result = await _getCarColorsUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(carColorsStatus: mapFailure(failure))),
+      (colors) => emit(state.copyWith(carColorsStatus: StateStatus.success(), carColors: colors)),
+    );
+  }
+
   void selectBrand(CarLibraryItem brand) {
     emit(
       state.copyWith(selectedBrand: brand, clearSelectedModel: true, models: [], modelsStatus: StateStatus.initial()),
@@ -173,11 +192,15 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
 
   void selectCarType(CarLibraryItem type) => emit(state.copyWith(selectedCarType: type));
 
+  void selectCarColor(CarColor color) => emit(state.copyWith(selectedCarColor: color));
+
   void setYear(String year) => emit(state.copyWith(year: year));
 
   void setEngineNumber(String value) => emit(state.copyWith(engineNumber: value));
 
   void setVinNumber(String value) => emit(state.copyWith(vinNumber: value));
+
+  void setSeatCount(String value) => emit(state.copyWith(seatCount: value));
 
   Future<void> pickPhoto() async {
     final picker = ImagePicker();
@@ -219,6 +242,8 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
         engineVolumeId: state.selectedEngineVolume?.id,
         fuelTypeId: state.selectedFuelType?.id,
         transmissionTypeId: state.selectedTransmissionType?.id,
+        carColorId: state.selectedCarColor?.id,
+        seatCount: int.tryParse(state.seatCount),
         engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
         vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
         photoPath: state.selectedPhotoPath,
@@ -240,6 +265,8 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
         engineVolumeId: state.selectedEngineVolume?.id,
         fuelTypeId: state.selectedFuelType?.id,
         transmissionTypeId: state.selectedTransmissionType?.id,
+        carColorId: state.selectedCarColor?.id,
+        seatCount: int.tryParse(state.seatCount),
         engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
         vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
         photoPath: state.selectedPhotoPath,
@@ -260,6 +287,8 @@ class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
         yearValidationState: mapValidationFailure('year', failure),
         engineNumberValidationState: mapValidationFailure('engine_number', failure),
         vinNumberValidationState: mapValidationFailure('vin_number', failure),
+        carColorValidationState: mapValidationFailure('car_color_id', failure),
+        seatCountValidationState: mapValidationFailure('seat_count', failure),
       ),
     );
   }

@@ -225,6 +225,10 @@ class AppLocalizations {
 
   String get carFormVinNumber => _tr(TranslationKeys.carFormVinNumber);
 
+  String get carFormColor => _tr(TranslationKeys.carFormColor);
+
+  String get carFormSeatCount => _tr(TranslationKeys.carFormSeatCount);
+
   // My Addresses
 
   String get profileMyAddressesAddBtn => _tr(TranslationKeys.profileMyAddressesAddBtn);
@@ -399,4 +403,20 @@ class AppLocalizations {
   String get categoryDone => _tr(TranslationKeys.categoryDone);
 
   String get categoriesSelected => _tr(TranslationKeys.categoriesSelected);
+
+  String get rateProduct => _tr(TranslationKeys.rateProduct);
+
+  String get giveRating => _tr(TranslationKeys.giveRating);
+
+  String get writeReviewHint => _tr(TranslationKeys.writeReviewHint);
+
+  String get addPhotos => _tr(TranslationKeys.addPhotos);
+
+  String get reviewConsent => _tr(TranslationKeys.reviewConsent);
+
+  String get send => _tr(TranslationKeys.send);
+
+  String get reviewSubmitSuccess => _tr(TranslationKeys.reviewSubmitSuccess);
+
+  String get ratingLabel => _tr(TranslationKeys.ratingLabel);
 }

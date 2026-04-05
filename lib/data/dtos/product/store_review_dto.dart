@@ -4,6 +4,7 @@ class StoreReviewDto {
   final String surname;
   final String email;
   final String review;
+  final List<String> imagePaths;
 
   StoreReviewDto({
     required this.rating,
@@ -11,13 +12,6 @@ class StoreReviewDto {
     required this.surname,
     required this.email,
     required this.review,
+    this.imagePaths = const [],
   });
-
-  Map<String, dynamic> toJson() => {
-        'rating': rating,
-        'name': name,
-        'surname': surname,
-        'email': email,
-        'review': review,
-      };
 }

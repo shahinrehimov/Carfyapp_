@@ -40,9 +40,12 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
       appBar: const CustomAppBar(height: 130, flexibleSpace: _AppBar()),
-      body: PaginationScrollWrapper(
-        onLoadMore: () => context.read<HomeCubit>().loadNextProducts(),
-        child: Column(
+      body: RefreshIndicator.adaptive(
+        onRefresh: () => context.read<HomeCubit>().refresh(),
+        child: PaginationScrollWrapper(
+          onLoadMore: () => context.read<HomeCubit>().loadNextProducts(),
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
           children: [
             const SizedBox(height: 16),
             _Heading(
@@ -64,6 +67,7 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
             const SizedBox(height: 12),
             const _ProductsSection(),
           ],
+        ),
         ),
       ),
     );

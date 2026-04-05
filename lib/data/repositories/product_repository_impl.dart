@@ -100,6 +100,7 @@ class ProductRepositoryImpl extends ProductRepository with RepositorySafeCallMix
         surname: params.surname,
         email: params.email,
         review: params.review,
+        imagePaths: params.imagePaths,
       );
       final res = await _remoteDataSource.storeReview(params.cpvUuid, dto);
       return _mapper.mapReview(res);

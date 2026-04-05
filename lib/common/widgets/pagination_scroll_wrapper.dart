@@ -4,12 +4,14 @@ class PaginationScrollWrapper extends StatefulWidget {
   final Widget child;
   final VoidCallback onLoadMore;
   final double threshold;
+  final ScrollPhysics? physics;
 
   const PaginationScrollWrapper({
     super.key,
     required this.child,
     required this.onLoadMore,
     this.threshold = 20,
+    this.physics,
   });
 
   @override
@@ -49,6 +51,7 @@ class _PaginationScrollWrapperState extends State<PaginationScrollWrapper> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       controller: _scrollController,
+      physics: widget.physics,
       child: widget.child,
     );
   }

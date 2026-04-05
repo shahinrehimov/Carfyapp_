@@ -12,6 +12,8 @@ import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/cars/state/my_cars/my_cars_cubit.dart';
+import 'package:carfy/presentation/filter/state/filter_cubit.dart';
+import 'package:carfy/presentation/product_list/state/product_list_params_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,8 +104,27 @@ class _CarList extends StatelessWidget {
             final result = await context.pushRoute(CarFormRoute(car: cars[index]));
             if (result == true) cubit.refresh();
           },
-          onSearch: () {
-            // TODO: navigate to search/home with this car pre-selected
+          onSearch: () async {
+            final car = cars[index];
+            final filterCubit = context.read<FilterCubit>();
+            await filterCubit.loadFilters();
+            if (!context.mounted) return;
+
+            final filters = filterCubit.state.filtersData;
+            final brand = filters?.brands.where((b) => b.id == car.brand.id).firstOrNull;
+            if (brand == null) return;
+
+            filterCubit.reset();
+            filterCubit.selectByCar(car.brand.id, car.brandModel.id);
+            filterCubit.apply();
+
+            if (!context.mounted) return;
+            context.pushRoute(ProductListRoute(
+              params: ProductListPageParams(
+                brands: [brand.slug],
+                fromFilter: true,
+              ),
+            ));
           },
         ),
       ),

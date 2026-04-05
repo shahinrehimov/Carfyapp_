@@ -972,3 +972,80 @@ class WishlistRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [WriteReviewPage]
+class WriteReviewRoute extends PageRouteInfo<WriteReviewRouteArgs> {
+  WriteReviewRoute({
+    Key? key,
+    required String cpvUuid,
+    required String productTitle,
+    String? productImage,
+    List<PageRouteInfo>? children,
+  }) : super(
+         WriteReviewRoute.name,
+         args: WriteReviewRouteArgs(
+           key: key,
+           cpvUuid: cpvUuid,
+           productTitle: productTitle,
+           productImage: productImage,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'WriteReviewRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WriteReviewRouteArgs>();
+      return WrappedRoute(
+        child: WriteReviewPage(
+          key: args.key,
+          cpvUuid: args.cpvUuid,
+          productTitle: args.productTitle,
+          productImage: args.productImage,
+        ),
+      );
+    },
+  );
+}
+
+class WriteReviewRouteArgs {
+  const WriteReviewRouteArgs({
+    this.key,
+    required this.cpvUuid,
+    required this.productTitle,
+    this.productImage,
+  });
+
+  final Key? key;
+
+  final String cpvUuid;
+
+  final String productTitle;
+
+  final String? productImage;
+
+  @override
+  String toString() {
+    return 'WriteReviewRouteArgs{key: $key, cpvUuid: $cpvUuid, productTitle: $productTitle, productImage: $productImage}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! WriteReviewRouteArgs) return false;
+    return key == other.key &&
+        cpvUuid == other.cpvUuid &&
+        productTitle == other.productTitle &&
+        productImage == other.productImage;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      cpvUuid.hashCode ^
+      productTitle.hashCode ^
+      productImage.hashCode;
+}

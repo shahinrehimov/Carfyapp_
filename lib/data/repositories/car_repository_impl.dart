@@ -2,6 +2,7 @@ import 'package:carfy/common/error/failure.dart';
 import 'package:carfy/common/mixin/repository_safe_call_mixin.dart';
 import 'package:carfy/data/datasources/car_remote_data_source.dart';
 import 'package:carfy/data/mappers/car_mapper.dart';
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/car/car_library_item.dart';
 import 'package:carfy/domain/entities/car/engine_volume.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
@@ -93,6 +94,14 @@ class CarRepositoryImpl extends CarRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final models = await _remoteDataSource.getEngineVolumes();
       return models.map(_mapper.mapEngineVolume).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<CarColor>>> getCarColors() {
+    return safeCall(() async {
+      final models = await _remoteDataSource.getCarColors();
+      return models.map(_mapper.mapCarColor).toList();
     });
   }
 

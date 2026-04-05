@@ -41,8 +41,17 @@ class HomeCubit extends Cubit<HomeState> with StateMapHelper {
     _loadProducts();
   }
 
-  Future<void> _loadCategories() async {
-    emit(state.copyWith(categoriesStatus: StateStatus.loading()));
+  Future<void> refresh() async {
+    _paymentPaginationHelper.reset();
+    await Future.wait([
+      _loadCategories(silent: true),
+      _loadGroups(silent: true),
+      _loadProducts(replace: true),
+    ]);
+  }
+
+  Future<void> _loadCategories({bool silent = false}) async {
+    if (!silent) emit(state.copyWith(categoriesStatus: StateStatus.loading()));
     final result = await _getCategoriesUseCase();
     result.fold(
       (failure) {
@@ -54,8 +63,8 @@ class HomeCubit extends Cubit<HomeState> with StateMapHelper {
     );
   }
 
-  Future<void> _loadGroups() async {
-    emit(state.copyWith(groupsStatus: StateStatus.loading()));
+  Future<void> _loadGroups({bool silent = false}) async {
+    if (!silent) emit(state.copyWith(groupsStatus: StateStatus.loading()));
 
     final listResult = await _getGroupsListUseCase();
     await listResult.fold(
@@ -85,10 +94,12 @@ class HomeCubit extends Cubit<HomeState> with StateMapHelper {
     );
   }
 
-  Future<void> _loadProducts() async {
+  Future<void> _loadProducts({bool replace = false}) async {
     if (!_paymentPaginationHelper.shouldLoad()) return;
 
-    emit(state.copyWith(productsStatus: _paymentPaginationHelper.getLoadingStatus()));
+    if (!replace) {
+      emit(state.copyWith(productsStatus: _paymentPaginationHelper.getLoadingStatus()));
+    }
     _paymentPaginationHelper.onLoadStart();
 
     final result = await _getProductsUseCase(ProductListParams(page: _paymentPaginationHelper.currentPage, limit: 8));
@@ -98,7 +109,7 @@ class HomeCubit extends Cubit<HomeState> with StateMapHelper {
       },
       (response) {
         _paymentPaginationHelper.onLoadEnd(response.lastPage);
-        final updatedProducts = [...state.products, ...response.data];
+        final updatedProducts = replace ? response.data : [...state.products, ...response.data];
         emit(state.copyWith(productsStatus: StateStatus.success(), products: updatedProducts));
       },
     );

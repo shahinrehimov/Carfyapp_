@@ -5,6 +5,8 @@ class AddCarParams {
   final int? engineVolumeId;
   final int? fuelTypeId;
   final int? transmissionTypeId;
+  final int? carColorId;
+  final int? seatCount;
   final String? engineNumber;
   final String? vinNumber;
   final String? photoPath;
@@ -16,6 +18,8 @@ class AddCarParams {
     this.engineVolumeId,
     this.fuelTypeId,
     this.transmissionTypeId,
+    this.carColorId,
+    this.seatCount,
     this.engineNumber,
     this.vinNumber,
     this.photoPath,

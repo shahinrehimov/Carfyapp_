@@ -1,3 +1,4 @@
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/car/car_library_item.dart';
 import 'package:carfy/domain/entities/car/engine_volume.dart';
 
@@ -10,6 +11,8 @@ class UserCar {
   final EngineVolume? engineVolume;
   final CarLibraryItem? fuelType;
   final CarLibraryItem? transmissionType;
+  final CarColor? carColor;
+  final int? seatCount;
   final int year;
   final String? engineNumber;
   final String? vinNumber;
@@ -24,6 +27,8 @@ class UserCar {
     this.engineVolume,
     this.fuelType,
     this.transmissionType,
+    this.carColor,
+    this.seatCount,
     required this.year,
     this.engineNumber,
     this.vinNumber,

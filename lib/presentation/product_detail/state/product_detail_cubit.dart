@@ -16,6 +16,9 @@ class ProductDetailCubit extends Cubit<ProductDetailState> with StateMapHelper {
   final GetProductShowUseCase _getProductShowUseCase;
   final LoadReviewsUseCase _loadReviewsUseCase;
 
+  static const int _reviewsPageSize = 5;
+  int _reviewsPage = 1;
+
   ProductDetailCubit({
     GetProductShowUseCase? getProductShowUseCase,
     LoadReviewsUseCase? loadReviewsUseCase,
@@ -42,18 +45,45 @@ class ProductDetailCubit extends Cubit<ProductDetailState> with StateMapHelper {
     );
   }
 
-  Future<void> _loadReviews(String cpvUuid) async {
-    emit(state.copyWith(reviewsStatus: StateStatus.loading()));
+  Future<void> reloadReviews() async {
+    final product = state.product;
+    if (product == null) return;
+    await _loadReviews(product.seller?.uuid ?? product.uuid);
+  }
+
+  Future<void> loadMoreReviews() async {
+    final product = state.product;
+    if (product == null) return;
+    if (state.reviews.length >= state.totalReviews) return;
+    if (state.reviewsStatus is StateStatusLoading ||
+        state.reviewsStatus is StateStatusPaginationLoading) {
+      return;
+    }
+    await _loadReviews(product.seller?.uuid ?? product.uuid, append: true);
+  }
+
+  Future<void> _loadReviews(String cpvUuid, {bool append = false}) async {
+    if (append) {
+      _reviewsPage += 1;
+      emit(state.copyWith(reviewsStatus: StateStatus.paginationLoading()));
+    } else {
+      _reviewsPage = 1;
+      emit(state.copyWith(reviewsStatus: StateStatus.loading()));
+    }
+
     final result = await _loadReviewsUseCase(LoadReviewsParams(
       cpvUuid: cpvUuid,
-      page: 1,
-      limit: 3,
+      page: _reviewsPage,
+      limit: _reviewsPageSize,
     ));
     result.fold(
-      (failure) => emit(state.copyWith(reviewsStatus: mapFailure(failure))),
+      (failure) {
+        if (append) _reviewsPage -= 1;
+        emit(state.copyWith(reviewsStatus: mapFailure(failure)));
+      },
       (response) => emit(state.copyWith(
         reviewsStatus: StateStatus.success(),
-        reviews: response.data,
+        reviews: append ? [...state.reviews, ...response.data] : response.data,
         totalReviews: response.total,
       )),
     );

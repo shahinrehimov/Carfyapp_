@@ -22,6 +22,7 @@ import 'package:carfy/data/models/product/product_show_model.dart';
 import 'package:carfy/data/models/product/review_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
 import 'package:carfy/data/models/product/set_item_model.dart';
+import 'package:carfy/data/models/product/sort_option_model.dart';
 import 'package:carfy/data/models/product/year_range_model.dart';
 import 'package:carfy/domain/entities/products/brand.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
@@ -44,6 +45,7 @@ import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/domain/entities/products/review.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/entities/products/set_item.dart';
+import 'package:carfy/domain/entities/products/sort_option.dart';
 import 'package:carfy/domain/entities/products/year_range.dart';
 import 'package:carfy/domain/enums/discount_type.dart';
 import 'package:injectable/injectable.dart';
@@ -69,6 +71,7 @@ class ProductMapper {
     inBasket: model.inBasket,
     seller: model.seller != null ? mapSeller(model.seller!) : null,
     product: mapProductInfo(model.product),
+    ratings: model.ratings != null ? mapProductRatings(model.ratings!) : null,
   );
 
   ProductInfo mapProductInfo(ProductInfoModel model) => ProductInfo(
@@ -174,6 +177,13 @@ class ProductMapper {
     colors: model.colors.map(mapFilterOption).toList(),
     conditions: model.conditions.map(mapFilterOption).toList(),
     yearRange: model.yearRange != null ? mapYearRange(model.yearRange!) : null,
+    sortOptions: model.sortOptions.map(mapSortOption).toList(),
+    sortTypes: model.sortTypes.map(mapSortOption).toList(),
+  );
+
+  SortOption mapSortOption(SortOptionModel model) => SortOption(
+    id: model.id,
+    title: model.title,
   );
 
   SetItem mapSetItem(SetItemModel model) => SetItem(

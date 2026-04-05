@@ -9,6 +9,7 @@ class CarFormState extends Equatable {
   final StateStatus fuelTypesStatus;
   final StateStatus transmissionTypesStatus;
   final StateStatus carTypesStatus;
+  final StateStatus carColorsStatus;
   final StateStatus submitStatus;
   final StateStatus deleteStatus;
 
@@ -18,6 +19,7 @@ class CarFormState extends Equatable {
   final List<CarLibraryItem> fuelTypes;
   final List<CarLibraryItem> transmissionTypes;
   final List<CarLibraryItem> carTypes;
+  final List<CarColor> carColors;
 
   final CarLibraryItem? selectedBrand;
   final CarLibraryItem? selectedModel;
@@ -25,10 +27,12 @@ class CarFormState extends Equatable {
   final CarLibraryItem? selectedFuelType;
   final CarLibraryItem? selectedTransmissionType;
   final CarLibraryItem? selectedCarType;
+  final CarColor? selectedCarColor;
 
   final String year;
   final String engineNumber;
   final String vinNumber;
+  final String seatCount;
   final String? selectedPhotoPath; // newly picked local file
   final bool deleteExistingPhoto;  // user removed the existing network photo
 
@@ -44,6 +48,8 @@ class CarFormState extends Equatable {
   final FieldValidationState yearValidationState;
   final FieldValidationState engineNumberValidationState;
   final FieldValidationState vinNumberValidationState;
+  final FieldValidationState carColorValidationState;
+  final FieldValidationState seatCountValidationState;
 
   const CarFormState({
     required this.brandsStatus,
@@ -52,6 +58,7 @@ class CarFormState extends Equatable {
     required this.fuelTypesStatus,
     required this.transmissionTypesStatus,
     required this.carTypesStatus,
+    required this.carColorsStatus,
     required this.submitStatus,
     required this.deleteStatus,
     required this.brands,
@@ -60,15 +67,18 @@ class CarFormState extends Equatable {
     required this.fuelTypes,
     required this.transmissionTypes,
     required this.carTypes,
+    required this.carColors,
     this.selectedBrand,
     this.selectedModel,
     this.selectedEngineVolume,
     this.selectedFuelType,
     this.selectedTransmissionType,
     this.selectedCarType,
+    this.selectedCarColor,
     required this.year,
     required this.engineNumber,
     required this.vinNumber,
+    required this.seatCount,
     this.selectedPhotoPath,
     this.deleteExistingPhoto = false,
     this.brandError,
@@ -80,6 +90,8 @@ class CarFormState extends Equatable {
     required this.yearValidationState,
     required this.engineNumberValidationState,
     required this.vinNumberValidationState,
+    required this.carColorValidationState,
+    required this.seatCountValidationState,
   });
 
   factory CarFormState.initial() => CarFormState(
@@ -89,6 +101,7 @@ class CarFormState extends Equatable {
     fuelTypesStatus: StateStatus.initial(),
     transmissionTypesStatus: StateStatus.initial(),
     carTypesStatus: StateStatus.initial(),
+    carColorsStatus: StateStatus.initial(),
     submitStatus: StateStatus.initial(),
     deleteStatus: StateStatus.initial(),
     brands: [],
@@ -97,14 +110,18 @@ class CarFormState extends Equatable {
     fuelTypes: [],
     transmissionTypes: [],
     carTypes: [],
+    carColors: [],
     year: '',
     engineNumber: '',
     vinNumber: '',
+    seatCount: '',
     brandModelValidationState: FieldValidationState.pure(),
     carTypeValidationState: FieldValidationState.pure(),
     yearValidationState: FieldValidationState.pure(),
     engineNumberValidationState: FieldValidationState.pure(),
     vinNumberValidationState: FieldValidationState.pure(),
+    carColorValidationState: FieldValidationState.pure(),
+    seatCountValidationState: FieldValidationState.pure(),
   );
 
   CarFormState copyWith({
@@ -114,6 +131,7 @@ class CarFormState extends Equatable {
     StateStatus? fuelTypesStatus,
     StateStatus? transmissionTypesStatus,
     StateStatus? carTypesStatus,
+    StateStatus? carColorsStatus,
     StateStatus? submitStatus,
     StateStatus? deleteStatus,
     List<CarLibraryItem>? brands,
@@ -122,15 +140,18 @@ class CarFormState extends Equatable {
     List<CarLibraryItem>? fuelTypes,
     List<CarLibraryItem>? transmissionTypes,
     List<CarLibraryItem>? carTypes,
+    List<CarColor>? carColors,
     CarLibraryItem? selectedBrand,
     CarLibraryItem? selectedModel,
     EngineVolume? selectedEngineVolume,
     CarLibraryItem? selectedFuelType,
     CarLibraryItem? selectedTransmissionType,
     CarLibraryItem? selectedCarType,
+    CarColor? selectedCarColor,
     String? year,
     String? engineNumber,
     String? vinNumber,
+    String? seatCount,
     String? selectedPhotoPath,
     bool? deleteExistingPhoto,
     bool clearSelectedPhoto = false,
@@ -143,6 +164,8 @@ class CarFormState extends Equatable {
     FieldValidationState? yearValidationState,
     FieldValidationState? engineNumberValidationState,
     FieldValidationState? vinNumberValidationState,
+    FieldValidationState? carColorValidationState,
+    FieldValidationState? seatCountValidationState,
     bool clearBrandError = false,
     bool clearModelError = false,
     bool clearCarTypeError = false,
@@ -151,6 +174,7 @@ class CarFormState extends Equatable {
     bool clearSelectedEngineVolume = false,
     bool clearSelectedFuelType = false,
     bool clearSelectedTransmissionType = false,
+    bool clearSelectedCarColor = false,
   }) {
     return CarFormState(
       brandsStatus: brandsStatus ?? this.brandsStatus,
@@ -159,6 +183,7 @@ class CarFormState extends Equatable {
       fuelTypesStatus: fuelTypesStatus ?? this.fuelTypesStatus,
       transmissionTypesStatus: transmissionTypesStatus ?? this.transmissionTypesStatus,
       carTypesStatus: carTypesStatus ?? this.carTypesStatus,
+      carColorsStatus: carColorsStatus ?? this.carColorsStatus,
       submitStatus: submitStatus ?? this.submitStatus,
       deleteStatus: deleteStatus ?? this.deleteStatus,
       brands: brands ?? this.brands,
@@ -167,6 +192,7 @@ class CarFormState extends Equatable {
       fuelTypes: fuelTypes ?? this.fuelTypes,
       transmissionTypes: transmissionTypes ?? this.transmissionTypes,
       carTypes: carTypes ?? this.carTypes,
+      carColors: carColors ?? this.carColors,
       selectedBrand: selectedBrand ?? this.selectedBrand,
       selectedModel: clearSelectedModel ? null : (selectedModel ?? this.selectedModel),
       selectedEngineVolume: clearSelectedEngineVolume ? null : (selectedEngineVolume ?? this.selectedEngineVolume),
@@ -175,9 +201,11 @@ class CarFormState extends Equatable {
           ? null
           : (selectedTransmissionType ?? this.selectedTransmissionType),
       selectedCarType: selectedCarType ?? this.selectedCarType,
+      selectedCarColor: clearSelectedCarColor ? null : (selectedCarColor ?? this.selectedCarColor),
       year: year ?? this.year,
       engineNumber: engineNumber ?? this.engineNumber,
       vinNumber: vinNumber ?? this.vinNumber,
+      seatCount: seatCount ?? this.seatCount,
       selectedPhotoPath: clearSelectedPhoto ? null : (selectedPhotoPath ?? this.selectedPhotoPath),
       deleteExistingPhoto: deleteExistingPhoto ?? this.deleteExistingPhoto,
       brandError: clearBrandError ? null : (brandError ?? this.brandError),
@@ -189,6 +217,8 @@ class CarFormState extends Equatable {
       yearValidationState: yearValidationState ?? this.yearValidationState,
       engineNumberValidationState: engineNumberValidationState ?? this.engineNumberValidationState,
       vinNumberValidationState: vinNumberValidationState ?? this.vinNumberValidationState,
+      carColorValidationState: carColorValidationState ?? this.carColorValidationState,
+      seatCountValidationState: seatCountValidationState ?? this.seatCountValidationState,
     );
   }
 
@@ -200,6 +230,7 @@ class CarFormState extends Equatable {
     fuelTypesStatus,
     transmissionTypesStatus,
     carTypesStatus,
+    carColorsStatus,
     submitStatus,
     deleteStatus,
     brands,
@@ -208,15 +239,18 @@ class CarFormState extends Equatable {
     fuelTypes,
     transmissionTypes,
     carTypes,
+    carColors,
     selectedBrand,
     selectedModel,
     selectedEngineVolume,
     selectedFuelType,
     selectedTransmissionType,
     selectedCarType,
+    selectedCarColor,
     year,
     engineNumber,
     vinNumber,
+    seatCount,
     selectedPhotoPath,
     deleteExistingPhoto,
     brandError,
@@ -228,5 +262,7 @@ class CarFormState extends Equatable {
     yearValidationState,
     engineNumberValidationState,
     vinNumberValidationState,
+    carColorValidationState,
+    seatCountValidationState,
   ];
 }
