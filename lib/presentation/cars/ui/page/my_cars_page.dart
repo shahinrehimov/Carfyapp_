@@ -157,7 +157,7 @@ class _CarListShimmer extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 16),
       itemBuilder: (_, __) => ShimmerWrapper(
         child: Container(
-          height: 225,
+          height: 160,
           decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),

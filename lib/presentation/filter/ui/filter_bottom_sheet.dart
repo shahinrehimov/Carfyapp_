@@ -1,5 +1,7 @@
+import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
@@ -38,50 +40,41 @@ class FilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            // Drag handle
-            Padding(
-              padding: const EdgeInsets.only(top: 11, bottom: 8),
-              child: Container(
-                width: 54,
-                height: 3,
-                decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
-              ),
+    return DraggableScrollableSheet(
+      initialChildSize: 0.95,
+      minChildSize: 0.5,
+      maxChildSize: 0.95,
+      expand: false,
+      snap: true,
+      snapSizes: const [0.95],
+      shouldCloseOnMinExtent: true,
+      builder: (context, scrollController) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            backgroundColor: Colors.white,
+            body: BlocBuilder<FilterCubit, FilterState>(
+              buildWhen: (prev, curr) => prev.loadStatus != curr.loadStatus,
+              builder: (context, state) {
+                return state.loadStatus.maybeWhen(
+                  success: () => _FilterContent(scrollController: scrollController),
+                  loading: () => _FilterLoading(scrollController: scrollController),
+                  orElse: () => _FilterLoading(scrollController: scrollController),
+                );
+              },
             ),
-            // Title
-            Text(
-              context.localization.filter,
-              style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 16),
-            // Content
-            Expanded(
-              child: BlocBuilder<FilterCubit, FilterState>(
-                buildWhen: (prev, curr) => prev.loadStatus != curr.loadStatus,
-                builder: (context, state) {
-                  return state.loadStatus.maybeWhen(
-                    success: () => const _FilterContent(),
-                    loading: () => const _FilterLoading(),
-                    orElse: () => const _FilterLoading(),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
 class _FilterContent extends StatelessWidget {
-  const _FilterContent();
+  final ScrollController scrollController;
+
+  const _FilterContent({required this.scrollController});
 
   List<int> _buildYearList(ProductFilters filters) {
     final yearRange = filters.yearRange;
@@ -97,9 +90,36 @@ class _FilterContent extends StatelessWidget {
         final cubit = context.read<FilterCubit>();
 
         return ListView(
+          controller: scrollController,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
           children: [
+            // Drag handle
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 11, bottom: 8),
+                child: Container(
+                  width: 54,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ),
+            ),
+            // Title
+            Center(
+              child: Text(
+                context.localization.filter,
+                style: TextStyle(
+                  color: context.theme.colors.textDark,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             // Brand
             // Category
             GestureDetector(
@@ -236,20 +256,22 @@ class _FilterContent extends StatelessWidget {
                 if (result != null) cubit.setConditions(result);
               },
             ),
-            const SizedBox(height: 16),
-            // Search by car button
-            CustomButton(
-              onPressed: () async {
-                final car = await CarPickerBottomSheet.show(context);
-                if (car != null && context.mounted) {
-                  cubit.selectByCar(car.brand.id, car.brandModel.id);
-                  cubit.apply();
-                  Navigator.pop(context, true);
-                }
-              },
-              text: context.localization.filterSearchByCar,
-              height: 48,
-            ),
+            if (PrefUtil.getString(AppPreferenceKeys.authToken) != null) ...[
+              const SizedBox(height: 16),
+              // Search by car button
+              CustomButton(
+                onPressed: () async {
+                  final car = await CarPickerBottomSheet.show(context);
+                  if (car != null && context.mounted) {
+                    cubit.selectByCar(car.brand.id, car.brandModel.id);
+                    cubit.apply();
+                    Navigator.pop(context, true);
+                  }
+                },
+                text: context.localization.filterSearchByCar,
+                height: 48,
+              ),
+            ],
             const SizedBox(height: 16),
             // Apply button
             CustomButton(
@@ -551,26 +573,55 @@ class _MultiSelectField extends StatelessWidget {
 }
 
 class _FilterLoading extends StatelessWidget {
-  const _FilterLoading();
+  final ScrollController scrollController;
+
+  const _FilterLoading({required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return ListView(
+      controller: scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ShimmerWrapper(
-        child: Column(
-          children: List.generate(
-            6,
-            (_) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Container(
-                height: 48,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40)),
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 11, bottom: 8),
+            child: Container(
+              width: 54,
+              height: 3,
+              decoration: BoxDecoration(
+                color: const Color(0xFFD9D9D9),
+                borderRadius: BorderRadius.circular(100),
               ),
             ),
           ),
         ),
-      ),
+        Center(
+          child: Text(
+            context.localization.filter,
+            style: TextStyle(
+              color: context.theme.colors.textDark,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        ShimmerWrapper(
+          child: Column(
+            children: List.generate(
+              6,
+              (_) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

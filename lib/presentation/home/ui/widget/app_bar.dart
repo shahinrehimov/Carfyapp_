@@ -13,12 +13,24 @@ class _AppBar extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(Assets.icons.locationIcon),
-                      const SizedBox(width: 6),
-                      Text('Baki', style: TextStyle(color: context.theme.colors.white)),
-                    ],
+                  child: BlocBuilder<DefaultAddressCubit, DefaultAddressState>(
+                    builder: (context, state) {
+                      final address = state.address;
+                      if (address == null) return const SizedBox.shrink();
+                      return Row(
+                        children: [
+                          SvgPicture.asset(Assets.icons.locationIcon),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              address.city.title,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: context.theme.colors.white),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 SvgPicture.asset(Assets.icons.logoWhite),

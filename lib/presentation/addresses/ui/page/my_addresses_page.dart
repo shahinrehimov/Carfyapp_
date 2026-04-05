@@ -11,6 +11,7 @@ import 'package:carfy/domain/entities/address/address.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/addresses/ui/page/address_form_bottom_sheet.dart';
 import 'package:carfy/presentation/addresses/state/my_addresses/my_addresses_cubit.dart';
+import 'package:carfy/presentation/app/state/default_address/default_address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,9 +32,17 @@ class MyAddressesPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: CustomAppBarWhite(title: context.localization.profileMyAddresses),
-      body: BlocListener<MyAddressesCubit, MyAddressesState>(
-        listenWhen: (prev, curr) => prev.status != curr.status,
-        listener: (context, state) => showStateStatusToast(context, state.status),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<MyAddressesCubit, MyAddressesState>(
+            listenWhen: (prev, curr) => prev.status != curr.status,
+            listener: (context, state) => showStateStatusToast(context, state.status),
+          ),
+          BlocListener<MyAddressesCubit, MyAddressesState>(
+            listenWhen: (prev, curr) => prev.addresses != curr.addresses,
+            listener: (context, _) => context.read<DefaultAddressCubit>().refresh(),
+          ),
+        ],
         child: Column(
           children: [
             Expanded(
