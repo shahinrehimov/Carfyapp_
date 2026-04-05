@@ -5,7 +5,7 @@ import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
-import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
+import 'package:carfy/common/widgets/wishlist_heart_button.dart';
 import 'package:carfy/presentation/basket/state/basket_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,21 +147,7 @@ class BasketItem extends StatelessWidget {
                 child: Padding(padding: const EdgeInsets.all(5.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
               ),
               const SizedBox(height: 22),
-              BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
-                buildWhen: (prev, curr) {
-                  final cpvUuid = basketProduct.product.seller?.uuid;
-                  if (cpvUuid == null) return false;
-                  return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
-                },
-                builder: (context, wishlistState) {
-                  final cpvUuid = basketProduct.product.seller?.uuid;
-                  final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
-                  return GestureDetector(
-                    onTap: cpvUuid != null ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid) : null,
-                    child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
-                  );
-                },
-              ),
+              WishlistHeartButton(cpvUuid: basketProduct.product.seller?.uuid),
             ],
           ),
         ],

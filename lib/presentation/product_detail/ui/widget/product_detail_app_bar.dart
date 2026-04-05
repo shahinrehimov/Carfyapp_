@@ -5,14 +5,15 @@ import 'package:carfy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ProductDetailAppBar extends StatelessWidget {
+class ProductDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProductDetailAppBar({super.key});
 
   @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      floating: false,
+    return AppBar(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       elevation: 0.5,

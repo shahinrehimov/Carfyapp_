@@ -55,6 +55,7 @@ class ProductDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
+      appBar: const ProductDetailAppBar(),
       body: BlocBuilder<ProductDetailCubit, ProductDetailState>(
         builder: (context, state) {
           return state.status.maybeWhen(
@@ -83,7 +84,6 @@ class _ProductDetailBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        const ProductDetailAppBar(),
         SliverToBoxAdapter(child: ProductMainImage(product: product)),
         SliverToBoxAdapter(child: ProductImageGallery(product: product)),
         SliverToBoxAdapter(child: ProductInfoSection(product: product)),

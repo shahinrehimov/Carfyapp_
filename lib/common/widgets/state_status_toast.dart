@@ -7,16 +7,16 @@ import 'package:carfy/common/translations/translation_context_extension.dart';
 void showStateStatusToast(BuildContext context, StateStatus state) {
   switch (state) {
     case StateStatusFailure(msg: final msg):
-      CustomToast.showToast(context, msg);
+      CustomToast.showError(context, msg);
       break;
     case StateStatusNetworkFailure():
-      CustomToast.showToast(context, context.localization.connectionFailure);
+      CustomToast.showError(context, context.localization.connectionFailure);
       break;
     case StateStatusServerFailure():
-      CustomToast.showToast(context, context.localization.serverFailure);
+      CustomToast.showError(context, context.localization.serverFailure);
       break;
     case StateStatusSuccessWithMessage(msg: final msg):
-      CustomToast.showToast(context, msg);
+      CustomToast.showSuccess(context, msg);
       break;
   }
 }

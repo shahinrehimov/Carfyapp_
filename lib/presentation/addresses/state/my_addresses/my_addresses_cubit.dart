@@ -68,7 +68,11 @@ class MyAddressesCubit extends Cubit<MyAddressesState> with StateMapHelper {
       (message) {
         final updated = {...state.setDefaultStatus}..remove(id);
         final addresses = state.addresses.map((a) => _withDefault(a, a.id == id)).toList();
-        emit(state.copyWith(setDefaultStatus: updated, addresses: addresses));
+        emit(state.copyWith(
+          setDefaultStatus: updated,
+          addresses: addresses,
+          status: StateStatus.successWithMessage(message),
+        ));
       },
     );
   }

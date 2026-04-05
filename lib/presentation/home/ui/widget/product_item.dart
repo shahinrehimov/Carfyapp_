@@ -7,8 +7,8 @@ import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/products/product.dart';
+import 'package:carfy/common/widgets/wishlist_heart_button.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
-import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,21 +59,7 @@ class ProductItem extends StatelessWidget {
                 Positioned(
                   right: 10,
                   top: 6,
-                  child: BlocBuilder<WishlistManagerCubit, WishlistManagerState>(
-                    buildWhen: (prev, curr) {
-                      final cpvUuid = product.seller?.uuid;
-                      if (cpvUuid == null) return false;
-                      return prev.wishlistIds.contains(cpvUuid) != curr.wishlistIds.contains(cpvUuid);
-                    },
-                    builder: (context, wishlistState) {
-                      final cpvUuid = product.seller?.uuid;
-                      final isWishlisted = cpvUuid != null && wishlistState.wishlistIds.contains(cpvUuid);
-                      return GestureDetector(
-                        onTap: cpvUuid != null ? () => context.read<WishlistManagerCubit>().toggle(cpvUuid) : null,
-                        child: SvgPicture.asset(isWishlisted ? Assets.icons.heartFilled : Assets.icons.heart),
-                      );
-                    },
-                  ),
+                  child: WishlistHeartButton(cpvUuid: product.seller?.uuid),
                 ),
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:carfy/presentation/app/ui/widget/multi_provider_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:toastification/toastification.dart';
 
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/delegate.dart';
@@ -25,6 +26,7 @@ class CarfyApp extends StatelessWidget {
               return MaterialApp.router(
                 theme: AppTheme.of(context).getTheme(),
                 debugShowCheckedModeBanner: false,
+                builder: (context, child) => ToastificationWrapper(child: child ?? const SizedBox.shrink()),
                 locale: localizationState.appLanguage.locale,
                 supportedLocales: const [Locale('az', ''), Locale('en', ''), Locale('ru', '')],
                 localizationsDelegates: [
