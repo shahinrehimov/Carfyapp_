@@ -6,6 +6,7 @@ import 'package:carfy/domain/entities/advertisements/advertisement.dart';
 import 'package:carfy/presentation/ads/state/ads_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AdsBanner extends StatelessWidget {
   final double height;
@@ -128,35 +129,44 @@ class _AdCard extends StatelessWidget {
 
   const _AdCard({required this.ad, required this.borderRadius, required this.padding});
 
+  Future<void> _openLink() async {
+    final uri = Uri.tryParse(ad.link);
+    if (uri == null) return;
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            CachedNetworkImage(imageUrl: ad.imageUrl!, fit: BoxFit.cover),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.black.withValues(alpha: 0.15), Colors.black.withValues(alpha: 0.55)],
+        child: GestureDetector(
+          onTap: _openLink,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              CachedNetworkImage(imageUrl: ad.imageUrl!, fit: BoxFit.cover),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black.withValues(alpha: 0.15), Colors.black.withValues(alpha: 0.55)],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 20,
-              right: 20,
-              bottom: 40,
-              child: Text(
-                ad.title,
-                style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700, height: 1.2),
+              Positioned(
+                left: 20,
+                right: 20,
+                bottom: 40,
+                child: Text(
+                  ad.title,
+                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700, height: 1.2),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
