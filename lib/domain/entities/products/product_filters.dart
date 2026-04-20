@@ -1,3 +1,4 @@
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/products/city.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/filter_category.dart';
@@ -11,7 +12,7 @@ class ProductFilters {
   final List<FilterBrand> brands;
   final List<City> cities;
   final PriceRange priceRange;
-  final List<FilterOption> colors;
+  final List<CarColor> colors;
   final List<FilterOption> conditions;
   final YearRange? yearRange;
   final List<SortOption> sortOptions;

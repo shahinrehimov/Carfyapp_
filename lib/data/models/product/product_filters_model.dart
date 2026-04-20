@@ -1,3 +1,4 @@
+import 'package:carfy/data/models/car/car_color_model.dart';
 import 'package:carfy/data/models/product/city_model.dart';
 import 'package:carfy/data/models/product/filter_brand_model.dart';
 import 'package:carfy/data/models/product/filter_category_model.dart';
@@ -11,7 +12,7 @@ class ProductFiltersModel {
   final List<FilterBrandModel> brands;
   final List<CityModel> cities;
   final PriceRangeModel priceRange;
-  final List<FilterOptionModel> colors;
+  final List<CarColorModel> colors;
   final List<FilterOptionModel> conditions;
   final YearRangeModel? yearRange;
   final List<SortOptionModel> sortOptions;
@@ -43,7 +44,7 @@ class ProductFiltersModel {
           .toList(),
       priceRange: PriceRangeModel.fromJson(data['price_ranges']),
       colors: data['colors'] != null
-          ? (data['colors'] as List).map((e) => FilterOptionModel.fromJson(e)).toList()
+          ? (data['colors'] as List).map((e) => CarColorModel.fromJson(e)).toList()
           : [],
       conditions: data['conditions'] != null
           ? (data['conditions'] as List).map((e) => FilterOptionModel.fromJson(e)).toList()

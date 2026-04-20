@@ -2,6 +2,7 @@ import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/util/pref_util.dart';
+import 'package:carfy/common/widgets/car_color_picker.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
@@ -202,20 +203,13 @@ class _FilterContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // Color
-            _MultiSelectField(
+            CarColorMultiPickerField(
+              colors: filters.colors,
+              selectedIds: state.selectedColorIds.map(int.parse).toSet(),
               hint: context.localization.filterColor,
-              selectedCount: state.selectedColorSlugs.length,
-              onTap: () async {
-                final result = await MultiSelectPickerBottomSheet.show<String>(
-                  context,
-                  title: context.localization.filterColor,
-                  doneText: context.localization.categoryDone,
-                  items: filters.colors.map((c) => c.slug).toList(),
-                  initialSelected: state.selectedColorSlugs,
-                  labelBuilder: (slug) => filters.colors.firstWhere((c) => c.slug == slug).title,
-                );
-                if (result != null) cubit.setColors(result);
-              },
+              sheetTitle: context.localization.filterColor,
+              doneText: context.localization.categoryDone,
+              onChanged: (ids) => cubit.setColors(ids.map((i) => i.toString()).toSet()),
             ),
             const SizedBox(height: 12),
             // Year range

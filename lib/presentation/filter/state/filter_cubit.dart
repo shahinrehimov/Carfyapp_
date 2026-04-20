@@ -58,8 +58,8 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     emit(state.copyWith(selectedCityIds: cityIds));
   }
 
-  void setColors(Set<String> colorSlugs) {
-    emit(state.copyWith(selectedColorSlugs: colorSlugs));
+  void setColors(Set<String> colorIds) {
+    emit(state.copyWith(selectedColorIds: colorIds));
   }
 
   void setConditions(Set<String> conditionSlugs) {

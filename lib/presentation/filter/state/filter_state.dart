@@ -6,7 +6,7 @@ class FilterState extends Equatable {
   final FilterBrand? selectedBrand;
   final BrandModelItem? selectedModel;
   final Set<int> selectedCityIds;
-  final Set<String> selectedColorSlugs;
+  final Set<String> selectedColorIds;
   final Set<String> selectedConditionSlugs;
   final Set<String> selectedCategories;
   final Set<String> selectedSubCategories;
@@ -21,7 +21,7 @@ class FilterState extends Equatable {
     this.selectedBrand,
     this.selectedModel,
     this.selectedCityIds = const {},
-    this.selectedColorSlugs = const {},
+    this.selectedColorIds = const {},
     this.selectedConditionSlugs = const {},
     this.selectedCategories = const {},
     this.selectedSubCategories = const {},
@@ -39,7 +39,7 @@ class FilterState extends Equatable {
       selectedBrand != null ||
       selectedModel != null ||
       selectedCityIds.isNotEmpty ||
-      selectedColorSlugs.isNotEmpty ||
+      selectedColorIds.isNotEmpty ||
       selectedConditionSlugs.isNotEmpty ||
       selectedCategories.isNotEmpty ||
       selectedSubCategories.isNotEmpty ||
@@ -56,7 +56,7 @@ class FilterState extends Equatable {
     BrandModelItem? selectedModel,
     bool clearModel = false,
     Set<int>? selectedCityIds,
-    Set<String>? selectedColorSlugs,
+    Set<String>? selectedColorIds,
     Set<String>? selectedConditionSlugs,
     Set<String>? selectedCategories,
     Set<String>? selectedSubCategories,
@@ -75,7 +75,7 @@ class FilterState extends Equatable {
       selectedBrand: clearBrand ? null : (selectedBrand ?? this.selectedBrand),
       selectedModel: clearModel ? null : (selectedModel ?? this.selectedModel),
       selectedCityIds: selectedCityIds ?? this.selectedCityIds,
-      selectedColorSlugs: selectedColorSlugs ?? this.selectedColorSlugs,
+      selectedColorIds: selectedColorIds ?? this.selectedColorIds,
       selectedConditionSlugs: selectedConditionSlugs ?? this.selectedConditionSlugs,
       selectedCategories: selectedCategories ?? this.selectedCategories,
       selectedSubCategories: selectedSubCategories ?? this.selectedSubCategories,
@@ -89,7 +89,7 @@ class FilterState extends Equatable {
   @override
   List<Object?> get props => [
     loadStatus, filtersData, selectedBrand, selectedModel, selectedCityIds,
-    selectedColorSlugs, selectedConditionSlugs, selectedCategories, selectedSubCategories,
+    selectedColorIds, selectedConditionSlugs, selectedCategories, selectedSubCategories,
     minYear, maxYear, minPrice, maxPrice,
   ];
 }

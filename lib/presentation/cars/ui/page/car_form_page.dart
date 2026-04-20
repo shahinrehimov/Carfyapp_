@@ -6,13 +6,13 @@ import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/car_color_picker.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:carfy/common/widgets/confirmation_dialog.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
-import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/car/user_car.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/cars/state/car_form/car_form_cubit.dart';
@@ -352,9 +352,11 @@ class _CarFormPageState extends State<CarFormPage> {
                     prev.selectedCarColor != curr.selectedCarColor ||
                     prev.carColorValidationState != curr.carColorValidationState,
                 builder: (context, state) {
-                  return _CarColorPickerField(
+                  return CarColorPickerField(
                     colors: state.carColors,
                     selected: state.selectedCarColor,
+                    hint: context.localization.carFormColor,
+                    sheetTitle: context.localization.carFormColor,
                     isLoading: state.carColorsStatus is StateStatusLoading,
                     hasLoadError: state.carColorsStatus is StateStatusFailure,
                     onRetry: cubit.retryCarColors,
@@ -417,186 +419,6 @@ class _CarFormPageState extends State<CarFormPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-Color _hexToColor(String hex) {
-  final normalized = hex.replaceAll('#', '');
-  final value = int.tryParse(normalized, radix: 16) ?? 0;
-  return Color(0xFF000000 | value);
-}
-
-class _CarColorPickerField extends StatelessWidget {
-  final List<CarColor> colors;
-  final CarColor? selected;
-  final bool isLoading;
-  final bool hasLoadError;
-  final VoidCallback? onRetry;
-  final String? errorText;
-  final ValueChanged<CarColor> onSelected;
-
-  const _CarColorPickerField({
-    required this.colors,
-    required this.selected,
-    required this.isLoading,
-    required this.hasLoadError,
-    required this.onRetry,
-    required this.errorText,
-    required this.onSelected,
-  });
-
-  Future<void> _open(BuildContext context) async {
-    if (isLoading || hasLoadError || colors.isEmpty) return;
-    final result = await showModalBottomSheet<CarColor>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
-      builder: (_) => _CarColorPickerSheet(colors: colors, selected: selected),
-    );
-    if (result != null) onSelected(result);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final hasError = errorText != null && errorText!.isNotEmpty;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () => _open(context),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              border: Border.all(color: hasError ? context.theme.colors.error : context.theme.colors.border),
-            ),
-            child: Row(
-              children: [
-                if (selected != null) ...[
-                  Container(
-                    width: 18,
-                    height: 18,
-                    decoration: BoxDecoration(
-                      color: _hexToColor(selected!.hexCode),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFD8D7D7)),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                ],
-                Expanded(
-                  child: Text(
-                    selected?.title ?? context.localization.carFormColor,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: selected != null ? context.theme.colors.textDark : context.theme.colors.textLight,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                if (isLoading)
-                  const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                else if (hasLoadError)
-                  GestureDetector(
-                    onTap: onRetry,
-                    child: Icon(Icons.refresh, color: context.theme.colors.textDark),
-                  )
-                else
-                  Icon(Icons.arrow_drop_down, color: context.theme.colors.textDark),
-              ],
-            ),
-          ),
-        ),
-        if (hasError)
-          Padding(
-            padding: const EdgeInsets.only(top: 4, left: 16),
-            child: Text(errorText!, style: TextStyle(color: context.theme.colors.error, fontSize: 12)),
-          ),
-      ],
-    );
-  }
-}
-
-class _CarColorPickerSheet extends StatelessWidget {
-  final List<CarColor> colors;
-  final CarColor? selected;
-
-  const _CarColorPickerSheet({required this.colors, required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 11, bottom: 8),
-            child: Container(
-              width: 54,
-              height: 3,
-              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
-            ),
-          ),
-          Text(
-            context.localization.carFormColor,
-            style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 16),
-          Flexible(
-            child: GridView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              itemCount: colors.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.68,
-              ),
-              itemBuilder: (context, index) {
-                final color = colors[index];
-                final isSelected = selected?.id == color.id;
-                return GestureDetector(
-                  onTap: () => Navigator.of(context).pop(color),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: _hexToColor(color.hexCode),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isSelected ? context.theme.colors.primary : const Color(0xFFD8D7D7),
-                              width: isSelected ? 3 : 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        color.title,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: context.theme.colors.textDark,
-                          fontSize: 12,
-                          fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

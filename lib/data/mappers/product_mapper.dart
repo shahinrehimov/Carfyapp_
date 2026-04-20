@@ -1,6 +1,7 @@
 import 'package:carfy/common/data/mappers/pagination_mapper.dart';
 import 'package:carfy/common/data/models/pagination_response_model.dart';
 import 'package:carfy/common/domain/entities/pagination_response.dart';
+import 'package:carfy/data/models/car/car_color_model.dart';
 import 'package:carfy/data/models/product/brand_model.dart';
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
 import 'package:carfy/data/models/product/category_slugs_model.dart';
@@ -24,6 +25,7 @@ import 'package:carfy/data/models/product/seller_model.dart';
 import 'package:carfy/data/models/product/set_item_model.dart';
 import 'package:carfy/data/models/product/sort_option_model.dart';
 import 'package:carfy/data/models/product/year_range_model.dart';
+import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/products/brand.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/category_slugs.dart';
@@ -164,6 +166,12 @@ class ProductMapper {
     title: model.title,
   );
 
+  CarColor mapCarColor(CarColorModel model) => CarColor(
+    id: model.id,
+    title: model.title,
+    hexCode: model.hexCode,
+  );
+
   YearRange mapYearRange(YearRangeModel model) => YearRange(
     min: model.min,
     max: model.max,
@@ -174,7 +182,7 @@ class ProductMapper {
     brands: model.brands.map(mapFilterBrand).toList(),
     cities: model.cities.map(mapCity).toList(),
     priceRange: mapPriceRange(model.priceRange),
-    colors: model.colors.map(mapFilterOption).toList(),
+    colors: model.colors.map(mapCarColor).toList(),
     conditions: model.conditions.map(mapFilterOption).toList(),
     yearRange: model.yearRange != null ? mapYearRange(model.yearRange!) : null,
     sortOptions: model.sortOptions.map(mapSortOption).toList(),
