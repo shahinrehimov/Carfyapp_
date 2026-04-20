@@ -419,4 +419,10 @@ class AppLocalizations {
   String get reviewSubmitSuccess => _tr(TranslationKeys.reviewSubmitSuccess);
 
   String get ratingLabel => _tr(TranslationKeys.ratingLabel);
+
+  String get contactMessageHint => _tr(TranslationKeys.contactMessageHint);
+
+  String get contactSubmitSuccess => _tr(TranslationKeys.contactSubmitSuccess);
+
+  String get contactLoginRequired => _tr(TranslationKeys.contactLoginRequired);
 }

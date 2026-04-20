@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
@@ -32,7 +34,7 @@ class ProductContactSection extends StatelessWidget {
                   width: 296,
                   height: 48,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () => context.pushRoute(const ContactUsRoute()),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: context.theme.colors.primary),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),

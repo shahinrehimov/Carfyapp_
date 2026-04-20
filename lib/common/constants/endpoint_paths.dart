@@ -101,4 +101,7 @@ class EndpointPaths {
 
   // Advertisement Endpoints
   static const activeAdvertisements = '/app/advertisements/active';
+
+  // Contact Endpoints
+  static const contactSend = '/app/contact/send';
 }

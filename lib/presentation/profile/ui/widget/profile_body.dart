@@ -44,7 +44,13 @@ class _ProfileBody extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           _ProfileSectionCard(
-            items: [_ProfileRowItem(label: context.localization.profileSupport, icon: Assets.icons.support, onTap: () {})],
+            items: [
+              _ProfileRowItem(
+                label: context.localization.profileSupport,
+                icon: Assets.icons.support,
+                onTap: () => context.pushRoute(const ContactUsRoute()),
+              ),
+            ],
           ),
         ],
       ),

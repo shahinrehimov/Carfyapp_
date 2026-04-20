@@ -217,6 +217,11 @@ class TranslationDefaults {
       TranslationKeys.send: 'Göndər',
       TranslationKeys.reviewSubmitSuccess: 'Rəyiniz uğurla göndərildi',
       TranslationKeys.ratingLabel: 'reytinq',
+
+      // Contact
+      TranslationKeys.contactMessageHint: 'Mesajınızı yazın',
+      TranslationKeys.contactSubmitSuccess: 'Mesajınız uğurla göndərildi',
+      TranslationKeys.contactLoginRequired: 'Bizə yazmaq üçün hesabınıza daxil olun',
     },
   };
 }

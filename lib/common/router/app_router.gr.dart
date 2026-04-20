@@ -232,6 +232,22 @@ class CompletePhoneRegisterRouteArgs {
 }
 
 /// generated route for
+/// [ContactUsPage]
+class ContactUsRoute extends PageRouteInfo<void> {
+  const ContactUsRoute({List<PageRouteInfo>? children})
+    : super(ContactUsRoute.name, initialChildren: children);
+
+  static const String name = 'ContactUsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const ContactUsPage());
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})

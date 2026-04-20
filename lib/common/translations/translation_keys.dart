@@ -222,4 +222,9 @@ class TranslationKeys {
   static const String send = 'send';
   static const String reviewSubmitSuccess = 'review_submit_success';
   static const String ratingLabel = 'rating_label';
+
+  // Contact
+  static const String contactMessageHint = 'contact_message_hint';
+  static const String contactSubmitSuccess = 'contact_submit_success';
+  static const String contactLoginRequired = 'contact_login_required';
 }

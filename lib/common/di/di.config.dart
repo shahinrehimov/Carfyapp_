@@ -19,6 +19,8 @@ import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
 import 'package:carfy/data/datasources/car_remote_data_source.dart' as _i304;
 import 'package:carfy/data/datasources/category_remote_data_source.dart'
     as _i861;
+import 'package:carfy/data/datasources/contact_remote_data_source.dart'
+    as _i1057;
 import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
 import 'package:carfy/data/datasources/product_remote_data_source.dart'
     as _i881;
@@ -45,6 +47,7 @@ import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
 import 'package:carfy/data/repositories/basket_repository_impl.dart' as _i522;
 import 'package:carfy/data/repositories/car_repository_impl.dart' as _i663;
 import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
+import 'package:carfy/data/repositories/contact_repository_impl.dart' as _i1031;
 import 'package:carfy/data/repositories/group_repository_impl.dart' as _i294;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
@@ -58,6 +61,7 @@ import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
 import 'package:carfy/domain/repositories/basket_repository.dart' as _i449;
 import 'package:carfy/domain/repositories/car_repository.dart' as _i194;
 import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
+import 'package:carfy/domain/repositories/contact_repository.dart' as _i157;
 import 'package:carfy/domain/repositories/group_repository.dart' as _i1037;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
@@ -152,6 +156,8 @@ import 'package:carfy/domain/use_cases/car/get_transmission_types_use_case.dart'
 import 'package:carfy/domain/use_cases/car/update_car_use_case.dart' as _i936;
 import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart'
     as _i202;
+import 'package:carfy/domain/use_cases/contact/send_contact_use_case.dart'
+    as _i914;
 import 'package:carfy/domain/use_cases/group/get_group_use_case.dart' as _i442;
 import 'package:carfy/domain/use_cases/group/get_groups_bulk_use_case.dart'
     as _i863;
@@ -204,6 +210,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.singleton<_i420.MainCubit>(() => _i420.MainCubit());
+    gh.factory<_i1057.ContactRemoteDataSource>(
+      () => _i1057.ContactRemoteDataSourceImpl(),
+    );
     gh.factory<_i490.BasketRemoteDataSource>(
       () => _i490.BasketRemoteDataSourceImpl(),
     );
@@ -282,6 +291,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i303.AddressMapper>(),
       ),
     );
+    gh.factory<_i157.ContactRepository>(
+      () => _i1031.ContactRepositoryImpl(gh<_i1057.ContactRemoteDataSource>()),
+    );
     gh.factory<_i524.GetActiveAdvertisementsUseCase>(
       () => _i524.GetActiveAdvertisementsUseCase(
         gh<_i443.AdvertisementRepository>(),
@@ -340,6 +352,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i139.StoreReviewUseCase>(
       () => _i139.StoreReviewUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i914.SendContactUseCase>(
+      () => _i914.SendContactUseCase(gh<_i157.ContactRepository>()),
     );
     gh.factory<_i202.GetCategoriesUseCase>(
       () => _i202.GetCategoriesUseCase(gh<_i557.CategoryRepository>()),
