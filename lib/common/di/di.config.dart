@@ -12,6 +12,8 @@
 import 'package:carfy/common/network/network_manager.dart' as _i597;
 import 'package:carfy/data/datasources/address_remote_data_source.dart'
     as _i930;
+import 'package:carfy/data/datasources/advertisement_remote_data_source.dart'
+    as _i951;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
 import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
 import 'package:carfy/data/datasources/car_remote_data_source.dart' as _i304;
@@ -29,6 +31,7 @@ import 'package:carfy/data/datasources/version_remote_data_source.dart'
 import 'package:carfy/data/datasources/wishlist_remote_data_source.dart'
     as _i685;
 import 'package:carfy/data/mappers/address_mapper.dart' as _i303;
+import 'package:carfy/data/mappers/advertisement_mapper.dart' as _i755;
 import 'package:carfy/data/mappers/auth_mapper.dart' as _i163;
 import 'package:carfy/data/mappers/basket_mapper.dart' as _i751;
 import 'package:carfy/data/mappers/car_mapper.dart' as _i407;
@@ -36,6 +39,8 @@ import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
 import 'package:carfy/data/repositories/address_repository_impl.dart' as _i1024;
+import 'package:carfy/data/repositories/advertisement_repository_impl.dart'
+    as _i198;
 import 'package:carfy/data/repositories/auth_repository_impl.dart' as _i407;
 import 'package:carfy/data/repositories/basket_repository_impl.dart' as _i522;
 import 'package:carfy/data/repositories/car_repository_impl.dart' as _i663;
@@ -47,6 +52,8 @@ import 'package:carfy/data/repositories/translations_repository_impl.dart'
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
 import 'package:carfy/data/repositories/wishlist_repository_impl.dart' as _i224;
 import 'package:carfy/domain/repositories/address_repository.dart' as _i574;
+import 'package:carfy/domain/repositories/advertisement_repository.dart'
+    as _i443;
 import 'package:carfy/domain/repositories/auth_repository.dart' as _i655;
 import 'package:carfy/domain/repositories/basket_repository.dart' as _i449;
 import 'package:carfy/domain/repositories/car_repository.dart' as _i194;
@@ -70,6 +77,8 @@ import 'package:carfy/domain/use_cases/address/set_default_address_use_case.dart
     as _i358;
 import 'package:carfy/domain/use_cases/address/update_address_use_case.dart'
     as _i438;
+import 'package:carfy/domain/use_cases/advertisements/get_active_advertisements_use_case.dart'
+    as _i524;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_phone_otp_use_case.dart'
     as _i818;
@@ -188,6 +197,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i303.AddressMapper>(() => _i303.AddressMapper());
+    gh.factory<_i755.AdvertisementMapper>(() => _i755.AdvertisementMapper());
     gh.factory<_i163.AuthMapper>(() => _i163.AuthMapper());
     gh.factory<_i407.CarMapper>(() => _i407.CarMapper());
     gh.factory<_i109.CategoryMapper>(() => _i109.CategoryMapper());
@@ -214,6 +224,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i685.WishlistRemoteDataSource>(),
         gh<_i344.ProductMapper>(),
       ),
+    );
+    gh.factory<_i951.AdvertisementRemoteDataSource>(
+      () => _i951.AdvertisementRemoteDataSourceImpl(),
     );
     gh.factory<_i456.AddToWishlistUseCase>(
       () => _i456.AddToWishlistUseCase(gh<_i54.WishlistRepository>()),
@@ -245,6 +258,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i387.TranslationRemoteDataSource>(
       () => _i387.TranslationRemoteDataSourceImpl(),
     );
+    gh.factory<_i443.AdvertisementRepository>(
+      () => _i198.AdvertisementRepositoryImpl(
+        gh<_i951.AdvertisementRemoteDataSource>(),
+        gh<_i755.AdvertisementMapper>(),
+      ),
+    );
     gh.factory<_i194.CarRepository>(
       () => _i663.CarRepositoryImpl(
         gh<_i304.CarRemoteDataSource>(),
@@ -261,6 +280,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1024.AddressRepositoryImpl(
         gh<_i930.AddressRemoteDataSource>(),
         gh<_i303.AddressMapper>(),
+      ),
+    );
+    gh.factory<_i524.GetActiveAdvertisementsUseCase>(
+      () => _i524.GetActiveAdvertisementsUseCase(
+        gh<_i443.AdvertisementRepository>(),
       ),
     );
     gh.factory<_i745.VersionRepository>(

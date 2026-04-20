@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/ads/ui/widget/ads_banner.dart';
 import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
 import 'package:carfy/presentation/app/state/default_address/default_address_cubit.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
@@ -47,28 +48,27 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
           onLoadMore: () => context.read<HomeCubit>().loadNextProducts(),
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
-          children: [
-            const SizedBox(height: 16),
-            _Heading(
-              header: context.localization.categories,
-              onTap: () {
-                context.router.push(const CategoriesRoute());
-              },
-            ),
-            const SizedBox(height: 8),
-            const _CategoriesSection(),
-            const SizedBox(height: 24),
-            const _GroupsSection(),
-            _Heading(
-              header: context.localization.allProducts,
-              onTap: () => context.pushRoute(ProductListRoute(
-                params: const ProductListPageParams(),
-              )),
-            ),
-            const SizedBox(height: 12),
-            const _ProductsSection(),
-          ],
-        ),
+            children: [
+              const SizedBox(height: 16),
+              _Heading(
+                header: context.localization.categories,
+                onTap: () {
+                  context.router.push(const CategoriesRoute());
+                },
+              ),
+              const SizedBox(height: 8),
+              const _CategoriesSection(),
+              const SizedBox(height: 24),
+              const _GroupsSection(),
+              const AdsBanner(padding: EdgeInsets.fromLTRB(16, 0, 16, 0), margin: EdgeInsets.only(bottom: 24)),
+              _Heading(
+                header: context.localization.allProducts,
+                onTap: () => context.pushRoute(ProductListRoute(params: const ProductListPageParams())),
+              ),
+              const SizedBox(height: 12),
+              const _ProductsSection(),
+            ],
+          ),
         ),
       ),
     );

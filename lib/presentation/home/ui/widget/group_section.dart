@@ -13,11 +13,11 @@ class _GroupsSection extends StatelessWidget {
           success: () => Column(
             children: state.groups.map((group) => _GroupItem(group: group)).toList(),
           ),
-          orElse: () => Column(
+          orElse: () => const Column(
             children: [
-              const SizedBox(height: 12),
-              const _GroupProductsLoading(),
-              const SizedBox(height: 24),
+              SizedBox(height: 12),
+              _GroupProductsLoading(),
+              SizedBox(height: 24),
             ],
           ),
         );
