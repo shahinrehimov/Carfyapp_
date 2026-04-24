@@ -204,7 +204,6 @@ import 'package:carfy/domain/use_cases/wishlist/get_wishlist_use_case.dart'
     as _i676;
 import 'package:carfy/domain/use_cases/wishlist/remove_from_wishlist_use_case.dart'
     as _i904;
-import 'package:carfy/presentation/main/state/main_cubit.dart' as _i420;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -223,7 +222,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i237.PaymentMapper>(() => _i237.PaymentMapper());
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
-    gh.singleton<_i420.MainCubit>(() => _i420.MainCubit());
     gh.factory<_i1057.ContactRemoteDataSource>(
       () => _i1057.ContactRemoteDataSourceImpl(),
     );

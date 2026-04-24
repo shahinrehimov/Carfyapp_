@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "119337416423",
+    "project_id": "carfy-c765e",
+    "storage_bucket": "carfy-c765e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119337416423:android:f9ce9b8f2650e760f49442",
+        "android_client_info": {
+          "package_name": "app.carfy.az"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAbU9g5mu5lo_LhWw8AbTOZuliaC43X-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
