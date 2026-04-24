@@ -1,7 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
 import 'package:carfy/domain/use_cases/product/get_product_filters_use_case.dart';
@@ -47,11 +46,11 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
   }
 
   void selectBrand(FilterBrand? brand) {
-    emit(state.copyWith(selectedBrand: brand, clearBrand: brand == null, clearModel: true));
+    emit(state.copyWith(selectedBrand: brand, clearBrand: brand == null, selectedModelIds: const {}));
   }
 
-  void selectModel(BrandModelItem? model) {
-    emit(state.copyWith(selectedModel: model, clearModel: model == null));
+  void setModels(Set<int> modelIds) {
+    emit(state.copyWith(selectedModelIds: modelIds));
   }
 
   void setCities(Set<int> cityIds) {
@@ -119,8 +118,7 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     emit(state.copyWith(
       selectedBrand: brand,
       clearBrand: false,
-      selectedModel: model,
-      clearModel: model == null,
+      selectedModelIds: model != null ? {model.id} : const {},
     ));
   }
 }

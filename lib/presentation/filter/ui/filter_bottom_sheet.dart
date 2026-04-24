@@ -175,14 +175,23 @@ class _FilterContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // Model
-            CustomDropdownField<BrandModelItem>(
-              items: state.selectedBrand?.models ?? [],
-              value: state.selectedModel,
+            _MultiSelectField(
               hint: context.localization.filterModel,
-              searchable: true,
-              itemLabelBuilder: (m) => m.title,
-              onChanged: (m) => cubit.selectModel(m),
+              selectedCount: state.selectedModelIds.length,
               enabled: state.selectedBrand != null,
+              onTap: () async {
+                final models = state.selectedBrand?.models ?? const <BrandModelItem>[];
+                if (models.isEmpty) return;
+                final result = await MultiSelectPickerBottomSheet.show<int>(
+                  context,
+                  title: context.localization.filterModel,
+                  doneText: context.localization.categoryDone,
+                  items: models.map((m) => m.id).toList(),
+                  initialSelected: state.selectedModelIds,
+                  labelBuilder: (id) => models.firstWhere((m) => m.id == id).title,
+                );
+                if (result != null) cubit.setModels(result);
+              },
             ),
             const SizedBox(height: 12),
             // City
@@ -526,40 +535,45 @@ class _MultiSelectField extends StatelessWidget {
   final String hint;
   final int selectedCount;
   final VoidCallback onTap;
+  final bool enabled;
 
   const _MultiSelectField({
     required this.hint,
     required this.selectedCount,
     required this.onTap,
+    this.enabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 48,
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: context.theme.colors.border),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                selectedCount > 0 ? '$selectedCount seçilib' : hint,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: selectedCount > 0
-                      ? context.theme.colors.textDark
-                      : context.theme.colors.textLight,
-                  fontWeight: FontWeight.w400,
+      onTap: enabled ? onTap : null,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.5,
+        child: Container(
+          height: 48,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            border: Border.all(color: context.theme.colors.border),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  selectedCount > 0 ? '$selectedCount seçilib' : hint,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: selectedCount > 0
+                        ? context.theme.colors.textDark
+                        : context.theme.colors.textLight,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-            ),
-            Icon(Icons.arrow_drop_down, color: context.theme.colors.textDark),
-          ],
+              Icon(Icons.arrow_drop_down, color: context.theme.colors.textDark),
+            ],
+          ),
         ),
       ),
     );

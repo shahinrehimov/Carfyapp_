@@ -4,7 +4,7 @@ class FilterState extends Equatable {
   final StateStatus loadStatus;
   final ProductFilters? filtersData;
   final FilterBrand? selectedBrand;
-  final BrandModelItem? selectedModel;
+  final Set<int> selectedModelIds;
   final Set<int> selectedCityIds;
   final Set<String> selectedColorIds;
   final Set<String> selectedConditionSlugs;
@@ -19,7 +19,7 @@ class FilterState extends Equatable {
     required this.loadStatus,
     this.filtersData,
     this.selectedBrand,
-    this.selectedModel,
+    this.selectedModelIds = const {},
     this.selectedCityIds = const {},
     this.selectedColorIds = const {},
     this.selectedConditionSlugs = const {},
@@ -37,7 +37,7 @@ class FilterState extends Equatable {
 
   bool get hasActiveFilters =>
       selectedBrand != null ||
-      selectedModel != null ||
+      selectedModelIds.isNotEmpty ||
       selectedCityIds.isNotEmpty ||
       selectedColorIds.isNotEmpty ||
       selectedConditionSlugs.isNotEmpty ||
@@ -53,8 +53,7 @@ class FilterState extends Equatable {
     ProductFilters? filtersData,
     FilterBrand? selectedBrand,
     bool clearBrand = false,
-    BrandModelItem? selectedModel,
-    bool clearModel = false,
+    Set<int>? selectedModelIds,
     Set<int>? selectedCityIds,
     Set<String>? selectedColorIds,
     Set<String>? selectedConditionSlugs,
@@ -73,7 +72,7 @@ class FilterState extends Equatable {
       loadStatus: loadStatus ?? this.loadStatus,
       filtersData: filtersData ?? this.filtersData,
       selectedBrand: clearBrand ? null : (selectedBrand ?? this.selectedBrand),
-      selectedModel: clearModel ? null : (selectedModel ?? this.selectedModel),
+      selectedModelIds: selectedModelIds ?? this.selectedModelIds,
       selectedCityIds: selectedCityIds ?? this.selectedCityIds,
       selectedColorIds: selectedColorIds ?? this.selectedColorIds,
       selectedConditionSlugs: selectedConditionSlugs ?? this.selectedConditionSlugs,
@@ -88,7 +87,7 @@ class FilterState extends Equatable {
 
   @override
   List<Object?> get props => [
-    loadStatus, filtersData, selectedBrand, selectedModel, selectedCityIds,
+    loadStatus, filtersData, selectedBrand, selectedModelIds, selectedCityIds,
     selectedColorIds, selectedConditionSlugs, selectedCategories, selectedSubCategories,
     minYear, maxYear, minPrice, maxPrice,
   ];
