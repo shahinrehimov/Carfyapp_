@@ -122,6 +122,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/password.svg
   String get password => 'assets/icons/password.svg';
 
+  /// File path: assets/icons/plus-square.svg
+  String get plusSquare => 'assets/icons/plus-square.svg';
+
   /// File path: assets/icons/plus.svg
   String get plus => 'assets/icons/plus.svg';
 
@@ -184,6 +187,7 @@ class $AssetsIconsGen {
     mobile,
     notification,
     password,
+    plusSquare,
     plus,
     profile,
     reset1,

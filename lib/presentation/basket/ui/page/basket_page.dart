@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/extensions/price_extension.dart';
+import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
@@ -107,7 +108,7 @@ class _PaymentDetailsBar extends StatelessWidget {
               context.localization.productCount,
               '${state.basketData!.totalItems} ${context.localization.piece}',
             ),
-            _buildDetailRow(context, context.localization.deliveryFee, state.basketData!.shipping.manatFormatted),
+            // _buildDetailRow(context, context.localization.deliveryFee, state.basketData!.shipping.manatFormatted),
             _buildDetailRow(context, context.localization.discount, state.basketData!.totalDiscount.manatFormatted),
             _buildDetailRow(
               context,
@@ -116,7 +117,10 @@ class _PaymentDetailsBar extends StatelessWidget {
               isBold: true,
             ),
             const SizedBox(height: 12),
-            CustomButton(onPressed: () {}, text: context.localization.formOrder),
+            CustomButton(
+              onPressed: () => context.pushRoute(const OrderConfirmRoute()),
+              text: context.localization.formOrder,
+            ),
           ],
         ),
       ),

@@ -104,4 +104,11 @@ class EndpointPaths {
 
   // Contact Endpoints
   static const contactSend = '/app/contact/send';
+
+  // Order Endpoints
+  static const checkoutPreview = '/app/orders/checkout-preview';
+  static const checkout = '/app/orders/checkout';
+
+  // Payment Endpoints
+  static const paymentMethods = '/app/payment/methods';
 }

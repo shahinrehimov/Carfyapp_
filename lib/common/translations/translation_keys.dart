@@ -227,4 +227,13 @@ class TranslationKeys {
   static const String contactMessageHint = 'contact_message_hint';
   static const String contactSubmitSuccess = 'contact_submit_success';
   static const String contactLoginRequired = 'contact_login_required';
+
+  // Order confirm
+  static const String orderConfirmTitle = 'order_confirm_title';
+  static const String orderConfirmAddAddress = 'order_confirm_add_address';
+  static const String orderConfirmAddAddressHint = 'order_confirm_add_address_hint';
+  static const String orderConfirmEditAddress = 'order_confirm_edit_address';
+  static const String orderConfirmSelectAddress = 'order_confirm_select_address';
+  static const String orderConfirmAddNewAddress = 'order_confirm_add_new_address';
+  static const String orderConfirmPaymentMethod = 'order_confirm_payment_method';
 }

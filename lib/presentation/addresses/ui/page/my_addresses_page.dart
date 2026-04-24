@@ -19,12 +19,31 @@ import 'package:flutter_svg/flutter_svg.dart';
 part '../widget/address_item.dart';
 
 @RoutePage()
-class MyAddressesPage extends StatelessWidget implements AutoRouteWrapper {
-  const MyAddressesPage({super.key});
+class MyAddressesPage extends StatefulWidget implements AutoRouteWrapper {
+  const MyAddressesPage({super.key, this.openAddForm = false});
+
+  final bool openAddForm;
 
   @override
   Widget wrappedRoute(BuildContext context) =>
       BlocProvider(create: (_) => MyAddressesCubit()..init(), child: this);
+
+  @override
+  State<MyAddressesPage> createState() => _MyAddressesPageState();
+}
+
+class _MyAddressesPageState extends State<MyAddressesPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.openAddForm) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        final saved = await showAddressFormBottomSheet(context);
+        if (saved && mounted) context.read<MyAddressesCubit>().refresh();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

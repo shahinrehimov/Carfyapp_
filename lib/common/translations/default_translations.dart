@@ -222,6 +222,15 @@ class TranslationDefaults {
       TranslationKeys.contactMessageHint: 'Mesajınızı yazın',
       TranslationKeys.contactSubmitSuccess: 'Mesajınız uğurla göndərildi',
       TranslationKeys.contactLoginRequired: 'Bizə yazmaq üçün hesabınıza daxil olun',
+
+      // Order confirm
+      TranslationKeys.orderConfirmTitle: 'Sifarişin tamamlanması',
+      TranslationKeys.orderConfirmAddAddress: 'Ünvan əlavə edin',
+      TranslationKeys.orderConfirmAddAddressHint: 'Sifarişin çatdırılması üçün ünvan əlavə etməyinizi xahiş edirik.',
+      TranslationKeys.orderConfirmEditAddress: 'Düzəliş',
+      TranslationKeys.orderConfirmSelectAddress: 'Ünvan seçin',
+      TranslationKeys.orderConfirmAddNewAddress: 'Yeni ünvan əlavə et',
+      TranslationKeys.orderConfirmPaymentMethod: 'Ödəniş üsulu',
     },
   };
 }

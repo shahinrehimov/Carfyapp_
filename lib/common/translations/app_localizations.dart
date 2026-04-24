@@ -425,4 +425,18 @@ class AppLocalizations {
   String get contactSubmitSuccess => _tr(TranslationKeys.contactSubmitSuccess);
 
   String get contactLoginRequired => _tr(TranslationKeys.contactLoginRequired);
+
+  String get orderConfirmTitle => _tr(TranslationKeys.orderConfirmTitle);
+
+  String get orderConfirmAddAddress => _tr(TranslationKeys.orderConfirmAddAddress);
+
+  String get orderConfirmAddAddressHint => _tr(TranslationKeys.orderConfirmAddAddressHint);
+
+  String get orderConfirmEditAddress => _tr(TranslationKeys.orderConfirmEditAddress);
+
+  String get orderConfirmSelectAddress => _tr(TranslationKeys.orderConfirmSelectAddress);
+
+  String get orderConfirmAddNewAddress => _tr(TranslationKeys.orderConfirmAddNewAddress);
+
+  String get orderConfirmPaymentMethod => _tr(TranslationKeys.orderConfirmPaymentMethod);
 }

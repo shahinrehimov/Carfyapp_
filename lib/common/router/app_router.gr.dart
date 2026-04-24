@@ -447,18 +447,53 @@ class MessagesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MyAddressesPage]
-class MyAddressesRoute extends PageRouteInfo<void> {
-  const MyAddressesRoute({List<PageRouteInfo>? children})
-    : super(MyAddressesRoute.name, initialChildren: children);
+class MyAddressesRoute extends PageRouteInfo<MyAddressesRouteArgs> {
+  MyAddressesRoute({
+    Key? key,
+    bool openAddForm = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         MyAddressesRoute.name,
+         args: MyAddressesRouteArgs(key: key, openAddForm: openAddForm),
+         initialChildren: children,
+       );
 
   static const String name = 'MyAddressesRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const MyAddressesPage());
+      final args = data.argsAs<MyAddressesRouteArgs>(
+        orElse: () => const MyAddressesRouteArgs(),
+      );
+      return WrappedRoute(
+        child: MyAddressesPage(key: args.key, openAddForm: args.openAddForm),
+      );
     },
   );
+}
+
+class MyAddressesRouteArgs {
+  const MyAddressesRouteArgs({this.key, this.openAddForm = false});
+
+  final Key? key;
+
+  final bool openAddForm;
+
+  @override
+  String toString() {
+    return 'MyAddressesRouteArgs{key: $key, openAddForm: $openAddForm}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MyAddressesRouteArgs) return false;
+    return key == other.key && openAddForm == other.openAddForm;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ openAddForm.hashCode;
 }
 
 /// generated route for
@@ -473,6 +508,22 @@ class MyCarsRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return WrappedRoute(child: const MyCarsPage());
+    },
+  );
+}
+
+/// generated route for
+/// [OrderConfirmPage]
+class OrderConfirmRoute extends PageRouteInfo<void> {
+  const OrderConfirmRoute({List<PageRouteInfo>? children})
+    : super(OrderConfirmRoute.name, initialChildren: children);
+
+  static const String name = 'OrderConfirmRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const OrderConfirmPage());
     },
   );
 }

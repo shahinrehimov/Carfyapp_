@@ -12,11 +12,19 @@ class _ProfileBody extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileMyCars, icon: Assets.icons.carHatchback, onTap: () => context.pushRoute(const MyCarsRoute())),
+                child: _ProfileMenuCard(
+                  label: context.localization.profileMyCars,
+                  icon: Assets.icons.carHatchback,
+                  onTap: () => context.pushRoute(const MyCarsRoute()),
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileMyOrders, icon: Assets.icons.box, onTap: () {}),
+                child: _ProfileMenuCard(
+                  label: context.localization.profileMyOrders,
+                  icon: Assets.icons.box,
+                  onTap: () {},
+                ),
               ),
             ],
           ),
@@ -24,23 +32,43 @@ class _ProfileBody extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileMyAddresses, icon: Assets.icons.addressPinLocation, onTap: () => context.pushRoute(const MyAddressesRoute())),
+                child: _ProfileMenuCard(
+                  label: context.localization.profileMyAddresses,
+                  icon: Assets.icons.addressPinLocation,
+                  onTap: () => context.pushRoute(MyAddressesRoute()),
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _ProfileMenuCard(label: context.localization.profileReferrals, icon: Assets.icons.saleSquare, onTap: () {}),
+                child: _ProfileMenuCard(
+                  label: context.localization.profileReferrals,
+                  icon: Assets.icons.saleSquare,
+                  onTap: () {},
+                ),
               ),
             ],
           ),
           const SizedBox(height: 16),
           _ProfileSectionCard(
             title: context.localization.profileSettings,
-            items: [_ProfileRowItem(label: context.localization.profileActiveSessions, icon: Assets.icons.mobile, onTap: () => context.pushRoute(const SessionsRoute()))],
+            items: [
+              _ProfileRowItem(
+                label: context.localization.profileActiveSessions,
+                icon: Assets.icons.mobile,
+                onTap: () => context.pushRoute(const SessionsRoute()),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           _ProfileSectionCard(
             title: context.localization.profileLanguage,
-            items: [_ProfileRowItem(label: context.localization.profileCurrentLanguage, icon: Assets.icons.globe2, onTap: () {})],
+            items: [
+              _ProfileRowItem(
+                label: context.localization.profileCurrentLanguage,
+                icon: Assets.icons.globe2,
+                onTap: () {},
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           _ProfileSectionCard(
