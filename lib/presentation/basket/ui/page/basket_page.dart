@@ -107,6 +107,7 @@ class _PaymentDetailsBar extends StatelessWidget {
               context.localization.productCount,
               '${state.basketData!.totalItems} ${context.localization.piece}',
             ),
+            _buildDetailRow(context, context.localization.deliveryFee, state.basketData!.shipping.manatFormatted),
             _buildDetailRow(context, context.localization.discount, state.basketData!.totalDiscount.manatFormatted),
             _buildDetailRow(
               context,

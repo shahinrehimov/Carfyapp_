@@ -114,6 +114,7 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
       totalPrice: totalPrice,
       totalPriceFinal: totalPriceFinal,
       totalDiscount: totalPrice - totalPriceFinal,
+      shipping: state.basketData?.shipping ?? 0,
       totalItems: totalItems,
     );
   }

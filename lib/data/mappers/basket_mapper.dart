@@ -21,6 +21,7 @@ class BasketMapper {
         totalPrice: model.totalPrice,
         totalPriceFinal: model.totalPriceFinal,
         totalDiscount: model.totalDiscount,
+        shipping: model.shipping,
         totalItems: model.totalItems,
       );
 
