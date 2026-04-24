@@ -1,4 +1,4 @@
-package az.kvadrat.carfy.carfy;
+package app.carfy.az;
 
 import io.flutter.embedding.android.FlutterActivity;
 
