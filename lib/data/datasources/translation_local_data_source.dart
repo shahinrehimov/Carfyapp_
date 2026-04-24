@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:injectable/injectable.dart';
 
-import '../models/translation/translation_local_model.dart';
+import 'package:carfy/data/models/translation/translation_local_model.dart';
 
 abstract class TranslationLocalDataSource {
   Future<Unit> saveTranslations(TranslationLocalModel model, String languageCode);
@@ -12,8 +12,6 @@ abstract class TranslationLocalDataSource {
 
 @Injectable(as: TranslationLocalDataSource)
 class TranslationLocalDataSourceImpl implements TranslationLocalDataSource {
-  static const String _translationBoxName = 'translations';
-
   Future<Box<TranslationLocalModel>> get _translationBox => Hive.openBox('translates_box');
 
   @override

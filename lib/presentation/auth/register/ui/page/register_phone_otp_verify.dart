@@ -4,15 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/theme/theme.dart';
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
-import '../../../../../common/widgets/custom_button.dart';
-import '../../../../../common/widgets/state_status_toast.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../../login/ui/page/login_phone_verify_page.dart';
-import '../../state/phone_verify_otp/phone_verify_otp_cubit.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/common/widgets/state_status_toast.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/auth/login/ui/page/login_phone_verify_page.dart';
+import 'package:carfy/presentation/auth/register/state/phone_verify_otp/phone_verify_otp_cubit.dart';
 
 @RoutePage()
 class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWrapper {
@@ -31,7 +30,7 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'OTP',
+          context.localization.phoneVerification,
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
         leading: InkWell(
@@ -52,12 +51,12 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
               context.localization.phoneVerification,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               context.localization.otpSentToNumber(phone),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: context.theme.colors.darkGray),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Pinput(
               length: 4,
               controller: context.read<PhoneVerifyOtpCubit>().otpController,
@@ -65,16 +64,16 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
                 width: 70,
                 height: 70,
                 textStyle: TextStyle(fontSize: 20, color: context.theme.colors.black, fontWeight: FontWeight.w500),
-                margin: EdgeInsets.symmetric(horizontal: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
                   color: context.theme.colors.white,
-                  border: Border.all(color: Color(0xFFA2ADC8)),
+                  border: Border.all(color: const Color(0xFFA2ADC8)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
               onCompleted: (pin) => context.read<PhoneVerifyOtpCubit>().verifyWithOtp(phone, pin),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             BlocBuilder<PhoneVerifyOtpCubit, PhoneVerifyOtpState>(
               builder: (context, state) {
                 return TimerWidget(
@@ -84,7 +83,7 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
                 );
               },
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26),
               child: BlocBuilder<PhoneVerifyOtpCubit, PhoneVerifyOtpState>(

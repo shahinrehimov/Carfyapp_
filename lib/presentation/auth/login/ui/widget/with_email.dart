@@ -16,12 +16,12 @@ class _LoginWithEmail extends StatelessWidget {
           listenWhen: (oldState, newState) => oldState.emailLoginState != newState.emailLoginState,
           child: Column(
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 context.localization.entranceToAccount,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.theme.colors.primary),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.emailValidationState != newState.emailValidationState,
                 builder: (context, state) {
@@ -33,7 +33,7 @@ class _LoginWithEmail extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) =>
                     oldState.obscurePassword != newState.obscurePassword ||
@@ -53,7 +53,7 @@ class _LoginWithEmail extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.emailLoginState != newState.emailLoginState,
                 builder: (context, state) {
@@ -65,14 +65,14 @@ class _LoginWithEmail extends StatelessWidget {
                 },
               ),
               TextButton(
-                onPressed: () => context.router.push(ForgotPasswordRoute()),
+                onPressed: () => context.router.push(const ForgotPasswordRoute()),
                 child: Text(
                   context.localization.forgotPassword,
                   style: TextStyle(color: context.theme.colors.primary, decoration: TextDecoration.underline),
                 ),
               ),
-              SizedBox(height: 10),
-              _Common(),
+              const SizedBox(height: 10),
+              const _Common(),
             ],
           ),
         ),

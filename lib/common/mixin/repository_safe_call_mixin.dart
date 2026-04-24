@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 
-import '../error/exceptions.dart';
-import '../error/failure.dart';
+import 'package:carfy/common/error/exceptions.dart';
+import 'package:carfy/common/error/failure.dart';
 
 mixin RepositorySafeCallMixin {
   Future<Either<Failure, T>> safeCall<T>(Future<T> Function() call) async {

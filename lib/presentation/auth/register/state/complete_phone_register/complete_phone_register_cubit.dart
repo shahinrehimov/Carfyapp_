@@ -1,5 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
@@ -9,7 +10,7 @@ import 'package:carfy/domain/use_cases/auth/register_with_phone_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 part 'complete_phone_register_state.dart';
 
@@ -38,6 +39,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
     final name = nameController.text;
     final surname = surnameController.text;
     final email = emailController.text;
+    final deviceName = await DeviceUtil.getDeviceName();
 
     final params = RegisterWithPhoneParams(
       name: name,
@@ -48,6 +50,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
       phone: phone,
       phoneConfirmationToken: phoneConfirmationToken,
       otp: otp,
+      deviceName: deviceName,
     );
 
     emit(state.copyWith(registerState: StateStatus.loading()));
@@ -64,7 +67,7 @@ class CompletePhoneRegisterCubit extends Cubit<CompletePhoneRegisterState> with 
       },
       (success) {
         emit(state.copyWith(registerState: StateStatus.success()));
-        _appRouter.replaceAll([RegisteredSuccessfullyRoute()]);
+        _appRouter.replaceAll([const RegisteredSuccessfullyRoute()]);
       },
     );
   }

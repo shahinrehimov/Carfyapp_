@@ -1,0 +1,304 @@
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:carfy/common/state/field_validation_state.dart';
+import 'package:carfy/common/state/state_map_helper.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/domain/entities/car/car_color.dart';
+import 'package:carfy/domain/entities/car/car_library_item.dart';
+import 'package:carfy/domain/entities/car/engine_volume.dart';
+import 'package:carfy/domain/entities/car/user_car.dart';
+import 'package:carfy/domain/params/car/add_car_params.dart';
+import 'package:carfy/domain/params/car/update_car_params.dart';
+import 'package:carfy/domain/use_cases/car/add_car_use_case.dart';
+import 'package:carfy/domain/use_cases/car/delete_car_photo_use_case.dart';
+import 'package:carfy/domain/use_cases/car/delete_car_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_brand_models_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_brands_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_car_colors_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_car_types_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_engine_volumes_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_fuel_types_use_case.dart';
+import 'package:carfy/domain/use_cases/car/get_transmission_types_use_case.dart';
+import 'package:carfy/domain/use_cases/car/update_car_use_case.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'car_form_state.dart';
+
+class CarFormCubit extends Cubit<CarFormState> with StateMapHelper {
+  final GetBrandsUseCase _getBrandsUseCase;
+  final GetBrandModelsUseCase _getBrandModelsUseCase;
+  final GetEngineVolumesUseCase _getEngineVolumesUseCase;
+  final GetFuelTypesUseCase _getFuelTypesUseCase;
+  final GetTransmissionTypesUseCase _getTransmissionTypesUseCase;
+  final GetCarTypesUseCase _getCarTypesUseCase;
+  final GetCarColorsUseCase _getCarColorsUseCase;
+  final AddCarUseCase _addCarUseCase;
+  final UpdateCarUseCase _updateCarUseCase;
+  final DeleteCarUseCase _deleteCarUseCase;
+  final DeleteCarPhotoUseCase _deleteCarPhotoUseCase;
+
+  CarFormCubit({
+    GetBrandsUseCase? getBrandsUseCase,
+    GetBrandModelsUseCase? getBrandModelsUseCase,
+    GetEngineVolumesUseCase? getEngineVolumesUseCase,
+    GetFuelTypesUseCase? getFuelTypesUseCase,
+    GetTransmissionTypesUseCase? getTransmissionTypesUseCase,
+    GetCarTypesUseCase? getCarTypesUseCase,
+    GetCarColorsUseCase? getCarColorsUseCase,
+    AddCarUseCase? addCarUseCase,
+    UpdateCarUseCase? updateCarUseCase,
+    DeleteCarUseCase? deleteCarUseCase,
+    DeleteCarPhotoUseCase? deleteCarPhotoUseCase,
+  }) : _getBrandsUseCase = getBrandsUseCase ?? getIt<GetBrandsUseCase>(),
+       _getBrandModelsUseCase = getBrandModelsUseCase ?? getIt<GetBrandModelsUseCase>(),
+       _getEngineVolumesUseCase = getEngineVolumesUseCase ?? getIt<GetEngineVolumesUseCase>(),
+       _getFuelTypesUseCase = getFuelTypesUseCase ?? getIt<GetFuelTypesUseCase>(),
+       _getTransmissionTypesUseCase = getTransmissionTypesUseCase ?? getIt<GetTransmissionTypesUseCase>(),
+       _getCarTypesUseCase = getCarTypesUseCase ?? getIt<GetCarTypesUseCase>(),
+       _getCarColorsUseCase = getCarColorsUseCase ?? getIt<GetCarColorsUseCase>(),
+       _addCarUseCase = addCarUseCase ?? getIt<AddCarUseCase>(),
+       _updateCarUseCase = updateCarUseCase ?? getIt<UpdateCarUseCase>(),
+       _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
+       _deleteCarPhotoUseCase = deleteCarPhotoUseCase ?? getIt<DeleteCarPhotoUseCase>(),
+       super(CarFormState.initial());
+
+  Future<void> init(UserCar? car) async {
+    if (car != null) {
+      emit(
+        state.copyWith(
+          selectedBrand: car.brand,
+          selectedModel: car.brandModel,
+          selectedEngineVolume: car.engineVolume,
+          selectedFuelType: car.fuelType,
+          selectedTransmissionType: car.transmissionType,
+          selectedCarType: car.carType,
+          selectedCarColor: car.carColor,
+          year: car.year.toString(),
+          engineNumber: car.engineNumber ?? '',
+          vinNumber: car.vinNumber ?? '',
+          seatCount: car.seatCount?.toString() ?? '',
+        ),
+      );
+    }
+    await Future.wait([
+      _loadBrands(),
+      _loadEngineVolumes(),
+      _loadFuelTypes(),
+      _loadTransmissionTypes(),
+      _loadCarTypes(),
+      _loadCarColors(),
+    ]);
+    if (car != null) {
+      await _loadBrandModels(car.brand.id);
+    }
+  }
+
+  Future<void> _loadBrands() async {
+    emit(state.copyWith(brandsStatus: StateStatus.loading()));
+    final result = await _getBrandsUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(brandsStatus: mapFailure(failure))),
+      (brands) => emit(state.copyWith(brandsStatus: StateStatus.success(), brands: brands)),
+    );
+  }
+
+  Future<void> retryBrands() => _loadBrands();
+
+  Future<void> retryModels() async {
+    final brand = state.selectedBrand;
+    if (brand != null) await _loadBrandModels(brand.id);
+  }
+
+  Future<void> retryEngineVolumes() => _loadEngineVolumes();
+
+  Future<void> retryFuelTypes() => _loadFuelTypes();
+
+  Future<void> retryTransmissionTypes() => _loadTransmissionTypes();
+
+  Future<void> retryCarTypes() => _loadCarTypes();
+
+  Future<void> retryCarColors() => _loadCarColors();
+
+  Future<void> _loadBrandModels(int brandId) async {
+    emit(state.copyWith(modelsStatus: StateStatus.loading(), models: []));
+    final result = await _getBrandModelsUseCase(brandId);
+    result.fold(
+      (failure) => emit(state.copyWith(modelsStatus: mapFailure(failure))),
+      (models) => emit(state.copyWith(modelsStatus: StateStatus.success(), models: models)),
+    );
+  }
+
+  Future<void> _loadEngineVolumes() async {
+    emit(state.copyWith(engineVolumesStatus: StateStatus.loading()));
+    final result = await _getEngineVolumesUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(engineVolumesStatus: mapFailure(failure))),
+      (volumes) => emit(state.copyWith(engineVolumesStatus: StateStatus.success(), engineVolumes: volumes)),
+    );
+  }
+
+  Future<void> _loadFuelTypes() async {
+    emit(state.copyWith(fuelTypesStatus: StateStatus.loading()));
+    final result = await _getFuelTypesUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(fuelTypesStatus: mapFailure(failure))),
+      (types) => emit(state.copyWith(fuelTypesStatus: StateStatus.success(), fuelTypes: types)),
+    );
+  }
+
+  Future<void> _loadTransmissionTypes() async {
+    emit(state.copyWith(transmissionTypesStatus: StateStatus.loading()));
+    final result = await _getTransmissionTypesUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(transmissionTypesStatus: mapFailure(failure))),
+      (types) => emit(state.copyWith(transmissionTypesStatus: StateStatus.success(), transmissionTypes: types)),
+    );
+  }
+
+  Future<void> _loadCarTypes() async {
+    emit(state.copyWith(carTypesStatus: StateStatus.loading()));
+    final result = await _getCarTypesUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(carTypesStatus: mapFailure(failure))),
+      (types) => emit(state.copyWith(carTypesStatus: StateStatus.success(), carTypes: types)),
+    );
+  }
+
+  Future<void> _loadCarColors() async {
+    emit(state.copyWith(carColorsStatus: StateStatus.loading()));
+    final result = await _getCarColorsUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(carColorsStatus: mapFailure(failure))),
+      (colors) => emit(state.copyWith(carColorsStatus: StateStatus.success(), carColors: colors)),
+    );
+  }
+
+  void selectBrand(CarLibraryItem brand) {
+    emit(
+      state.copyWith(selectedBrand: brand, clearSelectedModel: true, models: [], modelsStatus: StateStatus.initial()),
+    );
+    _loadBrandModels(brand.id);
+  }
+
+  void selectModel(CarLibraryItem model) => emit(state.copyWith(selectedModel: model));
+
+  void selectEngineVolume(EngineVolume volume) => emit(state.copyWith(selectedEngineVolume: volume));
+
+  void selectFuelType(CarLibraryItem type) => emit(state.copyWith(selectedFuelType: type));
+
+  void selectTransmissionType(CarLibraryItem type) => emit(state.copyWith(selectedTransmissionType: type));
+
+  void selectCarType(CarLibraryItem type) => emit(state.copyWith(selectedCarType: type));
+
+  void selectCarColor(CarColor color) => emit(state.copyWith(selectedCarColor: color));
+
+  void setYear(String year) => emit(state.copyWith(year: year));
+
+  void setEngineNumber(String value) => emit(state.copyWith(engineNumber: value));
+
+  void setVinNumber(String value) => emit(state.copyWith(vinNumber: value));
+
+  void setSeatCount(String value) => emit(state.copyWith(seatCount: value));
+
+  Future<void> pickPhoto() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    if (picked != null) {
+      emit(state.copyWith(selectedPhotoPath: picked.path, deleteExistingPhoto: false));
+    }
+  }
+
+  void removePhoto() => emit(state.copyWith(clearSelectedPhoto: true, deleteExistingPhoto: true));
+
+  Future<void> save({UserCar? car}) async {
+    final selectedModel = state.selectedModel;
+    final selectedCarType = state.selectedCarType;
+    final year = int.tryParse(state.year);
+
+    emit(
+      state.copyWith(
+        brandError: state.selectedBrand == null ? CarFormFieldError.required : null,
+        clearBrandError: state.selectedBrand != null,
+        modelError: selectedModel == null ? CarFormFieldError.required : null,
+        clearModelError: selectedModel != null,
+        carTypeError: selectedCarType == null ? CarFormFieldError.required : null,
+        clearCarTypeError: selectedCarType != null,
+        yearError: state.year.isEmpty || year == null ? CarFormFieldError.required : null,
+        clearYearError: state.year.isNotEmpty && year != null,
+      ),
+    );
+
+    if (state.selectedBrand == null || selectedModel == null || selectedCarType == null || year == null) return;
+
+    emit(state.copyWith(submitStatus: StateStatus.loading()));
+
+    if (car == null) {
+      final params = AddCarParams(
+        brandModelId: selectedModel.id,
+        carTypeId: selectedCarType.id,
+        year: year,
+        engineVolumeId: state.selectedEngineVolume?.id,
+        fuelTypeId: state.selectedFuelType?.id,
+        transmissionTypeId: state.selectedTransmissionType?.id,
+        carColorId: state.selectedCarColor?.id,
+        seatCount: int.tryParse(state.seatCount),
+        engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
+        vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
+        photoPath: state.selectedPhotoPath,
+      );
+      final result = await _addCarUseCase(params);
+      result.fold((failure) {
+        emit(state.copyWith(submitStatus: mapFailure(failure)));
+        if (failure is ValidationFailure) _emitValidationErrors(failure);
+      }, (_) => emit(state.copyWith(submitStatus: StateStatus.success())));
+    } else {
+      if (state.deleteExistingPhoto && car.photo != null) {
+        await _deleteCarPhotoUseCase(car.id);
+      }
+      final params = UpdateCarParams(
+        carId: car.id,
+        brandModelId: selectedModel.id,
+        carTypeId: selectedCarType.id,
+        year: year,
+        engineVolumeId: state.selectedEngineVolume?.id,
+        fuelTypeId: state.selectedFuelType?.id,
+        transmissionTypeId: state.selectedTransmissionType?.id,
+        carColorId: state.selectedCarColor?.id,
+        seatCount: int.tryParse(state.seatCount),
+        engineNumber: state.engineNumber.isEmpty ? null : state.engineNumber,
+        vinNumber: state.vinNumber.isEmpty ? null : state.vinNumber,
+        photoPath: state.selectedPhotoPath,
+      );
+      final result = await _updateCarUseCase(params);
+      result.fold((failure) {
+        emit(state.copyWith(submitStatus: mapFailure(failure)));
+        if (failure is ValidationFailure) _emitValidationErrors(failure);
+      }, (_) => emit(state.copyWith(submitStatus: StateStatus.success())));
+    }
+  }
+
+  void _emitValidationErrors(ValidationFailure failure) {
+    emit(
+      state.copyWith(
+        brandModelValidationState: mapValidationFailure('brand_model_id', failure),
+        carTypeValidationState: mapValidationFailure('car_type_id', failure),
+        yearValidationState: mapValidationFailure('year', failure),
+        engineNumberValidationState: mapValidationFailure('engine_number', failure),
+        vinNumberValidationState: mapValidationFailure('vin_number', failure),
+        carColorValidationState: mapValidationFailure('car_color_id', failure),
+        seatCountValidationState: mapValidationFailure('seat_count', failure),
+      ),
+    );
+  }
+
+  Future<void> deleteCar(int carId) async {
+    emit(state.copyWith(deleteStatus: StateStatus.loading()));
+    final result = await _deleteCarUseCase(carId);
+    result.fold(
+      (failure) => emit(state.copyWith(deleteStatus: mapFailure(failure))),
+      (_) => emit(state.copyWith(deleteStatus: StateStatus.success())),
+    );
+  }
+}

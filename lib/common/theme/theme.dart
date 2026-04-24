@@ -53,6 +53,8 @@ abstract interface class ColorScheme {
 
   Color get border;
 
+  Color get border2;
+
   Color get bg;
 
   Color get divider;
@@ -72,38 +74,41 @@ class _LightColors extends ColorScheme {
   Color get shimmerHighlightColor => Colors.grey.shade100;
 
   @override
-  Color get primary => Color(0xFF00569C);
+  Color get primary => const Color(0xFF00569C);
 
   @override
-  Color get secondary => Color(0xFF3696E7);
+  Color get secondary => const Color(0xFF3696E7);
 
   @override
-  Color get textBlack => Color(0xFF000000);
+  Color get textBlack => const Color(0xFF000000);
 
   @override
-  Color get textDark => Color(0xFF242323);
+  Color get textDark => const Color(0xFF242323);
 
   @override
-  Color get textGray => Color(0xFF727272);
+  Color get textGray => const Color(0xFF727272);
 
   @override
-  Color get textLight => Color(0xFF9F9F9F);
+  Color get textLight => const Color(0xFF9F9F9F);
 
   @override
-  Color get lightGray => Color(0xFF969EA5);
+  Color get lightGray => const Color(0xFF969EA5);
 
   @override
-  Color get darkGray => Color(0xFF7B7B7B);
+  Color get darkGray => const Color(0xFF7B7B7B);
 
   @override
-  Color get error => Color(0xFFF6683C);
+  Color get error => const Color(0xFFF6683C);
 
   @override
-  Color get border => Color(0xFFD8D7D7);
+  Color get border => const Color(0xFFD8D7D7);
 
   @override
-  Color get bg => Color(0xFFF7FBFE);
+  Color get border2 => const Color(0xFFE7F2FC);
 
   @override
-  Color get divider => Color(0xFFE3E3E3);
+  Color get bg => const Color(0xFFF7FBFE);
+
+  @override
+  Color get divider => const Color(0xFFE3E3E3);
 }

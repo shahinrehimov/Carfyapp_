@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -9,6 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ShapeBorder? shape;
   final bool centerTitle;
   final double? height;
+  final Widget? flexibleSpace;
 
   const CustomAppBar({
     super.key,
@@ -19,6 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.shape,
     this.centerTitle = true,
     this.height,
+    this.flexibleSpace,
   });
 
   /// copyWith method
@@ -31,6 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     ShapeBorder? shape,
     bool? centerTitle,
     double? height,
+    Widget? flexibleSpace,
   }) {
     return CustomAppBar(
       title: title ?? this.title,
@@ -40,6 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: shape ?? this.shape,
       centerTitle: centerTitle ?? this.centerTitle,
       height: height ?? this.height,
+      flexibleSpace: flexibleSpace ?? this.flexibleSpace
     );
   }
 
@@ -51,11 +58,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       backgroundColor: context.theme.colors.secondary,
       elevation: elevation,
-      shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(24))),
+      shape: shape ?? const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(24))),
       centerTitle: centerTitle,
+      flexibleSpace: flexibleSpace,
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(height ?? kToolbarHeight);
+}
+
+class CustomAppBarWhite extends StatelessWidget implements PreferredSizeWidget {
+  final String? title;
+  final List<Widget>? actions;
+
+  const CustomAppBarWhite({super.key, this.title, this.actions});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: title != null
+          ? Text(
+              title!,
+              style: TextStyle(fontWeight: FontWeight.w500, color: context.theme.colors.black, fontSize: 14),
+            )
+          : null,
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: context.theme.colors.white,
+      actions: actions,
+      leading: InkWell(
+        onTap: () => context.router.maybePop(),
+        child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 22)),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

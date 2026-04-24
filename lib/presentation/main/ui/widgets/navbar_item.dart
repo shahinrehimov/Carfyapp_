@@ -8,7 +8,6 @@ class NavBarItem extends StatefulWidget {
   final void Function()? onTap;
   final String image;
   final String text;
-
   final bool isActive;
 
   @override
@@ -16,56 +15,73 @@ class NavBarItem extends StatefulWidget {
 }
 
 class _NavBarItemState extends State<NavBarItem> with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> _fadeInFadeOut;
+  late final AnimationController _tapController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 220),
+  );
+
+  late final Animation<double> _tapScale = TweenSequence<double>([
+    TweenSequenceItem(
+      tween: Tween(begin: 1.0, end: 0.85).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 40,
+    ),
+    TweenSequenceItem(
+      tween: Tween(begin: 0.85, end: 1.12).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 30,
+    ),
+    TweenSequenceItem(
+      tween: Tween(begin: 1.12, end: 1.0).chain(CurveTween(curve: Curves.easeIn)),
+      weight: 30,
+    ),
+  ]).animate(_tapController);
 
   @override
-  void initState() {
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
-    _fadeInFadeOut = Tween<double>(begin: 1, end: 0.5).animate(controller);
+  void dispose() {
+    _tapController.dispose();
+    super.dispose();
+  }
 
-    super.initState();
+  void _onTap() {
+    widget.onTap?.call();
+    _tapController.forward(from: 0);
   }
 
   @override
   Widget build(BuildContext context) {
+    final activeColor = context.theme.colors.secondary;
+    final inactiveColor = context.theme.colors.textDark;
+    final targetColor = widget.isActive ? activeColor : inactiveColor;
+
     return Expanded(
       child: GestureDetector(
-        onTap: () async {
-          if (widget.onTap != null) {
-            widget.onTap!();
-          }
-          controller.forward();
-          await Future.delayed(const Duration(milliseconds: 200));
-          controller.reverse();
-        },
+        onTap: _onTap,
         behavior: HitTestBehavior.opaque,
-        child: FadeTransition(
-          opacity: _fadeInFadeOut,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ScaleTransition(
+              scale: _tapScale,
+              child: TweenAnimationBuilder<Color?>(
+                duration: const Duration(milliseconds: 260),
+                tween: ColorTween(begin: targetColor, end: targetColor),
+                builder: (context, color, _) => SvgPicture.asset(
                   widget.image,
                   height: 24,
-                  colorFilter: ColorFilter.mode(
-                    widget.isActive ? context.theme.colors.secondary : context.theme.colors.textDark,
-                    BlendMode.srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(color ?? inactiveColor, BlendMode.srcIn),
                 ),
               ),
-              SizedBox(height: 9),
-              Text(
-                widget.text,
-                style: TextStyle(
-                  color: widget.isActive ? context.theme.colors.secondary : context.theme.colors.textDark,
-                  fontSize: 10,
-                ),
+            ),
+            const SizedBox(height: 9),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 260),
+              style: TextStyle(
+                color: targetColor,
+                fontSize: 10,
+                fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
               ),
-            ],
-          ),
+              child: Text(widget.text),
+            ),
+          ],
         ),
       ),
     );

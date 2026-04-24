@@ -1,10 +1,9 @@
-import 'package:carfy/common/constants/constants.dart';
-
 class LoginWithPhoneSubmitRequestDto {
   final String phone;
   final int otp;
+  final String deviceName;
 
-  LoginWithPhoneSubmitRequestDto({required this.phone, required this.otp});
+  LoginWithPhoneSubmitRequestDto({required this.phone, required this.otp, required this.deviceName});
 
-  Map<String, dynamic> toJson() => {'device_type': Constants.deviceType, 'phone': phone, 'otp': otp};
+  Map<String, dynamic> toJson() => {'device_type': deviceName, 'phone': phone, 'otp': otp};
 }

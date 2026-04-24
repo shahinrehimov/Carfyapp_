@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../common/error/failure.dart';
-import '../entities/translation/translations.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/entities/translation/translations.dart';
 
 abstract class TranslationRepository {
   Future<Either<Failure, Translations>> getRemoteTranslations(String languageCode);

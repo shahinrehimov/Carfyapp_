@@ -47,5 +47,13 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Hazırki yerinizi xəritədə göstərmək üçün lokasiyaya giriş lazımdır.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Hazırki yerinizi xəritədə göstərmək üçün lokasiyaya giriş lazımdır.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+		<string>Avtomobilinizin şəklini seçmək üçün qalereyanıza giriş lazımdır.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Avtomobilinizin şəklini saxlamaq üçün qalereyanıza giriş lazımdır.</string>
 	</dict>
 </plist>

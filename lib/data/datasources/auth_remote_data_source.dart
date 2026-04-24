@@ -1,34 +1,36 @@
-import 'package:carfy/common/constants/constants.dart';
+import 'dart:io';
+
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/error/exceptions.dart';
-import '../../common/mixin/datasource_mixin.dart';
-import '../../common/network/network_manager.dart';
-import '../../common/di/di.dart';
+import 'package:carfy/common/mixin/datasource_mixin.dart';
+import 'package:carfy/common/network/network_manager.dart';
+import 'package:carfy/common/di/di.dart';
 
-import '../dtos/auth/check_email_request_dto.dart';
-import '../dtos/auth/register_with_email_request_dto.dart';
-import '../dtos/auth/verify_email_otp_request_dto.dart';
-import '../dtos/auth/send_phone_otp_request_dto.dart';
-import '../dtos/auth/check_phone_otp_request_dto.dart';
-import '../dtos/auth/register_with_phone_request_dto.dart';
-import '../dtos/auth/login_with_email_request_dto.dart';
-import '../dtos/auth/login_with_phone_otp_request_dto.dart';
-import '../dtos/auth/login_with_phone_submit_request_dto.dart';
-import '../dtos/auth/third_party_login_request_dto.dart';
-import '../dtos/auth/reset_password_request_dto.dart';
-import '../dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/verify_email_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/send_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/check_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/register_with_phone_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
+import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
+import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
+import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
-import '../models/auth/google_auth_redirect_model.dart';
-import '../models/auth/register_email_response_model.dart';
-import '../models/auth/register_phone_response_model.dart';
-import '../models/auth/simple_message_model.dart';
-import '../models/auth/check_phone_otp_model.dart';
-import '../models/auth/login_response_model.dart';
-import '../models/auth/logout_response_model.dart';
+import 'package:carfy/data/models/auth/auth_user_model.dart';
+import 'package:carfy/data/models/auth/google_auth_redirect_model.dart';
+import 'package:carfy/data/models/auth/register_email_response_model.dart';
+import 'package:carfy/data/models/auth/register_phone_response_model.dart';
+import 'package:carfy/data/models/auth/simple_message_model.dart';
+import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
+import 'package:carfy/data/models/auth/login_response_model.dart';
+import 'package:carfy/data/models/auth/logout_response_model.dart';
+import 'package:carfy/data/models/auth/sessions_response_model.dart';
 
-import '../../common/constants/endpoint_paths.dart';
+import 'package:carfy/common/constants/endpoint_paths.dart';
 
 abstract class AuthRemoteDataSource {
   Future<GoogleAuthRedirectModel> getGoogleAuthRedirect();
@@ -62,6 +64,14 @@ abstract class AuthRemoteDataSource {
   Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto);
 
   Future<GuestIdentifierResponseModel> generateGuestIdentifier();
+
+  Future<AuthUserModel> getProfile();
+
+  Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto);
+
+  Future<SessionsResponseModel> getSessions();
+
+  Future<String> logoutSession(int tokenId);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -188,8 +198,40 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   @override
   Future<GuestIdentifierResponseModel> generateGuestIdentifier() {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': Constants.deviceType}),
+      () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': Platform.isAndroid ? 'android' : 'ios'}),
       map: (json) => GuestIdentifierResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<AuthUserModel> getProfile() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.profileMe),
+      map: (json) => AuthUserModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.profileUpdate, data: dto.toJson()),
+      map: (json) => AuthUserModel.fromJson(json['user']),
+    );
+  }
+
+  @override
+  Future<SessionsResponseModel> getSessions() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.sessionsLoad),
+      map: (json) => SessionsResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<String> logoutSession(int tokenId) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.sessionLogout(tokenId)),
+      map: (json) => json['message'] as String? ?? '',
     );
   }
 }

@@ -1,11 +1,10 @@
 import 'package:carfy/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common/translations/translation_context_extension.dart';
-import '../../../../common/translations/translation_keys.dart';
-import '../../../../gen/assets.gen.dart';
-import '../enum/main_pages.dart';
-import 'navbar_item.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/main/ui/enum/main_pages.dart';
+import 'package:carfy/presentation/main/ui/widgets/navbar_item.dart';
 
 class CustomBottomNav extends StatelessWidget {
   const CustomBottomNav({super.key, required this.onTap, required this.activePage});

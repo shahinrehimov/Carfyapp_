@@ -1,7 +1,7 @@
 import 'package:carfy/common/state/state_status.dart';
 
-import '../error/failure.dart';
-import 'field_validation_state.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/common/state/field_validation_state.dart';
 
 mixin StateMapHelper {
   StateStatus mapFailure(Failure failure) {

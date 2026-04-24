@@ -9,9 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
-import '../../../../../gen/assets.gen.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
@@ -30,7 +29,7 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'OTP',
+          context.localization.phoneVerification,
           style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
         ),
         leading: InkWell(
@@ -51,12 +50,12 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
               context.localization.phoneVerification,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               context.localization.phone,
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: context.theme.colors.darkGray),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Pinput(
               length: 4,
               controller: context.read<VerifyOtpCubit>().otpController,
@@ -64,16 +63,16 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
                 width: 70,
                 height: 70,
                 textStyle: TextStyle(fontSize: 20, color: context.theme.colors.black, fontWeight: FontWeight.w500),
-                margin: EdgeInsets.symmetric(horizontal: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
                   color: context.theme.colors.white,
-                  border: Border.all(color: Color(0xFFA2ADC8)),
+                  border: Border.all(color: const Color(0xFFA2ADC8)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
               onCompleted: (pin) => context.read<VerifyOtpCubit>().verifyWithOtp(phone, pin),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             BlocBuilder<VerifyOtpCubit, VerifyOtpState>(
               builder: (context, state) {
                 return TimerWidget(
@@ -83,7 +82,7 @@ class LoginPhoneVerifyPage extends StatelessWidget implements AutoRouteWrapper {
                 );
               },
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26),
               child: BlocBuilder<VerifyOtpCubit, VerifyOtpState>(
@@ -116,14 +115,14 @@ class TimerWidget extends StatelessWidget {
       children: [
         if (isTimerActive)
           Text(
-            'Resend OTP in ${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}',
+            context.localization.resendOtpIn('${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}'),
             style: TextStyle(fontSize: 12, color: context.theme.colors.darkGray, fontWeight: FontWeight.w500),
           )
         else
           GestureDetector(
             onTap: onResendTap,
             child: Text(
-              'Resend OTP',
+              context.localization.resendOtp,
               style: TextStyle(
                 fontSize: 12,
                 color: context.theme.colors.primary,

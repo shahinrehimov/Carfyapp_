@@ -3,18 +3,19 @@ import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/util/input_formatters.dart';
 import 'package:carfy/common/widgets/custom_date_picker.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
+import 'package:carfy/common/widgets/custom_phone_field.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/theme/theme.dart';
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/widgets/custom_button.dart';
-import '../../../../../domain/enums/gender.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../state/complete_email_register/complete_email_register_cubit.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/domain/enums/gender.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/auth/register/state/complete_email_register/complete_email_register_cubit.dart';
 
 @RoutePage()
 class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrapper {
@@ -48,7 +49,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                 context.localization.signUp,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.nameValidationState != newState.nameValidationState,
                 builder: (context, state) {
@@ -57,10 +58,11 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.name,
                     errorText: state.nameValidationState.message,
                     inputFormatters: [InputFormatter.getPersonNameFormatter()],
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.profile)),
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.surnameValidationState != newState.surnameValidationState,
                 builder: (context, state) {
@@ -69,27 +71,24 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.surname,
                     errorText: state.surnameValidationState.message,
                     inputFormatters: [InputFormatter.getPersonNameFormatter()],
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.profile)),
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.phoneValidationState != newState.phoneValidationState,
                 builder: (context, state) {
-                  return CustomTextField(
+                  return CustomPhoneField(
                     controller: cubit.phoneController,
-                    hint: context.localization.mobileNumber,
                     errorText: state.phoneValidationState.message,
-                    inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
-                    keyboardType: TextInputType.number,
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomDropdownField<Gender>(
                 items: [Gender.male, Gender.female],
                 hint: context.localization.gender,
-                required: true,
                 onChanged: (value) {
                   if (value != null) {
                     cubit.selectGender(value);
@@ -99,8 +98,9 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                   Gender.male => context.localization.male,
                   Gender.female => context.localization.female,
                 },
+                prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.gender)),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomDatePickerField(
                 hint: context.localization.birthDate,
                 onChanged: (date) {
@@ -108,8 +108,9 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     cubit.selectBirthDate(date);
                   }
                 },
+                prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.calendar)),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.emailValidationState != newState.emailValidationState,
                 builder: (context, state) {
@@ -118,33 +119,51 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                     hint: context.localization.email,
                     errorText: state.emailValidationState.message,
                     inputFormatters: [InputFormatter.getEmailFormatter()],
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.message)),
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
-                buildWhen: (oldState, newState) => oldState.passwordValidationState != newState.passwordValidationState,
+                buildWhen: (oldState, newState) =>
+                    oldState.obscurePassword != newState.obscurePassword ||
+                    oldState.passwordValidationState != newState.passwordValidationState,
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.passwordController,
                     hint: context.localization.password,
                     errorText: state.passwordValidationState.message,
+                    obscureText: state.obscurePassword,
+                    maxLines: 1,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.password)),
+                    suffix: GestureDetector(
+                      onTap: () => cubit.toggleObscurePassword(),
+                      child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.eyeOff, width: 24, height: 24)),
+                    ),
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) =>
+                    oldState.obscureRepeatPassword != newState.obscureRepeatPassword ||
                     oldState.repeatPasswordValidationState != newState.repeatPasswordValidationState,
                 builder: (context, state) {
                   return CustomTextField(
                     controller: cubit.repeatPasswordController,
                     hint: context.localization.enterRepeatPassword,
                     errorText: state.repeatPasswordValidationState.message,
+                    obscureText: state.obscureRepeatPassword,
+                    maxLines: 1,
+                    prefix: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.password)),
+                    suffix: GestureDetector(
+                      onTap: () => cubit.toggleObscureRepeatPassword(),
+                      child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.eyeOff, width: 24, height: 24)),
+                    ),
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               BlocBuilder<CompleteEmailRegisterCubit, CompleteEmailRegisterState>(
                 buildWhen: (oldState, newState) => oldState.registerState != newState.registerState,
                 builder: (context, state) {
@@ -155,7 +174,7 @@ class CompleteEmailRegisterPage extends StatelessWidget implements AutoRouteWrap
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
             ],
           ),
         ),

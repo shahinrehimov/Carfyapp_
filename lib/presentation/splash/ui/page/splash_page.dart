@@ -6,11 +6,10 @@ import 'package:carfy/presentation/splash/state/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/state/state_status.dart';
-import '../../../../common/translations/translation_context_extension.dart';
-import '../../../../common/translations/translation_keys.dart';
-import '../../../../common/widgets/state_status_toast.dart';
-import '../../../../gen/assets.gen.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/state_status_toast.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class SplashPage extends StatelessWidget {
@@ -30,7 +29,7 @@ class SplashPage extends StatelessWidget {
             return Column(
               mainAxisAlignment: state.firstEnter ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
               children: [
-                SizedBox(width: double.maxFinite),
+                const SizedBox(width: double.maxFinite),
                 Image.asset(Assets.images.splashLogo.path, width: 250),
                 if (state.firstEnter)
                   CustomButton(

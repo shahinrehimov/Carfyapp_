@@ -5,12 +5,12 @@ import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common/di/di.dart';
-import '../../../../../common/router/app_router.dart';
-import '../../../../../common/state/state_map_helper.dart';
-import '../../../../../common/state/state_status.dart';
-import '../../../../../domain/params/auth/check_phone_otp_params.dart';
-import '../../../../../domain/params/auth/send_phone_otp_params.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/state_map_helper.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/domain/params/auth/check_phone_otp_params.dart';
+import 'package:carfy/domain/params/auth/send_phone_otp_params.dart';
 
 part 'phone_verify_otp_state.dart';
 
@@ -37,7 +37,7 @@ class PhoneVerifyOtpCubit extends Cubit<PhoneVerifyOtpState> with StateMapHelper
     _timer?.cancel();
     emit(state.copyWith(timeRemaining: 180, isTimerActive: true));
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.timeRemaining > 0) {
         emit(state.copyWith(timeRemaining: state.timeRemaining - 1));
       } else {

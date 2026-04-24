@@ -5,6 +5,7 @@ class AuthUserModel {
   final String name;
   final String surname;
   final String? gender;
+  final String? genderLabel;
   final String? birthDate;
   final bool emailIsVerified;
   final bool phoneIsVerified;
@@ -17,6 +18,7 @@ class AuthUserModel {
     required this.name,
     required this.surname,
     this.gender,
+    this.genderLabel,
     this.birthDate,
     required this.emailIsVerified,
     required this.phoneIsVerified,
@@ -31,6 +33,7 @@ class AuthUserModel {
       name: json['name'] ?? '',
       surname: json['surname'] ?? '',
       gender: json['gender'],
+      genderLabel: json['gender_label'],
       birthDate: json['birth_date'],
       emailIsVerified: json['email_is_verified'] ?? false,
       phoneIsVerified: json['phone_is_verified'] ?? false,

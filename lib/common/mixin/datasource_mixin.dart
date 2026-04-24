@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../error/exceptions.dart';
+import 'package:carfy/common/error/exceptions.dart';
 
 mixin DataSourceMixin {
   Exception handleException(Exception e) {
@@ -21,13 +21,9 @@ mixin DataSourceMixin {
     try {
       final response = await call();
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         if (map != null) {
-          try {
-            return map(response.data);
-          } catch (e) {
-            throw ParseException();
-          }
+          return map(response.data);
         }
         return response.data;
       } else if (response.statusCode == 400) {

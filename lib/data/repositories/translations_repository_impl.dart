@@ -7,7 +7,7 @@ import 'package:carfy/domain/repositories/translation_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../common/mixin/repository_safe_call_mixin.dart';
+import 'package:carfy/common/mixin/repository_safe_call_mixin.dart';
 
 @Injectable(as: TranslationRepository)
 class TranslationsRepositoryImpl extends TranslationRepository with RepositorySafeCallMixin {

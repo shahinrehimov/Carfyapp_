@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 
-import 'common/di/di.dart';
-import 'common/router/app_router.dart';
-import 'common/util/pref_util.dart';
-import 'data/models/translation/translation_local_model.dart';
-import 'presentation/app/ui/app.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/util/pref_util.dart';
+import 'package:carfy/data/models/translation/translation_local_model.dart';
+import 'package:carfy/presentation/app/ui/app.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {

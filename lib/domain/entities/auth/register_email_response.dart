@@ -1,4 +1,4 @@
-import 'auth_user.dart';
+import 'package:carfy/domain/entities/auth/auth_user.dart';
 
 class RegisterEmailResponse {
   final String step;

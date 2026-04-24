@@ -1,21 +1,22 @@
+import 'package:carfy/common/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 
-import '../state/state_status.dart';
-import '../translations/translation_context_extension.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
 
 void showStateStatusToast(BuildContext context, StateStatus state) {
   switch (state) {
     case StateStatusFailure(msg: final msg):
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      CustomToast.showError(context, msg);
       break;
     case StateStatusNetworkFailure():
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localization.connectionFailure)));
+      CustomToast.showError(context, context.localization.connectionFailure);
       break;
     case StateStatusServerFailure():
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.localization.serverFailure)));
+      CustomToast.showError(context, context.localization.serverFailure);
       break;
     case StateStatusSuccessWithMessage(msg: final msg):
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      CustomToast.showSuccess(context, msg);
       break;
   }
 }

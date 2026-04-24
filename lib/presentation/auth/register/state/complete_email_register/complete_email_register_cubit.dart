@@ -1,5 +1,6 @@
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
@@ -9,8 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../common/error/failure.dart';
-import '../../../../../domain/params/auth/register_with_email_params.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/params/auth/register_with_email_params.dart';
 
 part 'complete_email_register_state.dart';
 
@@ -49,6 +50,7 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
     final password = passwordController.text;
     final repeatPassword = repeatPasswordController.text;
     final phone = phoneController.text.replaceAll(' ', '');
+    final deviceName = await DeviceUtil.getDeviceName();
 
     final params = RegisterWithEmailParams(
       name: name,
@@ -59,6 +61,7 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
       phone: phone,
       password: password,
       passwordConfirmation: repeatPassword,
+      deviceName: deviceName,
     );
 
     emit(state.copyWith(registerState: StateStatus.loading()));
@@ -77,9 +80,17 @@ class CompleteEmailRegisterCubit extends Cubit<CompleteEmailRegisterState> with 
       },
       (success) {
         emit(state.copyWith(registerState: StateStatus.success()));
-        _appRouter.replaceAll([VerifyEmailRoute(email: email, userUuid: success.user.uuid)]);
+        _appRouter.push(VerifyEmailRoute(email: email, userUuid: success.user.uuid));
       },
     );
+  }
+
+  void toggleObscurePassword() {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
+  }
+
+  void toggleObscureRepeatPassword() {
+    emit(state.copyWith(obscureRepeatPassword: !state.obscureRepeatPassword));
   }
 
   void clearValidations() {

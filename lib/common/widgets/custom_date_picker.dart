@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import 'package:carfy/common/theme/theme.dart';
 
 class CustomDatePickerField extends StatefulWidget {
   final DateTime? value;
@@ -27,7 +27,6 @@ class CustomDatePickerField extends StatefulWidget {
   final bool? enabled;
   final FormFieldValidator<DateTime>? validator;
   final FocusNode? focusNode;
-  final Widget? titleWidget;
   final String Function(DateTime, BuildContext)? dateFormatBuilder;
   final TextAlign? align;
   final double? height;
@@ -62,7 +61,6 @@ class CustomDatePickerField extends StatefulWidget {
     this.enabled,
     this.validator,
     this.focusedBorderColor,
-    this.titleWidget,
     this.dateFormatBuilder,
     this.prefixIconConstraints,
     this.firstDate,
@@ -144,14 +142,20 @@ class _CustomDatePickerFieldState extends State<CustomDatePickerField> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.titleWidget != null) widget.titleWidget!,
+            if (widget.title != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(widget.title!, style: TextStyle(color: context.theme.colors.textLight, fontSize: 14)),
+              ),
+              const SizedBox(height: 8),
+            ],
             GestureDetector(
               onTap: widget.enabled != false ? _openDatePicker : null,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(
-                    color: widget.hasError
+                    color: (widget.hasError || widget.errorText != null || field.hasError)
                         ? context.theme.colors.error
                         : (widget.borderColor ?? context.theme.colors.border),
                     width: 1,
@@ -184,9 +188,14 @@ class _CustomDatePickerFieldState extends State<CustomDatePickerField> {
                 ),
               ),
             ),
-            if (field.hasError)
+            if (widget.errorText != null && widget.errorText!.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: 4, left: 16),
+                child: Text(widget.errorText!, style: TextStyle(color: context.theme.colors.error, fontSize: 12)),
+              )
+            else if (field.hasError)
+              Padding(
+                padding: const EdgeInsets.only(top: 4, left: 16),
                 child: Text(field.errorText ?? '', style: TextStyle(color: context.theme.colors.error, fontSize: 12)),
               ),
           ],

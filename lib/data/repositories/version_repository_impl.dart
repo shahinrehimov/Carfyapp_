@@ -4,8 +4,8 @@ import 'package:carfy/domain/entities/versions/version.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/repositories/version_repository.dart';
-import '../datasources/version_remote_data_source.dart';
+import 'package:carfy/domain/repositories/version_repository.dart';
+import 'package:carfy/data/datasources/version_remote_data_source.dart';
 
 @Injectable(as: VersionRepository)
 class VersionRepositoryImpl extends VersionRepository with RepositorySafeCallMixin {

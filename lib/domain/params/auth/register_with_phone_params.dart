@@ -1,4 +1,4 @@
-import '../../enums/gender.dart';
+import 'package:carfy/domain/enums/gender.dart';
 
 class RegisterWithPhoneParams {
   final String name;
@@ -10,6 +10,8 @@ class RegisterWithPhoneParams {
   final String phoneConfirmationToken;
   final int otp;
 
+  final String deviceName;
+
   RegisterWithPhoneParams({
     required this.name,
     required this.surname,
@@ -19,5 +21,6 @@ class RegisterWithPhoneParams {
     required this.phone,
     required this.phoneConfirmationToken,
     required this.otp,
+    required this.deviceName,
   });
 }

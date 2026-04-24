@@ -14,17 +14,80 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/address-pin-location.svg
+  String get addressPinLocation => 'assets/icons/address-pin-location.svg';
+
   /// File path: assets/icons/apple-icon-logo.svg
   String get appleIconLogo => 'assets/icons/apple-icon-logo.svg';
+
+  /// File path: assets/icons/arrow-left-circle.svg
+  String get arrowLeftCircle => 'assets/icons/arrow-left-circle.svg';
 
   /// File path: assets/icons/arrow-narrow-left.svg
   String get arrowNarrowLeft => 'assets/icons/arrow-narrow-left.svg';
 
+  /// File path: assets/icons/arrow-right-circle.svg
+  String get arrowRightCircle => 'assets/icons/arrow-right-circle.svg';
+
+  /// File path: assets/icons/box.svg
+  String get box => 'assets/icons/box.svg';
+
+  /// File path: assets/icons/calendar.svg
+  String get calendar => 'assets/icons/calendar.svg';
+
+  /// File path: assets/icons/call.svg
+  String get call => 'assets/icons/call.svg';
+
+  /// File path: assets/icons/car-hatchback.svg
+  String get carHatchback => 'assets/icons/car-hatchback.svg';
+
+  /// File path: assets/icons/chevron-right.svg
+  String get chevronRight => 'assets/icons/chevron-right.svg';
+
+  /// File path: assets/icons/close-square.svg
+  String get closeSquare => 'assets/icons/close-square.svg';
+
+  /// File path: assets/icons/comment-5.svg
+  String get comment5 => 'assets/icons/comment-5.svg';
+
+  /// File path: assets/icons/delete.svg
+  String get delete => 'assets/icons/delete.svg';
+
+  /// File path: assets/icons/edit-3.svg
+  String get edit3 => 'assets/icons/edit-3.svg';
+
   /// File path: assets/icons/eye-off.svg
   String get eyeOff => 'assets/icons/eye-off.svg';
 
+  /// File path: assets/icons/filters.svg
+  String get filters => 'assets/icons/filters.svg';
+
+  /// File path: assets/icons/gender.svg
+  String get gender => 'assets/icons/gender.svg';
+
+  /// File path: assets/icons/globe-2.svg
+  String get globe2 => 'assets/icons/globe-2.svg';
+
   /// File path: assets/icons/google-icon-logo.svg
   String get googleIconLogo => 'assets/icons/google-icon-logo.svg';
+
+  /// File path: assets/icons/heart-filled.svg
+  String get heartFilled => 'assets/icons/heart-filled.svg';
+
+  /// File path: assets/icons/heart.svg
+  String get heart => 'assets/icons/heart.svg';
+
+  /// File path: assets/icons/list-1.svg
+  String get list1 => 'assets/icons/list-1.svg';
+
+  /// File path: assets/icons/location-icon.svg
+  String get locationIcon => 'assets/icons/location-icon.svg';
+
+  /// File path: assets/icons/logo-white.svg
+  String get logoWhite => 'assets/icons/logo-white.svg';
+
+  /// File path: assets/icons/logo.svg
+  String get logo => 'assets/icons/logo.svg';
 
   /// File path: assets/icons/main-basket.svg
   String get mainBasket => 'assets/icons/main-basket.svg';
@@ -41,17 +104,98 @@ class $AssetsIconsGen {
   /// File path: assets/icons/main-profile.svg
   String get mainProfile => 'assets/icons/main-profile.svg';
 
+  /// File path: assets/icons/map.svg
+  String get map => 'assets/icons/map.svg';
+
+  /// File path: assets/icons/message.svg
+  String get message => 'assets/icons/message.svg';
+
+  /// File path: assets/icons/minus.svg
+  String get minus => 'assets/icons/minus.svg';
+
+  /// File path: assets/icons/mobile.svg
+  String get mobile => 'assets/icons/mobile.svg';
+
+  /// File path: assets/icons/notification.svg
+  String get notification => 'assets/icons/notification.svg';
+
+  /// File path: assets/icons/password.svg
+  String get password => 'assets/icons/password.svg';
+
+  /// File path: assets/icons/plus-square.svg
+  String get plusSquare => 'assets/icons/plus-square.svg';
+
+  /// File path: assets/icons/plus.svg
+  String get plus => 'assets/icons/plus.svg';
+
+  /// File path: assets/icons/profile.svg
+  String get profile => 'assets/icons/profile.svg';
+
+  /// File path: assets/icons/reset-1.svg
+  String get reset1 => 'assets/icons/reset-1.svg';
+
+  /// File path: assets/icons/sale-square.svg
+  String get saleSquare => 'assets/icons/sale-square.svg';
+
+  /// File path: assets/icons/search.svg
+  String get search => 'assets/icons/search.svg';
+
+  /// File path: assets/icons/star.svg
+  String get star => 'assets/icons/star.svg';
+
+  /// File path: assets/icons/support.svg
+  String get support => 'assets/icons/support.svg';
+
+  /// File path: assets/icons/write-carfy.svg
+  String get writeCarfy => 'assets/icons/write-carfy.svg';
+
   /// List of all assets
   List<String> get values => [
+    addressPinLocation,
     appleIconLogo,
+    arrowLeftCircle,
     arrowNarrowLeft,
+    arrowRightCircle,
+    box,
+    calendar,
+    call,
+    carHatchback,
+    chevronRight,
+    closeSquare,
+    comment5,
+    delete,
+    edit3,
     eyeOff,
+    filters,
+    gender,
+    globe2,
     googleIconLogo,
+    heartFilled,
+    heart,
+    list1,
+    locationIcon,
+    logoWhite,
+    logo,
     mainBasket,
     mainFavorite,
     mainHome,
     mainMessage,
     mainProfile,
+    map,
+    message,
+    minus,
+    mobile,
+    notification,
+    password,
+    plusSquare,
+    plus,
+    profile,
+    reset1,
+    saleSquare,
+    search,
+    star,
+    support,
+    writeCarfy,
   ];
 }
 

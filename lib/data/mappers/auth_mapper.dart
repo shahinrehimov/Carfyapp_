@@ -1,27 +1,31 @@
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
+import 'package:carfy/data/models/auth/session_model.dart';
+import 'package:carfy/data/models/auth/sessions_response_model.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
+import 'package:carfy/domain/entities/auth/session.dart';
+import 'package:carfy/domain/entities/auth/sessions_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/entities/auth/auth_user.dart';
-import '../../domain/entities/auth/google_auth_redirect.dart';
-import '../../domain/entities/auth/check_email_response.dart';
-import '../../domain/entities/auth/verify_otp_response.dart';
-import '../../domain/entities/auth/send_phone_otp_response.dart';
-import '../../domain/entities/auth/check_phone_otp_response.dart';
-import '../../domain/entities/auth/register_email_response.dart';
-import '../../domain/entities/auth/register_phone_response.dart';
-import '../../domain/entities/auth/login_response.dart';
-import '../../domain/entities/auth/logout_response.dart';
-import '../../domain/entities/auth/forgot_password_response.dart';
+import 'package:carfy/domain/entities/auth/auth_user.dart';
+import 'package:carfy/domain/entities/auth/google_auth_redirect.dart';
+import 'package:carfy/domain/entities/auth/check_email_response.dart';
+import 'package:carfy/domain/entities/auth/verify_otp_response.dart';
+import 'package:carfy/domain/entities/auth/send_phone_otp_response.dart';
+import 'package:carfy/domain/entities/auth/check_phone_otp_response.dart';
+import 'package:carfy/domain/entities/auth/register_email_response.dart';
+import 'package:carfy/domain/entities/auth/register_phone_response.dart';
+import 'package:carfy/domain/entities/auth/login_response.dart';
+import 'package:carfy/domain/entities/auth/logout_response.dart';
+import 'package:carfy/domain/entities/auth/forgot_password_response.dart';
 
-import '../models/auth/auth_user_model.dart';
-import '../models/auth/google_auth_redirect_model.dart';
-import '../models/auth/register_email_response_model.dart';
-import '../models/auth/register_phone_response_model.dart';
-import '../models/auth/simple_message_model.dart';
-import '../models/auth/check_phone_otp_model.dart';
-import '../models/auth/login_response_model.dart';
-import '../models/auth/logout_response_model.dart';
+import 'package:carfy/data/models/auth/auth_user_model.dart';
+import 'package:carfy/data/models/auth/google_auth_redirect_model.dart';
+import 'package:carfy/data/models/auth/register_email_response_model.dart';
+import 'package:carfy/data/models/auth/register_phone_response_model.dart';
+import 'package:carfy/data/models/auth/simple_message_model.dart';
+import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
+import 'package:carfy/data/models/auth/login_response_model.dart';
+import 'package:carfy/data/models/auth/logout_response_model.dart';
 
 @injectable
 class AuthMapper {
@@ -32,6 +36,7 @@ class AuthMapper {
     name: model.name,
     surname: model.surname,
     gender: model.gender,
+    genderLabel: model.genderLabel,
     birthDate: model.birthDate,
     emailIsVerified: model.emailIsVerified,
     phoneIsVerified: model.phoneIsVerified,
@@ -70,4 +75,18 @@ class AuthMapper {
 
   GuestIdentifierResponse mapGuestIdentifier(GuestIdentifierResponseModel model) =>
       GuestIdentifierResponse(identifier: model.identifier, message: model.message);
+
+  Session mapSession(SessionModel model) => Session(
+    id: model.id,
+    deviceName: model.deviceName,
+    ipAddress: model.ipAddress,
+    location: model.location,
+    createdAt: model.createdAt,
+    isCurrent: model.isCurrent,
+  );
+
+  SessionsResponse mapSessions(SessionsResponseModel model) => SessionsResponse(
+    currentSession: mapSession(model.currentSession),
+    otherSessions: model.otherSessions.map(mapSession).toList(),
+  );
 }

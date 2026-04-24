@@ -1,18 +1,19 @@
 import 'dart:async';
 
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
 import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common/constants/preference_keys.dart';
-import '../../../../../common/di/di.dart';
-import '../../../../../common/router/app_router.dart';
-import '../../../../../common/state/state_map_helper.dart';
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/util/pref_util.dart';
-import '../../../../../domain/params/auth/login_with_phone_otp_params.dart';
-import '../../../../../domain/use_cases/auth/send_phone_login_otp_use_case.dart';
+import 'package:carfy/common/constants/preference_keys.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/state_map_helper.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/util/pref_util.dart';
+import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
+import 'package:carfy/domain/use_cases/auth/send_phone_login_otp_use_case.dart';
 
 part 'verify_otp_state.dart';
 
@@ -39,7 +40,7 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
     _timer?.cancel();
     emit(state.copyWith(timeRemaining: 180, isTimerActive: true));
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.timeRemaining > 0) {
         emit(state.copyWith(timeRemaining: state.timeRemaining - 1));
       } else {
@@ -64,7 +65,8 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
   Future<void> verifyWithOtp(String phone, String otp) async {
     emit(state.copyWith(verifyState: StateStatus.loading()));
 
-    final result = await _loginWithPhoneUseCase(LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp)));
+    final deviceName = await DeviceUtil.getDeviceName();
+    final result = await _loginWithPhoneUseCase(LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp), deviceName: deviceName));
 
     result.fold(
       (failure) {
@@ -73,7 +75,8 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
       (success) {
         emit(state.copyWith(verifyState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replaceAll([MainRoute()]);
+        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
+        _appRouter.replaceAll([const MainRoute()]);
       },
     );
   }

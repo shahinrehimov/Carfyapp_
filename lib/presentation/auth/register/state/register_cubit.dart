@@ -9,8 +9,8 @@ import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/error/failure.dart';
-import '../../../../domain/params/auth/send_phone_otp_params.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/params/auth/send_phone_otp_params.dart';
 
 part 'register_state.dart';
 

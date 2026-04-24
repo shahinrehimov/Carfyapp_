@@ -1,5 +1,6 @@
 import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
+import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
@@ -12,7 +13,7 @@ import 'package:carfy/domain/use_cases/auth/send_phone_login_otp_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/error/failure.dart';
+import 'package:carfy/common/error/failure.dart';
 
 part 'login_state.dart';
 
@@ -50,7 +51,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       ),
     );
 
-    final result = await _loginWithEmailUseCase(LoginWithEmailParams(email: email, password: password));
+    final deviceName = await DeviceUtil.getDeviceName();
+    final result = await _loginWithEmailUseCase(LoginWithEmailParams(email: email, password: password, deviceName: deviceName));
     result.fold(
       (failure) {
         emit(state.copyWith(emailLoginState: mapFailure(failure)));
@@ -66,7 +68,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
       (success) {
         emit(state.copyWith(emailLoginState: StateStatus.success()));
         PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        _appRouter.replaceAll([MainRoute()]);
+        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
+        _appRouter.pushAndPopUntil(const MainRoute(), predicate: (_) => false);
       },
     );
   }
@@ -74,11 +77,7 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
   Future<void> loginWithNumber() async {
     emit(state.copyWith(phoneLoginState: StateStatus.loading()));
 
-    emit(
-      state.copyWith(
-        phoneValidationState: FieldValidationState.pure(),
-      ),
-    );
+    emit(state.copyWith(phoneValidationState: FieldValidationState.pure()));
     final phone = phoneController.text.trim().replaceAll(' ', '');
 
     final result = await _sendPhoneLoginOtpUseCase(LoginWithPhoneOtpParams(phone: phone));

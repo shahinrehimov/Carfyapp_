@@ -16,25 +16,22 @@ class _LoginWithNumber extends StatelessWidget {
           listenWhen: (oldState, newState) => oldState.phoneLoginState != newState.phoneLoginState,
           child: Column(
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 context.localization.entranceToAccount,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.theme.colors.primary),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.phoneValidationState != newState.phoneValidationState,
                 builder: (context, state) {
-                  return CustomTextField(
+                  return CustomPhoneField(
                     controller: cubit.phoneController,
-                    hint: context.localization.mobileNumber,
                     errorText: state.phoneValidationState.message,
-                    inputFormatters: [InputFormatter.getPhoneNumberFormatter()],
-                    keyboardType: TextInputType.number,
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.phoneLoginState != newState.phoneLoginState,
                 builder: (context, state) {
@@ -45,8 +42,8 @@ class _LoginWithNumber extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
-              _Common(),
+              const SizedBox(height: 16),
+              const _Common(),
             ],
           ),
         ),

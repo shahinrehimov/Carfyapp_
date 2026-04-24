@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../common/error/failure.dart';
-import '../../entities/auth/logout_response.dart';
-import '../../repositories/auth_repository.dart';
+import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/domain/entities/auth/logout_response.dart';
+import 'package:carfy/domain/repositories/auth_repository.dart';
 
 @injectable
 class LogoutUseCase {

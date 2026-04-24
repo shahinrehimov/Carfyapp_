@@ -5,9 +5,9 @@ import 'package:dio_curl_logger/dio_curl_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../constants/constants.dart';
-import '../constants/preference_keys.dart';
-import '../util/pref_util.dart';
+import 'package:carfy/common/constants/constants.dart';
+import 'package:carfy/common/constants/preference_keys.dart';
+import 'package:carfy/common/util/pref_util.dart';
 
 @singleton
 class NetworkManager {
@@ -30,6 +30,11 @@ class NetworkManager {
           final guestIdentifier = PrefUtil.getString(AppPreferenceKeys.guestIdentifier);
           if (guestIdentifier != null && guestIdentifier.isNotEmpty) {
             options.headers["identifier"] = guestIdentifier;
+          }
+
+          final authToken = PrefUtil.getString(AppPreferenceKeys.authToken);
+          if (authToken != null && authToken.isNotEmpty) {
+            options.headers["Authorization"] = 'Bearer $authToken';
           }
           return handler.next(options);
         },

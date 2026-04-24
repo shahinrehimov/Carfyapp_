@@ -9,13 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../common/state/state_status.dart';
-import '../../../../../common/theme/theme.dart';
-import '../../../../../common/translations/translation_context_extension.dart';
-import '../../../../../common/translations/translation_keys.dart';
-import '../../../../../common/widgets/custom_button.dart';
-import '../../../../../domain/enums/gender.dart';
-import '../../../../../gen/assets.gen.dart';
+import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/theme/theme.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_button.dart';
+import 'package:carfy/domain/enums/gender.dart';
+import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrapper {
@@ -50,7 +49,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                 context.localization.signUp,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               BlocBuilder<CompletePhoneRegisterCubit, CompletePhoneRegisterState>(
                 buildWhen: (oldState, newState) => oldState.nameValidationState != newState.nameValidationState,
                 builder: (context, state) {
@@ -62,7 +61,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompletePhoneRegisterCubit, CompletePhoneRegisterState>(
                 buildWhen: (oldState, newState) => oldState.surnameValidationState != newState.surnameValidationState,
                 builder: (context, state) {
@@ -74,11 +73,10 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomDropdownField<Gender>(
                 items: [Gender.male, Gender.female],
                 hint: context.localization.gender,
-                required: true,
                 onChanged: (value) {
                   if (value != null) {
                     cubit.selectGender(value);
@@ -89,7 +87,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   Gender.female => context.localization.female,
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomDatePickerField(
                 hint: context.localization.birthDate,
                 onChanged: (date) {
@@ -98,7 +96,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   }
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<CompletePhoneRegisterCubit, CompletePhoneRegisterState>(
                 buildWhen: (oldState, newState) => oldState.emailValidationState != newState.emailValidationState,
                 builder: (context, state) {
@@ -110,7 +108,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               BlocBuilder<CompletePhoneRegisterCubit, CompletePhoneRegisterState>(
                 buildWhen: (oldState, newState) => oldState.registerState != newState.registerState,
                 builder: (context, state) {
@@ -121,7 +119,7 @@ class CompletePhoneRegisterPage extends StatelessWidget implements AutoRouteWrap
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
             ],
           ),
         ),
