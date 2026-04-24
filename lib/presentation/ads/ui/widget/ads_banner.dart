@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
@@ -5,6 +7,7 @@ import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/domain/entities/advertisements/advertisement.dart';
 import 'package:carfy/presentation/ads/state/ads_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -84,13 +87,39 @@ class _AdsPager extends StatefulWidget {
 }
 
 class _AdsPagerState extends State<_AdsPager> {
+  static const Duration _autoScrollInterval = Duration(seconds: 5);
+  static const Duration _autoScrollAnimation = Duration(milliseconds: 500);
+
   final PageController _controller = PageController();
   int _currentIndex = 0;
+  Timer? _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoScroll();
+  }
 
   @override
   void dispose() {
+    _autoScrollTimer?.cancel();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _startAutoScroll() {
+    _autoScrollTimer?.cancel();
+    if (widget.ads.length <= 1) return;
+    _autoScrollTimer = Timer.periodic(_autoScrollInterval, (_) {
+      if (!mounted || !_controller.hasClients) return;
+      final next = (_currentIndex + 1) % widget.ads.length;
+      _controller.animateToPage(next, duration: _autoScrollAnimation, curve: Curves.easeOutCubic);
+    });
+  }
+
+  void _onUserInteraction() {
+    // Pause and restart so the next auto-advance isn't immediate after a swipe.
+    _startAutoScroll();
   }
 
   @override
@@ -101,12 +130,20 @@ class _AdsPagerState extends State<_AdsPager> {
         height: widget.height,
         child: Stack(
           children: [
-            PageView.builder(
-              controller: _controller,
-              itemCount: widget.ads.length,
-              onPageChanged: (i) => setState(() => _currentIndex = i),
-              itemBuilder: (context, index) =>
-                  _AdCard(ad: widget.ads[index], borderRadius: widget.borderRadius, padding: widget.padding),
+            NotificationListener<ScrollNotification>(
+              onNotification: (n) {
+                if (n is UserScrollNotification && n.direction != ScrollDirection.idle) {
+                  _onUserInteraction();
+                }
+                return false;
+              },
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: widget.ads.length,
+                onPageChanged: (i) => setState(() => _currentIndex = i),
+                itemBuilder: (context, index) =>
+                    _AdCard(ad: widget.ads[index], borderRadius: widget.borderRadius, padding: widget.padding),
+              ),
             ),
             if (widget.ads.length > 1)
               Positioned(
