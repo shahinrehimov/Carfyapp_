@@ -1,6 +1,8 @@
 import 'package:carfy/data/mappers/product_mapper.dart';
 import 'package:carfy/data/models/orders/checkout_preview_model.dart';
+import 'package:carfy/data/models/orders/checkout_result_model.dart';
 import 'package:carfy/domain/entities/orders/checkout_preview.dart';
+import 'package:carfy/domain/entities/orders/checkout_result.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -8,6 +10,12 @@ class OrderMapper {
   final ProductMapper _productMapper;
 
   OrderMapper(this._productMapper);
+
+  CheckoutResult mapCheckoutResult(CheckoutResultModel model) => CheckoutResult(
+        message: model.message,
+        redirect: model.redirect,
+        redirectUrl: model.redirectUrl,
+      );
 
   CheckoutPreviewItem mapItem(CheckoutPreviewItemModel model) => CheckoutPreviewItem(
         quantity: model.quantity,

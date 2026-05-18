@@ -439,4 +439,22 @@ class AppLocalizations {
   String get orderConfirmAddNewAddress => _tr(TranslationKeys.orderConfirmAddNewAddress);
 
   String get orderConfirmPaymentMethod => _tr(TranslationKeys.orderConfirmPaymentMethod);
+
+  String get orderConfirmNote => _tr(TranslationKeys.orderConfirmNote);
+
+  String get orderConfirmNoteHint => _tr(TranslationKeys.orderConfirmNoteHint);
+
+  String get orderConfirmAddressRequired => _tr(TranslationKeys.orderConfirmAddressRequired);
+
+  String get orderSuccessTitle => _tr(TranslationKeys.orderSuccessTitle);
+
+  String get orderSuccessProducts => _tr(TranslationKeys.orderSuccessProducts);
+
+  String get orderSuccessDeliveryAddress => _tr(TranslationKeys.orderSuccessDeliveryAddress);
+
+  String get orderSuccessGoHome => _tr(TranslationKeys.orderSuccessGoHome);
+
+  String get paymentTitle => _tr(TranslationKeys.paymentTitle);
+
+  String get paymentFailed => _tr(TranslationKeys.paymentFailed);
 }

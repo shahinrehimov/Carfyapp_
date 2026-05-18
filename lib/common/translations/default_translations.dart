@@ -231,6 +231,15 @@ class TranslationDefaults {
       TranslationKeys.orderConfirmSelectAddress: 'Ünvan seçin',
       TranslationKeys.orderConfirmAddNewAddress: 'Yeni ünvan əlavə et',
       TranslationKeys.orderConfirmPaymentMethod: 'Ödəniş üsulu',
+      TranslationKeys.orderConfirmNote: 'Qeyd',
+      TranslationKeys.orderConfirmNoteHint: 'Sifariş üçün qeydinizi yazın (məsələn: zəng etməyin, SMS göndərin)',
+      TranslationKeys.orderConfirmAddressRequired: 'Sifarişi tamamlamaq üçün çatdırılma ünvanı seçin',
+      TranslationKeys.orderSuccessTitle: 'Sifarişiniz alındı',
+      TranslationKeys.orderSuccessProducts: 'Məhsullar',
+      TranslationKeys.orderSuccessDeliveryAddress: 'Çatdırılma ünvanı',
+      TranslationKeys.orderSuccessGoHome: 'Ana səhifəyə qayıt',
+      TranslationKeys.paymentTitle: 'Ödəniş',
+      TranslationKeys.paymentFailed: 'Ödəniş uğursuz oldu',
     },
   };
 }

@@ -264,6 +264,66 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [GroupProductsPage]
+class GroupProductsRoute extends PageRouteInfo<GroupProductsRouteArgs> {
+  GroupProductsRoute({
+    Key? key,
+    required String slug,
+    required String title,
+    List<PageRouteInfo>? children,
+  }) : super(
+         GroupProductsRoute.name,
+         args: GroupProductsRouteArgs(key: key, slug: slug, title: title),
+         initialChildren: children,
+       );
+
+  static const String name = 'GroupProductsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<GroupProductsRouteArgs>();
+      return WrappedRoute(
+        child: GroupProductsPage(
+          key: args.key,
+          slug: args.slug,
+          title: args.title,
+        ),
+      );
+    },
+  );
+}
+
+class GroupProductsRouteArgs {
+  const GroupProductsRouteArgs({
+    this.key,
+    required this.slug,
+    required this.title,
+  });
+
+  final Key? key;
+
+  final String slug;
+
+  final String title;
+
+  @override
+  String toString() {
+    return 'GroupProductsRouteArgs{key: $key, slug: $slug, title: $title}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! GroupProductsRouteArgs) return false;
+    return key == other.key && slug == other.slug && title == other.title;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ slug.hashCode ^ title.hashCode;
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -514,18 +574,166 @@ class MyCarsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OrderConfirmPage]
-class OrderConfirmRoute extends PageRouteInfo<void> {
-  const OrderConfirmRoute({List<PageRouteInfo>? children})
-    : super(OrderConfirmRoute.name, initialChildren: children);
+class OrderConfirmRoute extends PageRouteInfo<OrderConfirmRouteArgs> {
+  OrderConfirmRoute({
+    Key? key,
+    List<BasketProduct> items = const [],
+    List<PageRouteInfo>? children,
+  }) : super(
+         OrderConfirmRoute.name,
+         args: OrderConfirmRouteArgs(key: key, items: items),
+         initialChildren: children,
+       );
 
   static const String name = 'OrderConfirmRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const OrderConfirmPage());
+      final args = data.argsAs<OrderConfirmRouteArgs>(
+        orElse: () => const OrderConfirmRouteArgs(),
+      );
+      return WrappedRoute(
+        child: OrderConfirmPage(key: args.key, items: args.items),
+      );
     },
   );
+}
+
+class OrderConfirmRouteArgs {
+  const OrderConfirmRouteArgs({this.key, this.items = const []});
+
+  final Key? key;
+
+  final List<BasketProduct> items;
+
+  @override
+  String toString() {
+    return 'OrderConfirmRouteArgs{key: $key, items: $items}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OrderConfirmRouteArgs) return false;
+    return key == other.key &&
+        const ListEquality<BasketProduct>().equals(items, other.items);
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ const ListEquality<BasketProduct>().hash(items);
+}
+
+/// generated route for
+/// [OrderSuccessPage]
+class OrderSuccessRoute extends PageRouteInfo<OrderSuccessRouteArgs> {
+  OrderSuccessRoute({
+    Key? key,
+    required CheckoutPreview preview,
+    required Address address,
+    List<PageRouteInfo>? children,
+  }) : super(
+         OrderSuccessRoute.name,
+         args: OrderSuccessRouteArgs(
+           key: key,
+           preview: preview,
+           address: address,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'OrderSuccessRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OrderSuccessRouteArgs>();
+      return OrderSuccessPage(
+        key: args.key,
+        preview: args.preview,
+        address: args.address,
+      );
+    },
+  );
+}
+
+class OrderSuccessRouteArgs {
+  const OrderSuccessRouteArgs({
+    this.key,
+    required this.preview,
+    required this.address,
+  });
+
+  final Key? key;
+
+  final CheckoutPreview preview;
+
+  final Address address;
+
+  @override
+  String toString() {
+    return 'OrderSuccessRouteArgs{key: $key, preview: $preview, address: $address}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OrderSuccessRouteArgs) return false;
+    return key == other.key &&
+        preview == other.preview &&
+        address == other.address;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ preview.hashCode ^ address.hashCode;
+}
+
+/// generated route for
+/// [PaymentWebviewPage]
+class PaymentWebviewRoute extends PageRouteInfo<PaymentWebviewRouteArgs> {
+  PaymentWebviewRoute({
+    Key? key,
+    required String redirectUrl,
+    List<PageRouteInfo>? children,
+  }) : super(
+         PaymentWebviewRoute.name,
+         args: PaymentWebviewRouteArgs(key: key, redirectUrl: redirectUrl),
+         initialChildren: children,
+       );
+
+  static const String name = 'PaymentWebviewRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PaymentWebviewRouteArgs>();
+      return PaymentWebviewPage(key: args.key, redirectUrl: args.redirectUrl);
+    },
+  );
+}
+
+class PaymentWebviewRouteArgs {
+  const PaymentWebviewRouteArgs({this.key, required this.redirectUrl});
+
+  final Key? key;
+
+  final String redirectUrl;
+
+  @override
+  String toString() {
+    return 'PaymentWebviewRouteArgs{key: $key, redirectUrl: $redirectUrl}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PaymentWebviewRouteArgs) return false;
+    return key == other.key && redirectUrl == other.redirectUrl;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ redirectUrl.hashCode;
 }
 
 /// generated route for

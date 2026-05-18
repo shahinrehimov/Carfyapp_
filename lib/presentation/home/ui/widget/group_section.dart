@@ -35,7 +35,10 @@ class _GroupItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _Heading(header: group.title, onTap: () {}),
+        _Heading(
+          header: group.title,
+          onTap: () => context.pushRoute(GroupProductsRoute(slug: group.slug, title: group.title)),
+        ),
         const SizedBox(height: 12),
         _GroupProductsList(products: group.products),
         const SizedBox(height: 24),

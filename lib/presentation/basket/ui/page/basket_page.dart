@@ -118,7 +118,7 @@ class _PaymentDetailsBar extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             CustomButton(
-              onPressed: () => context.pushRoute(const OrderConfirmRoute()),
+              onPressed: () => context.pushRoute(OrderConfirmRoute(items: state.items)),
               text: context.localization.formOrder,
             ),
           ],

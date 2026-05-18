@@ -172,6 +172,7 @@ import 'package:carfy/domain/use_cases/group/get_groups_bulk_use_case.dart'
     as _i863;
 import 'package:carfy/domain/use_cases/group/get_groups_list_use_case.dart'
     as _i321;
+import 'package:carfy/domain/use_cases/orders/checkout_use_case.dart' as _i353;
 import 'package:carfy/domain/use_cases/orders/get_checkout_preview_use_case.dart'
     as _i786;
 import 'package:carfy/domain/use_cases/payment/get_payment_methods_use_case.dart'
@@ -469,6 +470,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i450.GetVersionsUseCase>(
       () => _i450.GetVersionsUseCase(gh<_i745.VersionRepository>()),
+    );
+    gh.factory<_i353.CheckoutUseCase>(
+      () => _i353.CheckoutUseCase(gh<_i603.OrderRepository>()),
     );
     gh.factory<_i786.GetCheckoutPreviewUseCase>(
       () => _i786.GetCheckoutPreviewUseCase(gh<_i603.OrderRepository>()),

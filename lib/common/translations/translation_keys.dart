@@ -236,4 +236,13 @@ class TranslationKeys {
   static const String orderConfirmSelectAddress = 'order_confirm_select_address';
   static const String orderConfirmAddNewAddress = 'order_confirm_add_new_address';
   static const String orderConfirmPaymentMethod = 'order_confirm_payment_method';
+  static const String orderConfirmNote = 'order_confirm_note';
+  static const String orderConfirmNoteHint = 'order_confirm_note_hint';
+  static const String orderConfirmAddressRequired = 'order_confirm_address_required';
+  static const String orderSuccessTitle = 'order_success_title';
+  static const String orderSuccessProducts = 'order_success_products';
+  static const String orderSuccessDeliveryAddress = 'order_success_delivery_address';
+  static const String orderSuccessGoHome = 'order_success_go_home';
+  static const String paymentTitle = 'payment_title';
+  static const String paymentFailed = 'payment_failed';
 }

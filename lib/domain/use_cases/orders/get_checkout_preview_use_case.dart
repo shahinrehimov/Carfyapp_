@@ -10,5 +10,5 @@ class GetCheckoutPreviewUseCase {
 
   GetCheckoutPreviewUseCase(this._repository);
 
-  Future<Either<Failure, CheckoutPreview>> call() => _repository.getCheckoutPreview();
+  Future<Either<Failure, CheckoutPreview>> call(int addressId) => _repository.getCheckoutPreview(addressId);
 }
