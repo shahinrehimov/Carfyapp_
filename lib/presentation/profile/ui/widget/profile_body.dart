@@ -23,7 +23,7 @@ class _ProfileBody extends StatelessWidget {
                 child: _ProfileMenuCard(
                   label: context.localization.profileMyOrders,
                   icon: Assets.icons.box,
-                  onTap: () {},
+                  onTap: () => context.pushRoute(const OrdersRoute()),
                 ),
               ),
             ],

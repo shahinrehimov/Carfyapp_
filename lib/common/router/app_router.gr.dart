@@ -690,6 +690,22 @@ class OrderSuccessRouteArgs {
 }
 
 /// generated route for
+/// [OrdersPage]
+class OrdersRoute extends PageRouteInfo<void> {
+  const OrdersRoute({List<PageRouteInfo>? children})
+    : super(OrdersRoute.name, initialChildren: children);
+
+  static const String name = 'OrdersRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const OrdersPage());
+    },
+  );
+}
+
+/// generated route for
 /// [PaymentWebviewPage]
 class PaymentWebviewRoute extends PageRouteInfo<PaymentWebviewRouteArgs> {
   PaymentWebviewRoute({
