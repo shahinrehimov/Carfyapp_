@@ -193,26 +193,27 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
-              // Delete account button
-              // BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
-              //   buildWhen: (prev, curr) => prev.logoutStatus != curr.logoutStatus,
-              //   builder: (context, state) => CustomButton(
-              //     text: context.localization.profileDeleteAccount,
-              //     loading: state.deleteStatus is StateStatusLoading,
-              //     backgroundColor: Colors.transparent,
-              //     outlineColor: context.theme.colors.error,
-              //     color: context.theme.colors.error,
-              //     onPressed: () => showConfirmationDialog(
-              //       context: context,
-              //       title: context.localization.deleteAccountConfirmTitle,
-              //       description: context.localization.deleteAccountConfirmDescription,
-              //       confirmText: context.localization.delete,
-              //       cancelText: context.localization.cancel,
-              //       onConfirm: cubit.logout,
-              //     ),
-              //   ),
-              // ),
+              const SizedBox(height: 32),
+              GestureDetector(
+                onTap: () => showConfirmationDialog(
+                  context: context,
+                  title: context.localization.deleteAccountConfirmTitle,
+                  description: context.localization.deleteAccountConfirmDescription,
+                  confirmText: context.localization.profileDeleteAccount,
+                  cancelText: context.localization.cancel,
+                  onConfirm: cubit.logout,
+                ),
+                child: Text(
+                  context.localization.profileDeleteAccount,
+                  style: TextStyle(
+                    color: context.theme.colors.error,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.underline,
+                    decorationColor: context.theme.colors.error,
+                  ),
+                ),
+              ),
               const SizedBox(height: 24),
             ],
           ),

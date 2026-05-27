@@ -6,7 +6,8 @@ import 'package:carfy/presentation/product_detail/state/product_detail_cubit.dar
 import 'package:carfy/presentation/product_detail/ui/widget/product_bottom_bar.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_contact_section.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_description_section.dart';
-import 'package:carfy/presentation/product_detail/ui/widget/product_detail_app_bar.dart';
+import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_detail_loading.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_details_table.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_image_gallery.dart';
@@ -55,7 +56,7 @@ class ProductDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
-      appBar: const ProductDetailAppBar(),
+      appBar: CustomAppBarWhite(title: context.localization.productDetail),
       body: BlocBuilder<ProductDetailCubit, ProductDetailState>(
         builder: (context, state) {
           return state.status.maybeWhen(

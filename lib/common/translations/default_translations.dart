@@ -143,7 +143,7 @@ class TranslationDefaults {
       TranslationKeys.logoutConfirmTitle: 'Çıxış',
       TranslationKeys.logoutConfirmDescription: 'Hesabdan çıxmaq istəyirsiniz?',
       TranslationKeys.deleteAccountConfirmTitle: 'Hesabı sil',
-      TranslationKeys.deleteAccountConfirmDescription: 'Hesabınızı silmək istəyirsiniz? Bu əməliyyat geri qaytarıla bilməz.',
+      TranslationKeys.deleteAccountConfirmDescription: 'Hesabınızı silmək istəyirsiniz? 15 gün ərzində hesabınıza daxil olmasanız, hesabınız silinəcək.',
 
       // Sessions
       TranslationKeys.sessionsTitle: 'Aktiv seanslar',
