@@ -240,6 +240,12 @@ class TranslationDefaults {
       TranslationKeys.orderSuccessGoHome: 'Ana səhifəyə qayıt',
       TranslationKeys.paymentTitle: 'Ödəniş',
       TranslationKeys.paymentFailed: 'Ödəniş uğursuz oldu',
+
+      // Order detail
+      TranslationKeys.orderDetailTitle: 'Sifariş detalları',
+      TranslationKeys.orderDetailOrder: 'Sifariş',
+      TranslationKeys.orderDetailDelivery: 'Çatdırılma',
+      TranslationKeys.copied: 'Kopyalandı',
     },
   };
 }

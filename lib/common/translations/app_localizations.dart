@@ -457,4 +457,13 @@ class AppLocalizations {
   String get paymentTitle => _tr(TranslationKeys.paymentTitle);
 
   String get paymentFailed => _tr(TranslationKeys.paymentFailed);
+
+  // Order detail
+  String get orderDetailTitle => _tr(TranslationKeys.orderDetailTitle);
+
+  String get orderDetailOrder => _tr(TranslationKeys.orderDetailOrder);
+
+  String get orderDetailDelivery => _tr(TranslationKeys.orderDetailDelivery);
+
+  String get copied => _tr(TranslationKeys.copied);
 }

@@ -1,9 +1,11 @@
 import 'package:carfy/data/mappers/product_mapper.dart';
 import 'package:carfy/data/models/orders/checkout_preview_model.dart';
 import 'package:carfy/data/models/orders/checkout_result_model.dart';
+import 'package:carfy/data/models/orders/order_detail_model.dart';
 import 'package:carfy/data/models/orders/order_summary_model.dart';
 import 'package:carfy/domain/entities/orders/checkout_preview.dart';
 import 'package:carfy/domain/entities/orders/checkout_result.dart';
+import 'package:carfy/domain/entities/orders/order_detail.dart';
 import 'package:carfy/domain/entities/orders/order_summary.dart';
 import 'package:injectable/injectable.dart';
 
@@ -48,5 +50,72 @@ class OrderMapper {
         status: model.status,
         statusLabel: model.statusLabel,
         date: model.date,
+      );
+
+  OrderDetail mapOrderDetail(OrderDetailModel model) => OrderDetail(
+        id: model.id,
+        code: model.code,
+        uuid: model.uuid,
+        productsCount: model.productsCount,
+        status: model.status,
+        statusLabel: model.statusLabel,
+        date: model.date,
+        amount: model.amount,
+        amountFinal: model.amountFinal,
+        paymentMethod: OrderPaymentMethod(
+          name: model.paymentMethod.name,
+          label: model.paymentMethod.label,
+          paymentStatus: model.paymentMethod.paymentStatus,
+          paymentStatusLabel: model.paymentMethod.paymentStatusLabel,
+        ),
+        address: OrderAddress(
+          addressType: OrderAddressType(id: model.address.addressType.id, title: model.address.addressType.title),
+          city: OrderCity(id: model.address.city.id, title: model.address.city.title),
+          addressLine1: model.address.addressLine1,
+          addressLine2: model.address.addressLine2,
+          latitude: model.address.latitude,
+          longitude: model.address.longitude,
+          phone: model.address.phone,
+        ),
+        statusTree: model.statusTree
+            .map((e) => OrderStatusTree(
+                  status: e.status,
+                  statusLabel: e.statusLabel,
+                  isChecked: e.isChecked,
+                  date: e.date,
+                ))
+            .toList(),
+        statuses: model.statuses
+            .map((e) => OrderStatusHistory(
+                  id: e.id,
+                  status: e.status,
+                  statusLabel: e.statusLabel,
+                  date: e.date,
+                ))
+            .toList(),
+        items: model.items.map(_mapOrderItem).toList(),
+      );
+
+  OrderItem _mapOrderItem(OrderItemModel model) => OrderItem(
+        quantity: model.quantity,
+        amount: model.amount,
+        amountFinal: model.amountFinal,
+        product: OrderItemProduct(
+          uuid: model.product.uuid,
+          variantSlug: model.product.variantSlug,
+          title: model.product.title,
+          oemCode: model.product.oemCode,
+          hoverImage: model.product.hoverImage,
+          price: model.product.price,
+          priceFinal: model.product.priceFinal,
+          hasDiscount: model.product.hasDiscount,
+          discount: model.product.discount,
+          seller: OrderItemSeller(
+            uuid: model.product.seller.uuid,
+            storeCode: model.product.seller.storeCode,
+            label: model.product.seller.label,
+            city: OrderCity(id: model.product.seller.city.id, title: model.product.seller.city.title),
+          ),
+        ),
       );
 }

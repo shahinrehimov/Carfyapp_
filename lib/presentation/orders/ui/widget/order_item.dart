@@ -20,24 +20,24 @@ class _OrderItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  order.date,
+                  order.code,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: context.theme.colors.black,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 8),
                 Text(
-                  order.code,
+                  '${context.localization.orderSuccessProducts} (${order.productsCount})',
                   style: TextStyle(
                     fontSize: 12,
                     color: context.theme.colors.black.withValues(alpha: 0.5),
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 Text(
-                  '${context.localization.orderSuccessProducts} (${order.productsCount})',
+                  order.date,
                   style: TextStyle(
                     fontSize: 12,
                     color: context.theme.colors.black.withValues(alpha: 0.5),
@@ -88,8 +88,10 @@ class _StatusBadge extends StatelessWidget {
     return switch (status) {
       'pending' => (const Color(0xFFFFF3E0), const Color(0xFFFF9800)),
       'processing' => (const Color(0xFFE3F2FD), const Color(0xFF2196F3)),
-      'completed' || 'delivered' => (const Color(0xFFE8F5E9), const Color(0xFF4CAF50)),
-      'cancelled' || 'failed' => (const Color(0xFFFFEBEE), const Color(0xFFF44336)),
+      'completed' ||
+      'delivered' => (const Color(0xFFE8F5E9), const Color(0xFF4CAF50)),
+      'cancelled' ||
+      'failed' => (const Color(0xFFFFEBEE), const Color(0xFFF44336)),
       _ => (const Color(0xFFF5F5F5), const Color(0xFF757575)),
     };
   }

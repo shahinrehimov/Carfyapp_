@@ -245,4 +245,10 @@ class TranslationKeys {
   static const String orderSuccessGoHome = 'order_success_go_home';
   static const String paymentTitle = 'payment_title';
   static const String paymentFailed = 'payment_failed';
+
+  // Order detail
+  static const String orderDetailTitle = 'order_detail_title';
+  static const String orderDetailOrder = 'order_detail_order';
+  static const String orderDetailDelivery = 'order_detail_delivery';
+  static const String copied = 'copied';
 }

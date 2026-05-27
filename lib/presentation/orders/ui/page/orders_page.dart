@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
@@ -27,22 +28,24 @@ class OrdersPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: CustomAppBarWhite(title: context.localization.profileMyOrders),
-      body: BlocListener<OrdersCubit, OrdersState>(
-        listenWhen: (prev, curr) => prev.status != curr.status,
-        listener: (context, state) => showStateStatusToast(context, state.status),
-        child: BlocBuilder<OrdersCubit, OrdersState>(
-          builder: (context, state) {
-            return state.status.maybeWhen(
-              loading: () => const _OrdersListShimmer(),
-              empty: () => _EmptyOrdersView(),
-              orElse: () => _OrdersList(
-                orders: state.orders,
-                isPaginationLoading: state.status is StateStatusPaginationLoading,
-                onLoadMore: () => context.read<OrdersCubit>().loadNextPage(),
-                onRefresh: () => context.read<OrdersCubit>().refresh(),
-              ),
-            );
-          },
+      body: SafeArea(
+        child: BlocListener<OrdersCubit, OrdersState>(
+          listenWhen: (prev, curr) => prev.status != curr.status,
+          listener: (context, state) => showStateStatusToast(context, state.status),
+          child: BlocBuilder<OrdersCubit, OrdersState>(
+            builder: (context, state) {
+              return state.status.maybeWhen(
+                loading: () => const _OrdersListShimmer(),
+                empty: () => _EmptyOrdersView(),
+                orElse: () => _OrdersList(
+                  orders: state.orders,
+                  isPaginationLoading: state.status is StateStatusPaginationLoading,
+                  onLoadMore: () => context.read<OrdersCubit>().loadNextPage(),
+                  onRefresh: () => context.read<OrdersCubit>().refresh(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -87,7 +90,10 @@ class _OrdersList extends StatelessWidget {
                 ),
               );
             }
-            return _OrderItem(order: orders[index]);
+            return GestureDetector(
+              onTap: () => context.pushRoute(OrderDetailRoute(orderId: orders[index].id)),
+              child: _OrderItem(order: orders[index]),
+            );
           },
         ),
       ),

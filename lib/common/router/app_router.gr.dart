@@ -626,6 +626,55 @@ class OrderConfirmRouteArgs {
 }
 
 /// generated route for
+/// [OrderDetailPage]
+class OrderDetailRoute extends PageRouteInfo<OrderDetailRouteArgs> {
+  OrderDetailRoute({
+    Key? key,
+    required int orderId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         OrderDetailRoute.name,
+         args: OrderDetailRouteArgs(key: key, orderId: orderId),
+         initialChildren: children,
+       );
+
+  static const String name = 'OrderDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OrderDetailRouteArgs>();
+      return WrappedRoute(
+        child: OrderDetailPage(key: args.key, orderId: args.orderId),
+      );
+    },
+  );
+}
+
+class OrderDetailRouteArgs {
+  const OrderDetailRouteArgs({this.key, required this.orderId});
+
+  final Key? key;
+
+  final int orderId;
+
+  @override
+  String toString() {
+    return 'OrderDetailRouteArgs{key: $key, orderId: $orderId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OrderDetailRouteArgs) return false;
+    return key == other.key && orderId == other.orderId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ orderId.hashCode;
+}
+
+/// generated route for
 /// [OrderSuccessPage]
 class OrderSuccessRoute extends PageRouteInfo<OrderSuccessRouteArgs> {
   OrderSuccessRoute({

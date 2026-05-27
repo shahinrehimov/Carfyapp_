@@ -7,6 +7,7 @@ import 'package:carfy/data/dtos/orders/checkout_request_dto.dart';
 import 'package:carfy/data/dtos/orders/orders_load_query_params.dart';
 import 'package:carfy/data/models/orders/checkout_preview_model.dart';
 import 'package:carfy/data/models/orders/checkout_result_model.dart';
+import 'package:carfy/data/models/orders/order_detail_model.dart';
 import 'package:carfy/data/models/orders/order_summary_model.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,6 +15,7 @@ abstract class OrderRemoteDataSource {
   Future<CheckoutPreviewModel> getCheckoutPreview(int addressId);
   Future<CheckoutResultModel> checkout(CheckoutRequestDto dto);
   Future<PaginationResponseModel<OrderSummaryModel>> loadOrders(OrdersLoadQueryParams params);
+  Future<OrderDetailModel> getOrderDetails(int id);
 }
 
 @Injectable(as: OrderRemoteDataSource)
@@ -44,6 +46,14 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource with DataSourceMix
     return handleResponse(
       () => _networkManager.get(EndpointPaths.ordersLoad, queryParams: params.toQueryParameters()),
       map: (json) => PaginationResponseModel.fromJson(json, (item) => OrderSummaryModel.fromJson(item)),
+    );
+  }
+
+  @override
+  Future<OrderDetailModel> getOrderDetails(int id) {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.orderDetails(id)),
+      map: (json) => OrderDetailModel.fromJson(json['data']),
     );
   }
 }

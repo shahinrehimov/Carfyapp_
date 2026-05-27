@@ -275,6 +275,22 @@ Generates:
 
 ---
 
+## CustomToast
+
+`lib/common/widgets/custom_toast.dart`
+
+**Always use `CustomToast` for user-facing messages. Never use `ScaffoldMessenger` / `SnackBar`.**
+
+```dart
+CustomToast.showSuccess(context, 'Success message');
+CustomToast.showError(context, 'Error message');
+CustomToast.showToast(context, 'Info message'); // default: info type
+```
+
+Uses `toastification` package under the hood with fill-colored style, top-center alignment, drag-to-close.
+
+---
+
 ## showStateStatusToast
 
 `lib/common/widgets/state_status_toast.dart`

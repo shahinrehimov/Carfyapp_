@@ -8,6 +8,7 @@ import 'package:carfy/data/dtos/orders/orders_load_query_params.dart';
 import 'package:carfy/data/mappers/order_mapper.dart';
 import 'package:carfy/domain/entities/orders/checkout_preview.dart';
 import 'package:carfy/domain/entities/orders/checkout_result.dart';
+import 'package:carfy/domain/entities/orders/order_detail.dart';
 import 'package:carfy/domain/entities/orders/order_summary.dart';
 import 'package:carfy/domain/params/orders/checkout_params.dart';
 import 'package:carfy/domain/params/orders/orders_load_params.dart';
@@ -51,6 +52,14 @@ class OrderRepositoryImpl extends OrderRepository with RepositorySafeCallMixin {
         OrdersLoadQueryParams(page: params.page, limit: params.limit),
       );
       return PaginationMapper.map(res, _mapper.mapOrderSummary);
+    });
+  }
+
+  @override
+  Future<Either<Failure, OrderDetail>> getOrderDetails(int id) {
+    return safeCall(() async {
+      final res = await _dataSource.getOrderDetails(id);
+      return _mapper.mapOrderDetail(res);
     });
   }
 }

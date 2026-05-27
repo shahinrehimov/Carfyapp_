@@ -109,6 +109,7 @@ class EndpointPaths {
   static const checkoutPreview = '/app/orders/checkout-preview';
   static const checkout = '/app/orders/checkout';
   static const ordersLoad = '/app/orders/load';
+  static String orderDetails(int id) => '/app/orders/details/$id';
 
   // Payment Endpoints
   static const paymentMethods = '/app/payment/methods';
