@@ -56,6 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title != null ? Text(title!) : null,
       leading: leading,
       actions: actions,
+      actionsPadding: const EdgeInsets.only(right: 16),
       backgroundColor: context.theme.colors.secondary,
       elevation: elevation,
       shape: shape ?? const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(24))),
@@ -87,6 +88,7 @@ class CustomAppBarWhite extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       backgroundColor: context.theme.colors.white,
       actions: actions,
+      actionsPadding: const EdgeInsets.only(right: 16),
       leading: InkWell(
         onTap: () => context.router.maybePop(),
         child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 22)),

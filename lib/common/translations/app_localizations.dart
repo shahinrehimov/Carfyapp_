@@ -458,6 +458,26 @@ class AppLocalizations {
 
   String get paymentFailed => _tr(TranslationKeys.paymentFailed);
 
+  String get notificationsTitle => _tr(TranslationKeys.notificationsTitle);
+
+  String get notificationsReadAll => _tr(TranslationKeys.notificationsReadAll);
+
+  String get notificationsDeleteAll => _tr(TranslationKeys.notificationsDeleteAll);
+
+  String get notificationsRead => _tr(TranslationKeys.notificationsRead);
+
+  String get notificationsReadConfirm => _tr(TranslationKeys.notificationsReadConfirm);
+
+  String get notificationsReadAllConfirm => _tr(TranslationKeys.notificationsReadAllConfirm);
+
+  String get notificationsDeleteConfirm => _tr(TranslationKeys.notificationsDeleteConfirm);
+
+  String get notificationsDeleteAllConfirm => _tr(TranslationKeys.notificationsDeleteAllConfirm);
+
+  String get ordersEmpty => _tr(TranslationKeys.ordersEmpty);
+
+  String get notificationsEmpty => _tr(TranslationKeys.notificationsEmpty);
+
   // Order detail
   String get orderDetailTitle => _tr(TranslationKeys.orderDetailTitle);
 

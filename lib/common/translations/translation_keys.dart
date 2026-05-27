@@ -247,6 +247,16 @@ class TranslationKeys {
   static const String paymentFailed = 'payment_failed';
 
   // Order detail
+  static const String notificationsTitle = 'notifications_title';
+  static const String notificationsReadAll = 'notifications_read_all';
+  static const String notificationsDeleteAll = 'notifications_delete_all';
+  static const String notificationsRead = 'notifications_read';
+  static const String notificationsReadConfirm = 'notifications_read_confirm';
+  static const String notificationsReadAllConfirm = 'notifications_read_all_confirm';
+  static const String notificationsDeleteConfirm = 'notifications_delete_confirm';
+  static const String notificationsDeleteAllConfirm = 'notifications_delete_all_confirm';
+  static const String ordersEmpty = 'orders_empty';
+  static const String notificationsEmpty = 'notifications_empty';
   static const String orderDetailTitle = 'order_detail_title';
   static const String orderDetailOrder = 'order_detail_order';
   static const String orderDetailDelivery = 'order_detail_delivery';

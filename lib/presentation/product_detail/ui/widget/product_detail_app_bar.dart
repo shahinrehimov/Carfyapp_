@@ -26,15 +26,6 @@ class ProductDetailAppBar extends StatelessWidget implements PreferredSizeWidget
         style: TextStyle(color: context.theme.colors.black, fontSize: 14, fontWeight: FontWeight.w500),
       ),
       centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            Assets.icons.notification,
-            colorFilter: ColorFilter.mode(context.theme.colors.primary, BlendMode.srcIn),
-          ),
-        ),
-      ],
     );
   }
 }

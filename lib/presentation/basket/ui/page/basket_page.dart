@@ -8,13 +8,13 @@ import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/dotted_line_painter.dart';
 import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
+import 'package:carfy/common/widgets/notification_icon_button.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:carfy/presentation/basket/state/basket_cubit.dart';
 import 'package:carfy/presentation/basket/ui/widget/basket_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class BasketPage extends StatelessWidget implements AutoRouteWrapper {
@@ -32,7 +32,7 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
         backgroundColor: context.theme.colors.bg,
         appBar: CustomAppBar(
           title: context.localization.mainBasket,
-          actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
+          actions: [const NotificationIconButton()],
         ),
         body: BlocBuilder<BasketCubit, BasketState>(
           builder: (context, state) {

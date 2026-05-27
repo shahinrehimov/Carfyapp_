@@ -241,6 +241,17 @@ class TranslationDefaults {
       TranslationKeys.paymentTitle: 'Ödəniş',
       TranslationKeys.paymentFailed: 'Ödəniş uğursuz oldu',
 
+      TranslationKeys.notificationsTitle: 'Bildirişlər',
+      TranslationKeys.notificationsReadAll: 'Hamısını oxu',
+      TranslationKeys.notificationsDeleteAll: 'Hamısını sil',
+      TranslationKeys.notificationsRead: 'Oxu',
+      TranslationKeys.notificationsReadConfirm: 'Bu bildirişi oxunmuş kimi işarələmək istəyirsiniz?',
+      TranslationKeys.notificationsReadAllConfirm: 'Bütün bildirişləri oxunmuş kimi işarələmək istəyirsiniz?',
+      TranslationKeys.notificationsDeleteConfirm: 'Bu bildirişi silmək istəyirsiniz?',
+      TranslationKeys.notificationsDeleteAllConfirm: 'Bütün bildirişləri silmək istəyirsiniz?',
+      TranslationKeys.ordersEmpty: 'Hələ ki, sifarişiniz yoxdur',
+      TranslationKeys.notificationsEmpty: 'Bildiriş yoxdur',
+
       // Order detail
       TranslationKeys.orderDetailTitle: 'Sifariş detalları',
       TranslationKeys.orderDetailOrder: 'Sifariş',

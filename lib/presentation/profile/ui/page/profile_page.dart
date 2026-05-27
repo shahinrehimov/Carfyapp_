@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/widgets/not_logged_view.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
+import 'package:carfy/common/widgets/notification_icon_button.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/profile/state/profile_cubit.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
           appBar: CustomAppBar(
             title: context.localization.mainProfile,
             height: 140,
-            actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(Assets.icons.notification))],
+            actions: [const NotificationIconButton()],
             flexibleSpace: const SafeArea(child: _ProfileFlexibleSpace()),
           ),
           body: const _ProfileBody(),

@@ -22,6 +22,8 @@ import 'package:carfy/data/datasources/category_remote_data_source.dart'
 import 'package:carfy/data/datasources/contact_remote_data_source.dart'
     as _i1057;
 import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
+import 'package:carfy/data/datasources/notification_remote_data_source.dart'
+    as _i49;
 import 'package:carfy/data/datasources/order_remote_data_source.dart' as _i150;
 import 'package:carfy/data/datasources/payment_remote_data_source.dart'
     as _i1047;
@@ -42,6 +44,7 @@ import 'package:carfy/data/mappers/basket_mapper.dart' as _i751;
 import 'package:carfy/data/mappers/car_mapper.dart' as _i407;
 import 'package:carfy/data/mappers/category_mapper.dart' as _i109;
 import 'package:carfy/data/mappers/group_mapper.dart' as _i12;
+import 'package:carfy/data/mappers/notification_mapper.dart' as _i787;
 import 'package:carfy/data/mappers/order_mapper.dart' as _i778;
 import 'package:carfy/data/mappers/payment_mapper.dart' as _i237;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
@@ -54,6 +57,8 @@ import 'package:carfy/data/repositories/car_repository_impl.dart' as _i663;
 import 'package:carfy/data/repositories/category_repository_impl.dart' as _i395;
 import 'package:carfy/data/repositories/contact_repository_impl.dart' as _i1031;
 import 'package:carfy/data/repositories/group_repository_impl.dart' as _i294;
+import 'package:carfy/data/repositories/notification_repository_impl.dart'
+    as _i750;
 import 'package:carfy/data/repositories/order_repository_impl.dart' as _i506;
 import 'package:carfy/data/repositories/payment_repository_impl.dart' as _i390;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
@@ -70,6 +75,8 @@ import 'package:carfy/domain/repositories/car_repository.dart' as _i194;
 import 'package:carfy/domain/repositories/category_repository.dart' as _i557;
 import 'package:carfy/domain/repositories/contact_repository.dart' as _i157;
 import 'package:carfy/domain/repositories/group_repository.dart' as _i1037;
+import 'package:carfy/domain/repositories/notification_repository.dart'
+    as _i765;
 import 'package:carfy/domain/repositories/order_repository.dart' as _i603;
 import 'package:carfy/domain/repositories/payment_repository.dart' as _i504;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
@@ -172,6 +179,16 @@ import 'package:carfy/domain/use_cases/group/get_groups_bulk_use_case.dart'
     as _i863;
 import 'package:carfy/domain/use_cases/group/get_groups_list_use_case.dart'
     as _i321;
+import 'package:carfy/domain/use_cases/notifications/delete_all_notifications_use_case.dart'
+    as _i276;
+import 'package:carfy/domain/use_cases/notifications/delete_notification_use_case.dart'
+    as _i682;
+import 'package:carfy/domain/use_cases/notifications/load_notifications_use_case.dart'
+    as _i532;
+import 'package:carfy/domain/use_cases/notifications/read_all_notifications_use_case.dart'
+    as _i243;
+import 'package:carfy/domain/use_cases/notifications/read_notification_use_case.dart'
+    as _i211;
 import 'package:carfy/domain/use_cases/orders/checkout_use_case.dart' as _i353;
 import 'package:carfy/domain/use_cases/orders/get_checkout_preview_use_case.dart'
     as _i786;
@@ -224,6 +241,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i163.AuthMapper>(() => _i163.AuthMapper());
     gh.factory<_i407.CarMapper>(() => _i407.CarMapper());
     gh.factory<_i109.CategoryMapper>(() => _i109.CategoryMapper());
+    gh.factory<_i787.NotificationMapper>(() => _i787.NotificationMapper());
     gh.factory<_i237.PaymentMapper>(() => _i237.PaymentMapper());
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
@@ -241,6 +259,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i685.WishlistRemoteDataSource>(
       () => _i685.WishlistRemoteDataSourceImpl(),
+    );
+    gh.factory<_i49.NotificationRemoteDataSource>(
+      () => _i49.NotificationRemoteDataSourceImpl(),
     );
     gh.factory<_i713.VersionRemoteDataSource>(
       () => _i713.VersionRemoteDataSourceImpl(),
@@ -325,6 +346,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i157.ContactRepository>(
       () => _i1031.ContactRepositoryImpl(gh<_i1057.ContactRemoteDataSource>()),
+    );
+    gh.factory<_i765.NotificationRepository>(
+      () => _i750.NotificationRepositoryImpl(
+        gh<_i49.NotificationRemoteDataSource>(),
+        gh<_i787.NotificationMapper>(),
+      ),
     );
     gh.factory<_i524.GetActiveAdvertisementsUseCase>(
       () => _i524.GetActiveAdvertisementsUseCase(
@@ -471,6 +498,24 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i321.GetGroupsListUseCase>(
       () => _i321.GetGroupsListUseCase(gh<_i1037.GroupRepository>()),
+    );
+    gh.factory<_i276.DeleteAllNotificationsUseCase>(
+      () => _i276.DeleteAllNotificationsUseCase(
+        gh<_i765.NotificationRepository>(),
+      ),
+    );
+    gh.factory<_i682.DeleteNotificationUseCase>(
+      () => _i682.DeleteNotificationUseCase(gh<_i765.NotificationRepository>()),
+    );
+    gh.factory<_i532.LoadNotificationsUseCase>(
+      () => _i532.LoadNotificationsUseCase(gh<_i765.NotificationRepository>()),
+    );
+    gh.factory<_i243.ReadAllNotificationsUseCase>(
+      () =>
+          _i243.ReadAllNotificationsUseCase(gh<_i765.NotificationRepository>()),
+    );
+    gh.factory<_i211.ReadNotificationUseCase>(
+      () => _i211.ReadNotificationUseCase(gh<_i765.NotificationRepository>()),
     );
     gh.factory<_i450.GetVersionsUseCase>(
       () => _i450.GetVersionsUseCase(gh<_i745.VersionRepository>()),

@@ -111,6 +111,13 @@ class EndpointPaths {
   static const ordersLoad = '/app/orders/load';
   static String orderDetails(int id) => '/app/orders/details/$id';
 
+  // Notification Endpoints
+  static const notificationsLoad = '/app/notifications/load';
+  static String notificationRead(int id) => '/app/notifications/$id/read';
+  static const notificationsReadAll = '/app/notifications/read-all';
+  static String notificationDelete(int id) => '/app/notifications/$id/delete';
+  static const notificationsDeleteAll = '/app/notifications/delete-all';
+
   // Payment Endpoints
   static const paymentMethods = '/app/payment/methods';
 }

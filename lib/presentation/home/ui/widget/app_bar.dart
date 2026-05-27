@@ -34,8 +34,8 @@ class _AppBar extends StatelessWidget {
                   ),
                 ),
                 SvgPicture.asset(Assets.icons.logoWhite),
-                Expanded(
-                  child: Align(alignment: Alignment.centerRight, child: SvgPicture.asset(Assets.icons.notification)),
+                const Expanded(
+                  child: Align(alignment: Alignment.centerRight, child: NotificationIconButton()),
                 ),
               ],
             ),

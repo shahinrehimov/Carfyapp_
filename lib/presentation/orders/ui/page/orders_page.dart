@@ -4,6 +4,9 @@ import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
+import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
+import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/domain/entities/orders/order_summary.dart';
@@ -67,34 +70,28 @@ class _OrdersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        if (notification is ScrollEndNotification &&
-            notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
-          onLoadMore();
-        }
-        return false;
-      },
-      child: RefreshIndicator(
-        onRefresh: onRefresh,
-        child: ListView.separated(
+    return PullToRefreshWrapper(
+      onRefresh: onRefresh,
+      child: PaginationScrollWrapper(
+        onLoadMore: onLoadMore,
+        child: Padding(
           padding: const EdgeInsets.all(16),
-          itemCount: orders.length + (isPaginationLoading ? 1 : 0),
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            if (index == orders.length) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: CircularProgressIndicator(),
+          child: Column(
+            children: [
+              for (int i = 0; i < orders.length; i++) ...[
+                if (i > 0) const SizedBox(height: 12),
+                GestureDetector(
+                  onTap: () => context.pushRoute(OrderDetailRoute(orderId: orders[i].id)),
+                  child: _OrderItem(order: orders[i]),
                 ),
-              );
-            }
-            return GestureDetector(
-              onTap: () => context.pushRoute(OrderDetailRoute(orderId: orders[index].id)),
-              child: _OrderItem(order: orders[index]),
-            );
-          },
+              ],
+              if (isPaginationLoading)
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -105,9 +102,16 @@ class _EmptyOrdersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        context.localization.profileMyOrders,
-        style: TextStyle(fontSize: 18, color: context.theme.colors.black),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(Assets.images.basketNotLogged.path, height: 168),
+          const SizedBox(height: 16),
+          Text(
+            context.localization.ordersEmpty,
+            style: TextStyle(fontSize: 18, color: context.theme.colors.black),
+          ),
+        ],
       ),
     );
   }
