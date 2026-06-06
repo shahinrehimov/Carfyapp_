@@ -118,6 +118,15 @@ class EndpointPaths {
   static String notificationDelete(int id) => '/app/notifications/$id/delete';
   static const notificationsDeleteAll = '/app/notifications/delete-all';
 
+  // Referral Endpoints
+  static const referralMy = '/app/referral/my';
+  static const referralBalance = '/app/referral/balance';
+  static const referralUpdateCode = '/app/referral/update-code';
+  static const referralPerks = '/app/referral/perks';
+  static const referralEarnings = '/app/referral/earnings';
+  static const referralReferrals = '/app/referral/referrals';
+  static const referralWithdrawals = '/app/referral/withdrawals';
+
   // Payment Endpoints
   static const paymentMethods = '/app/payment/methods';
 }

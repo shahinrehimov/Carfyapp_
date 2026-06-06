@@ -42,6 +42,7 @@ import 'package:carfy/presentation/product_detail/ui/page/product_detail_page.da
 import 'package:carfy/presentation/product_list/state/product_list_params_ui.dart';
 import 'package:carfy/presentation/product_list/ui/page/product_list_page.dart';
 import 'package:carfy/presentation/search/ui/page/search_page.dart';
+import 'package:carfy/presentation/referral/ui/page/referral_page.dart';
 import 'package:carfy/presentation/splash/ui/page/splash_page.dart';
 import 'package:carfy/presentation/write_review/ui/page/write_review_page.dart';
 
@@ -88,6 +89,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: ContactUsRoute.page),
     AutoRoute(page: GroupProductsRoute.page),
     AutoRoute(page: NotificationsRoute.page),
+    AutoRoute(page: ReferralRoute.page),
     AutoRoute(page: OrdersRoute.page),
     AutoRoute(page: OrderDetailRoute.page),
     AutoRoute(page: OrderConfirmRoute.page),

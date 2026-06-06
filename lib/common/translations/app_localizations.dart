@@ -486,4 +486,71 @@ class AppLocalizations {
   String get orderDetailDelivery => _tr(TranslationKeys.orderDetailDelivery);
 
   String get copied => _tr(TranslationKeys.copied);
+
+  // Referral
+  String get referralBonuses => _tr(TranslationKeys.referralBonuses);
+
+  String get referralBalanceDetails => _tr(TranslationKeys.referralBalanceDetails);
+
+  String get referralPendingBalance => _tr(TranslationKeys.referralPendingBalance);
+
+  String get referralAvailableBalance => _tr(TranslationKeys.referralAvailableBalance);
+
+  String get referralLifetimeEarned => _tr(TranslationKeys.referralLifetimeEarned);
+
+  String get referralYourCode => _tr(TranslationKeys.referralYourCode);
+
+  String get referralLink => _tr(TranslationKeys.referralLink);
+
+  String get referralTotalReferrals => _tr(TranslationKeys.referralTotalReferrals);
+
+  String get referralActive => _tr(TranslationKeys.referralActive);
+
+  String get referralPending => _tr(TranslationKeys.referralPending);
+
+  String get referralUpdateCode => _tr(TranslationKeys.referralUpdateCode);
+
+  String get referralUpdateCodeHint => _tr(TranslationKeys.referralUpdateCodeHint);
+
+  String get referralUpdateCodeSave => _tr(TranslationKeys.referralUpdateCodeSave);
+
+  String get referralUpdateCodeSuccess => _tr(TranslationKeys.referralUpdateCodeSuccess);
+
+  String get referralUpdateCodeRules => _tr(TranslationKeys.referralUpdateCodeRules);
+
+  String get referralPerks => _tr(TranslationKeys.referralPerks);
+
+  String get referralFreeDelivery => _tr(TranslationKeys.referralFreeDelivery);
+
+  String get referralDiscount => _tr(TranslationKeys.referralDiscount);
+
+  String get referralEarnings => _tr(TranslationKeys.referralEarnings);
+
+  String get referralReferrals => _tr(TranslationKeys.referralReferrals);
+
+  String get referralWithdrawals => _tr(TranslationKeys.referralWithdrawals);
+
+  String get referralEarningsEmpty => _tr(TranslationKeys.referralEarningsEmpty);
+
+  String get referralReferralsEmpty => _tr(TranslationKeys.referralReferralsEmpty);
+
+  String get referralWithdrawalsEmpty => _tr(TranslationKeys.referralWithdrawalsEmpty);
+
+  String get referralOrder => _tr(TranslationKeys.referralOrder);
+
+  String get referralWithdraw => _tr(TranslationKeys.referralWithdraw);
+
+  String get referralMinimumWithdrawal => _tr(TranslationKeys.referralMinimumWithdrawal);
+
+  String get referralWithdrawTitle => _tr(TranslationKeys.referralWithdrawTitle);
+
+  String get referralWithdrawAmount => _tr(TranslationKeys.referralWithdrawAmount);
+
+  String get referralWithdrawCardLast4 => _tr(TranslationKeys.referralWithdrawCardLast4);
+
+  String get referralWithdrawCardHolder => _tr(TranslationKeys.referralWithdrawCardHolder);
+
+  String get referralWithdrawSuccess => _tr(TranslationKeys.referralWithdrawSuccess);
+
+  String get referralWithdrawSubmit => _tr(TranslationKeys.referralWithdrawSubmit);
 }

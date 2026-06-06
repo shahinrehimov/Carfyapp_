@@ -29,6 +29,8 @@ import 'package:carfy/data/datasources/payment_remote_data_source.dart'
     as _i1047;
 import 'package:carfy/data/datasources/product_remote_data_source.dart'
     as _i881;
+import 'package:carfy/data/datasources/referral_remote_data_source.dart'
+    as _i861;
 import 'package:carfy/data/datasources/translation_local_data_source.dart'
     as _i1053;
 import 'package:carfy/data/datasources/translation_remote_data_source.dart'
@@ -48,6 +50,7 @@ import 'package:carfy/data/mappers/notification_mapper.dart' as _i787;
 import 'package:carfy/data/mappers/order_mapper.dart' as _i778;
 import 'package:carfy/data/mappers/payment_mapper.dart' as _i237;
 import 'package:carfy/data/mappers/product_mapper.dart' as _i344;
+import 'package:carfy/data/mappers/referral_mapper.dart' as _i839;
 import 'package:carfy/data/repositories/address_repository_impl.dart' as _i1024;
 import 'package:carfy/data/repositories/advertisement_repository_impl.dart'
     as _i198;
@@ -62,6 +65,7 @@ import 'package:carfy/data/repositories/notification_repository_impl.dart'
 import 'package:carfy/data/repositories/order_repository_impl.dart' as _i506;
 import 'package:carfy/data/repositories/payment_repository_impl.dart' as _i390;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
+import 'package:carfy/data/repositories/referral_repository_impl.dart' as _i655;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
@@ -80,6 +84,7 @@ import 'package:carfy/domain/repositories/notification_repository.dart'
 import 'package:carfy/domain/repositories/order_repository.dart' as _i603;
 import 'package:carfy/domain/repositories/payment_repository.dart' as _i504;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
+import 'package:carfy/domain/repositories/referral_repository.dart' as _i200;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
 import 'package:carfy/domain/repositories/wishlist_repository.dart' as _i54;
@@ -210,6 +215,22 @@ import 'package:carfy/domain/use_cases/product/load_reviews_use_case.dart'
     as _i303;
 import 'package:carfy/domain/use_cases/product/store_review_use_case.dart'
     as _i139;
+import 'package:carfy/domain/use_cases/referral/create_withdrawal_use_case.dart'
+    as _i511;
+import 'package:carfy/domain/use_cases/referral/get_referral_balance_use_case.dart'
+    as _i652;
+import 'package:carfy/domain/use_cases/referral/get_referral_info_use_case.dart'
+    as _i892;
+import 'package:carfy/domain/use_cases/referral/get_referral_perks_use_case.dart'
+    as _i807;
+import 'package:carfy/domain/use_cases/referral/load_referral_earnings_use_case.dart'
+    as _i644;
+import 'package:carfy/domain/use_cases/referral/load_referral_users_use_case.dart'
+    as _i538;
+import 'package:carfy/domain/use_cases/referral/load_referral_withdrawals_use_case.dart'
+    as _i414;
+import 'package:carfy/domain/use_cases/referral/update_referral_code_use_case.dart'
+    as _i247;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
@@ -244,6 +265,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i787.NotificationMapper>(() => _i787.NotificationMapper());
     gh.factory<_i237.PaymentMapper>(() => _i237.PaymentMapper());
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
+    gh.factory<_i839.ReferralMapper>(() => _i839.ReferralMapper());
     gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.factory<_i1057.ContactRemoteDataSource>(
       () => _i1057.ContactRemoteDataSourceImpl(),
@@ -314,6 +336,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i150.OrderRemoteDataSource>(
       () => _i150.OrderRemoteDataSourceImpl(),
     );
+    gh.factory<_i861.ReferralRemoteDataSource>(
+      () => _i861.ReferralRemoteDataSourceImpl(),
+    );
     gh.factory<_i387.TranslationRemoteDataSource>(
       () => _i387.TranslationRemoteDataSourceImpl(),
     );
@@ -347,6 +372,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i157.ContactRepository>(
       () => _i1031.ContactRepositoryImpl(gh<_i1057.ContactRemoteDataSource>()),
     );
+    gh.factory<_i200.ReferralRepository>(
+      () => _i655.ReferralRepositoryImpl(
+        gh<_i861.ReferralRemoteDataSource>(),
+        gh<_i839.ReferralMapper>(),
+      ),
+    );
     gh.factory<_i765.NotificationRepository>(
       () => _i750.NotificationRepositoryImpl(
         gh<_i49.NotificationRemoteDataSource>(),
@@ -360,6 +391,31 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i135.GetPaymentMethodsUseCase>(
       () => _i135.GetPaymentMethodsUseCase(gh<_i504.PaymentRepository>()),
+    );
+    gh.factory<_i511.CreateWithdrawalUseCase>(
+      () => _i511.CreateWithdrawalUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i652.GetReferralBalanceUseCase>(
+      () => _i652.GetReferralBalanceUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i892.GetReferralInfoUseCase>(
+      () => _i892.GetReferralInfoUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i807.GetReferralPerksUseCase>(
+      () => _i807.GetReferralPerksUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i644.LoadReferralEarningsUseCase>(
+      () => _i644.LoadReferralEarningsUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i538.LoadReferralUsersUseCase>(
+      () => _i538.LoadReferralUsersUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i414.LoadReferralWithdrawalsUseCase>(
+      () =>
+          _i414.LoadReferralWithdrawalsUseCase(gh<_i200.ReferralRepository>()),
+    );
+    gh.factory<_i247.UpdateReferralCodeUseCase>(
+      () => _i247.UpdateReferralCodeUseCase(gh<_i200.ReferralRepository>()),
     );
     gh.factory<_i745.VersionRepository>(
       () => _i235.VersionRepositoryImpl(gh<_i713.VersionRemoteDataSource>()),

@@ -1025,6 +1025,22 @@ class ProfileUpdateRouteArgs {
 }
 
 /// generated route for
+/// [ReferralPage]
+class ReferralRoute extends PageRouteInfo<void> {
+  const ReferralRoute({List<PageRouteInfo>? children})
+    : super(ReferralRoute.name, initialChildren: children);
+
+  static const String name = 'ReferralRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const ReferralPage());
+    },
+  );
+}
+
+/// generated route for
 /// [RegisterPage]
 class RegisterRoute extends PageRouteInfo<void> {
   const RegisterRoute({List<PageRouteInfo>? children})

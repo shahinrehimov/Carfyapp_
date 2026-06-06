@@ -29,6 +29,22 @@ class PaginationResponseModel<T> {
     );
   }
 
+  factory PaginationResponseModel.fromFlatJson(
+    Map<String, dynamic> json,
+    T Function(Map<String, dynamic>) fromJsonT,
+  ) {
+    return PaginationResponseModel(
+      data: (json['data'] as List<dynamic>)
+          .map((item) => fromJsonT(item as Map<String, dynamic>))
+          .toList(),
+      currentPage: json['current_page'] as int,
+      lastPage: json['last_page'] as int,
+      total: json['total'] as int,
+      perPage: json['per_page'] as int,
+    );
+  }
+
   bool get hasNextPage => currentPage < lastPage;
+
   bool get hasPreviousPage => currentPage > 1;
 }

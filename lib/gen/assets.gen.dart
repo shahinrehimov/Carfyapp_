@@ -29,6 +29,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-right-circle.svg
   String get arrowRightCircle => 'assets/icons/arrow-right-circle.svg';
 
+  /// File path: assets/icons/bonus-bg-left.svg
+  String get bonusBgLeft => 'assets/icons/bonus-bg-left.svg';
+
+  /// File path: assets/icons/bonus-bg-right.svg
+  String get bonusBgRight => 'assets/icons/bonus-bg-right.svg';
+
   /// File path: assets/icons/box.svg
   String get box => 'assets/icons/box.svg';
 
@@ -156,6 +162,8 @@ class $AssetsIconsGen {
     arrowLeftCircle,
     arrowNarrowLeft,
     arrowRightCircle,
+    bonusBgLeft,
+    bonusBgRight,
     box,
     calendar,
     call,

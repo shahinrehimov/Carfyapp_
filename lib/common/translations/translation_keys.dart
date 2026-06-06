@@ -261,4 +261,39 @@ class TranslationKeys {
   static const String orderDetailOrder = 'order_detail_order';
   static const String orderDetailDelivery = 'order_detail_delivery';
   static const String copied = 'copied';
+
+  // Referral
+  static const String referralBonuses = 'referral_bonuses';
+  static const String referralBalanceDetails = 'referral_balance_details';
+  static const String referralPendingBalance = 'referral_pending_balance';
+  static const String referralAvailableBalance = 'referral_available_balance';
+  static const String referralLifetimeEarned = 'referral_lifetime_earned';
+  static const String referralYourCode = 'referral_your_code';
+  static const String referralLink = 'referral_link';
+  static const String referralTotalReferrals = 'referral_total_referrals';
+  static const String referralActive = 'referral_active';
+  static const String referralPending = 'referral_pending';
+  static const String referralUpdateCode = 'referral_update_code';
+  static const String referralUpdateCodeHint = 'referral_update_code_hint';
+  static const String referralUpdateCodeSave = 'referral_update_code_save';
+  static const String referralUpdateCodeSuccess = 'referral_update_code_success';
+  static const String referralUpdateCodeRules = 'referral_update_code_rules';
+  static const String referralPerks = 'referral_perks';
+  static const String referralFreeDelivery = 'referral_free_delivery';
+  static const String referralDiscount = 'referral_discount';
+  static const String referralEarnings = 'referral_earnings';
+  static const String referralReferrals = 'referral_referrals';
+  static const String referralWithdrawals = 'referral_withdrawals';
+  static const String referralEarningsEmpty = 'referral_earnings_empty';
+  static const String referralReferralsEmpty = 'referral_referrals_empty';
+  static const String referralWithdrawalsEmpty = 'referral_withdrawals_empty';
+  static const String referralOrder = 'referral_order';
+  static const String referralWithdraw = 'referral_withdraw';
+  static const String referralMinimumWithdrawal = 'referral_minimum_withdrawal';
+  static const String referralWithdrawTitle = 'referral_withdraw_title';
+  static const String referralWithdrawAmount = 'referral_withdraw_amount';
+  static const String referralWithdrawCardLast4 = 'referral_withdraw_card_last4';
+  static const String referralWithdrawCardHolder = 'referral_withdraw_card_holder';
+  static const String referralWithdrawSuccess = 'referral_withdraw_success';
+  static const String referralWithdrawSubmit = 'referral_withdraw_submit';
 }

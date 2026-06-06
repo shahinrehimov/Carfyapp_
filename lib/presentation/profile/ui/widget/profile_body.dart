@@ -43,7 +43,7 @@ class _ProfileBody extends StatelessWidget {
                 child: _ProfileMenuCard(
                   label: context.localization.profileReferrals,
                   icon: Assets.icons.saleSquare,
-                  onTap: () {},
+                  onTap: () => context.pushRoute(const ReferralRoute()),
                 ),
               ),
             ],
