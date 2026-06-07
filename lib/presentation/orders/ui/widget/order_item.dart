@@ -86,12 +86,12 @@ class _StatusBadge extends StatelessWidget {
 
   (Color, Color) _getStatusColors(String status, BuildContext context) {
     return switch (status) {
-      'pending' => (const Color(0xFFFFF3E0), const Color(0xFFFF9800)),
-      'processing' => (const Color(0xFFE3F2FD), const Color(0xFF2196F3)),
-      'completed' ||
+      'pending' || 'payment_pending' => (const Color(0xFFFFF3E0), const Color(0xFFFF9800)),
+      'processing' || 'confirmed' => (const Color(0xFFE3F2FD), const Color(0xFF2196F3)),
+      'shipped' || 'courier_assigned' => (const Color(0xFFE8EAF6), const Color(0xFF3F51B5)),
       'delivered' => (const Color(0xFFE8F5E9), const Color(0xFF4CAF50)),
-      'cancelled' ||
-      'failed' => (const Color(0xFFFFEBEE), const Color(0xFFF44336)),
+      'canceled' || 'failed' => (const Color(0xFFFFEBEE), const Color(0xFFF44336)),
+      'returned' => (const Color(0xFFFCE4EC), const Color(0xFFE91E63)),
       _ => (const Color(0xFFF5F5F5), const Color(0xFF757575)),
     };
   }
