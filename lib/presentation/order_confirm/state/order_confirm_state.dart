@@ -1,7 +1,6 @@
 part of 'order_confirm_cubit.dart';
 
 class OrderConfirmState extends Equatable {
-  final List<BasketProduct> basketItems;
   final StateStatus addressesStatus;
   final List<Address> addresses;
   final Address? selectedAddress;
@@ -15,7 +14,6 @@ class OrderConfirmState extends Equatable {
   final CheckoutResult? checkoutResult;
 
   const OrderConfirmState({
-    this.basketItems = const [],
     required this.addressesStatus,
     this.addresses = const [],
     this.selectedAddress,
@@ -29,8 +27,7 @@ class OrderConfirmState extends Equatable {
     this.checkoutResult,
   });
 
-  factory OrderConfirmState.initial({List<BasketProduct> basketItems = const []}) => OrderConfirmState(
-        basketItems: basketItems,
+  factory OrderConfirmState.initial() => OrderConfirmState(
         addressesStatus: StateStatus.initial(),
         paymentMethodsStatus: StateStatus.initial(),
         previewStatus: StateStatus.initial(),
@@ -38,7 +35,6 @@ class OrderConfirmState extends Equatable {
       );
 
   OrderConfirmState copyWith({
-    List<BasketProduct>? basketItems,
     StateStatus? addressesStatus,
     List<Address>? addresses,
     Address? selectedAddress,
@@ -52,7 +48,6 @@ class OrderConfirmState extends Equatable {
     CheckoutResult? checkoutResult,
   }) {
     return OrderConfirmState(
-      basketItems: basketItems ?? this.basketItems,
       addressesStatus: addressesStatus ?? this.addressesStatus,
       addresses: addresses ?? this.addresses,
       selectedAddress: selectedAddress ?? this.selectedAddress,
@@ -69,7 +64,6 @@ class OrderConfirmState extends Equatable {
 
   @override
   List<Object?> get props => [
-        basketItems,
         addressesStatus,
         addresses,
         selectedAddress,

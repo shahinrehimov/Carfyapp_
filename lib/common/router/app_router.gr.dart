@@ -590,55 +590,18 @@ class NotificationsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OrderConfirmPage]
-class OrderConfirmRoute extends PageRouteInfo<OrderConfirmRouteArgs> {
-  OrderConfirmRoute({
-    Key? key,
-    List<BasketProduct> items = const [],
-    List<PageRouteInfo>? children,
-  }) : super(
-         OrderConfirmRoute.name,
-         args: OrderConfirmRouteArgs(key: key, items: items),
-         initialChildren: children,
-       );
+class OrderConfirmRoute extends PageRouteInfo<void> {
+  const OrderConfirmRoute({List<PageRouteInfo>? children})
+    : super(OrderConfirmRoute.name, initialChildren: children);
 
   static const String name = 'OrderConfirmRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<OrderConfirmRouteArgs>(
-        orElse: () => const OrderConfirmRouteArgs(),
-      );
-      return WrappedRoute(
-        child: OrderConfirmPage(key: args.key, items: args.items),
-      );
+      return WrappedRoute(child: const OrderConfirmPage());
     },
   );
-}
-
-class OrderConfirmRouteArgs {
-  const OrderConfirmRouteArgs({this.key, this.items = const []});
-
-  final Key? key;
-
-  final List<BasketProduct> items;
-
-  @override
-  String toString() {
-    return 'OrderConfirmRouteArgs{key: $key, items: $items}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! OrderConfirmRouteArgs) return false;
-    return key == other.key &&
-        const ListEquality<BasketProduct>().equals(items, other.items);
-  }
-
-  @override
-  int get hashCode =>
-      key.hashCode ^ const ListEquality<BasketProduct>().hash(items);
 }
 
 /// generated route for

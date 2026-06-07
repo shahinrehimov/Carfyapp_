@@ -34,7 +34,7 @@ class BasketItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadiusGeometry.circular(8),
             child: CachedNetworkImage(
-              imageUrl: basketProduct.product.product.hoverImage!,
+              imageUrl: basketProduct.product.hoverImage!,
               height: 104,
               width: 104,
               fit: BoxFit.cover,

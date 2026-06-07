@@ -25,14 +25,22 @@ class CheckoutPreviewSellerModel {
   final String storeCode;
   final List<CheckoutPreviewItemModel> items;
   final double subtotal;
+  final bool weightWarning;
   final double shipping;
+  final int shippingEtaMinutes;
+  final bool shippingIsEstimate;
+  final bool isSedan;
 
   CheckoutPreviewSellerModel({
     required this.companyId,
     required this.storeCode,
     required this.items,
     required this.subtotal,
+    required this.weightWarning,
     required this.shipping,
+    required this.shippingEtaMinutes,
+    required this.shippingIsEstimate,
+    required this.isSedan,
   });
 
   factory CheckoutPreviewSellerModel.fromJson(Map<String, dynamic> json) {
@@ -43,7 +51,52 @@ class CheckoutPreviewSellerModel {
           .map((e) => CheckoutPreviewItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       subtotal: (json['subtotal'] as num).toDouble(),
+      weightWarning: json['weight_warning'] as bool,
       shipping: (json['shipping'] as num).toDouble(),
+      shippingEtaMinutes: json['shipping_eta_minutes'] as int,
+      shippingIsEstimate: json['shipping_is_estimate'] as bool,
+      isSedan: json['is_sedan'] as bool,
+    );
+  }
+}
+
+class CheckoutPreviewReferralModel {
+  final bool freeDeliveryApplied;
+  final bool discountApplied;
+  final double discountAmount;
+  final double subtotalAfterDiscount;
+  final double shippingAfterPerk;
+  final double grandTotalAfterPerks;
+  final bool canUseBalance;
+  final double availableBalance;
+  final int freeDeliveryRemaining;
+  final int discountOrdersRemaining;
+
+  CheckoutPreviewReferralModel({
+    required this.freeDeliveryApplied,
+    required this.discountApplied,
+    required this.discountAmount,
+    required this.subtotalAfterDiscount,
+    required this.shippingAfterPerk,
+    required this.grandTotalAfterPerks,
+    required this.canUseBalance,
+    required this.availableBalance,
+    required this.freeDeliveryRemaining,
+    required this.discountOrdersRemaining,
+  });
+
+  factory CheckoutPreviewReferralModel.fromJson(Map<String, dynamic> json) {
+    return CheckoutPreviewReferralModel(
+      freeDeliveryApplied: json['free_delivery_applied'] as bool,
+      discountApplied: json['discount_applied'] as bool,
+      discountAmount: (json['discount_amount'] as num).toDouble(),
+      subtotalAfterDiscount: (json['subtotal_after_discount'] as num).toDouble(),
+      shippingAfterPerk: (json['shipping_after_perk'] as num).toDouble(),
+      grandTotalAfterPerks: (json['grand_total_after_perks'] as num).toDouble(),
+      canUseBalance: json['can_use_balance'] as bool,
+      availableBalance: (json['available_balance'] as num).toDouble(),
+      freeDeliveryRemaining: json['free_delivery_remaining'] as int,
+      discountOrdersRemaining: json['discount_orders_remaining'] as int,
     );
   }
 }
@@ -53,12 +106,14 @@ class CheckoutPreviewModel {
   final double subtotal;
   final double totalShipping;
   final double grandTotal;
+  final CheckoutPreviewReferralModel? referral;
 
   CheckoutPreviewModel({
     required this.sellers,
     required this.subtotal,
     required this.totalShipping,
     required this.grandTotal,
+    this.referral,
   });
 
   factory CheckoutPreviewModel.fromJson(Map<String, dynamic> json) {
@@ -69,6 +124,9 @@ class CheckoutPreviewModel {
       subtotal: (json['subtotal'] as num).toDouble(),
       totalShipping: (json['total_shipping'] as num).toDouble(),
       grandTotal: (json['grand_total'] as num).toDouble(),
+      referral: json['referral'] != null
+          ? CheckoutPreviewReferralModel.fromJson(json['referral'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

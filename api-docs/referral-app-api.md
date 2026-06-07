@@ -84,32 +84,6 @@ Aşağıdakılar **frontend müdaxiləsi olmadan** otomatik tətbiq olunur:
 }
 ```
 
-
----
-
-### `POST /referral/withdrawals`
-Yeni withdrawal request yarat.
-
-**Body:**
-```json
-{
-  "amount": 50,
-  "card_last4": "1234",
-  "card_holder_name": "ANAR ALIYEV"
-}
-```
-
-**Qaydalar:**
-- Minimum **50 AZN** `available_balance` olmalıdır
-- `amount` ≤ `available_balance`
-- `amount` ≥ 50 AZN
-- Fee admin tərəfindən konfiqurasiya edilir (default 2%), net_amount = amount − fee
-
-**Xəta cavabı (422):**
-```json
-{ "message": "Minimum withdrawal amount is 50 AZN" }
-```
-
 ## Status / Enum dəyərləri
 
 ### Earning status

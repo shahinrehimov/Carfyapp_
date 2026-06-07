@@ -292,6 +292,9 @@ class TranslationDefaults {
       TranslationKeys.referralWithdrawCardHolder: 'Kart sahibinin adı',
       TranslationKeys.referralWithdrawSuccess: 'Çıxarış sorğusu uğurla göndərildi',
       TranslationKeys.referralWithdrawSubmit: 'Göndər',
+      TranslationKeys.orderSummary: 'Sifariş xülasəsi',
+      TranslationKeys.shippingLabel: 'Çatdırılma',
+      TranslationKeys.shippingMinutes: 'dəqiqə',
     },
   };
 }

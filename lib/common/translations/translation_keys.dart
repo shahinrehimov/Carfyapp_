@@ -296,4 +296,7 @@ class TranslationKeys {
   static const String referralWithdrawCardHolder = 'referral_withdraw_card_holder';
   static const String referralWithdrawSuccess = 'referral_withdraw_success';
   static const String referralWithdrawSubmit = 'referral_withdraw_submit';
+  static const String orderSummary = 'order_summary';
+  static const String shippingLabel = 'shipping_label';
+  static const String shippingMinutes = 'shipping_minutes';
 }

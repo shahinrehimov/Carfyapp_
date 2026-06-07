@@ -553,4 +553,10 @@ class AppLocalizations {
   String get referralWithdrawSuccess => _tr(TranslationKeys.referralWithdrawSuccess);
 
   String get referralWithdrawSubmit => _tr(TranslationKeys.referralWithdrawSubmit);
+
+  String get orderSummary => _tr(TranslationKeys.orderSummary);
+
+  String get shippingLabel => _tr(TranslationKeys.shippingLabel);
+
+  String get shippingMinutes => _tr(TranslationKeys.shippingMinutes);
 }

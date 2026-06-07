@@ -32,14 +32,35 @@ class OrderMapper {
         storeCode: model.storeCode,
         items: model.items.map(mapItem).toList(),
         subtotal: model.subtotal,
+        weightWarning: model.weightWarning,
         shipping: model.shipping,
+        shippingEtaMinutes: model.shippingEtaMinutes,
+        shippingIsEstimate: model.shippingIsEstimate,
+        isSedan: model.isSedan,
       );
+
+  CheckoutPreviewReferral? _mapReferral(CheckoutPreviewReferralModel? model) {
+    if (model == null) return null;
+    return CheckoutPreviewReferral(
+      freeDeliveryApplied: model.freeDeliveryApplied,
+      discountApplied: model.discountApplied,
+      discountAmount: model.discountAmount,
+      subtotalAfterDiscount: model.subtotalAfterDiscount,
+      shippingAfterPerk: model.shippingAfterPerk,
+      grandTotalAfterPerks: model.grandTotalAfterPerks,
+      canUseBalance: model.canUseBalance,
+      availableBalance: model.availableBalance,
+      freeDeliveryRemaining: model.freeDeliveryRemaining,
+      discountOrdersRemaining: model.discountOrdersRemaining,
+    );
+  }
 
   CheckoutPreview mapCheckoutPreview(CheckoutPreviewModel model) => CheckoutPreview(
         sellers: model.sellers.map(mapSeller).toList(),
         subtotal: model.subtotal,
         totalShipping: model.totalShipping,
         grandTotal: model.grandTotal,
+        referral: _mapReferral(model.referral),
       );
 
   OrderSummary mapOrderSummary(OrderSummaryModel model) => OrderSummary(

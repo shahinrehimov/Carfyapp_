@@ -2,7 +2,6 @@ import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/address/address.dart';
-import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/domain/entities/orders/checkout_preview.dart';
 import 'package:carfy/domain/entities/orders/checkout_result.dart';
 import 'package:carfy/domain/entities/payment/payment_method.dart';
@@ -23,7 +22,6 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
   final CheckoutUseCase _checkoutUseCase;
 
   OrderConfirmCubit({
-    List<BasketProduct> basketItems = const [],
     GetCheckoutPreviewUseCase? getCheckoutPreviewUseCase,
     GetPaymentMethodsUseCase? getPaymentMethodsUseCase,
     GetAddressesUseCase? getAddressesUseCase,
@@ -32,7 +30,7 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
         _getPaymentMethodsUseCase = getPaymentMethodsUseCase ?? getIt<GetPaymentMethodsUseCase>(),
         _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
         _checkoutUseCase = checkoutUseCase ?? getIt<CheckoutUseCase>(),
-        super(OrderConfirmState.initial(basketItems: basketItems));
+        super(OrderConfirmState.initial());
 
   Future<void> load() async {
     emit(state.copyWith(
