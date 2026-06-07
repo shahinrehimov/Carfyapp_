@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
@@ -25,6 +26,7 @@ class ReferralPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.theme.colors.bg,
       appBar: CustomAppBarWhite(title: context.localization.profileReferrals),
       body: PaginationScrollWrapper(
         onLoadMore: () => context.read<ReferralCubit>().loadMoreCurrentTab(),

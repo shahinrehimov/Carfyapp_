@@ -17,7 +17,7 @@ class BalanceDetails extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFFBFBFB),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFEEEEEE)),
+        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
