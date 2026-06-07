@@ -140,6 +140,21 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     );
   }
 
+  void setTabIndex(int index) {
+    emit(state.copyWith(currentTabIndex: index));
+  }
+
+  void loadMoreCurrentTab() {
+    switch (state.currentTabIndex) {
+      case 0:
+        loadEarnings();
+      case 1:
+        loadReferrals();
+      case 2:
+        loadWithdrawals();
+    }
+  }
+
   Future<void> updateCode(String code) async {
     emit(state.copyWith(updateCodeStatus: StateStatus.loading()));
     final result = await _updateReferralCodeUseCase(code);

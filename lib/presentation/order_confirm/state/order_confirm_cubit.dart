@@ -57,8 +57,11 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
           addressesStatus: StateStatus.success(),
           addresses: addresses,
           selectedAddress: primary,
+          previewStatus: primary == null ? StateStatus.initial() : null,
         ));
-        if (primary != null) _loadPreview(primary.id);
+        if (primary != null) {
+          _loadPreview(primary.id);
+        }
       },
     );
   }
@@ -98,6 +101,10 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
     emit(state.copyWith(note: note));
   }
 
+  void toggleUseReferralBalance(bool value) {
+    emit(state.copyWith(useReferralBalance: value));
+  }
+
   Future<void> checkout() async {
     final address = state.selectedAddress;
     final method = state.selectedPaymentMethod;
@@ -110,6 +117,7 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
         paymentMethod: method.value,
         addressId: address.id,
         note: state.note.trim().isEmpty ? null : state.note.trim(),
+        useReferralBalance: state.useReferralBalance,
       ),
     );
 

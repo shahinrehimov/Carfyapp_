@@ -10,6 +10,7 @@ class OrderConfirmState extends Equatable {
   final String note;
   final StateStatus previewStatus;
   final CheckoutPreview? preview;
+  final bool useReferralBalance;
   final StateStatus checkoutStatus;
   final CheckoutResult? checkoutResult;
 
@@ -21,6 +22,7 @@ class OrderConfirmState extends Equatable {
     this.paymentMethods = const [],
     this.selectedPaymentMethod,
     this.note = '',
+    this.useReferralBalance = false,
     required this.previewStatus,
     this.preview,
     required this.checkoutStatus,
@@ -42,6 +44,7 @@ class OrderConfirmState extends Equatable {
     List<PaymentMethod>? paymentMethods,
     PaymentMethod? selectedPaymentMethod,
     String? note,
+    bool? useReferralBalance,
     StateStatus? previewStatus,
     CheckoutPreview? preview,
     StateStatus? checkoutStatus,
@@ -55,6 +58,7 @@ class OrderConfirmState extends Equatable {
       paymentMethods: paymentMethods ?? this.paymentMethods,
       selectedPaymentMethod: selectedPaymentMethod ?? this.selectedPaymentMethod,
       note: note ?? this.note,
+      useReferralBalance: useReferralBalance ?? this.useReferralBalance,
       previewStatus: previewStatus ?? this.previewStatus,
       preview: preview ?? this.preview,
       checkoutStatus: checkoutStatus ?? this.checkoutStatus,
@@ -71,6 +75,7 @@ class OrderConfirmState extends Equatable {
         paymentMethods,
         selectedPaymentMethod,
         note,
+        useReferralBalance,
         previewStatus,
         preview,
         checkoutStatus,

@@ -1,3 +1,5 @@
+import 'package:carfy/domain/enums/withdrawal_status.dart';
+
 class ReferralWithdrawal {
   final int id;
   final double amount;
@@ -5,7 +7,7 @@ class ReferralWithdrawal {
   final double netAmount;
   final String cardLast4;
   final String cardHolderName;
-  final String status;
+  final WithdrawalStatus status;
   final String? adminNote;
   final String requestedAt;
   final String? processedAt;

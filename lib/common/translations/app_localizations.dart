@@ -559,4 +559,40 @@ class AppLocalizations {
   String get shippingLabel => _tr(TranslationKeys.shippingLabel);
 
   String get shippingMinutes => _tr(TranslationKeys.shippingMinutes);
+
+  String get earningStatusPending => _tr(TranslationKeys.earningStatusPending);
+
+  String get earningStatusAvailable => _tr(TranslationKeys.earningStatusAvailable);
+
+  String get earningStatusRefunded => _tr(TranslationKeys.earningStatusRefunded);
+
+  String get earningStatusCancelled => _tr(TranslationKeys.earningStatusCancelled);
+
+  String get earningStatusFraudHold => _tr(TranslationKeys.earningStatusFraudHold);
+
+  String get earningStatusPendingDescription => _tr(TranslationKeys.earningStatusPendingDescription);
+
+  String get earningStatusFraudHoldDescription => _tr(TranslationKeys.earningStatusFraudHoldDescription);
+
+  String get attributionStatusPending => _tr(TranslationKeys.attributionStatusPending);
+
+  String get attributionStatusActive => _tr(TranslationKeys.attributionStatusActive);
+
+  String get attributionStatusFraudBlocked => _tr(TranslationKeys.attributionStatusFraudBlocked);
+
+  String get withdrawalStatusPending => _tr(TranslationKeys.withdrawalStatusPending);
+
+  String get withdrawalStatusApproved => _tr(TranslationKeys.withdrawalStatusApproved);
+
+  String get withdrawalStatusPaid => _tr(TranslationKeys.withdrawalStatusPaid);
+
+  String get withdrawalStatusRejected => _tr(TranslationKeys.withdrawalStatusRejected);
+
+  String get freeDeliveryApplied => _tr(TranslationKeys.freeDeliveryApplied);
+
+  String get referralDiscountApplied => _tr(TranslationKeys.referralDiscountApplied);
+
+  String get useReferralBalance => _tr(TranslationKeys.useReferralBalance);
+
+  String get freeLabel => _tr(TranslationKeys.freeLabel);
 }

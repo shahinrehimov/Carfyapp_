@@ -1,6 +1,9 @@
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
+import 'package:carfy/domain/enums/attribution_status.dart';
+import 'package:carfy/domain/enums/earning_status.dart';
+import 'package:carfy/domain/enums/withdrawal_status.dart';
 import 'package:carfy/domain/entities/referral/referral_earning.dart';
 import 'package:carfy/domain/entities/referral/referral_user.dart';
 import 'package:carfy/domain/entities/referral/referral_withdrawal.dart';
@@ -16,7 +19,8 @@ class ReferralListsTab extends StatefulWidget {
   State<ReferralListsTab> createState() => _ReferralListsTabState();
 }
 
-class _ReferralListsTabState extends State<ReferralListsTab> with SingleTickerProviderStateMixin {
+class _ReferralListsTabState extends State<ReferralListsTab>
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   final _loadedTabs = <int>{};
 
@@ -37,7 +41,9 @@ class _ReferralListsTabState extends State<ReferralListsTab> with SingleTickerPr
 
   void _onTabChanged() {
     if (!_tabController.indexIsChanging) {
-      _loadTab(_tabController.index);
+      final index = _tabController.index;
+      context.read<ReferralCubit>().setTabIndex(index);
+      _loadTab(index);
     }
   }
 
@@ -72,11 +78,25 @@ class _ReferralListsTabState extends State<ReferralListsTab> with SingleTickerPr
             indicator: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 4, offset: Offset(0, 1))],
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x14000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 1),
+                ),
+              ],
             ),
             dividerColor: Colors.transparent,
-            labelStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
-            unselectedLabelStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
+            labelStyle: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: context.theme.colors.primary,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF717171),
+            ),
             splashBorderRadius: BorderRadius.circular(10),
             tabs: [
               Tab(text: context.localization.referralEarnings, height: 36),
@@ -86,24 +106,29 @@ class _ReferralListsTabState extends State<ReferralListsTab> with SingleTickerPr
           ),
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 400,
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _EarningsTab(),
-              _ReferralsTab(),
-              _WithdrawalsTab(),
-            ],
-          ),
+        AnimatedBuilder(
+          animation: _tabController,
+          builder: (context, _) => switch (_tabController.index) {
+            0 => _EarningsTab(),
+            1 => _ReferralsTab(),
+            2 => _WithdrawalsTab(),
+            _ => const SizedBox.shrink(),
+          },
         ),
       ],
     );
   }
 }
 
-const _loader = Center(child: CupertinoActivityIndicator());
-const _paginationLoader = Center(child: Padding(padding: EdgeInsets.all(16), child: CupertinoActivityIndicator()));
+const _loader = Center(
+  child: SizedBox(height: 200, child: CupertinoActivityIndicator()),
+);
+const _paginationLoader = Center(
+  child: Padding(
+    padding: EdgeInsets.all(16),
+    child: CupertinoActivityIndicator(),
+  ),
+);
 
 bool _isLoadingOrInitial(StateStatus status) =>
     status is StateStatusLoading || status is StateStatusInitial;
@@ -114,7 +139,9 @@ class _EarningsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
-      buildWhen: (prev, curr) => prev.earningsStatus != curr.earningsStatus || prev.earnings != curr.earnings,
+      buildWhen: (prev, curr) =>
+          prev.earningsStatus != curr.earningsStatus ||
+          prev.earnings != curr.earnings,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.earningsStatus)) return _loader;
         if (state.earningsStatus is StateStatusEmpty) {
@@ -125,22 +152,18 @@ class _EarningsTab extends StatelessWidget {
             ),
           );
         }
-        return NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is ScrollEndNotification && notification.metrics.extentAfter < 20) {
-              context.read<ReferralCubit>().loadEarnings();
-            }
-            return false;
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount:
+              state.earnings.length +
+              (state.earningsStatus is StateStatusPaginationLoading ? 1 : 0),
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, index) {
+            if (index == state.earnings.length) return _paginationLoader;
+            return _EarningItem(earning: state.earnings[index]);
           },
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: state.earnings.length + (state.earningsStatus is StateStatusPaginationLoading ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              if (index == state.earnings.length) return _paginationLoader;
-              return _EarningItem(earning: state.earnings[index]);
-            },
-          ),
         );
       },
     );
@@ -168,13 +191,20 @@ class _EarningItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${context.localization.referralOrder}: ${earning.orderUuid.substring(0, 8)}...',
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
+                  '${earning.orderAmount.toStringAsFixed(2)} ₼',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF242323),
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${earning.rate} · ${earning.tier}',
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF717171)),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF717171),
+                  ),
                 ),
               ],
             ),
@@ -184,10 +214,14 @@ class _EarningItem extends StatelessWidget {
             children: [
               Text(
                 '+${earning.amount.toStringAsFixed(2)} ₼',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF4CAF50)),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF4CAF50),
+                ),
               ),
               const SizedBox(height: 4),
-              _StatusBadge(status: earning.status),
+              _EarningStatusBadge(status: earning.status),
             ],
           ),
         ],
@@ -202,7 +236,9 @@ class _ReferralsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
-      buildWhen: (prev, curr) => prev.referralsStatus != curr.referralsStatus || prev.referrals != curr.referrals,
+      buildWhen: (prev, curr) =>
+          prev.referralsStatus != curr.referralsStatus ||
+          prev.referrals != curr.referrals,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.referralsStatus)) return _loader;
         if (state.referralsStatus is StateStatusEmpty) {
@@ -213,22 +249,18 @@ class _ReferralsTab extends StatelessWidget {
             ),
           );
         }
-        return NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is ScrollEndNotification && notification.metrics.extentAfter < 20) {
-              context.read<ReferralCubit>().loadReferrals();
-            }
-            return false;
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount:
+              state.referrals.length +
+              (state.referralsStatus is StateStatusPaginationLoading ? 1 : 0),
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, index) {
+            if (index == state.referrals.length) return _paginationLoader;
+            return _ReferralUserItem(user: state.referrals[index]);
           },
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: state.referrals.length + (state.referralsStatus is StateStatusPaginationLoading ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              if (index == state.referrals.length) return _paginationLoader;
-              return _ReferralUserItem(user: state.referrals[index]);
-            },
-          ),
         );
       },
     );
@@ -258,7 +290,11 @@ class _ReferralUserItem extends StatelessWidget {
               color: const Color(0xFF3696E7).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.person_outline, size: 20, color: Color(0xFF3696E7)),
+            child: const Icon(
+              Icons.person_outline,
+              size: 20,
+              color: Color(0xFF3696E7),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -267,17 +303,24 @@ class _ReferralUserItem extends StatelessWidget {
               children: [
                 Text(
                   user.referredName,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF242323),
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   user.joinedAt.substring(0, 10),
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF717171)),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF717171),
+                  ),
                 ),
               ],
             ),
           ),
-          _StatusBadge(status: user.status),
+          _AttributionStatusBadge(status: user.status),
         ],
       ),
     );
@@ -291,7 +334,8 @@ class _WithdrawalsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
       buildWhen: (prev, curr) =>
-          prev.withdrawalsStatus != curr.withdrawalsStatus || prev.withdrawals != curr.withdrawals,
+          prev.withdrawalsStatus != curr.withdrawalsStatus ||
+          prev.withdrawals != curr.withdrawals,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.withdrawalsStatus)) return _loader;
         if (state.withdrawalsStatus is StateStatusEmpty) {
@@ -302,22 +346,18 @@ class _WithdrawalsTab extends StatelessWidget {
             ),
           );
         }
-        return NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is ScrollEndNotification && notification.metrics.extentAfter < 20) {
-              context.read<ReferralCubit>().loadWithdrawals();
-            }
-            return false;
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount:
+              state.withdrawals.length +
+              (state.withdrawalsStatus is StateStatusPaginationLoading ? 1 : 0),
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, index) {
+            if (index == state.withdrawals.length) return _paginationLoader;
+            return _WithdrawalItem(withdrawal: state.withdrawals[index]);
           },
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: state.withdrawals.length + (state.withdrawalsStatus is StateStatusPaginationLoading ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              if (index == state.withdrawals.length) return _paginationLoader;
-              return _WithdrawalItem(withdrawal: state.withdrawals[index]);
-            },
-          ),
         );
       },
     );
@@ -346,12 +386,19 @@ class _WithdrawalItem extends StatelessWidget {
               children: [
                 Text(
                   '**** ${withdrawal.cardLast4}',
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF242323),
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   withdrawal.requestedAt.substring(0, 10),
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF717171)),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF717171),
+                  ),
                 ),
               ],
             ),
@@ -361,10 +408,14 @@ class _WithdrawalItem extends StatelessWidget {
             children: [
               Text(
                 '-${withdrawal.amount.toStringAsFixed(2)} ₼',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFF6683C)),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFF6683C),
+                ),
               ),
               const SizedBox(height: 4),
-              _StatusBadge(status: withdrawal.status),
+              _WithdrawalStatusBadge(status: withdrawal.status),
             ],
           ),
         ],
@@ -373,19 +424,28 @@ class _WithdrawalItem extends StatelessWidget {
   }
 }
 
-// ── Status Badge ──
+// ── Earning Status Badge ──
 
-class _StatusBadge extends StatelessWidget {
-  final String status;
+class _EarningStatusBadge extends StatelessWidget {
+  final EarningStatus status;
 
-  const _StatusBadge({required this.status});
+  const _EarningStatusBadge({required this.status});
 
   Color get _color => switch (status) {
-        'available' || 'active' || 'paid' || 'approved' => const Color(0xFF4CAF50),
-        'pending' => const Color(0xFFF6A623),
-        'refunded' || 'cancelled' || 'rejected' || 'fraud_hold' || 'fraud_blocked' => const Color(0xFFF44336),
-        _ => const Color(0xFF717171),
-      };
+    EarningStatus.available => const Color(0xFF4CAF50),
+    EarningStatus.pending => const Color(0xFFF6A623),
+    EarningStatus.refunded ||
+    EarningStatus.cancelled => const Color(0xFFF44336),
+    EarningStatus.fraudHold => const Color(0xFFFF9800),
+  };
+
+  String _label(BuildContext context) => switch (status) {
+    EarningStatus.pending => context.localization.earningStatusPending,
+    EarningStatus.available => context.localization.earningStatusAvailable,
+    EarningStatus.refunded => context.localization.earningStatusRefunded,
+    EarningStatus.cancelled => context.localization.earningStatusCancelled,
+    EarningStatus.fraudHold => context.localization.earningStatusFraudHold,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -396,8 +456,93 @@ class _StatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        status,
-        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: _color),
+        _label(context),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          color: _color,
+        ),
+      ),
+    );
+  }
+}
+
+// ── Attribution Status Badge ──
+
+class _AttributionStatusBadge extends StatelessWidget {
+  final AttributionStatus status;
+
+  const _AttributionStatusBadge({required this.status});
+
+  Color get _color => switch (status) {
+    AttributionStatus.active => const Color(0xFF4CAF50),
+    AttributionStatus.pending => const Color(0xFFF6A623),
+    AttributionStatus.fraudBlocked => const Color(0xFFF44336),
+  };
+
+  String _label(BuildContext context) => switch (status) {
+    AttributionStatus.pending => context.localization.attributionStatusPending,
+    AttributionStatus.active => context.localization.attributionStatusActive,
+    AttributionStatus.fraudBlocked =>
+      context.localization.attributionStatusFraudBlocked,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: _color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        _label(context),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          color: _color,
+        ),
+      ),
+    );
+  }
+}
+
+// ── Withdrawal Status Badge ──
+
+class _WithdrawalStatusBadge extends StatelessWidget {
+  final WithdrawalStatus status;
+
+  const _WithdrawalStatusBadge({required this.status});
+
+  Color get _color => switch (status) {
+    WithdrawalStatus.paid => const Color(0xFF4CAF50),
+    WithdrawalStatus.approved => const Color(0xFF3696E7),
+    WithdrawalStatus.pending => const Color(0xFFF6A623),
+    WithdrawalStatus.rejected => const Color(0xFFF44336),
+  };
+
+  String _label(BuildContext context) => switch (status) {
+    WithdrawalStatus.pending => context.localization.withdrawalStatusPending,
+    WithdrawalStatus.approved => context.localization.withdrawalStatusApproved,
+    WithdrawalStatus.paid => context.localization.withdrawalStatusPaid,
+    WithdrawalStatus.rejected => context.localization.withdrawalStatusRejected,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: _color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        _label(context),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          color: _color,
+        ),
       ),
     );
   }

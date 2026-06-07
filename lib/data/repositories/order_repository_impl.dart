@@ -39,6 +39,7 @@ class OrderRepositoryImpl extends OrderRepository with RepositorySafeCallMixin {
           paymentMethod: params.paymentMethod,
           addressId: params.addressId,
           note: params.note,
+          useReferralBalance: params.useReferralBalance,
         ),
       );
       return _mapper.mapCheckoutResult(res);

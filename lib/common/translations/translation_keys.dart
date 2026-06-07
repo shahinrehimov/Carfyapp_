@@ -299,4 +299,22 @@ class TranslationKeys {
   static const String orderSummary = 'order_summary';
   static const String shippingLabel = 'shipping_label';
   static const String shippingMinutes = 'shipping_minutes';
+  static const String earningStatusPending = 'earning_status_pending';
+  static const String earningStatusAvailable = 'earning_status_available';
+  static const String earningStatusRefunded = 'earning_status_refunded';
+  static const String earningStatusCancelled = 'earning_status_cancelled';
+  static const String earningStatusFraudHold = 'earning_status_fraud_hold';
+  static const String earningStatusPendingDescription = 'earning_status_pending_description';
+  static const String earningStatusFraudHoldDescription = 'earning_status_fraud_hold_description';
+  static const String attributionStatusPending = 'attribution_status_pending';
+  static const String attributionStatusActive = 'attribution_status_active';
+  static const String attributionStatusFraudBlocked = 'attribution_status_fraud_blocked';
+  static const String withdrawalStatusPending = 'withdrawal_status_pending';
+  static const String withdrawalStatusApproved = 'withdrawal_status_approved';
+  static const String withdrawalStatusPaid = 'withdrawal_status_paid';
+  static const String withdrawalStatusRejected = 'withdrawal_status_rejected';
+  static const String freeDeliveryApplied = 'free_delivery_applied';
+  static const String referralDiscountApplied = 'referral_discount_applied';
+  static const String useReferralBalance = 'use_referral_balance';
+  static const String freeLabel = 'free_label';
 }

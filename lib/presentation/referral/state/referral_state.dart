@@ -12,6 +12,7 @@ class ReferralState extends Equatable {
   final List<ReferralEarning> earnings;
   final List<ReferralUser> referrals;
   final List<ReferralWithdrawal> withdrawals;
+  final int currentTabIndex;
 
   const ReferralState({
     required this.status,
@@ -25,6 +26,7 @@ class ReferralState extends Equatable {
     required this.earnings,
     required this.referrals,
     required this.withdrawals,
+    this.currentTabIndex = 0,
   });
 
   factory ReferralState.initial() => ReferralState(
@@ -51,6 +53,7 @@ class ReferralState extends Equatable {
     List<ReferralEarning>? earnings,
     List<ReferralUser>? referrals,
     List<ReferralWithdrawal>? withdrawals,
+    int? currentTabIndex,
   }) {
     return ReferralState(
       status: status ?? this.status,
@@ -64,6 +67,7 @@ class ReferralState extends Equatable {
       earnings: earnings ?? this.earnings,
       referrals: referrals ?? this.referrals,
       withdrawals: withdrawals ?? this.withdrawals,
+      currentTabIndex: currentTabIndex ?? this.currentTabIndex,
     );
   }
 
@@ -80,5 +84,6 @@ class ReferralState extends Equatable {
         earnings,
         referrals,
         withdrawals,
+        currentTabIndex,
       ];
 }

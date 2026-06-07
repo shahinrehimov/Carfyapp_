@@ -1,6 +1,8 @@
+import 'package:carfy/domain/enums/attribution_status.dart';
+
 class ReferralUser {
   final String referredName;
-  final String status;
+  final AttributionStatus status;
   final String? activatedAt;
   final String joinedAt;
 

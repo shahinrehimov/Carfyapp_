@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
+import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
 import 'package:carfy/presentation/referral/state/referral_cubit.dart';
 import 'package:carfy/presentation/referral/ui/widget/balance_details.dart';
 import 'package:carfy/presentation/referral/ui/widget/bonus.dart';
@@ -25,7 +26,8 @@ class ReferralPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWhite(title: context.localization.profileReferrals),
-      body: SingleChildScrollView(
+      body: PaginationScrollWrapper(
+        onLoadMore: () => context.read<ReferralCubit>().loadMoreCurrentTab(),
         child: Column(children: [
           const SizedBox(height: 24),
           BlocBuilder<ReferralCubit, ReferralState>(

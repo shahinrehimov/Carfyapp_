@@ -1,10 +1,12 @@
+import 'package:carfy/domain/enums/earning_status.dart';
+
 class ReferralEarning {
   final int id;
   final double amount;
   final double orderAmount;
   final String rate;
   final String tier;
-  final String status;
+  final EarningStatus status;
   final String orderUuid;
   final String? deliveredAt;
   final String? availableAt;

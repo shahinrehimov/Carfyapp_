@@ -1,3 +1,6 @@
+import 'package:carfy/domain/enums/attribution_status.dart';
+import 'package:carfy/domain/enums/earning_status.dart';
+import 'package:carfy/domain/enums/withdrawal_status.dart';
 import 'package:carfy/data/models/referral/referral_balance_model.dart';
 import 'package:carfy/data/models/referral/referral_earning_model.dart';
 import 'package:carfy/data/models/referral/referral_info_model.dart';
@@ -49,7 +52,7 @@ class ReferralMapper {
         orderAmount: model.orderAmount,
         rate: model.rate,
         tier: model.tier,
-        status: model.status,
+        status: EarningStatus.fromString(model.status),
         orderUuid: model.orderUuid,
         deliveredAt: model.deliveredAt,
         availableAt: model.availableAt,
@@ -58,7 +61,7 @@ class ReferralMapper {
 
   ReferralUser mapReferralUser(ReferralUserModel model) => ReferralUser(
         referredName: model.referredName,
-        status: model.status,
+        status: AttributionStatus.fromString(model.status),
         activatedAt: model.activatedAt,
         joinedAt: model.joinedAt,
       );
@@ -70,7 +73,7 @@ class ReferralMapper {
         netAmount: model.netAmount,
         cardLast4: model.cardLast4,
         cardHolderName: model.cardHolderName,
-        status: model.status,
+        status: WithdrawalStatus.fromString(model.status),
         adminNote: model.adminNote,
         requestedAt: model.requestedAt,
         processedAt: model.processedAt,
