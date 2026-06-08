@@ -19,35 +19,40 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasketManagerListener(
       child: MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => MainCubit()),
-        BlocProvider(create: (_) => NotificationBadgeCubit()..load()),
-      ],
-      child: AutoTabsScaffold(
-        lazyLoad: true,
-        backgroundColor: context.theme.colors.bg,
-        routes: const [HomeRoute(), MessagesRoute(), WishlistRoute(), BasketRoute(), ProfileRoute()],
-        bottomNavigationBuilder: (context, tabsRouter) {
-          return BlocConsumer<MainCubit, MainPages>(
-            listener: (context, state) {
-              tabsRouter.setActiveIndex(state.value);
-            },
-            builder: (context, state) {
-              return CustomBottomNav(
-                onTap: (MainPages page) {
-                  if (page.value == tabsRouter.activeIndex) {
-                    tabsRouter.maybePopTop();
-                  } else {
-                    context.read<MainCubit>().changePage(page);
-                  }
-                },
-                activePage: state,
-              );
-            },
-          );
-        },
+        providers: [
+          BlocProvider(create: (_) => MainCubit()),
+          BlocProvider(create: (_) => NotificationBadgeCubit()..load()),
+        ],
+        child: AutoTabsScaffold(
+          lazyLoad: true,
+          backgroundColor: context.theme.colors.bg,
+          routes: const [
+            HomeRoute(),
+            WishlistRoute(),
+            BasketRoute(),
+            ProfileRoute(),
+          ],
+          bottomNavigationBuilder: (context, tabsRouter) {
+            return BlocConsumer<MainCubit, MainPages>(
+              listener: (context, state) {
+                tabsRouter.setActiveIndex(state.value);
+              },
+              builder: (context, state) {
+                return CustomBottomNav(
+                  onTap: (MainPages page) {
+                    if (page.value == tabsRouter.activeIndex) {
+                      tabsRouter.maybePopTop();
+                    } else {
+                      context.read<MainCubit>().changePage(page);
+                    }
+                  },
+                  activePage: state,
+                );
+              },
+            );
+          },
+        ),
       ),
-    ),
     );
   }
 }

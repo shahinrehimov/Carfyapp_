@@ -30,14 +30,14 @@ class CustomBottomNav extends StatelessWidget {
               },
               isActive: activePage == MainPages.home,
             ),
-            NavBarItem(
-              image: Assets.icons.mainMessage,
-              text: context.localization.mainMessage,
-              onTap: () {
-                onTap(MainPages.messages);
-              },
-              isActive: activePage == MainPages.messages,
-            ),
+            // NavBarItem(
+            //   image: Assets.icons.mainMessage,
+            //   text: context.localization.mainMessage,
+            //   onTap: () {
+            //     onTap(MainPages.messages);
+            //   },
+            //   isActive: activePage == MainPages.messages,
+            // ),
             NavBarItem(
               image: Assets.icons.mainFavorite,
               text: context.localization.mainFavorite,
