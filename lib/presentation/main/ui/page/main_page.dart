@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/router/app_router.dart';
+import 'package:carfy/common/state/notification_badge_cubit.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/presentation/app/ui/widget/basket_manager_listener.dart';
 
@@ -17,8 +18,11 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasketManagerListener(
-      child: BlocProvider(
-      create: (_) => MainCubit(),
+      child: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => MainCubit()),
+        BlocProvider(create: (_) => NotificationBadgeCubit()..load()),
+      ],
       child: AutoTabsScaffold(
         lazyLoad: true,
         backgroundColor: context.theme.colors.bg,

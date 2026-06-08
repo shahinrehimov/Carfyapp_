@@ -117,6 +117,7 @@ class EndpointPaths {
   static const notificationsReadAll = '/app/notifications/read-all';
   static String notificationDelete(int id) => '/app/notifications/$id/delete';
   static const notificationsDeleteAll = '/app/notifications/delete-all';
+  static const notificationsUnreadCount = '/app/notifications/unread-count';
 
   // Referral Endpoints
   static const referralMy = '/app/referral/my';

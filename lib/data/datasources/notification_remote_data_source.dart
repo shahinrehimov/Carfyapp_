@@ -13,6 +13,7 @@ abstract class NotificationRemoteDataSource {
   Future<String> readAllNotifications();
   Future<String> deleteNotification(int id);
   Future<String> deleteAllNotifications();
+  Future<int> getUnreadCount();
 }
 
 @Injectable(as: NotificationRemoteDataSource)
@@ -56,6 +57,14 @@ class NotificationRemoteDataSourceImpl extends NotificationRemoteDataSource with
     return handleResponse(
       () => _networkManager.delete(EndpointPaths.notificationsDeleteAll),
       map: (json) => json['message'] as String,
+    );
+  }
+
+  @override
+  Future<int> getUnreadCount() {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.notificationsUnreadCount),
+      map: (json) => json['count'] as int,
     );
   }
 }

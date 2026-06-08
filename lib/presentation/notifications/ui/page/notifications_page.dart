@@ -30,13 +30,7 @@ class NotificationsPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
-      appBar: CustomAppBarWhite(
-        title: context.localization.notificationsTitle,
-        actions: [
-          _ReadAllButton(),
-          _DeleteAllButton(),
-        ],
-      ),
+      appBar: const _NotificationsAppBar(),
       body: SafeArea(
         child: BlocListener<NotificationsCubit, NotificationsState>(
           listenWhen: (prev, curr) => prev.status != curr.status,
@@ -171,6 +165,32 @@ class _DateGroup extends StatelessWidget {
               child: _NotificationItem(notification: n),
             )),
       ],
+    );
+  }
+}
+
+class _NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _NotificationsAppBar();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NotificationsCubit, NotificationsState>(
+      buildWhen: (prev, curr) => prev.notifications != curr.notifications,
+      builder: (context, state) {
+        final unread = state.notifications.where((n) => !n.isRead).length;
+        return CustomAppBarWhite(
+          title: unread > 0
+              ? '${context.localization.notificationsTitle} ($unread)'
+              : context.localization.notificationsTitle,
+          actions: [
+            _ReadAllButton(),
+            _DeleteAllButton(),
+          ],
+        );
+      },
     );
   }
 }

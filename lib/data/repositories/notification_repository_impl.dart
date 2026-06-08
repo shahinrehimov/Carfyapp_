@@ -47,4 +47,9 @@ class NotificationRepositoryImpl extends NotificationRepository with RepositoryS
   Future<Either<Failure, String>> deleteAllNotifications() {
     return safeCall(() => _dataSource.deleteAllNotifications());
   }
+
+  @override
+  Future<Either<Failure, int>> getUnreadCount() {
+    return safeCall(() => _dataSource.getUnreadCount());
+  }
 }

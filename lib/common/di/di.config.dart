@@ -188,6 +188,8 @@ import 'package:carfy/domain/use_cases/notifications/delete_all_notifications_us
     as _i276;
 import 'package:carfy/domain/use_cases/notifications/delete_notification_use_case.dart'
     as _i682;
+import 'package:carfy/domain/use_cases/notifications/get_unread_count_use_case.dart'
+    as _i514;
 import 'package:carfy/domain/use_cases/notifications/load_notifications_use_case.dart'
     as _i532;
 import 'package:carfy/domain/use_cases/notifications/read_all_notifications_use_case.dart'
@@ -562,6 +564,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i682.DeleteNotificationUseCase>(
       () => _i682.DeleteNotificationUseCase(gh<_i765.NotificationRepository>()),
+    );
+    gh.factory<_i514.GetUnreadCountUseCase>(
+      () => _i514.GetUnreadCountUseCase(gh<_i765.NotificationRepository>()),
     );
     gh.factory<_i532.LoadNotificationsUseCase>(
       () => _i532.LoadNotificationsUseCase(gh<_i765.NotificationRepository>()),
