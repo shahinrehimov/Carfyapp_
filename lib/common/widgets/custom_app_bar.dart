@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -62,6 +63,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: shape ?? const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(24))),
       centerTitle: centerTitle,
       flexibleSpace: flexibleSpace,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: context.theme.colors.secondary,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
     );
   }
 
@@ -92,6 +98,11 @@ class CustomAppBarWhite extends StatelessWidget implements PreferredSizeWidget {
       leading: InkWell(
         onTap: () => context.router.maybePop(),
         child: UnconstrainedBox(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft, width: 22)),
+      ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: context.theme.colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
       ),
     );
   }
