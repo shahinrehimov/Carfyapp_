@@ -752,7 +752,9 @@ class PaymentWebviewRoute extends PageRouteInfo<PaymentWebviewRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<PaymentWebviewRouteArgs>();
-      return PaymentWebviewPage(key: args.key, redirectUrl: args.redirectUrl);
+      return WrappedRoute(
+        child: PaymentWebviewPage(key: args.key, redirectUrl: args.redirectUrl),
+      );
     },
   );
 }

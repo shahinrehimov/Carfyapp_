@@ -10,6 +10,7 @@ import 'package:carfy/domain/entities/orders/checkout_preview.dart';
 import 'package:carfy/domain/entities/orders/checkout_result.dart';
 import 'package:carfy/domain/entities/orders/order_detail.dart';
 import 'package:carfy/domain/entities/orders/order_summary.dart';
+import 'package:carfy/domain/params/orders/check_payment_status_params.dart';
 import 'package:carfy/domain/params/orders/checkout_params.dart';
 import 'package:carfy/domain/params/orders/orders_load_params.dart';
 import 'package:carfy/domain/repositories/order_repository.dart';
@@ -61,6 +62,13 @@ class OrderRepositoryImpl extends OrderRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final res = await _dataSource.getOrderDetails(id);
       return _mapper.mapOrderDetail(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, String>> checkPaymentStatus(CheckPaymentStatusParams params) {
+    return safeCall(() async {
+      return await _dataSource.checkPaymentStatus(params.orderUuid, params.paymentMethod, params.token);
     });
   }
 }

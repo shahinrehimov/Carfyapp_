@@ -111,6 +111,8 @@ class EndpointPaths {
   static const checkout = '/app/orders/checkout';
   static const ordersLoad = '/app/orders/load';
   static String orderDetails(int id) => '/app/orders/details/$id';
+  static String checkPaymentStatus(String orderUuid, String paymentMethod, String token) =>
+      '/app/orders/check-payment-status/$orderUuid/$paymentMethod/$token';
 
   // Notification Endpoints
   static const notificationsLoad = '/app/notifications/load';

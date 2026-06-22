@@ -16,6 +16,7 @@ abstract class OrderRemoteDataSource {
   Future<CheckoutResultModel> checkout(CheckoutRequestDto dto);
   Future<PaginationResponseModel<OrderSummaryModel>> loadOrders(OrdersLoadQueryParams params);
   Future<OrderDetailModel> getOrderDetails(int id);
+  Future<String> checkPaymentStatus(String orderUuid, String paymentMethod, String token);
 }
 
 @Injectable(as: OrderRemoteDataSource)
@@ -54,6 +55,14 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource with DataSourceMix
     return handleResponse(
       () => _networkManager.get(EndpointPaths.orderDetails(id)),
       map: (json) => OrderDetailModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<String> checkPaymentStatus(String orderUuid, String paymentMethod, String token) {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.checkPaymentStatus(orderUuid, paymentMethod, token)),
+      map: (json) => json['status'] as String,
     );
   }
 }
