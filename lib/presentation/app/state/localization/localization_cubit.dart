@@ -31,7 +31,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
        _saveTranslationsUseCase = saveTranslationsUseCase ?? getIt<SaveTranslationsUseCase>(),
        super(LocalizationState.initial());
 
-  Map<String, String> trMap = TranslationDefaults.defaults['az']!;
+  Map<String, String> trMap = TranslationDefaults.defaults['az'] ?? {};
 
   Future<void> init() async {
     _loadLastSelectedDefault();
