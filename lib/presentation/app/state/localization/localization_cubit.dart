@@ -7,6 +7,7 @@ import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_
 import 'package:carfy/domain/use_cases/translations/save_translations_use_case.dart';
 import 'package:carfy/domain/use_cases/version/get_versions_use_case.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:carfy/common/enums/language.dart';
@@ -31,7 +32,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
        _saveTranslationsUseCase = saveTranslationsUseCase ?? getIt<SaveTranslationsUseCase>(),
        super(LocalizationState.initial());
 
-  Map<String, String> trMap = TranslationDefaults.defaults['az'] ?? {};
+  Map<String, String> trMap = {};
 
   Future<void> init() async {
     _loadLastSelectedDefault();
@@ -40,10 +41,17 @@ class LocalizationCubit extends Cubit<LocalizationState> {
   }
 
   void _loadLastSelectedDefault() {
-    final langStr = PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? 'az';
+    final saved = PrefUtil.getString(AppPreferenceKeys.selectedLanguage);
+    final langStr = saved ?? _deviceLanguageCode();
     trMap = TranslationDefaults.defaults[langStr] ?? {};
     Language language = Language.fromValue(langStr);
     emit(state.copyWith(appLanguage: language));
+  }
+
+  String _deviceLanguageCode() {
+    final deviceLang = PlatformDispatcher.instance.locale.languageCode;
+    final supported = Language.values.map((l) => l.locale.languageCode).toSet();
+    return supported.contains(deviceLang) ? deviceLang : 'az';
   }
 
   Future<void> _loadCachedTranslations() async {
