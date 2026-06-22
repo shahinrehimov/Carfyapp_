@@ -35,13 +35,13 @@ class LocalizationCubit extends Cubit<LocalizationState> {
 
   Future<void> init() async {
     _loadLastSelectedDefault();
-    // await _loadCachedTranslations();
-    // await _checkRemoteLanguageVersion();
+    await _loadCachedTranslations();
+    await _checkRemoteLanguageVersion();
   }
 
   void _loadLastSelectedDefault() {
     final langStr = PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? 'az';
-    trMap = TranslationDefaults.defaults[langStr]!;
+    trMap = TranslationDefaults.defaults[langStr] ?? {};
     Language language = Language.fromValue(langStr);
     emit(state.copyWith(appLanguage: language));
   }
@@ -89,7 +89,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
     PrefUtil.setString(AppPreferenceKeys.selectedLanguage, languageCode);
 
     // Update trMap with default values first
-    trMap = TranslationDefaults.defaults[languageCode]!;
+    trMap = TranslationDefaults.defaults[languageCode] ?? {};
     emit(LocalizationState(appLanguage: language, timestamp: DateTime.now().millisecondsSinceEpoch));
 
     // Then load cached and remote translations

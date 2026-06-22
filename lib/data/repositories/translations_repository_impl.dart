@@ -2,6 +2,7 @@ import 'package:carfy/common/error/failure.dart';
 import 'package:carfy/data/datasources/translation_local_data_source.dart';
 import 'package:carfy/data/datasources/translation_remote_data_source.dart';
 import 'package:carfy/data/models/translation/translation_local_model.dart';
+import 'package:carfy/domain/entities/translation/app_language.dart';
 import 'package:carfy/domain/entities/translation/translations.dart';
 import 'package:carfy/domain/repositories/translation_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -42,6 +43,14 @@ class TranslationsRepositoryImpl extends TranslationRepository with RepositorySa
         TranslationLocalModel(translations: translations.translations),
         languageCode,
       );
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<AppLanguage>>> getLanguagesList() {
+    return safeCall(() async {
+      final res = await _remoteDataSource.getLanguagesList();
+      return res.map((m) => AppLanguage(id: m.id, key: m.key)).toList();
     });
   }
 }

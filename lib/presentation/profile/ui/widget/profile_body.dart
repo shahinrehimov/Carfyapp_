@@ -60,15 +60,20 @@ class _ProfileBody extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          _ProfileSectionCard(
-            title: context.localization.profileLanguage,
-            items: [
-              _ProfileRowItem(
-                label: context.localization.profileCurrentLanguage,
-                icon: Assets.icons.globe2,
-                onTap: () {},
-              ),
-            ],
+          BlocBuilder<LocalizationCubit, LocalizationState>(
+            buildWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+            builder: (context, localizationState) {
+              return _ProfileSectionCard(
+                title: context.localization.profileLanguage,
+                items: [
+                  _ProfileRowItem(
+                    label: localizationState.appLanguage.displayName,
+                    icon: Assets.icons.globe2,
+                    onTap: () => showLanguagePickerBottomSheet(context),
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 8),
           _ProfileSectionCard(

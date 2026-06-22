@@ -235,6 +235,8 @@ import 'package:carfy/domain/use_cases/referral/update_referral_code_use_case.da
     as _i247;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
+import 'package:carfy/domain/use_cases/translations/get_languages_list_use_case.dart'
+    as _i731;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
     as _i567;
 import 'package:carfy/domain/use_cases/translations/save_translations_use_case.dart'
@@ -680,6 +682,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i187.GetCachedTranslationsUseCase>(
       () =>
           _i187.GetCachedTranslationsUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i731.GetLanguagesListUseCase>(
+      () => _i731.GetLanguagesListUseCase(gh<_i611.TranslationRepository>()),
     );
     gh.factory<_i567.GetRemoteTranslationsUseCase>(
       () =>

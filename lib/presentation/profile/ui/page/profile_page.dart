@@ -3,6 +3,8 @@ import 'package:carfy/common/widgets/not_logged_view.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/common/widgets/notification_icon_button.dart';
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
+import 'package:carfy/presentation/language_picker/ui/widget/language_picker_bottom_sheet.dart';
 import 'package:carfy/presentation/profile/state/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
