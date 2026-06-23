@@ -5,7 +5,6 @@ import 'package:carfy/domain/entities/products/product_category.dart';
 class ProductDetail {
   final int id;
   final String uuid;
-  final String slug;
   final CategorySlugs? categorySlugs;
   final ProductCategory? mainCategory;
   final List<ProductCategory> categories;
@@ -23,7 +22,6 @@ class ProductDetail {
   ProductDetail({
     required this.id,
     required this.uuid,
-    required this.slug,
     this.categorySlugs,
     this.mainCategory,
     this.categories = const [],

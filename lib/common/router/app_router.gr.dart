@@ -787,22 +787,11 @@ class PaymentWebviewRouteArgs {
 class ProductDetailRoute extends PageRouteInfo<ProductDetailRouteArgs> {
   ProductDetailRoute({
     Key? key,
-    String? parentSlug,
-    required String subSlug,
-    required String productSlug,
-    String? variant,
-    String? seller,
+    required String cpvUuid,
     List<PageRouteInfo>? children,
   }) : super(
          ProductDetailRoute.name,
-         args: ProductDetailRouteArgs(
-           key: key,
-           parentSlug: parentSlug,
-           subSlug: subSlug,
-           productSlug: productSlug,
-           variant: variant,
-           seller: seller,
-         ),
+         args: ProductDetailRouteArgs(key: key, cpvUuid: cpvUuid),
          initialChildren: children,
        );
 
@@ -813,66 +802,33 @@ class ProductDetailRoute extends PageRouteInfo<ProductDetailRouteArgs> {
     builder: (data) {
       final args = data.argsAs<ProductDetailRouteArgs>();
       return WrappedRoute(
-        child: ProductDetailPage(
-          key: args.key,
-          parentSlug: args.parentSlug,
-          subSlug: args.subSlug,
-          productSlug: args.productSlug,
-          variant: args.variant,
-          seller: args.seller,
-        ),
+        child: ProductDetailPage(key: args.key, cpvUuid: args.cpvUuid),
       );
     },
   );
 }
 
 class ProductDetailRouteArgs {
-  const ProductDetailRouteArgs({
-    this.key,
-    this.parentSlug,
-    required this.subSlug,
-    required this.productSlug,
-    this.variant,
-    this.seller,
-  });
+  const ProductDetailRouteArgs({this.key, required this.cpvUuid});
 
   final Key? key;
 
-  final String? parentSlug;
-
-  final String subSlug;
-
-  final String productSlug;
-
-  final String? variant;
-
-  final String? seller;
+  final String cpvUuid;
 
   @override
   String toString() {
-    return 'ProductDetailRouteArgs{key: $key, parentSlug: $parentSlug, subSlug: $subSlug, productSlug: $productSlug, variant: $variant, seller: $seller}';
+    return 'ProductDetailRouteArgs{key: $key, cpvUuid: $cpvUuid}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! ProductDetailRouteArgs) return false;
-    return key == other.key &&
-        parentSlug == other.parentSlug &&
-        subSlug == other.subSlug &&
-        productSlug == other.productSlug &&
-        variant == other.variant &&
-        seller == other.seller;
+    return key == other.key && cpvUuid == other.cpvUuid;
   }
 
   @override
-  int get hashCode =>
-      key.hashCode ^
-      parentSlug.hashCode ^
-      subSlug.hashCode ^
-      productSlug.hashCode ^
-      variant.hashCode ^
-      seller.hashCode;
+  int get hashCode => key.hashCode ^ cpvUuid.hashCode;
 }
 
 /// generated route for

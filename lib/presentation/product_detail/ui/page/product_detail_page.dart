@@ -20,35 +20,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ProductDetailPage extends StatelessWidget implements AutoRouteWrapper {
-  final String? parentSlug;
-  final String subSlug;
-  final String productSlug;
-  final String? variant;
-  final String? seller;
+  final String cpvUuid;
 
-  const ProductDetailPage({
-    super.key,
-    this.parentSlug,
-    required this.subSlug,
-    required this.productSlug,
-    this.variant,
-    this.seller,
-  });
+  const ProductDetailPage({super.key, required this.cpvUuid});
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     create: (_) => ProductDetailCubit()
-      ..init(
-        ProductShowParams(
-          parentSlug: parentSlug,
-          subSlug: subSlug,
-          productSlug: productSlug,
-          variant: variant,
-          seller: seller,
-          otherSellers: true,
-          withRelated: true,
-        ),
-      ),
+      ..init(ProductShowParams(cpvUuid: cpvUuid, otherSellers: true, withRelated: true)),
     child: this,
   );
 

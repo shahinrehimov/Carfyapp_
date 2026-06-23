@@ -5,7 +5,6 @@ import 'package:carfy/data/models/product/product_category_model.dart';
 class ProductDetailModel {
   final int id;
   final String uuid;
-  final String slug;
   final CategorySlugsModel? categorySlugs;
   final ProductCategoryModel? mainCategory;
   final List<ProductCategoryModel> categories;
@@ -23,7 +22,6 @@ class ProductDetailModel {
   ProductDetailModel({
     required this.id,
     required this.uuid,
-    required this.slug,
     this.categorySlugs,
     this.mainCategory,
     this.categories = const [],
@@ -43,7 +41,6 @@ class ProductDetailModel {
     return ProductDetailModel(
       id: json['id'] as int,
       uuid: json['uuid'] as String,
-      slug: json['slug'] as String,
       categorySlugs: json['category_slugs'] != null
           ? CategorySlugsModel.fromJson(json['category_slugs'] as Map<String, dynamic>)
           : null,

@@ -37,10 +37,7 @@ class EndpointPaths {
   // Product Endpoints
   static const products = '/app/products/load';
   static const productFilters = '/app/products/filters';
-  static String productShow(String parentSlug, String subSlug, String productSlug) =>
-      '/app/products/show/$parentSlug/$subSlug/$productSlug';
-  static String productShowTwoPart(String subSlug, String productSlug) =>
-      '/app/products/show/$subSlug/$productSlug';
+  static String productShow(String cpvUuid) => '/app/products/show/$cpvUuid';
   static String otherSellers(int variantId) => '/app/products/$variantId/other-sellers';
   static String reviewStore(String cpvUuid) => '/app/products/$cpvUuid/reviews/store';
   static String reviewsLoad(String cpvUuid) => '/app/products/$cpvUuid/reviews/load';

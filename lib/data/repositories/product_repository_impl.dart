@@ -68,12 +68,8 @@ class ProductRepositoryImpl extends ProductRepository with RepositorySafeCallMix
   @override
   Future<Either<Failure, ProductShow>> getProductShow(ProductShowParams params) {
     return safeCall(() async {
-      final endpoint = params.parentSlug != null
-          ? EndpointPaths.productShow(params.parentSlug!, params.subSlug, params.productSlug)
-          : EndpointPaths.productShowTwoPart(params.subSlug, params.productSlug);
+      final endpoint = EndpointPaths.productShow(params.cpvUuid);
       final queryParams = ProductShowQueryParams(
-        variant: params.variant,
-        seller: params.seller,
         otherSellers: params.otherSellers,
         withRelated: params.withRelated,
       );

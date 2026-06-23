@@ -12,7 +12,6 @@ import 'package:carfy/domain/enums/discount_type.dart';
 class ProductShow {
   final int id;
   final String uuid;
-  final String slug;
   final String? oemCode;
   final String title;
   final String? mainImage;
@@ -44,7 +43,6 @@ class ProductShow {
   ProductShow({
     required this.id,
     required this.uuid,
-    required this.slug,
     this.oemCode,
     required this.title,
     this.mainImage,

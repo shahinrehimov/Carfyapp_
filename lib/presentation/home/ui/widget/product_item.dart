@@ -21,16 +21,8 @@ class ProductItem extends StatelessWidget {
   const ProductItem({super.key, required this.product});
 
   void _navigateToDetail(BuildContext context) {
-    final categorySlugs = product.product.categorySlugs;
-    context.pushRoute(
-      ProductDetailRoute(
-        parentSlug: categorySlugs?.parentCategorySlug,
-        subSlug: categorySlugs?.subCategorySlug ?? '',
-        productSlug: product.product.slug,
-        variant: product.slug,
-        seller: product.seller?.storeCode,
-      ),
-    );
+    final cpvUuid = product.seller?.uuid ?? product.uuid;
+    context.pushRoute(ProductDetailRoute(cpvUuid: cpvUuid));
   }
 
   @override

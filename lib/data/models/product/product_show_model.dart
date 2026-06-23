@@ -11,7 +11,6 @@ import 'package:carfy/data/models/product/set_item_model.dart';
 class ProductShowModel {
   final int id;
   final String uuid;
-  final String slug;
   final String? oemCode;
   final String title;
   final String? mainImage;
@@ -43,7 +42,6 @@ class ProductShowModel {
   ProductShowModel({
     required this.id,
     required this.uuid,
-    required this.slug,
     this.oemCode,
     required this.title,
     this.mainImage,
@@ -77,7 +75,6 @@ class ProductShowModel {
     return ProductShowModel(
       id: json['id'] as int,
       uuid: json['uuid'] as String,
-      slug: json['slug'] as String,
       oemCode: json['oem_code'] as String?,
       title: json['title'] as String,
       mainImage: json['main_image'] as String?,

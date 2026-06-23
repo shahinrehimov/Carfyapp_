@@ -4,7 +4,6 @@ import 'package:carfy/domain/entities/products/category_slugs.dart';
 class ProductInfo {
   final int id;
   final String uuid;
-  final String slug;
   final CategorySlugs? categorySlugs;
   final String title;
   final String? descriptionShort;
@@ -15,7 +14,6 @@ class ProductInfo {
   ProductInfo({
     required this.id,
     required this.uuid,
-    required this.slug,
     this.categorySlugs,
     required this.title,
     this.descriptionShort,

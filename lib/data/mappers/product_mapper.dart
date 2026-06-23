@@ -57,7 +57,6 @@ class ProductMapper {
   Product mapProduct(ProductModel model) => Product(
     id: model.id,
     uuid: model.uuid,
-    slug: model.slug,
     oemCode: model.oemCode,
     title: model.title,
     hoverImage: model.hoverImage,
@@ -79,7 +78,6 @@ class ProductMapper {
   ProductInfo mapProductInfo(ProductInfoModel model) => ProductInfo(
     id: model.id,
     uuid: model.uuid,
-    slug: model.slug,
     categorySlugs: model.categorySlugs != null ? mapCategorySlugs(model.categorySlugs!) : null,
     title: model.title,
     descriptionShort: model.descriptionShort,
@@ -91,7 +89,6 @@ class ProductMapper {
   ProductDetail mapProductDetail(ProductDetailModel model) => ProductDetail(
     id: model.id,
     uuid: model.uuid,
-    slug: model.slug,
     categorySlugs: model.categorySlugs != null ? mapCategorySlugs(model.categorySlugs!) : null,
     mainCategory: model.mainCategory != null ? mapProductCategory(model.mainCategory!) : null,
     categories: model.categories.map(mapProductCategory).toList(),
@@ -245,7 +242,6 @@ class ProductMapper {
   ProductShow mapProductShow(ProductShowModel model) => ProductShow(
     id: model.id,
     uuid: model.uuid,
-    slug: model.slug,
     oemCode: model.oemCode,
     title: model.title,
     mainImage: model.mainImage,

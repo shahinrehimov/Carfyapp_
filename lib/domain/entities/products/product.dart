@@ -6,7 +6,6 @@ import 'package:carfy/domain/enums/discount_type.dart';
 class Product {
   final int? id;
   final String uuid;
-  final String slug;
   final String? oemCode;
   final String title;
   final String? hoverImage;
@@ -27,7 +26,6 @@ class Product {
   Product({
     this.id,
     required this.uuid,
-    required this.slug,
     this.oemCode,
     required this.title,
     this.hoverImage,

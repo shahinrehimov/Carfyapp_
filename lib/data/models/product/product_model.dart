@@ -5,7 +5,6 @@ import 'package:carfy/data/models/product/seller_model.dart';
 class ProductModel {
   final int? id;
   final String uuid;
-  final String slug;
   final String? oemCode;
   final String title;
   final String? hoverImage;
@@ -26,7 +25,6 @@ class ProductModel {
   ProductModel({
     this.id,
     required this.uuid,
-    required this.slug,
     this.oemCode,
     required this.title,
     this.hoverImage,
@@ -49,7 +47,6 @@ class ProductModel {
     return ProductModel(
       id: json['id'] as int?,
       uuid: json['uuid'] as String,
-      slug: (json['variant_slug'] ?? json['slug']) as String,
       oemCode: json['oem_code'] as String?,
       title: json['title'] as String,
       hoverImage: json['hover_image'] as String?,
