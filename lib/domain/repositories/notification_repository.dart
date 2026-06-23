@@ -11,4 +11,5 @@ abstract class NotificationRepository {
   Future<Either<Failure, String>> deleteNotification(int id);
   Future<Either<Failure, String>> deleteAllNotifications();
   Future<Either<Failure, int>> getUnreadCount();
+  Future<Either<Failure, void>> registerDeviceToken(String token, String deviceType);
 }

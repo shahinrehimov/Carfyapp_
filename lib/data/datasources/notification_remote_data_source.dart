@@ -14,6 +14,7 @@ abstract class NotificationRemoteDataSource {
   Future<String> deleteNotification(int id);
   Future<String> deleteAllNotifications();
   Future<int> getUnreadCount();
+  Future<void> registerDeviceToken(String token, String deviceType);
 }
 
 @Injectable(as: NotificationRemoteDataSource)
@@ -65,6 +66,14 @@ class NotificationRemoteDataSourceImpl extends NotificationRemoteDataSource with
     return handleResponse(
       () => _networkManager.get(EndpointPaths.notificationsUnreadCount),
       map: (json) => json['count'] as int,
+    );
+  }
+
+  @override
+  Future<void> registerDeviceToken(String token, String deviceType) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.deviceTokenRegister, data: {'token': token, 'device_type': deviceType}),
+      map: (_) {},
     );
   }
 }

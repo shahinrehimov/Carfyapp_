@@ -114,6 +114,9 @@ class EndpointPaths {
   static String checkPaymentStatus(String orderUuid, String paymentMethod, String token) =>
       '/app/orders/check-payment-status/$orderUuid/$paymentMethod/$token';
 
+  // Device Token Endpoints
+  static const deviceTokenRegister = '/app/device-token/register';
+
   // Notification Endpoints
   static const notificationsLoad = '/app/notifications/load';
   static String notificationRead(int id) => '/app/notifications/$id/read';

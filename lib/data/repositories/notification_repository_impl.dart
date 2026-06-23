@@ -52,4 +52,9 @@ class NotificationRepositoryImpl extends NotificationRepository with RepositoryS
   Future<Either<Failure, int>> getUnreadCount() {
     return safeCall(() => _dataSource.getUnreadCount());
   }
+
+  @override
+  Future<Either<Failure, void>> registerDeviceToken(String token, String deviceType) {
+    return safeCall(() => _dataSource.registerDeviceToken(token, deviceType));
+  }
 }
