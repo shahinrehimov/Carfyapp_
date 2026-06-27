@@ -115,45 +115,87 @@ class ProductListSortFilterBar extends StatelessWidget {
                 ),
                 Container(width: 1, height: 48, color: const Color(0xFFEDEDED)),
                 Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () async {
-                      final applied = await FilterBottomSheet.show(context);
-                      if (applied == true && context.mounted) {
-                        final filterState = context.read<FilterCubit>().state;
-                        context.read<ProductListCubit>().applyFilters(
-                          brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
-                          categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
-                          subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
-                          cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
-                          colors: filterState.selectedColorIds.isNotEmpty ? filterState.selectedColorIds.toList() : null,
-                          conditions: filterState.selectedConditionSlugs.isNotEmpty ? filterState.selectedConditionSlugs.toList() : null,
-                          minYear: filterState.minYear,
-                          maxYear: filterState.maxYear,
-                          minPrice: filterState.minPrice != null && filterState.minPrice!.isNotEmpty
-                              ? double.tryParse(filterState.minPrice!)
-                              : null,
-                          maxPrice: filterState.maxPrice != null && filterState.maxPrice!.isNotEmpty
-                              ? double.tryParse(filterState.maxPrice!)
-                              : null,
+                  child: BlocBuilder<ProductListCubit, ProductListState>(
+                    buildWhen: (p, c) => p.filterCount != c.filterCount,
+                    builder: (context, listState) {
+                      final count = listState.filterCount;
+                      final hasFilters = count > 0;
+
+                      void openFilter() async {
+                        final applied = await FilterBottomSheet.show(context);
+                        if (applied == true && context.mounted) {
+                          final filterState = context.read<FilterCubit>().state;
+                          context.read<ProductListCubit>().applyFilters(
+                            brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
+                            categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
+                            subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
+                            cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
+                            colors: filterState.selectedColorIds.isNotEmpty ? filterState.selectedColorIds.toList() : null,
+                            conditions: filterState.selectedConditionSlugs.isNotEmpty ? filterState.selectedConditionSlugs.toList() : null,
+                            minYear: filterState.minYear,
+                            maxYear: filterState.maxYear,
+                            minPrice: filterState.minPrice != null && filterState.minPrice!.isNotEmpty
+                                ? double.tryParse(filterState.minPrice!)
+                                : null,
+                            maxPrice: filterState.maxPrice != null && filterState.maxPrice!.isNotEmpty
+                                ? double.tryParse(filterState.maxPrice!)
+                                : null,
+                          );
+                        }
+                      }
+
+                      if (hasFilters) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: openFilter,
+                              child: Text(
+                                '${context.localization.filter} ($count)',
+                                style: TextStyle(
+                                  color: context.theme.colors.primary,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                context.read<FilterCubit>().reset();
+                                context.read<ProductListCubit>().resetFilters();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Icon(Icons.close, size: 16, color: context.theme.colors.primary),
+                              ),
+                            ),
+                          ],
                         );
                       }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          context.localization.filter,
-                          style: const TextStyle(
-                            color: Color(0xFF5F5F5F),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                          ),
+
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: openFilter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              context.localization.filter,
+                              style: const TextStyle(
+                                color: Color(0xFF5F5F5F),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            SvgPicture.asset(Assets.icons.filters, width: 24),
+                          ],
                         ),
-                        const SizedBox(width: 4),
-                        SvgPicture.asset(Assets.icons.filters, width: 24),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
               ],

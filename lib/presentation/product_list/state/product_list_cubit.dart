@@ -176,6 +176,21 @@ class ProductListCubit extends Cubit<ProductListState> with StateMapHelper {
     _loadProducts();
   }
 
+  void resetFilters() {
+    _paginationHelper.reset();
+    emit(ProductListState(
+      status: StateStatus.loading(),
+      products: const [],
+      totalCount: 0,
+      search: state.search,
+      sort: state.sort,
+      sortType: state.sortType,
+      isSet: state.isSet,
+      sellerStoreCode: state.sellerStoreCode,
+    ));
+    _loadProducts();
+  }
+
   void resetSort() {
     _paginationHelper.reset();
     emit(ProductListState(

@@ -54,6 +54,19 @@ class ProductListState extends Equatable {
       minPrice != null ||
       maxPrice != null;
 
+  int get filterCount {
+    int count = 0;
+    if (brands != null && brands!.isNotEmpty) count++;
+    if (categories != null && categories!.isNotEmpty) count++;
+    if (subCategories != null && subCategories!.isNotEmpty) count++;
+    if (cityId != null) count++;
+    if (colors != null && colors!.isNotEmpty) count++;
+    if (conditions != null && conditions!.isNotEmpty) count++;
+    if (minYear != null || maxYear != null) count++;
+    if (minPrice != null || maxPrice != null) count++;
+    return count;
+  }
+
   factory ProductListState.initial() => ProductListState(
     status: StateStatus.loading(),
     products: const [],
