@@ -27,6 +27,15 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
     );
   }
 
+  Future<void> reloadFilters() async {
+    emit(FilterState(loadStatus: StateStatus.loading()));
+    final result = await _getProductFiltersUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(loadStatus: mapFailure(failure))),
+      (filters) => emit(state.copyWith(loadStatus: StateStatus.success(), filtersData: filters)),
+    );
+  }
+
   /// Call when bottom sheet opens — saves current state so we can restore on dismiss
   void saveSnapshot() {
     _snapshot = state;

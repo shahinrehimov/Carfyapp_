@@ -11,6 +11,7 @@ import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/common/widgets/notification_icon_button.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 import 'package:carfy/presentation/basket/state/basket_cubit.dart';
 import 'package:carfy/presentation/basket/ui/widget/basket_item.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,14 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => BasketCubit()..init(), child: this);
+    return BlocProvider(
+      create: (_) => BasketCubit()..init(),
+      child: BlocListener<LocalizationCubit, LocalizationState>(
+        listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+        listener: (context, _) => context.read<BasketCubit>().init(),
+        child: this,
+      ),
+    );
   }
 
   @override

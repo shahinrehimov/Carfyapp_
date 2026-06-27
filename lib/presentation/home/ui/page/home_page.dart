@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/ads/ui/widget/ads_banner.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 import 'package:carfy/presentation/categories/ui/widget/category_item.dart';
 import 'package:carfy/presentation/app/state/default_address/default_address_cubit.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
@@ -36,7 +37,14 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
   const HomePage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => HomeCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (_) => HomeCubit()..init(),
+    child: BlocListener<LocalizationCubit, LocalizationState>(
+      listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+      listener: (context, _) => context.read<HomeCubit>().init(),
+      child: this,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {

@@ -22,7 +22,15 @@ class MultiProviderWrap extends StatelessWidget {
         BlocProvider<FilterCubit>(create: (_) => FilterCubit()..loadFilters(), lazy: false),
         BlocProvider<DefaultAddressCubit>(create: (_) => DefaultAddressCubit()..refresh(), lazy: false),
       ],
-      child: child,
+      child: BlocListener<LocalizationCubit, LocalizationState>(
+        listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+        listener: (context, state) {
+          context.read<FilterCubit>().reloadFilters();
+          context.read<WishlistManagerCubit>().loadWishlistIds();
+          context.read<DefaultAddressCubit>().refresh();
+        },
+        child: child,
+      ),
     );
   }
 }

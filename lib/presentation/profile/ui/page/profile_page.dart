@@ -25,7 +25,14 @@ class ProfilePage extends StatelessWidget implements AutoRouteWrapper {
   const ProfilePage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => ProfileCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (_) => ProfileCubit()..init(),
+    child: BlocListener<LocalizationCubit, LocalizationState>(
+      listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+      listener: (context, _) => context.read<ProfileCubit>().init(),
+      child: this,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {

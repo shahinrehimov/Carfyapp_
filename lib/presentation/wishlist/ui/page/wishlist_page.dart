@@ -7,6 +7,7 @@ import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/common/widgets/notification_icon_button.dart';
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
 import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
 import 'package:carfy/presentation/home/ui/widget/product_item.dart';
 import 'package:carfy/presentation/wishlist/state/wishlist_cubit.dart';
@@ -18,7 +19,14 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
   const WishlistPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => WishlistCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (_) => WishlistCubit()..init(),
+    child: BlocListener<LocalizationCubit, LocalizationState>(
+      listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+      listener: (context, _) => context.read<WishlistCubit>().init(),
+      child: this,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
