@@ -316,6 +316,37 @@ Other statuses (loading, success, empty, etc.) are silently ignored.
 
 ---
 
+## Language Change — API Reload
+
+Every API request includes an `Accept-Language` header, so all server-returned content (names, titles, descriptions) is language-dependent. When the user changes language, any page or cubit that holds API data must re-fetch.
+
+### How it works
+
+**Tab pages** (Home, Wishlist, Basket, Profile) — each page's `wrappedRoute` wraps the page with a `BlocListener<LocalizationCubit>` that calls `cubit.init()` on language change:
+
+```dart
+Widget wrappedRoute(BuildContext context) => BlocProvider(
+  create: (_) => MyCubit()..init(),
+  child: BlocListener<LocalizationCubit, LocalizationState>(
+    listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,
+    listener: (context, _) => context.read<MyCubit>().init(),
+    child: this,
+  ),
+);
+```
+
+**Globally-provided cubits** (FilterCubit, WishlistManagerCubit, DefaultAddressCubit) — refreshed via `BlocListener<LocalizationCubit>` in `multi_provider_wrap.dart`.
+
+### Adding a new page with API data
+
+If you add a new tab page or a globally-provided cubit that fetches language-sensitive data:
+
+1. **New tab page** — follow the `wrappedRoute` pattern above; call its `init()` (or equivalent reload method) in the listener.
+2. **New globally-provided cubit** in `MultiProviderWrap` — add it to the `BlocListener` in `multi_provider_wrap.dart`.
+3. **Non-tab page pushed on top of the stack** — no action needed; auto_route recreates these pages each time they are navigated to, so they always fetch fresh data.
+
+---
+
 ## Key Conventions
 
 1. **Widget sections** inside pages are private classes prefixed with `_` and declared as `part of` the page file
