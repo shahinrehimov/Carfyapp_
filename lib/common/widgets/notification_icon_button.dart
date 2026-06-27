@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/notification_badge_cubit.dart';
+import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,9 @@ class NotificationIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isAuthenticated = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
+    if (!isAuthenticated) return const SizedBox.shrink();
+
     return GestureDetector(
       onTap: () async {
         await context.pushRoute(const NotificationsRoute());
