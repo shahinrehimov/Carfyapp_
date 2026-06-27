@@ -68,10 +68,10 @@ class CustomButton extends StatelessWidget {
             gradient: isDisabled || backgroundColor != null
                 ? null
                 : LinearGradient(
-              colors: [colors.secondary, colors.primary],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
+                    colors: [colors.secondary, colors.primary],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
             borderRadius: BorderRadius.circular(borderRadius ?? 40),
           ),
           child: Container(
@@ -79,22 +79,22 @@ class CustomButton extends StatelessWidget {
             child: loading == true
                 ? CircularProgressIndicator.adaptive(valueColor: AlwaysStoppedAnimation<Color>(colors.white))
                 : child ??
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (prefix != null) ...[prefix!, SizedBox(width: prefixPadding ?? 10)],
-                    Text(
-                      text!,
-                      style: TextStyle(
-                        fontWeight: fontWeight ?? FontWeight.w400,
-                        fontSize: fontSize ?? 16,
-                        color: isDisabled ? const Color(0xFF9E9E9E) : (color ?? colors.white),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (prefix != null) ...[prefix!, SizedBox(width: prefixPadding ?? 10)],
+                          Text(
+                            text!,
+                            style: TextStyle(
+                              fontWeight: fontWeight ?? FontWeight.w400,
+                              fontSize: fontSize ?? 16,
+                              color: isDisabled ? const Color(0xFF9E9E9E) : (color ?? colors.white),
+                            ),
+                          ),
+                          if (suffix != null) ...[SizedBox(width: suffixPadding ?? 10), suffix!],
+                        ],
                       ),
-                    ),
-                    if (suffix != null) ...[SizedBox(width: suffixPadding ?? 10), suffix!],
-                  ],
-                ),
           ),
         ),
       ),

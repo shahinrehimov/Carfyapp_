@@ -15,10 +15,7 @@ class MapPickerCubit extends Cubit<MapPickerState> {
   Timer? _debounce;
   CancelToken? _cancelToken;
 
-  MapPickerCubit({LatLng? initial})
-      : super(MapPickerState(
-          position: initial ?? const LatLng(40.4093, 49.8671),
-        ));
+  MapPickerCubit({LatLng? initial}) : super(MapPickerState(position: initial ?? const LatLng(40.4093, 49.8671)));
 
   void updatePosition(LatLng position) => emit(state.copyWith(position: position));
 
@@ -46,10 +43,9 @@ class MapPickerCubit extends Cubit<MapPickerState> {
           'lon': pos.longitude,
           'lang': PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? 'az',
         },
-        options: Options(headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; CarfyApp/1.0)',
-          'Accept': 'application/json',
-        }),
+        options: Options(
+          headers: {'User-Agent': 'Mozilla/5.0 (compatible; CarfyApp/1.0)', 'Accept': 'application/json'},
+        ),
         cancelToken: _cancelToken,
       );
       final features = response.data['features'] as List;
@@ -81,11 +77,13 @@ class MapPickerCubit extends Cubit<MapPickerState> {
   void clearSearch() => emit(state.copyWith(clearSearchResults: true));
 
   void selectSearchResult(NominatimResult result) {
-    emit(state.copyWith(
-      position: LatLng(result.lat, result.lng),
-      moveToPosition: LatLng(result.lat, result.lng),
-      clearSearchResults: true,
-    ));
+    emit(
+      state.copyWith(
+        position: LatLng(result.lat, result.lng),
+        moveToPosition: LatLng(result.lat, result.lng),
+        clearSearchResults: true,
+      ),
+    );
   }
 
   void onMapMoved() {
@@ -101,8 +99,7 @@ class MapPickerCubit extends Cubit<MapPickerState> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
       }
-      if (permission == LocationPermission.deniedForever ||
-          permission == LocationPermission.denied) {
+      if (permission == LocationPermission.deniedForever || permission == LocationPermission.denied) {
         emit(state.copyWith(isLocating: false));
         return;
       }
@@ -110,11 +107,7 @@ class MapPickerCubit extends Cubit<MapPickerState> {
         locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
       );
       final latLng = LatLng(pos.latitude, pos.longitude);
-      emit(state.copyWith(
-        position: latLng,
-        moveToPosition: latLng,
-        isLocating: false,
-      ));
+      emit(state.copyWith(position: latLng, moveToPosition: latLng, isLocating: false));
     } catch (_) {
       emit(state.copyWith(isLocating: false));
     }

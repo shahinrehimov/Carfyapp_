@@ -9,10 +9,7 @@ class _OrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: context.theme.colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
           Expanded(
@@ -21,37 +18,24 @@ class _OrderItem extends StatelessWidget {
               children: [
                 Text(
                   order.code,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: context.theme.colors.black,
-                  ),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.theme.colors.black),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '${context.localization.orderSuccessProducts} (${order.productsCount})',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: context.theme.colors.black.withValues(alpha: 0.5),
-                  ),
+                  style: TextStyle(fontSize: 12, color: context.theme.colors.black.withValues(alpha: 0.5)),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   order.date,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: context.theme.colors.black.withValues(alpha: 0.5),
-                  ),
+                  style: TextStyle(fontSize: 12, color: context.theme.colors.black.withValues(alpha: 0.5)),
                 ),
               ],
             ),
           ),
           _StatusBadge(status: order.status, label: order.statusLabel),
           const SizedBox(width: 12),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: context.theme.colors.black.withValues(alpha: 0.3),
-          ),
+          Icon(Icons.chevron_right_rounded, color: context.theme.colors.black.withValues(alpha: 0.3)),
         ],
       ),
     );
@@ -69,17 +53,10 @@ class _StatusBadge extends StatelessWidget {
     final (bgColor, textColor) = _getStatusColors(status, context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(20)),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: textColor,
-        ),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: textColor),
       ),
     );
   }

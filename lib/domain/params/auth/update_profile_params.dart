@@ -4,10 +4,5 @@ class UpdateProfileParams {
   final String? gender;
   final String? birthDate; // format: dd.MM.yyyy
 
-  const UpdateProfileParams({
-    required this.name,
-    required this.surname,
-    this.gender,
-    this.birthDate,
-  });
+  const UpdateProfileParams({required this.name, required this.surname, this.gender, this.birthDate});
 }

@@ -8,7 +8,7 @@ class ApiErrorModel {
     return ApiErrorModel(
       message: json['message'] ?? '',
       errors: (json['errors'] as Map<String, dynamic>?)?.map(
-            (key, value) => MapEntry(key, (value as List).map((e) => e.toString()).toList()),
+        (key, value) => MapEntry(key, (value as List).map((e) => e.toString()).toList()),
       ),
     );
   }

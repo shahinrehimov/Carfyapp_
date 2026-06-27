@@ -4,12 +4,7 @@ class EngineVolumeModel {
   final String valueLiters;
   final int valueCc;
 
-  EngineVolumeModel({
-    required this.id,
-    required this.title,
-    required this.valueLiters,
-    required this.valueCc,
-  });
+  EngineVolumeModel({required this.id, required this.title, required this.valueLiters, required this.valueCc});
 
   factory EngineVolumeModel.fromJson(Map<String, dynamic> json) {
     return EngineVolumeModel(

@@ -17,8 +17,7 @@ class AdvertisementRemoteDataSourceImpl extends AdvertisementRemoteDataSource wi
   Future<List<AdvertisementModel>> fetchActiveAdvertisements() {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.activeAdvertisements),
-      map: (json) =>
-          json['data'].map<AdvertisementModel>((item) => AdvertisementModel.fromJson(item)).toList(),
+      map: (json) => json['data'].map<AdvertisementModel>((item) => AdvertisementModel.fromJson(item)).toList(),
     );
   }
 }

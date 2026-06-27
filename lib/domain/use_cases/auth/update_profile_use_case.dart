@@ -11,6 +11,5 @@ class UpdateProfileUseCase {
 
   UpdateProfileUseCase(this._repository);
 
-  Future<Either<Failure, AuthUser>> call(UpdateProfileParams params) =>
-      _repository.updateProfile(params: params);
+  Future<Either<Failure, AuthUser>> call(UpdateProfileParams params) => _repository.updateProfile(params: params);
 }

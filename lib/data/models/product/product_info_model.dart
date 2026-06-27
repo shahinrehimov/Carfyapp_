@@ -33,9 +33,7 @@ class ProductInfoModel {
       descriptionShort: json['description_short'] as String?,
       hoverImage: json['hover_image'] as String?,
       isSet: json['is_set'] as bool? ?? false,
-      brand: json['brand'] != null
-          ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
-          : null,
+      brand: json['brand'] != null ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>) : null,
     );
   }
 }

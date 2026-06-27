@@ -26,12 +26,7 @@ class MainPage extends StatelessWidget {
         child: AutoTabsScaffold(
           lazyLoad: true,
           backgroundColor: context.theme.colors.bg,
-          routes: const [
-            HomeRoute(),
-            WishlistRoute(),
-            BasketRoute(),
-            ProfileRoute(),
-          ],
+          routes: const [HomeRoute(), WishlistRoute(), BasketRoute(), ProfileRoute()],
           bottomNavigationBuilder: (context, tabsRouter) {
             return BlocConsumer<MainCubit, MainPages>(
               listener: (context, state) {

@@ -2,10 +2,7 @@ class ProductShowQueryParams {
   final bool otherSellers;
   final bool withRelated;
 
-  ProductShowQueryParams({
-    this.otherSellers = false,
-    this.withRelated = false,
-  });
+  ProductShowQueryParams({this.otherSellers = false, this.withRelated = false});
 
   Map<String, dynamic> toQueryParameters() {
     final params = <String, dynamic>{};

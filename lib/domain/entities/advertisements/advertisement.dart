@@ -4,10 +4,5 @@ class Advertisement {
   final String? imageUrl;
   final String link;
 
-  Advertisement({
-    required this.title,
-    required this.key,
-    required this.imageUrl,
-    required this.link,
-  });
+  Advertisement({required this.title, required this.key, required this.imageUrl, required this.link});
 }

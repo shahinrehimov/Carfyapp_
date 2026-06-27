@@ -4,24 +4,12 @@ class WishlistState extends Equatable {
   final StateStatus status;
   final List<Product> products;
 
-  const WishlistState({
-    required this.status,
-    required this.products,
-  });
+  const WishlistState({required this.status, required this.products});
 
-  factory WishlistState.initial() => WishlistState(
-    status: StateStatus.loading(),
-    products: [],
-  );
+  factory WishlistState.initial() => WishlistState(status: StateStatus.loading(), products: []);
 
-  WishlistState copyWith({
-    StateStatus? status,
-    List<Product>? products,
-  }) {
-    return WishlistState(
-      status: status ?? this.status,
-      products: products ?? this.products,
-    );
+  WishlistState copyWith({StateStatus? status, List<Product>? products}) {
+    return WishlistState(status: status ?? this.status, products: products ?? this.products);
   }
 
   @override

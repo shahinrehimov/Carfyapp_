@@ -15,8 +15,6 @@ class ContactRemoteDataSourceImpl extends ContactRemoteDataSource with DataSourc
 
   @override
   Future<void> sendContact(SendContactDto dto) {
-    return handleResponse(
-      () => _networkManager.post(EndpointPaths.contactSend, data: dto.toJson()),
-    );
+    return handleResponse(() => _networkManager.post(EndpointPaths.contactSend, data: dto.toJson()));
   }
 }

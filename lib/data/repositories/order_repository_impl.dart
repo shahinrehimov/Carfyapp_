@@ -50,9 +50,7 @@ class OrderRepositoryImpl extends OrderRepository with RepositorySafeCallMixin {
   @override
   Future<Either<Failure, PaginationResponse<OrderSummary>>> loadOrders(OrdersLoadParams params) {
     return safeCall(() async {
-      final res = await _dataSource.loadOrders(
-        OrdersLoadQueryParams(page: params.page, limit: params.limit),
-      );
+      final res = await _dataSource.loadOrders(OrdersLoadQueryParams(page: params.page, limit: params.limit));
       return PaginationMapper.map(res, _mapper.mapOrderSummary);
     });
   }

@@ -21,10 +21,7 @@ class NotificationsPage extends StatelessWidget implements AutoRouteWrapper {
   const NotificationsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => NotificationsCubit()..init(),
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => NotificationsCubit()..init(), child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +80,7 @@ class _NotificationsList extends StatelessWidget {
             children: [
               for (int i = 0; i < grouped.length; i++) ...[
                 if (i > 0) const SizedBox(height: 30),
-                _DateGroup(
-                  dateLabel: grouped[i].key,
-                  notifications: grouped[i].value,
-                ),
+                _DateGroup(dateLabel: grouped[i].key, notifications: grouped[i].value),
               ],
               if (isPaginationLoading)
                 const Padding(
@@ -110,8 +104,18 @@ class _NotificationsList extends StatelessWidget {
   }
 
   static const _azMonths = [
-    'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun',
-    'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr',
+    'Yanvar',
+    'Fevral',
+    'Mart',
+    'Aprel',
+    'May',
+    'İyun',
+    'İyul',
+    'Avqust',
+    'Sentyabr',
+    'Oktyabr',
+    'Noyabr',
+    'Dekabr',
   ];
 
   String _formatDateLabel(String dateRaw) {
@@ -160,10 +164,12 @@ class _DateGroup extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        ...notifications.map((n) => Padding(
-              padding: const EdgeInsets.only(bottom: 14),
-              child: _NotificationItem(notification: n),
-            )),
+        ...notifications.map(
+          (n) => Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: _NotificationItem(notification: n),
+          ),
+        ),
       ],
     );
   }
@@ -185,10 +191,7 @@ class _NotificationsAppBar extends StatelessWidget implements PreferredSizeWidge
           title: unread > 0
               ? '${context.localization.notificationsTitle} ($unread)'
               : context.localization.notificationsTitle,
-          actions: [
-            _ReadAllButton(),
-            _DeleteAllButton(),
-          ],
+          actions: [_ReadAllButton(), _DeleteAllButton()],
         );
       },
     );
@@ -262,10 +265,7 @@ class _NotificationsShimmer extends StatelessWidget {
       itemBuilder: (_, __) => ShimmerWrapper(
         child: Container(
           height: 100,
-          decoration: BoxDecoration(
-            color: context.theme.colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
+          decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),
     );

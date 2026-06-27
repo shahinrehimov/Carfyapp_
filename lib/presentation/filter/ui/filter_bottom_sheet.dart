@@ -102,10 +102,7 @@ class _FilterContent extends StatelessWidget {
                 child: Container(
                   width: 54,
                   height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                 ),
               ),
             ),
@@ -113,11 +110,7 @@ class _FilterContent extends StatelessWidget {
             Center(
               child: Text(
                 context.localization.filter,
-                style: TextStyle(
-                  color: context.theme.colors.textDark,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
               ),
             ),
             const SizedBox(height: 16),
@@ -537,12 +530,7 @@ class _MultiSelectField extends StatelessWidget {
   final VoidCallback onTap;
   final bool enabled;
 
-  const _MultiSelectField({
-    required this.hint,
-    required this.selectedCount,
-    required this.onTap,
-    this.enabled = true,
-  });
+  const _MultiSelectField({required this.hint, required this.selectedCount, required this.onTap, this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
@@ -564,9 +552,7 @@ class _MultiSelectField extends StatelessWidget {
                   selectedCount > 0 ? '$selectedCount seçilib' : hint,
                   style: TextStyle(
                     fontSize: 14,
-                    color: selectedCount > 0
-                        ? context.theme.colors.textDark
-                        : context.theme.colors.textLight,
+                    color: selectedCount > 0 ? context.theme.colors.textDark : context.theme.colors.textLight,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -597,21 +583,14 @@ class _FilterLoading extends StatelessWidget {
             child: Container(
               width: 54,
               height: 3,
-              decoration: BoxDecoration(
-                color: const Color(0xFFD9D9D9),
-                borderRadius: BorderRadius.circular(100),
-              ),
+              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
             ),
           ),
         ),
         Center(
           child: Text(
             context.localization.filter,
-            style: TextStyle(
-              color: context.theme.colors.textDark,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
+            style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
           ),
         ),
         const SizedBox(height: 16),

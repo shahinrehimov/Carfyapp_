@@ -33,11 +33,7 @@ class ProductReviewsSection extends StatelessWidget {
                   Expanded(
                     child: Text(
                       context.localization.reviewsAndRatings,
-                      style: TextStyle(
-                        color: context.theme.colors.textDark,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                   ),
                   SizedBox(
@@ -47,11 +43,13 @@ class ProductReviewsSection extends StatelessWidget {
                         final product = state.product;
                         if (product == null) return;
                         final cubit = context.read<ProductDetailCubit>();
-                        final result = await context.pushRoute<bool>(WriteReviewRoute(
-                          cpvUuid: product.seller?.uuid ?? product.uuid,
-                          productTitle: product.title,
-                          productImage: product.mainImage ?? product.hoverImage,
-                        ));
+                        final result = await context.pushRoute<bool>(
+                          WriteReviewRoute(
+                            cpvUuid: product.seller?.uuid ?? product.uuid,
+                            productTitle: product.title,
+                            productImage: product.mainImage ?? product.hoverImage,
+                          ),
+                        );
                         if (result == true) {
                           cubit.reloadReviews();
                         }
@@ -80,24 +78,14 @@ class ProductReviewsSection extends StatelessWidget {
                   child: Text(
                     context.localization.noReviews,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: context.theme.colors.textDark,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textDark, fontSize: 13, fontWeight: FontWeight.w400),
                   ),
                 ),
               ...state.reviews.map((review) => _ReviewItem(review: review)),
               if (state.totalReviews > state.reviews.length) ...[
                 const SizedBox(height: 16),
                 if (state.reviewsStatus is StateStatusPaginationLoading)
-                  const Center(
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  )
+                  const Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)))
                 else
                   GestureDetector(
                     onTap: () => context.read<ProductDetailCubit>().loadMoreReviews(),

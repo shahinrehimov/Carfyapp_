@@ -47,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: shape ?? this.shape,
       centerTitle: centerTitle ?? this.centerTitle,
       height: height ?? this.height,
-      flexibleSpace: flexibleSpace ?? this.flexibleSpace
+      flexibleSpace: flexibleSpace ?? this.flexibleSpace,
     );
   }
 

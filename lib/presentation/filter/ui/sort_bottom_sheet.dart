@@ -18,18 +18,12 @@ class SortBottomSheet extends StatelessWidget {
 
   const SortBottomSheet({super.key, this.currentSort, this.currentSortType});
 
-  static Future<SortSelection?> show(
-    BuildContext context, {
-    String? currentSort,
-    String? currentSortType,
-  }) {
+  static Future<SortSelection?> show(BuildContext context, {String? currentSort, String? currentSortType}) {
     final cubit = context.read<FilterCubit>();
     return showModalBottomSheet<SortSelection>(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
       builder: (_) => BlocProvider.value(
         value: cubit,
         child: SortBottomSheet(currentSort: currentSort, currentSortType: currentSortType),
@@ -53,19 +47,12 @@ class SortBottomSheet extends StatelessWidget {
             child: Container(
               width: 54,
               height: 3,
-              decoration: BoxDecoration(
-                color: const Color(0xFFD9D9D9),
-                borderRadius: BorderRadius.circular(100),
-              ),
+              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
             ),
           ),
           Text(
             context.localization.sorting,
-            style: TextStyle(
-              color: context.theme.colors.textDark,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
+            style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 8),
           for (final option in sortOptions)
@@ -74,9 +61,7 @@ class SortBottomSheet extends StatelessWidget {
                 title: '${option.title} - ${type.title}',
                 selected: currentSort == option.id && currentSortType == type.id,
                 onTap: () {
-                  Navigator.of(context).pop(
-                    SortSelection(sort: option.id, sortType: type.id),
-                  );
+                  Navigator.of(context).pop(SortSelection(sort: option.id, sortType: type.id));
                 },
               ),
           const SizedBox(height: 8),
@@ -116,20 +101,14 @@ class _SortRow extends StatelessWidget {
               height: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: selected ? context.theme.colors.primary : const Color(0xFFDFDFDF),
-                  width: 2,
-                ),
+                border: Border.all(color: selected ? context.theme.colors.primary : const Color(0xFFDFDFDF), width: 2),
               ),
               child: selected
                   ? Center(
                       child: Container(
                         width: 10,
                         height: 10,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: context.theme.colors.primary,
-                        ),
+                        decoration: BoxDecoration(shape: BoxShape.circle, color: context.theme.colors.primary),
                       ),
                     )
                   : null,

@@ -5,11 +5,7 @@ class CheckoutPreviewItem {
   final double price;
   final Product product;
 
-  CheckoutPreviewItem({
-    required this.quantity,
-    required this.price,
-    required this.product,
-  });
+  CheckoutPreviewItem({required this.quantity, required this.price, required this.product});
 }
 
 class CheckoutPreviewSeller {

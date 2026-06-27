@@ -3,9 +3,5 @@ class VerifyEmailOtpParams {
   final String email;
   final int otp;
 
-  VerifyEmailOtpParams({
-    required this.userUuid,
-    required this.email,
-    required this.otp,
-  });
+  VerifyEmailOtpParams({required this.userUuid, required this.email, required this.otp});
 }

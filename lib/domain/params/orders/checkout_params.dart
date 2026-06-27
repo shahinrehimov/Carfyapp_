@@ -4,10 +4,5 @@ class CheckoutParams {
   final String? note;
   final bool useReferralBalance;
 
-  CheckoutParams({
-    required this.paymentMethod,
-    required this.addressId,
-    this.note,
-    this.useReferralBalance = false,
-  });
+  CheckoutParams({required this.paymentMethod, required this.addressId, this.note, this.useReferralBalance = false});
 }

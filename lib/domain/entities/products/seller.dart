@@ -7,11 +7,5 @@ class Seller {
   final City? city;
   final List<String> images;
 
-  Seller({
-    required this.uuid,
-    this.storeCode,
-    this.label,
-    this.city,
-    this.images = const [],
-  });
+  Seller({required this.uuid, this.storeCode, this.label, this.city, this.images = const []});
 }

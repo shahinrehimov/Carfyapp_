@@ -19,9 +19,7 @@ class SellerCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        shadows: const [
-          BoxShadow(color: Color(0x14000000), blurRadius: 2, offset: Offset(0, 2)),
-        ],
+        shadows: const [BoxShadow(color: Color(0x14000000), blurRadius: 2, offset: Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,10 +41,7 @@ class SellerCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          for (final item in seller.items) ...[
-            _ProductItemRow(item: item),
-            const SizedBox(height: 8),
-          ],
+          for (final item in seller.items) ...[_ProductItemRow(item: item), const SizedBox(height: 8)],
           const Divider(height: 1, color: Color(0xFFEEEEEE)),
           const SizedBox(height: 8),
           Row(

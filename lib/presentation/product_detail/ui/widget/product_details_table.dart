@@ -16,9 +16,7 @@ class ProductDetailsTable extends StatelessWidget {
       rows.add(_DetailRow(label: context.localization.city, value: product.seller!.city!.title));
     }
     if (product.product?.mainCategory != null) {
-      rows.add(
-        _DetailRow(label: context.localization.category, value: product.product?.mainCategory?.title ?? ''),
-      );
+      rows.add(_DetailRow(label: context.localization.category, value: product.product?.mainCategory?.title ?? ''));
     }
     if (product.product?.brand != null) {
       rows.add(_DetailRow(label: context.localization.brand, value: product.product!.brand!.title));

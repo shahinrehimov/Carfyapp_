@@ -87,8 +87,18 @@ class FilterState extends Equatable {
 
   @override
   List<Object?> get props => [
-    loadStatus, filtersData, selectedBrand, selectedModelIds, selectedCityIds,
-    selectedColorIds, selectedConditionSlugs, selectedCategories, selectedSubCategories,
-    minYear, maxYear, minPrice, maxPrice,
+    loadStatus,
+    filtersData,
+    selectedBrand,
+    selectedModelIds,
+    selectedCityIds,
+    selectedColorIds,
+    selectedConditionSlugs,
+    selectedCategories,
+    selectedSubCategories,
+    minYear,
+    maxYear,
+    minPrice,
+    maxPrice,
   ];
 }

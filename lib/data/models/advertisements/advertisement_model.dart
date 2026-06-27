@@ -4,12 +4,7 @@ class AdvertisementModel {
   final String? imageUrl;
   final String link;
 
-  AdvertisementModel({
-    required this.title,
-    required this.key,
-    required this.imageUrl,
-    required this.link,
-  });
+  AdvertisementModel({required this.title, required this.key, required this.imageUrl, required this.link});
 
   factory AdvertisementModel.fromJson(Map<String, dynamic> json) {
     return AdvertisementModel(

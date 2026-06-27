@@ -6,9 +6,5 @@ class BasketActionResponse {
   final BasketProduct? product;
   final BasketData basketData;
 
-  BasketActionResponse({
-    required this.message,
-    this.product,
-    required this.basketData,
-  });
+  BasketActionResponse({required this.message, this.product, required this.basketData});
 }

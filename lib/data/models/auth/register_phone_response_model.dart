@@ -5,11 +5,7 @@ class RegisterPhoneResponseModel {
   final AuthUserModel user;
   final String message;
 
-  RegisterPhoneResponseModel({
-    required this.step,
-    required this.user,
-    required this.message,
-  });
+  RegisterPhoneResponseModel({required this.step, required this.user, required this.message});
 
   factory RegisterPhoneResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterPhoneResponseModel(

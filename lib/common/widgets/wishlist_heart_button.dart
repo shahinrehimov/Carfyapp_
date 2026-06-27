@@ -11,18 +11,13 @@ class WishlistHeartButton extends StatefulWidget {
   final String? cpvUuid;
   final double size;
 
-  const WishlistHeartButton({
-    super.key,
-    required this.cpvUuid,
-    this.size = 24,
-  });
+  const WishlistHeartButton({super.key, required this.cpvUuid, this.size = 24});
 
   @override
   State<WishlistHeartButton> createState() => _WishlistHeartButtonState();
 }
 
-class _WishlistHeartButtonState extends State<WishlistHeartButton>
-    with SingleTickerProviderStateMixin {
+class _WishlistHeartButtonState extends State<WishlistHeartButton> with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 260),

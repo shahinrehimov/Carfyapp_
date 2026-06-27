@@ -16,9 +16,7 @@ Future<void> showWithdrawalBottomSheet(BuildContext context) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.white,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-    ),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
     builder: (_) => BlocProvider.value(
       value: cubit,
       child: _WithdrawalSheet(availableBalance: cubit.state.info?.availableBalance ?? 0),
@@ -80,20 +78,13 @@ class _WithdrawalSheetState extends State<_WithdrawalSheet> {
                 child: Container(
                   width: 40,
                   height: 4,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(2)),
                 ),
               ),
               const SizedBox(height: 20),
               Text(
                 context.localization.referralWithdrawTitle,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: context.theme.colors.black,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: context.theme.colors.black),
               ),
               const SizedBox(height: 8),
               Text(
@@ -105,9 +96,7 @@ class _WithdrawalSheetState extends State<_WithdrawalSheet> {
                 controller: _amountController,
                 hint: context.localization.referralWithdrawAmount,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
-                ],
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
                 onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 12),
@@ -115,10 +104,7 @@ class _WithdrawalSheetState extends State<_WithdrawalSheet> {
                 controller: _cardLast4Controller,
                 hint: context.localization.referralWithdrawCardLast4,
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(4),
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(4)],
                 onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 12),
@@ -136,10 +122,10 @@ class _WithdrawalSheetState extends State<_WithdrawalSheet> {
                   loading: state.withdrawalCreateStatus is StateStatusLoading,
                   onPressed: _isValid
                       ? () => context.read<ReferralCubit>().createWithdrawal(
-                            amount: double.parse(_amountController.text),
-                            cardLast4: _cardLast4Controller.text,
-                            cardHolderName: _cardHolderController.text.trim(),
-                          )
+                          amount: double.parse(_amountController.text),
+                          cardLast4: _cardLast4Controller.text,
+                          cardHolderName: _cardHolderController.text.trim(),
+                        )
                       : null,
                 ),
               ),

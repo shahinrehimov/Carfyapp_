@@ -11,8 +11,7 @@ class MainCubit extends Cubit<MainPages> {
   final RegisterDeviceTokenUseCase _registerDeviceTokenUseCase;
 
   MainCubit({RegisterDeviceTokenUseCase? registerDeviceTokenUseCase})
-    : _registerDeviceTokenUseCase =
-          registerDeviceTokenUseCase ?? getIt<RegisterDeviceTokenUseCase>(),
+    : _registerDeviceTokenUseCase = registerDeviceTokenUseCase ?? getIt<RegisterDeviceTokenUseCase>(),
       super(MainPages.home) {
     _initPushNotifications();
   }
@@ -23,9 +22,7 @@ class MainCubit extends Cubit<MainPages> {
   }
 
   Future<void> _registerFcmToken() async {
-    final deviceType = defaultTargetPlatform == TargetPlatform.iOS
-        ? 'ios'
-        : 'android';
+    final deviceType = defaultTargetPlatform == TargetPlatform.iOS ? 'ios' : 'android';
     final String? token = await FirebaseMessaging.instance.getToken();
     if (token != null) {
       _registerDeviceTokenUseCase(token, deviceType);

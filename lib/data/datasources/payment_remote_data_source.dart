@@ -17,9 +17,8 @@ class PaymentRemoteDataSourceImpl extends PaymentRemoteDataSource with DataSourc
   Future<List<PaymentMethodModel>> getPaymentMethods() {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.paymentMethods),
-      map: (json) => (json['data'] as List<dynamic>)
-          .map((e) => PaymentMethodModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      map: (json) =>
+          (json['data'] as List<dynamic>).map((e) => PaymentMethodModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
   }
 }

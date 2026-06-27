@@ -6,8 +6,8 @@ class NotificationBadgeCubit extends Cubit<int> {
   final GetUnreadCountUseCase _getUnreadCountUseCase;
 
   NotificationBadgeCubit({GetUnreadCountUseCase? getUnreadCountUseCase})
-      : _getUnreadCountUseCase = getUnreadCountUseCase ?? getIt<GetUnreadCountUseCase>(),
-        super(0);
+    : _getUnreadCountUseCase = getUnreadCountUseCase ?? getIt<GetUnreadCountUseCase>(),
+      super(0);
 
   Future<void> load() async {
     final result = await _getUnreadCountUseCase();

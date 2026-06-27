@@ -12,16 +12,8 @@ class _OrderInfoCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 2,
-            offset: Offset(0, 2),
-          ),
-        ],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shadows: const [BoxShadow(color: Color(0x14000000), blurRadius: 2, offset: Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -31,11 +23,7 @@ class _OrderInfoCard extends StatelessWidget {
               children: [
                 Text(
                   'ID: ${order.code}',
-                  style: const TextStyle(
-                    color: Color(0xFF292929),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
@@ -43,11 +31,7 @@ class _OrderInfoCard extends StatelessWidget {
                     Clipboard.setData(ClipboardData(text: order.code));
                     CustomToast.showSuccess(context, context.localization.copied);
                   },
-                  child: Icon(
-                    Icons.copy_rounded,
-                    size: 15,
-                    color: context.theme.colors.black.withValues(alpha: 0.4),
-                  ),
+                  child: Icon(Icons.copy_rounded, size: 15, color: context.theme.colors.black.withValues(alpha: 0.4)),
                 ),
               ],
             ),
@@ -57,11 +41,7 @@ class _OrderInfoCard extends StatelessWidget {
             label: context.localization.orderDetailDelivery,
             child: Text(
               order.date,
-              style: const TextStyle(
-                color: Color(0xFF292929),
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
+              style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w400),
             ),
           ),
           const SizedBox(height: 10),
@@ -69,11 +49,7 @@ class _OrderInfoCard extends StatelessWidget {
             label: context.localization.amount,
             child: Text(
               '${order.amountFinal.toStringAsFixed(2)}\u20BC',
-              style: const TextStyle(
-                color: Color(0xFF292929),
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ),
         ],
@@ -96,11 +72,7 @@ class _InfoRow extends StatelessWidget {
           width: 100,
           child: Text(
             label,
-            style: const TextStyle(
-              color: Color(0xFF292929),
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
+            style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w400),
           ),
         ),
         const SizedBox(width: 10),

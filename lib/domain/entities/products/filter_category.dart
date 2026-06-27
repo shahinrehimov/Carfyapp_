@@ -4,10 +4,5 @@ class FilterCategory {
   final String title;
   final List<FilterCategory> children;
 
-  FilterCategory({
-    required this.id,
-    required this.slug,
-    required this.title,
-    this.children = const [],
-  });
+  FilterCategory({required this.id, required this.slug, required this.title, this.children = const []});
 }

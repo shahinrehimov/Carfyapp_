@@ -2,10 +2,7 @@ class CategorySlugsModel {
   final String? subCategorySlug;
   final String? parentCategorySlug;
 
-  CategorySlugsModel({
-    this.subCategorySlug,
-    this.parentCategorySlug,
-  });
+  CategorySlugsModel({this.subCategorySlug, this.parentCategorySlug});
 
   factory CategorySlugsModel.fromJson(Map<String, dynamic> json) {
     return CategorySlugsModel(

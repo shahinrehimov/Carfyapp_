@@ -29,11 +29,13 @@ class _BasketManagerListenerState extends State<BasketManagerListener> {
         BlocListener<BasketManagerCubit, BasketManagerState>(
           listenWhen: (prev, curr) {
             if (prev.productLoadingStates == curr.productLoadingStates) return false;
-            return curr.productLoadingStates.values.any((s) =>
-                s is StateStatusFailure ||
-                s is StateStatusServerFailure ||
-                s is StateStatusNetworkFailure ||
-                s is StateStatusSuccessWithMessage);
+            return curr.productLoadingStates.values.any(
+              (s) =>
+                  s is StateStatusFailure ||
+                  s is StateStatusServerFailure ||
+                  s is StateStatusNetworkFailure ||
+                  s is StateStatusSuccessWithMessage,
+            );
           },
           listener: (context, state) {
             final keysToRemove = <String>[];

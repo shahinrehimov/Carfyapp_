@@ -24,10 +24,8 @@ class OrderDetailPage extends StatelessWidget implements AutoRouteWrapper {
   const OrderDetailPage({super.key, required this.orderId});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => OrderDetailCubit()..init(orderId),
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider(create: (_) => OrderDetailCubit()..init(orderId), child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +77,7 @@ class _OrderDetailShimmer extends StatelessWidget {
           ShimmerWrapper(
             child: Container(
               height: 140,
-              decoration: BoxDecoration(
-                color: context.theme.colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
+              decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
             ),
           ),
         ],

@@ -22,25 +22,19 @@ class ReferralPerksCard extends StatelessWidget {
         children: [
           Text(
             context.localization.referralPerks,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF242323),
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF242323)),
           ),
           const SizedBox(height: 16),
           _PerkItem(
             icon: Icons.local_shipping_outlined,
             color: const Color(0xFF4CAF50),
-            text:
-                '${context.localization.referralFreeDelivery} (${perks.freeDeliveryRemaining})',
+            text: '${context.localization.referralFreeDelivery} (${perks.freeDeliveryRemaining})',
           ),
           const SizedBox(height: 12),
           _PerkItem(
             icon: Icons.discount_outlined,
             color: const Color(0xFF3696E7),
-            text:
-                '${perks.discountRate} ${context.localization.referralDiscount} (${perks.discountOrdersRemaining})',
+            text: '${perks.discountRate} ${context.localization.referralDiscount} (${perks.discountOrdersRemaining})',
           ),
         ],
       ),
@@ -53,11 +47,7 @@ class _PerkItem extends StatelessWidget {
   final Color color;
   final String text;
 
-  const _PerkItem({
-    required this.icon,
-    required this.color,
-    required this.text,
-  });
+  const _PerkItem({required this.icon, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -66,20 +56,13 @@ class _PerkItem extends StatelessWidget {
         Container(
           width: 36,
           height: 36,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(10),
-          ),
+          decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
           child: Icon(icon, size: 20, color: color),
         ),
         const SizedBox(width: 12),
         Text(
           text,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF242323),
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
         ),
       ],
     );

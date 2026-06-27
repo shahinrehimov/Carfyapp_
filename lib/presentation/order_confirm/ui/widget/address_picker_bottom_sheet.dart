@@ -8,10 +8,7 @@ import 'package:carfy/presentation/addresses/state/my_addresses/my_addresses_cub
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-Future<Address?> showAddressPickerBottomSheet(
-  BuildContext context, {
-  Address? selectedAddress,
-}) {
+Future<Address?> showAddressPickerBottomSheet(BuildContext context, {Address? selectedAddress}) {
   return showModalBottomSheet<Address?>(
     context: context,
     isScrollControlled: true,
@@ -46,10 +43,7 @@ class _AddressPickerBottomSheet extends StatelessWidget {
                 child: Container(
                   width: 54,
                   height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                 ),
               ),
               Text(

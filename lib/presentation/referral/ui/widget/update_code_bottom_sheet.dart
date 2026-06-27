@@ -16,9 +16,7 @@ Future<void> showUpdateCodeBottomSheet(BuildContext context) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.white,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-    ),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
     builder: (_) => BlocProvider.value(
       value: cubit,
       child: _UpdateCodeSheet(initialCode: cubit.state.info?.code ?? ''),
@@ -78,29 +76,18 @@ class _UpdateCodeSheetState extends State<_UpdateCodeSheet> {
                 child: Container(
                   width: 40,
                   height: 4,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(2)),
                 ),
               ),
               const SizedBox(height: 20),
               Text(
                 context.localization.referralUpdateCode,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: context.theme.colors.black,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: context.theme.colors.black),
               ),
               const SizedBox(height: 8),
               Text(
                 context.localization.referralUpdateCodeRules,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF717171),
-                ),
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
               ),
               const SizedBox(height: 20),
               CustomTextField(
@@ -119,8 +106,8 @@ class _UpdateCodeSheetState extends State<_UpdateCodeSheet> {
                 builder: (context, state) => CustomButton(
                   text: context.localization.referralUpdateCodeSave,
                   loading: state.updateCodeStatus is StateStatusLoading,
-                  onPressed: _isValid(_controller.text) &&
-                          _controller.text.toUpperCase() != widget.initialCode.toUpperCase()
+                  onPressed:
+                      _isValid(_controller.text) && _controller.text.toUpperCase() != widget.initialCode.toUpperCase()
                       ? () => context.read<ReferralCubit>().updateCode(_controller.text)
                       : null,
                 ),

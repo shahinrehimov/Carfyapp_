@@ -16,12 +16,10 @@ class ContactUsCubit extends Cubit<ContactUsState> with StateMapHelper {
   final SendContactUseCase _sendContactUseCase;
   final GetProfileUseCase _getProfileUseCase;
 
-  ContactUsCubit({
-    SendContactUseCase? sendContactUseCase,
-    GetProfileUseCase? getProfileUseCase,
-  }) : _sendContactUseCase = sendContactUseCase ?? getIt<SendContactUseCase>(),
-       _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
-       super(ContactUsState.initial());
+  ContactUsCubit({SendContactUseCase? sendContactUseCase, GetProfileUseCase? getProfileUseCase})
+    : _sendContactUseCase = sendContactUseCase ?? getIt<SendContactUseCase>(),
+      _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
+      super(ContactUsState.initial());
 
   Future<void> init() async {
     final result = await _getProfileUseCase();
@@ -32,29 +30,19 @@ class ContactUsCubit extends Cubit<ContactUsState> with StateMapHelper {
     final user = state.user;
     if (user == null) return;
 
-    emit(state.copyWith(
-      submitStatus: StateStatus.loading(),
-      messageValidationState: FieldValidationState.pure(),
-    ));
+    emit(state.copyWith(submitStatus: StateStatus.loading(), messageValidationState: FieldValidationState.pure()));
 
-    final result = await _sendContactUseCase(SendContactParams(
-      fullName: user.fullName,
-      email: user.email,
-      message: message,
-    ));
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(submitStatus: mapFailure(failure)));
-        if (failure is ValidationFailure) _emitValidationErrors(failure);
-      },
-      (_) => emit(state.copyWith(submitStatus: StateStatus.successWithMessage(successMessage))),
+    final result = await _sendContactUseCase(
+      SendContactParams(fullName: user.fullName, email: user.email, message: message),
     );
+
+    result.fold((failure) {
+      emit(state.copyWith(submitStatus: mapFailure(failure)));
+      if (failure is ValidationFailure) _emitValidationErrors(failure);
+    }, (_) => emit(state.copyWith(submitStatus: StateStatus.successWithMessage(successMessage))));
   }
 
   void _emitValidationErrors(ValidationFailure failure) {
-    emit(state.copyWith(
-      messageValidationState: mapValidationFailure('message', failure),
-    ));
+    emit(state.copyWith(messageValidationState: mapValidationFailure('message', failure)));
   }
 }

@@ -25,8 +25,7 @@ class MyAddressesPage extends StatefulWidget implements AutoRouteWrapper {
   final bool openAddForm;
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(create: (_) => MyAddressesCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => MyAddressesCubit()..init(), child: this);
 
   @override
   State<MyAddressesPage> createState() => _MyAddressesPageState();
@@ -169,10 +168,7 @@ class _AddressListShimmer extends StatelessWidget {
       itemBuilder: (_, __) => ShimmerWrapper(
         child: Container(
           height: 120,
-          decoration: BoxDecoration(
-            color: context.theme.colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
+          decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),
     );

@@ -38,10 +38,7 @@ class ProductListQueryParams {
   });
 
   Map<String, dynamic> toQueryParameters() {
-    final params = <String, dynamic>{
-      'page': page,
-      'limit': limit,
-    };
+    final params = <String, dynamic>{'page': page, 'limit': limit};
     if (search != null) params['search'] = search;
     if (sort != null) params['sort'] = sort;
     if (sortType != null) params['sort_type'] = sortType;

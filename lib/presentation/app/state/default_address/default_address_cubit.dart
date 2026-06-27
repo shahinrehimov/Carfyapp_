@@ -12,8 +12,8 @@ class DefaultAddressCubit extends Cubit<DefaultAddressState> {
   final GetAddressesUseCase _getAddressesUseCase;
 
   DefaultAddressCubit({GetAddressesUseCase? getAddressesUseCase})
-      : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
-        super(const DefaultAddressState());
+    : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
+      super(const DefaultAddressState());
 
   Future<void> refresh() async {
     final isLoggedIn = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
@@ -22,13 +22,10 @@ class DefaultAddressCubit extends Cubit<DefaultAddressState> {
       return;
     }
     final result = await _getAddressesUseCase();
-    result.fold(
-      (_) {},
-      (addresses) {
-        final defaultAddress = addresses.where((a) => a.isDefault).firstOrNull;
-        emit(DefaultAddressState(address: defaultAddress));
-      },
-    );
+    result.fold((_) {}, (addresses) {
+      final defaultAddress = addresses.where((a) => a.isDefault).firstOrNull;
+      emit(DefaultAddressState(address: defaultAddress));
+    });
   }
 
   void clear() => emit(const DefaultAddressState());

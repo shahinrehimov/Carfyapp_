@@ -3,9 +3,5 @@ class OtherSellersParams {
   final int page;
   final int limit;
 
-  OtherSellersParams({
-    required this.productVariantId,
-    required this.page,
-    this.limit = 20,
-  });
+  OtherSellersParams({required this.productVariantId, required this.page, this.limit = 20});
 }

@@ -7,13 +7,7 @@ class SellerModel {
   final CityModel? city;
   final List<String> images;
 
-  SellerModel({
-    required this.uuid,
-    this.storeCode,
-    this.label,
-    this.city,
-    this.images = const [],
-  });
+  SellerModel({required this.uuid, this.storeCode, this.label, this.city, this.images = const []});
 
   factory SellerModel.fromJson(Map<String, dynamic> json) {
     return SellerModel(

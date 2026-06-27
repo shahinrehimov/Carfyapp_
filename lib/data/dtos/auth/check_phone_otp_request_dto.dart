@@ -4,8 +4,5 @@ class CheckPhoneOtpRequestDto {
 
   CheckPhoneOtpRequestDto({required this.phone, required this.otp});
 
-  Map<String, dynamic> toJson() => {
-    'phone': phone,
-    'otp': otp,
-  };
+  Map<String, dynamic> toJson() => {'phone': phone, 'otp': otp};
 }

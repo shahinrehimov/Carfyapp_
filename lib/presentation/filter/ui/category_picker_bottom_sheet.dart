@@ -149,10 +149,7 @@ class _CategoryPickerBottomSheetState extends State<CategoryPickerBottomSheet> {
       }
     }
 
-    Navigator.pop(context, CategoryPickerResult(
-      categories: resultCategories,
-      subCategories: resultSubCategories,
-    ));
+    Navigator.pop(context, CategoryPickerResult(categories: resultCategories, subCategories: resultSubCategories));
   }
 
   @override
@@ -175,20 +172,13 @@ class _CategoryPickerBottomSheetState extends State<CategoryPickerBottomSheet> {
                 child: Container(
                   width: 54,
                   height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                 ),
               ),
               // Title
               Text(
                 context.localization.selectCategory,
-                style: TextStyle(
-                  color: context.theme.colors.textDark,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 16),
               // List
@@ -295,11 +285,7 @@ class _CategoryPickerBottomSheetState extends State<CategoryPickerBottomSheet> {
                   top: 8,
                   bottom: MediaQuery.of(context).padding.bottom + 16,
                 ),
-                child: CustomButton(
-                  onPressed: _confirm,
-                  text: context.localization.categoryDone,
-                  height: 48,
-                ),
+                child: CustomButton(onPressed: _confirm, text: context.localization.categoryDone, height: 48),
               ),
             ],
           ),
@@ -321,10 +307,7 @@ class _CheckboxIcon extends StatelessWidget {
       return Container(
         width: 22,
         height: 22,
-        decoration: BoxDecoration(
-          color: context.theme.colors.secondary,
-          borderRadius: BorderRadius.circular(4),
-        ),
+        decoration: BoxDecoration(color: context.theme.colors.secondary, borderRadius: BorderRadius.circular(4)),
         child: const Icon(Icons.check, size: 16, color: Colors.white),
       );
     }
@@ -332,10 +315,7 @@ class _CheckboxIcon extends StatelessWidget {
       return Container(
         width: 22,
         height: 22,
-        decoration: BoxDecoration(
-          color: context.theme.colors.secondary,
-          borderRadius: BorderRadius.circular(4),
-        ),
+        decoration: BoxDecoration(color: context.theme.colors.secondary, borderRadius: BorderRadius.circular(4)),
         child: const Icon(Icons.remove, size: 16, color: Colors.white),
       );
     }

@@ -24,23 +24,19 @@ class ReferralInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _TierBadge(
-            tier: info?.tier,
-            rate: info?.rate,
-            loading: loading,
-          ),
+          _TierBadge(tier: info?.tier, rate: info?.rate, loading: loading),
           const SizedBox(height: 16),
           if (loading)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(3, (_) => Container(
-                width: 40,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE0E0E0),
-                  borderRadius: BorderRadius.circular(4),
+              children: List.generate(
+                3,
+                (_) => Container(
+                  width: 40,
+                  height: 30,
+                  decoration: BoxDecoration(color: const Color(0xFFE0E0E0), borderRadius: BorderRadius.circular(4)),
                 ),
-              )),
+              ),
             )
           else if (info != null)
             Row(
@@ -108,16 +104,11 @@ class _TierBadge extends StatelessWidget {
       return Container(
         width: 120,
         height: 32,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE0E0E0),
-          borderRadius: BorderRadius.circular(20),
-        ),
+        decoration: BoxDecoration(color: const Color(0xFFE0E0E0), borderRadius: BorderRadius.circular(20)),
       );
     }
 
-    final tierName = (tier ?? '').isNotEmpty
-        ? '${tier![0].toUpperCase()}${tier!.substring(1)}'
-        : '';
+    final tierName = (tier ?? '').isNotEmpty ? '${tier![0].toUpperCase()}${tier!.substring(1)}' : '';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -133,11 +124,7 @@ class _TierBadge extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '$tierName · $rate',
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFFF6A623),
-            ),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFFF6A623)),
           ),
         ],
       ),
@@ -158,20 +145,12 @@ class _StatItem extends StatelessWidget {
       children: [
         Text(
           '$value',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: color,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: color),
         ),
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF717171),
-          ),
+          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
         ),
       ],
     );
@@ -185,13 +164,7 @@ class _CopyRow extends StatelessWidget {
   final VoidCallback onCopy;
   final VoidCallback? onEdit;
 
-  const _CopyRow({
-    required this.label,
-    this.value,
-    this.loading = false,
-    required this.onCopy,
-    this.onEdit,
-  });
+  const _CopyRow({required this.label, this.value, this.loading = false, required this.onCopy, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -199,30 +172,19 @@ class _CopyRow extends StatelessWidget {
       children: [
         Text(
           '$label: ',
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF717171),
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
         ),
         if (loading)
           Container(
             width: 80,
             height: 14,
-            decoration: BoxDecoration(
-              color: const Color(0xFFE0E0E0),
-              borderRadius: BorderRadius.circular(4),
-            ),
+            decoration: BoxDecoration(color: const Color(0xFFE0E0E0), borderRadius: BorderRadius.circular(4)),
           )
         else ...[
           Flexible(
             child: Text(
               value ?? '',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF242323),
-              ),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
               overflow: TextOverflow.ellipsis,
             ),
           ),

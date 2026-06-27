@@ -3,11 +3,7 @@ class ProductOptionModel {
   final String optionLabel;
   final String value;
 
-  ProductOptionModel({
-    required this.optionName,
-    required this.optionLabel,
-    required this.value,
-  });
+  ProductOptionModel({required this.optionName, required this.optionLabel, required this.value});
 
   factory ProductOptionModel.fromJson(Map<String, dynamic> json) {
     return ProductOptionModel(

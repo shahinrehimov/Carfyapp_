@@ -14,8 +14,8 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
   FilterState? _snapshot;
 
   FilterCubit({GetProductFiltersUseCase? getProductFiltersUseCase})
-      : _getProductFiltersUseCase = getProductFiltersUseCase ?? getIt<GetProductFiltersUseCase>(),
-        super(FilterState.initial());
+    : _getProductFiltersUseCase = getProductFiltersUseCase ?? getIt<GetProductFiltersUseCase>(),
+      super(FilterState.initial());
 
   Future<void> loadFilters() async {
     if (state.filtersData != null) return;
@@ -86,16 +86,10 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
   }
 
   void reset() {
-    emit(FilterState.initial().copyWith(
-      loadStatus: state.loadStatus,
-      filtersData: state.filtersData,
-    ));
+    emit(FilterState.initial().copyWith(loadStatus: state.loadStatus, filtersData: state.filtersData));
   }
 
-  void syncFromParams({
-    Set<String>? categories,
-    Set<String>? subCategories,
-  }) {
+  void syncFromParams({Set<String>? categories, Set<String>? subCategories}) {
     reset();
     if (categories != null && categories.isNotEmpty || subCategories != null && subCategories.isNotEmpty) {
       setCategories(categories ?? {}, subCategories ?? {});
@@ -115,10 +109,8 @@ class FilterCubit extends Cubit<FilterState> with StateMapHelper {
 
     final model = brand.models.where((m) => m.id == brandModelId).firstOrNull;
 
-    emit(state.copyWith(
-      selectedBrand: brand,
-      clearBrand: false,
-      selectedModelIds: model != null ? {model.id} : const {},
-    ));
+    emit(
+      state.copyWith(selectedBrand: brand, clearBrand: false, selectedModelIds: model != null ? {model.id} : const {}),
+    );
   }
 }

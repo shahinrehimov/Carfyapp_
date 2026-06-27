@@ -15,10 +15,7 @@ class LoadingDialog {
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: const CircularProgressIndicator.adaptive(),
           ),
         ),

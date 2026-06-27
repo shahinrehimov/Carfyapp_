@@ -18,34 +18,32 @@ class BasketMapper {
   BasketMapper(this._productMapper);
 
   BasketData mapBasketData(BasketDataModel model) => BasketData(
-        totalPrice: model.totalPrice,
-        totalPriceFinal: model.totalPriceFinal,
-        totalDiscount: model.totalDiscount,
-        shipping: model.shipping,
-        totalItems: model.totalItems,
-      );
+    totalPrice: model.totalPrice,
+    totalPriceFinal: model.totalPriceFinal,
+    totalDiscount: model.totalDiscount,
+    shipping: model.shipping,
+    totalItems: model.totalItems,
+  );
 
   BasketProduct mapBasketProduct(BasketProductModel model) => BasketProduct(
-        product: _productMapper.mapProduct(model.product),
-        basketQuantity: model.basketQuantity,
-        priceInBasket: model.priceInBasket,
-        priceFinalInBasket: model.priceFinalInBasket,
-      );
+    product: _productMapper.mapProduct(model.product),
+    basketQuantity: model.basketQuantity,
+    priceInBasket: model.priceInBasket,
+    priceFinalInBasket: model.priceFinalInBasket,
+  );
 
-  BasketResponse mapBasketResponse(BasketResponseModel model) => BasketResponse(
-        items: model.items.map(mapBasketProduct).toList(),
-        basketData: mapBasketData(model.basketData),
-      );
+  BasketResponse mapBasketResponse(BasketResponseModel model) =>
+      BasketResponse(items: model.items.map(mapBasketProduct).toList(), basketData: mapBasketData(model.basketData));
 
   BasketActionResponse mapBasketActionResponse(BasketActionResponseModel model) => BasketActionResponse(
-        message: model.message,
-        product: model.product != null ? mapBasketProduct(model.product!) : null,
-        basketData: mapBasketData(model.basketData),
-      );
+    message: model.message,
+    product: model.product != null ? mapBasketProduct(model.product!) : null,
+    basketData: mapBasketData(model.basketData),
+  );
 
   BasketQuantityResponse mapBasketQuantityResponse(BasketQuantityResponseModel model) => BasketQuantityResponse(
-        message: model.message,
-        quantity: model.quantity,
-        basketData: mapBasketData(model.basketData),
-      );
+    message: model.message,
+    quantity: model.quantity,
+    basketData: mapBasketData(model.basketData),
+  );
 }

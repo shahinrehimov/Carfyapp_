@@ -26,8 +26,8 @@ class GroupModel {
       image: json['image'] as String?,
       products: json['product_variants'] != null
           ? (json['product_variants'] as List<dynamic>)
-              .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
-              .toList()
+                .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
+                .toList()
           : [],
     );
   }

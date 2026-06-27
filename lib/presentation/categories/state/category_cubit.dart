@@ -6,7 +6,6 @@ import 'package:carfy/domain/use_cases/category/get_categories_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 part 'category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> with StateMapHelper {

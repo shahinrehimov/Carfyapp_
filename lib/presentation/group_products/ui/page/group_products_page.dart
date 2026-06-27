@@ -17,10 +17,7 @@ class GroupProductsPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (_) => GroupProductsCubit()..load(slug),
-      child: this,
-    );
+    return BlocProvider(create: (_) => GroupProductsCubit()..load(slug), child: this);
   }
 
   @override

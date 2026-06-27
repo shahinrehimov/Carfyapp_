@@ -26,8 +26,8 @@ class ProductDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (_) => ProductDetailCubit()
-      ..init(ProductShowParams(cpvUuid: cpvUuid, otherSellers: true, withRelated: true)),
+    create: (_) =>
+        ProductDetailCubit()..init(ProductShowParams(cpvUuid: cpvUuid, otherSellers: true, withRelated: true)),
     child: this,
   );
 
@@ -72,8 +72,7 @@ class _ProductDetailBody extends StatelessWidget {
           SliverToBoxAdapter(child: ProductDescriptionSection(description: product.product!.descriptionShort!)),
         const SliverToBoxAdapter(child: ProductContactSection()),
         const SliverToBoxAdapter(child: ProductReviewsSection()),
-        if (product.relatedProducts.isNotEmpty)
-          SliverToBoxAdapter(child: ProductRelatedSection(product: product)),
+        if (product.relatedProducts.isNotEmpty) SliverToBoxAdapter(child: ProductRelatedSection(product: product)),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
       ],
     );

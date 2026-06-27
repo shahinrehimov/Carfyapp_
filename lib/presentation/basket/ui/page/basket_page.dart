@@ -30,10 +30,7 @@ class BasketPage extends StatelessWidget implements AutoRouteWrapper {
     return _BasketManagerListener(
       child: Scaffold(
         backgroundColor: context.theme.colors.bg,
-        appBar: CustomAppBar(
-          title: context.localization.mainBasket,
-          actions: [const NotificationIconButton()],
-        ),
+        appBar: CustomAppBar(title: context.localization.mainBasket, actions: [const NotificationIconButton()]),
         body: BlocBuilder<BasketCubit, BasketState>(
           builder: (context, state) {
             return state.basketStatus.maybeWhen(
@@ -203,8 +200,9 @@ class _BasketManagerListener extends StatelessWidget {
         BlocListener<BasketManagerCubit, BasketManagerState>(
           listenWhen: (prev, curr) {
             if (prev.productLoadingStates == curr.productLoadingStates) return false;
-            return curr.productLoadingStates.values.any((s) =>
-                s is StateStatusFailure || s is StateStatusServerFailure || s is StateStatusNetworkFailure);
+            return curr.productLoadingStates.values.any(
+              (s) => s is StateStatusFailure || s is StateStatusServerFailure || s is StateStatusNetworkFailure,
+            );
           },
           listener: (context, _) {
             context.read<BasketCubit>().rollback();

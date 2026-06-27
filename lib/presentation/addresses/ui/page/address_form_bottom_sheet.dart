@@ -68,8 +68,7 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
     final isEdit = widget.address != null;
 
     return BlocListener<AddressFormCubit, AddressFormState>(
-      listenWhen: (prev, curr) =>
-          prev.submitStatus != curr.submitStatus || prev.deleteStatus != curr.deleteStatus,
+      listenWhen: (prev, curr) => prev.submitStatus != curr.submitStatus || prev.deleteStatus != curr.deleteStatus,
       listener: (context, state) {
         showStateStatusToast(context, state.submitStatus);
         showStateStatusToast(context, state.deleteStatus);
@@ -96,10 +95,7 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
                   child: Container(
                     width: 54,
                     height: 3,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
+                    decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                   ),
                 ),
                 // Title
@@ -107,11 +103,7 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
                   padding: const EdgeInsets.only(top: 16, bottom: 24),
                   child: Text(
                     isEdit ? context.localization.addressFormEditTitle : context.localization.addressFormAddTitle,
-                    style: const TextStyle(
-                      color: Color(0xFF242323),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: const TextStyle(color: Color(0xFF242323), fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                 ),
                 // Form
@@ -239,10 +231,7 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
                                     final initLat = double.tryParse(state.latitude ?? '');
                                     final initLng = double.tryParse(state.longitude ?? '');
                                     final result = await context.pushRoute<LatLng>(
-                                      MapPickerRoute(
-                                        initialLatitude: initLat,
-                                        initialLongitude: initLng,
-                                      ),
+                                      MapPickerRoute(initialLatitude: initLat, initialLongitude: initLng),
                                     );
                                     if (result != null) {
                                       cubit.setLocation(
@@ -257,9 +246,7 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
-                                        color: hasError
-                                            ? context.theme.colors.error
-                                            : const Color(0xFFF0F0F0),
+                                        color: hasError ? context.theme.colors.error : const Color(0xFFF0F0F0),
                                       ),
                                     ),
                                     child: Row(
@@ -293,13 +280,11 @@ class _AddressFormSheetState extends State<_AddressFormSheet> {
                                 if (hasError)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4, left: 16),
-                                    child: Text(
-                                      switch (state.locationError) {
-                                        AddressFormFieldError.required => context.localization.addressFormLocationRequired,
-                                        null => '',
-                                      },
-                                      style: TextStyle(color: context.theme.colors.error, fontSize: 12),
-                                    ),
+                                    child: Text(switch (state.locationError) {
+                                      AddressFormFieldError.required =>
+                                        context.localization.addressFormLocationRequired,
+                                      null => '',
+                                    }, style: TextStyle(color: context.theme.colors.error, fontSize: 12)),
                                   ),
                               ],
                             );

@@ -3,9 +3,5 @@ class LoginWithPhoneSubmitParams {
   final int otp;
   final String deviceName;
 
-  LoginWithPhoneSubmitParams({
-    required this.phone,
-    required this.otp,
-    required this.deviceName,
-  });
+  LoginWithPhoneSubmitParams({required this.phone, required this.otp, required this.deviceName});
 }

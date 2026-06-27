@@ -21,10 +21,7 @@ class WishlistRepositoryImpl extends WishlistRepository with RepositorySafeCallM
   @override
   Future<Either<Failure, PaginationResponse<Product>>> getWishlist(ProductListParams params) {
     return safeCall(() async {
-      final queryParams = ProductListQueryParams(
-        page: params.page,
-        limit: params.limit,
-      );
+      final queryParams = ProductListQueryParams(page: params.page, limit: params.limit);
       final res = await _remoteDataSource.fetchWishlist(queryParams);
       return _mapper.mapPaginationResponse(res);
     });

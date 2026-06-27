@@ -4,8 +4,6 @@ class AddressTypeModel {
 
   AddressTypeModel({required this.id, required this.title});
 
-  factory AddressTypeModel.fromJson(Map<String, dynamic> json) => AddressTypeModel(
-        id: json['id'] as int,
-        title: json['title'] as String,
-      );
+  factory AddressTypeModel.fromJson(Map<String, dynamic> json) =>
+      AddressTypeModel(id: json['id'] as int, title: json['title'] as String);
 }

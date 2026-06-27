@@ -115,7 +115,9 @@ class TimerWidget extends StatelessWidget {
       children: [
         if (isTimerActive)
           Text(
-            context.localization.resendOtpIn('${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}'),
+            context.localization.resendOtpIn(
+              '${timeRemaining ~/ 60}:${(timeRemaining % 60).toString().padLeft(2, '0')}',
+            ),
             style: TextStyle(fontSize: 12, color: context.theme.colors.darkGray, fontWeight: FontWeight.w500),
           )
         else

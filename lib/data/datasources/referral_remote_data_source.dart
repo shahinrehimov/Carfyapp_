@@ -77,11 +77,10 @@ class ReferralRemoteDataSourceImpl extends ReferralRemoteDataSource with DataSou
   @override
   Future<void> createWithdrawal({required double amount, required String cardLast4, required String cardHolderName}) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.referralWithdrawals, data: {
-        'amount': amount,
-        'card_last4': cardLast4,
-        'card_holder_name': cardHolderName,
-      }),
+      () => _networkManager.post(
+        EndpointPaths.referralWithdrawals,
+        data: {'amount': amount, 'card_last4': cardLast4, 'card_holder_name': cardHolderName},
+      ),
       map: (_) {},
     );
   }

@@ -19,10 +19,10 @@ class MyAddressesCubit extends Cubit<MyAddressesState> with StateMapHelper {
     GetAddressesUseCase? getAddressesUseCase,
     DeleteAddressUseCase? deleteAddressUseCase,
     SetDefaultAddressUseCase? setDefaultAddressUseCase,
-  })  : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
-        _deleteAddressUseCase = deleteAddressUseCase ?? getIt<DeleteAddressUseCase>(),
-        _setDefaultAddressUseCase = setDefaultAddressUseCase ?? getIt<SetDefaultAddressUseCase>(),
-        super(MyAddressesState.initial());
+  }) : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
+       _deleteAddressUseCase = deleteAddressUseCase ?? getIt<DeleteAddressUseCase>(),
+       _setDefaultAddressUseCase = setDefaultAddressUseCase ?? getIt<SetDefaultAddressUseCase>(),
+       super(MyAddressesState.initial());
 
   Future<void> init() => _loadAddresses();
 
@@ -48,11 +48,9 @@ class MyAddressesCubit extends Cubit<MyAddressesState> with StateMapHelper {
       (message) {
         final updated = {...state.deleteStatus}..remove(id);
         final addresses = state.addresses.where((a) => a.id != id).toList();
-        emit(state.copyWith(
-          deleteStatus: updated,
-          addresses: addresses,
-          status: StateStatus.successWithMessage(message),
-        ));
+        emit(
+          state.copyWith(deleteStatus: updated, addresses: addresses, status: StateStatus.successWithMessage(message)),
+        );
       },
     );
   }
@@ -68,24 +66,26 @@ class MyAddressesCubit extends Cubit<MyAddressesState> with StateMapHelper {
       (message) {
         final updated = {...state.setDefaultStatus}..remove(id);
         final addresses = state.addresses.map((a) => _withDefault(a, a.id == id)).toList();
-        emit(state.copyWith(
-          setDefaultStatus: updated,
-          addresses: addresses,
-          status: StateStatus.successWithMessage(message),
-        ));
+        emit(
+          state.copyWith(
+            setDefaultStatus: updated,
+            addresses: addresses,
+            status: StateStatus.successWithMessage(message),
+          ),
+        );
       },
     );
   }
 
   Address _withDefault(Address a, bool isDefault) => Address(
-        id: a.id,
-        isDefault: isDefault,
-        addressType: a.addressType,
-        city: a.city,
-        addressLine1: a.addressLine1,
-        addressLine2: a.addressLine2,
-        latitude: a.latitude,
-        longitude: a.longitude,
-        phone: a.phone,
-      );
+    id: a.id,
+    isDefault: isDefault,
+    addressType: a.addressType,
+    city: a.city,
+    addressLine1: a.addressLine1,
+    addressLine2: a.addressLine2,
+    latitude: a.latitude,
+    longitude: a.longitude,
+    phone: a.phone,
+  );
 }

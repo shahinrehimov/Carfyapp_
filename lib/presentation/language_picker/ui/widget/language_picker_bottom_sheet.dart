@@ -13,10 +13,8 @@ Future<void> showLanguagePickerBottomSheet(BuildContext context) {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => BlocProvider(
-      create: (_) => LanguagePickerCubit()..load(),
-      child: const _LanguagePickerBottomSheet(),
-    ),
+    builder: (_) =>
+        BlocProvider(create: (_) => LanguagePickerCubit()..load(), child: const _LanguagePickerBottomSheet()),
   );
 }
 
@@ -41,10 +39,7 @@ class _LanguagePickerBottomSheet extends StatelessWidget {
                 child: Container(
                   width: 54,
                   height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                 ),
               ),
               Text(
@@ -113,11 +108,7 @@ class _LanguageList extends StatelessWidget {
                 Expanded(
                   child: Text(
                     display,
-                    style: TextStyle(
-                      color: context.theme.colors.textDark,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                 ),
               ],

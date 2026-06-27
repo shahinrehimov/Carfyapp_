@@ -22,11 +22,11 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     RemoveFromBasketUseCase? removeFromBasketUseCase,
     IncrementQuantityUseCase? incrementQuantityUseCase,
     DecrementQuantityUseCase? decrementQuantityUseCase,
-  })  : _addToBasketUseCase = addToBasketUseCase ?? getIt<AddToBasketUseCase>(),
-        _removeFromBasketUseCase = removeFromBasketUseCase ?? getIt<RemoveFromBasketUseCase>(),
-        _incrementQuantityUseCase = incrementQuantityUseCase ?? getIt<IncrementQuantityUseCase>(),
-        _decrementQuantityUseCase = decrementQuantityUseCase ?? getIt<DecrementQuantityUseCase>(),
-        super(BasketManagerState.initial());
+  }) : _addToBasketUseCase = addToBasketUseCase ?? getIt<AddToBasketUseCase>(),
+       _removeFromBasketUseCase = removeFromBasketUseCase ?? getIt<RemoveFromBasketUseCase>(),
+       _incrementQuantityUseCase = incrementQuantityUseCase ?? getIt<IncrementQuantityUseCase>(),
+       _decrementQuantityUseCase = decrementQuantityUseCase ?? getIt<DecrementQuantityUseCase>(),
+       super(BasketManagerState.initial());
 
   Future<void> addToBasket(String cpvUuid) async {
     _setProductState(cpvUuid, StateStatus.loading());
@@ -88,9 +88,11 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
   }
 
   void _emitQuantityUpdate(String cpvUuid, int quantity, BasketData basketData) {
-    emit(state.copyWith(
-      quantityUpdate: QuantityUpdate(cpvUuid: cpvUuid, quantity: quantity, basketData: basketData),
-    ));
+    emit(
+      state.copyWith(
+        quantityUpdate: QuantityUpdate(cpvUuid: cpvUuid, quantity: quantity, basketData: basketData),
+      ),
+    );
   }
 
   void _setProductState(String cpvUuid, StateStatus status) {

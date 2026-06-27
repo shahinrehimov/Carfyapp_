@@ -18,11 +18,7 @@ class _OrderAddressSection extends StatelessWidget {
       children: [
         Text(
           context.localization.orderSuccessDeliveryAddress,
-          style: const TextStyle(
-            color: Color(0xFF292929),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Container(
@@ -30,9 +26,7 @@ class _OrderAddressSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
           decoration: ShapeDecoration(
             color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           child: Text(
             addressText,

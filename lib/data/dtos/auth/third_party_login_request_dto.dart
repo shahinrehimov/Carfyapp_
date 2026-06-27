@@ -3,15 +3,7 @@ class ThirdPartyLoginRequestDto {
   final String provider;
   final String token;
 
-  ThirdPartyLoginRequestDto({
-    required this.deviceType,
-    required this.provider,
-    required this.token,
-  });
+  ThirdPartyLoginRequestDto({required this.deviceType, required this.provider, required this.token});
 
-  Map<String, dynamic> toJson() => {
-    'device_type': deviceType,
-    'provider': provider,
-    'token': token,
-  };
+  Map<String, dynamic> toJson() => {'device_type': deviceType, 'provider': provider, 'token': token};
 }

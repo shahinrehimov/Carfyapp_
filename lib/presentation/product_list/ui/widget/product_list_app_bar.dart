@@ -31,9 +31,7 @@ class ProductListAppBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
                 border: Border.all(color: const Color(0xFFD8D7D7)),
               ),
-              child: Center(
-                child: SvgPicture.asset(Assets.icons.arrowNarrowLeft),
-              ),
+              child: Center(child: SvgPicture.asset(Assets.icons.arrowNarrowLeft)),
             ),
           ),
           const SizedBox(width: 8),

@@ -24,10 +24,7 @@ class CarRepositoryImpl extends CarRepository with RepositorySafeCallMixin {
   Future<Either<Failure, UserCarListResponse>> getCars({int? limit}) {
     return safeCall(() async {
       final models = await _remoteDataSource.getCars(limit: limit);
-      return UserCarListResponse(
-        cars: models.map(_mapper.mapUserCar).toList(),
-        lastPage: 1,
-      );
+      return UserCarListResponse(cars: models.map(_mapper.mapUserCar).toList(), lastPage: 1);
     });
   }
 

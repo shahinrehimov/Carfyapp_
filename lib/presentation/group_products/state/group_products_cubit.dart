@@ -13,18 +13,20 @@ class GroupProductsCubit extends Cubit<GroupProductsState> with StateMapHelper {
   final GetGroupUseCase _getGroupUseCase;
 
   GroupProductsCubit({GetGroupUseCase? getGroupUseCase})
-      : _getGroupUseCase = getGroupUseCase ?? getIt<GetGroupUseCase>(),
-        super(GroupProductsState.initial());
+    : _getGroupUseCase = getGroupUseCase ?? getIt<GetGroupUseCase>(),
+      super(GroupProductsState.initial());
 
   Future<void> load(String slug) async {
     emit(state.copyWith(status: StateStatus.loading()));
     final result = await _getGroupUseCase(GroupParams(slug: slug, limit: 50));
     result.fold(
       (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (group) => emit(state.copyWith(
-        status: group.products.isEmpty ? StateStatus.empty() : StateStatus.success(),
-        products: group.products,
-      )),
+      (group) => emit(
+        state.copyWith(
+          status: group.products.isEmpty ? StateStatus.empty() : StateStatus.success(),
+          products: group.products,
+        ),
+      ),
     );
   }
 }

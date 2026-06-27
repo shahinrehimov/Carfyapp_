@@ -22,14 +22,14 @@ class WriteReviewState extends Equatable {
   });
 
   factory WriteReviewState.initial() => WriteReviewState(
-        submitStatus: StateStatus.initial(),
-        ratingValidationState: FieldValidationState.pure(),
-        nameValidationState: FieldValidationState.pure(),
-        surnameValidationState: FieldValidationState.pure(),
-        emailValidationState: FieldValidationState.pure(),
-        reviewValidationState: FieldValidationState.pure(),
-        imagesValidationState: FieldValidationState.pure(),
-      );
+    submitStatus: StateStatus.initial(),
+    ratingValidationState: FieldValidationState.pure(),
+    nameValidationState: FieldValidationState.pure(),
+    surnameValidationState: FieldValidationState.pure(),
+    emailValidationState: FieldValidationState.pure(),
+    reviewValidationState: FieldValidationState.pure(),
+    imagesValidationState: FieldValidationState.pure(),
+  );
 
   WriteReviewState copyWith({
     StateStatus? submitStatus,
@@ -40,27 +40,26 @@ class WriteReviewState extends Equatable {
     FieldValidationState? emailValidationState,
     FieldValidationState? reviewValidationState,
     FieldValidationState? imagesValidationState,
-  }) =>
-      WriteReviewState(
-        submitStatus: submitStatus ?? this.submitStatus,
-        user: user ?? this.user,
-        ratingValidationState: ratingValidationState ?? this.ratingValidationState,
-        nameValidationState: nameValidationState ?? this.nameValidationState,
-        surnameValidationState: surnameValidationState ?? this.surnameValidationState,
-        emailValidationState: emailValidationState ?? this.emailValidationState,
-        reviewValidationState: reviewValidationState ?? this.reviewValidationState,
-        imagesValidationState: imagesValidationState ?? this.imagesValidationState,
-      );
+  }) => WriteReviewState(
+    submitStatus: submitStatus ?? this.submitStatus,
+    user: user ?? this.user,
+    ratingValidationState: ratingValidationState ?? this.ratingValidationState,
+    nameValidationState: nameValidationState ?? this.nameValidationState,
+    surnameValidationState: surnameValidationState ?? this.surnameValidationState,
+    emailValidationState: emailValidationState ?? this.emailValidationState,
+    reviewValidationState: reviewValidationState ?? this.reviewValidationState,
+    imagesValidationState: imagesValidationState ?? this.imagesValidationState,
+  );
 
   @override
   List<Object?> get props => [
-        submitStatus,
-        user,
-        ratingValidationState,
-        nameValidationState,
-        surnameValidationState,
-        emailValidationState,
-        reviewValidationState,
-        imagesValidationState,
-      ];
+    submitStatus,
+    user,
+    ratingValidationState,
+    nameValidationState,
+    surnameValidationState,
+    emailValidationState,
+    reviewValidationState,
+    imagesValidationState,
+  ];
 }

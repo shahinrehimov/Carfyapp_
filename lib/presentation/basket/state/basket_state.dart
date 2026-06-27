@@ -13,11 +13,8 @@ class BasketState extends Equatable {
     this.basketData,
   });
 
-  factory BasketState.initial() => BasketState(
-        basketStatus: StateStatus.loading(),
-        basketActionStatus: StateStatus.initial(),
-        items: [],
-      );
+  factory BasketState.initial() =>
+      BasketState(basketStatus: StateStatus.loading(), basketActionStatus: StateStatus.initial(), items: []);
 
   bool get isActionLoading => basketActionStatus is StateStatusLoading;
 

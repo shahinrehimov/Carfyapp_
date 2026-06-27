@@ -5,10 +5,7 @@ class BasketResponseModel {
   final List<BasketProductModel> items;
   final BasketDataModel basketData;
 
-  BasketResponseModel({
-    required this.items,
-    required this.basketData,
-  });
+  BasketResponseModel({required this.items, required this.basketData});
 
   factory BasketResponseModel.fromJson(Map<String, dynamic> json) {
     return BasketResponseModel(

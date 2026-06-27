@@ -24,11 +24,7 @@ class BalanceDetails extends StatelessWidget {
         children: [
           Text(
             context.localization.referralBalanceDetails,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF242323),
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF242323)),
           ),
           const SizedBox(height: 16),
           _BalanceRow(
@@ -56,10 +52,7 @@ class BalanceDetails extends StatelessWidget {
           ),
           if (!loading) ...[
             const SizedBox(height: 16),
-            _WithdrawButton(
-              enabled: (info?.availableBalance ?? 0) >= 50,
-              onTap: onWithdraw,
-            ),
+            _WithdrawButton(enabled: (info?.availableBalance ?? 0) >= 50, onTap: onWithdraw),
             const SizedBox(height: 8),
             Center(
               child: Text(
@@ -80,12 +73,7 @@ class _BalanceRow extends StatelessWidget {
   final Color valueColor;
   final bool loading;
 
-  const _BalanceRow({
-    required this.label,
-    this.value,
-    required this.valueColor,
-    this.loading = false,
-  });
+  const _BalanceRow({required this.label, this.value, required this.valueColor, this.loading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -94,29 +82,18 @@ class _BalanceRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF717171),
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
         ),
         if (loading)
           Container(
             width: 60,
             height: 14,
-            decoration: BoxDecoration(
-              color: const Color(0xFFE0E0E0),
-              borderRadius: BorderRadius.circular(4),
-            ),
+            decoration: BoxDecoration(color: const Color(0xFFE0E0E0), borderRadius: BorderRadius.circular(4)),
           )
         else
           Text(
             '${(value ?? 0).toStringAsFixed(2)} ₼',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: valueColor,
-            ),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: valueColor),
           ),
       ],
     );
@@ -138,9 +115,7 @@ class _WithdrawButton extends StatelessWidget {
         height: 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: enabled ? const Color(0xFF3696E7) : const Color(0xFFD9D9D9),
-          ),
+          border: Border.all(color: enabled ? const Color(0xFF3696E7) : const Color(0xFFD9D9D9)),
         ),
         alignment: Alignment.center,
         child: Text(

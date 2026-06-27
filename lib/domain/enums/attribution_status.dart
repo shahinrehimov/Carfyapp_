@@ -4,9 +4,9 @@ enum AttributionStatus {
   fraudBlocked;
 
   static AttributionStatus fromString(String value) => switch (value) {
-        'pending' => AttributionStatus.pending,
-        'active' => AttributionStatus.active,
-        'fraud_blocked' => AttributionStatus.fraudBlocked,
-        _ => AttributionStatus.pending,
-      };
+    'pending' => AttributionStatus.pending,
+    'active' => AttributionStatus.active,
+    'fraud_blocked' => AttributionStatus.fraudBlocked,
+    _ => AttributionStatus.pending,
+  };
 }

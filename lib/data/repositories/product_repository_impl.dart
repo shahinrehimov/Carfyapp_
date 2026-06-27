@@ -69,10 +69,7 @@ class ProductRepositoryImpl extends ProductRepository with RepositorySafeCallMix
   Future<Either<Failure, ProductShow>> getProductShow(ProductShowParams params) {
     return safeCall(() async {
       final endpoint = EndpointPaths.productShow(params.cpvUuid);
-      final queryParams = ProductShowQueryParams(
-        otherSellers: params.otherSellers,
-        withRelated: params.withRelated,
-      );
+      final queryParams = ProductShowQueryParams(otherSellers: params.otherSellers, withRelated: params.withRelated);
       final res = await _remoteDataSource.fetchProductShow(endpoint, queryParams);
       return _mapper.mapProductShow(res);
     });

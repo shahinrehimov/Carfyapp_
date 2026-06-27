@@ -123,8 +123,7 @@ class ProductMapper {
     models: model.models.map(mapBrandModelItem).toList(),
   );
 
-  BrandModelItem mapBrandModelItem(BrandModelItemModel model) =>
-      BrandModelItem(id: model.id, title: model.title);
+  BrandModelItem mapBrandModelItem(BrandModelItemModel model) => BrandModelItem(id: model.id, title: model.title);
 
   City mapCity(CityModel model) => City(id: model.id, title: model.title);
 
@@ -153,26 +152,13 @@ class ProductMapper {
     models: model.models.map(mapBrandModelItem).toList(),
   );
 
-  PriceRange mapPriceRange(PriceRangeModel model) => PriceRange(
-    min: model.min,
-    max: model.max,
-  );
+  PriceRange mapPriceRange(PriceRangeModel model) => PriceRange(min: model.min, max: model.max);
 
-  FilterOption mapFilterOption(FilterOptionModel model) => FilterOption(
-    slug: model.slug,
-    title: model.title,
-  );
+  FilterOption mapFilterOption(FilterOptionModel model) => FilterOption(slug: model.slug, title: model.title);
 
-  CarColor mapCarColor(CarColorModel model) => CarColor(
-    id: model.id,
-    title: model.title,
-    hexCode: model.hexCode,
-  );
+  CarColor mapCarColor(CarColorModel model) => CarColor(id: model.id, title: model.title, hexCode: model.hexCode);
 
-  YearRange mapYearRange(YearRangeModel model) => YearRange(
-    min: model.min,
-    max: model.max,
-  );
+  YearRange mapYearRange(YearRangeModel model) => YearRange(min: model.min, max: model.max);
 
   ProductFilters mapProductFilters(ProductFiltersModel model) => ProductFilters(
     categories: model.categories.map(mapFilterCategory).toList(),
@@ -186,10 +172,7 @@ class ProductMapper {
     sortTypes: model.sortTypes.map(mapSortOption).toList(),
   );
 
-  SortOption mapSortOption(SortOptionModel model) => SortOption(
-    id: model.id,
-    title: model.title,
-  );
+  SortOption mapSortOption(SortOptionModel model) => SortOption(id: model.id, title: model.title);
 
   SetItem mapSetItem(SetItemModel model) => SetItem(
     id: model.id,
@@ -200,11 +183,8 @@ class ProductMapper {
     stock: model.stock,
   );
 
-  ProductOption mapProductOption(ProductOptionModel model) => ProductOption(
-    name: model.optionName,
-    label: model.optionLabel,
-    value: model.value,
-  );
+  ProductOption mapProductOption(ProductOptionModel model) =>
+      ProductOption(name: model.optionName, label: model.optionLabel, value: model.value);
 
   ProductRatings mapProductRatings(ProductRatingsModel model) => ProductRatings(
     average: model.average,
@@ -212,10 +192,7 @@ class ProductMapper {
     list: model.list.map((e) => RatingEntry(rating: e.rating, count: e.count)).toList(),
   );
 
-  GalleryImage mapGalleryImage(GalleryImageModel model) => GalleryImage(
-    source: model.source,
-    url: model.url,
-  );
+  GalleryImage mapGalleryImage(GalleryImageModel model) => GalleryImage(source: model.source, url: model.url);
 
   OtherSeller mapOtherSeller(OtherSellerModel model) => OtherSeller(
     uuid: model.uuid,
@@ -271,11 +248,9 @@ class ProductMapper {
     product: model.product != null ? mapProductDetail(model.product!) : null,
   );
 
-  PaginationResponse<OtherSeller> mapOtherSellersPaginationResponse(
-      PaginationResponseModel<OtherSellerModel> model) =>
+  PaginationResponse<OtherSeller> mapOtherSellersPaginationResponse(PaginationResponseModel<OtherSellerModel> model) =>
       PaginationMapper.map(model, mapOtherSeller);
 
-  PaginationResponse<Review> mapReviewsPaginationResponse(
-      PaginationResponseModel<ReviewModel> model) =>
+  PaginationResponse<Review> mapReviewsPaginationResponse(PaginationResponseModel<ReviewModel> model) =>
       PaginationMapper.map(model, mapReview);
 }

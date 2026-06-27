@@ -30,16 +30,16 @@ class ReferralState extends Equatable {
   });
 
   factory ReferralState.initial() => ReferralState(
-        status: StateStatus.loading(),
-        updateCodeStatus: StateStatus.initial(),
-        withdrawalCreateStatus: StateStatus.initial(),
-        earningsStatus: StateStatus.initial(),
-        referralsStatus: StateStatus.initial(),
-        withdrawalsStatus: StateStatus.initial(),
-        earnings: const [],
-        referrals: const [],
-        withdrawals: const [],
-      );
+    status: StateStatus.loading(),
+    updateCodeStatus: StateStatus.initial(),
+    withdrawalCreateStatus: StateStatus.initial(),
+    earningsStatus: StateStatus.initial(),
+    referralsStatus: StateStatus.initial(),
+    withdrawalsStatus: StateStatus.initial(),
+    earnings: const [],
+    referrals: const [],
+    withdrawals: const [],
+  );
 
   ReferralState copyWith({
     StateStatus? status,
@@ -73,17 +73,17 @@ class ReferralState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        updateCodeStatus,
-        withdrawalCreateStatus,
-        earningsStatus,
-        referralsStatus,
-        withdrawalsStatus,
-        info,
-        perks,
-        earnings,
-        referrals,
-        withdrawals,
-        currentTabIndex,
-      ];
+    status,
+    updateCodeStatus,
+    withdrawalCreateStatus,
+    earningsStatus,
+    referralsStatus,
+    withdrawalsStatus,
+    info,
+    perks,
+    earnings,
+    referrals,
+    withdrawals,
+    currentTabIndex,
+  ];
 }

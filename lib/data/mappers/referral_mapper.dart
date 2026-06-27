@@ -18,64 +18,64 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ReferralMapper {
   ReferralBalance mapBalance(ReferralBalanceModel model) => ReferralBalance(
-        pendingBalance: model.pendingBalance,
-        availableBalance: model.availableBalance,
-        lifetimeEarned: model.lifetimeEarned,
-        lifetimeWithdrawn: model.lifetimeWithdrawn,
-        lifetimeSpentOnPlatform: model.lifetimeSpentOnPlatform,
-      );
+    pendingBalance: model.pendingBalance,
+    availableBalance: model.availableBalance,
+    lifetimeEarned: model.lifetimeEarned,
+    lifetimeWithdrawn: model.lifetimeWithdrawn,
+    lifetimeSpentOnPlatform: model.lifetimeSpentOnPlatform,
+  );
 
   ReferralInfo mapInfo(ReferralInfoModel model) => ReferralInfo(
-        code: model.code,
-        link: model.link,
-        tier: model.tier,
-        rate: model.rate,
-        isActive: model.isActive,
-        totalReferrals: model.totalReferrals,
-        activeReferrals: model.activeReferrals,
-        pendingReferrals: model.pendingReferrals,
-        pendingBalance: model.pendingBalance,
-        availableBalance: model.availableBalance,
-        lifetimeEarned: model.lifetimeEarned,
-      );
+    code: model.code,
+    link: model.link,
+    tier: model.tier,
+    rate: model.rate,
+    isActive: model.isActive,
+    totalReferrals: model.totalReferrals,
+    activeReferrals: model.activeReferrals,
+    pendingReferrals: model.pendingReferrals,
+    pendingBalance: model.pendingBalance,
+    availableBalance: model.availableBalance,
+    lifetimeEarned: model.lifetimeEarned,
+  );
 
   ReferralPerks mapPerks(ReferralPerksModel model) => ReferralPerks(
-        hasPerks: model.hasPerks,
-        freeDeliveryRemaining: model.freeDeliveryRemaining,
-        discountOrdersRemaining: model.discountOrdersRemaining,
-        discountRate: model.discountRate,
-      );
+    hasPerks: model.hasPerks,
+    freeDeliveryRemaining: model.freeDeliveryRemaining,
+    discountOrdersRemaining: model.discountOrdersRemaining,
+    discountRate: model.discountRate,
+  );
 
   ReferralEarning mapEarning(ReferralEarningModel model) => ReferralEarning(
-        id: model.id,
-        amount: model.amount,
-        orderAmount: model.orderAmount,
-        rate: model.rate,
-        tier: model.tier,
-        status: EarningStatus.fromString(model.status),
-        orderUuid: model.orderUuid,
-        deliveredAt: model.deliveredAt,
-        availableAt: model.availableAt,
-        creditedAt: model.creditedAt,
-      );
+    id: model.id,
+    amount: model.amount,
+    orderAmount: model.orderAmount,
+    rate: model.rate,
+    tier: model.tier,
+    status: EarningStatus.fromString(model.status),
+    orderUuid: model.orderUuid,
+    deliveredAt: model.deliveredAt,
+    availableAt: model.availableAt,
+    creditedAt: model.creditedAt,
+  );
 
   ReferralUser mapReferralUser(ReferralUserModel model) => ReferralUser(
-        referredName: model.referredName,
-        status: AttributionStatus.fromString(model.status),
-        activatedAt: model.activatedAt,
-        joinedAt: model.joinedAt,
-      );
+    referredName: model.referredName,
+    status: AttributionStatus.fromString(model.status),
+    activatedAt: model.activatedAt,
+    joinedAt: model.joinedAt,
+  );
 
   ReferralWithdrawal mapWithdrawal(ReferralWithdrawalModel model) => ReferralWithdrawal(
-        id: model.id,
-        amount: model.amount,
-        fee: model.fee,
-        netAmount: model.netAmount,
-        cardLast4: model.cardLast4,
-        cardHolderName: model.cardHolderName,
-        status: WithdrawalStatus.fromString(model.status),
-        adminNote: model.adminNote,
-        requestedAt: model.requestedAt,
-        processedAt: model.processedAt,
-      );
+    id: model.id,
+    amount: model.amount,
+    fee: model.fee,
+    netAmount: model.netAmount,
+    cardLast4: model.cardLast4,
+    cardHolderName: model.cardHolderName,
+    status: WithdrawalStatus.fromString(model.status),
+    adminNote: model.adminNote,
+    requestedAt: model.requestedAt,
+    processedAt: model.processedAt,
+  );
 }

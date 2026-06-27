@@ -4,8 +4,5 @@ class NotificationsLoadQueryParams {
 
   NotificationsLoadQueryParams({required this.page, required this.limit});
 
-  Map<String, dynamic> toQueryParameters() => {
-        'page': page,
-        'limit': limit,
-      };
+  Map<String, dynamic> toQueryParameters() => {'page': page, 'limit': limit};
 }

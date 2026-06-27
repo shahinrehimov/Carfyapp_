@@ -42,9 +42,7 @@ class ProductMainImage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: const [BoxShadow(color: Color(0x28000000), blurRadius: 8)],
               ),
-              child: Center(
-                child: WishlistHeartButton(cpvUuid: product.seller?.uuid),
-              ),
+              child: Center(child: WishlistHeartButton(cpvUuid: product.seller?.uuid)),
             ),
           ),
         ],

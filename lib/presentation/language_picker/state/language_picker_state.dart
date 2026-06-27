@@ -9,10 +9,7 @@ class LanguagePickerState extends Equatable {
   factory LanguagePickerState.initial() => LanguagePickerState(status: StateStatus.initial());
 
   LanguagePickerState copyWith({StateStatus? status, List<AppLanguage>? languages}) {
-    return LanguagePickerState(
-      status: status ?? this.status,
-      languages: languages ?? this.languages,
-    );
+    return LanguagePickerState(status: status ?? this.status, languages: languages ?? this.languages);
   }
 
   @override

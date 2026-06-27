@@ -80,7 +80,7 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
     }
     return handleResponse(
       () => _networkManager.post(EndpointPaths.carsAdd, data: formData),
-      map: (json) => UserCarModel.fromJson(json['data']as Map<String, dynamic>),
+      map: (json) => UserCarModel.fromJson(json['data'] as Map<String, dynamic>),
     );
   }
 
@@ -168,9 +168,8 @@ class CarRemoteDataSourceImpl extends CarRemoteDataSource with DataSourceMixin {
   Future<List<CarColorModel>> getCarColors() {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.carLibraryCarColors),
-      map: (json) => (json['data'] as List<dynamic>)
-          .map((item) => CarColorModel.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      map: (json) =>
+          (json['data'] as List<dynamic>).map((item) => CarColorModel.fromJson(item as Map<String, dynamic>)).toList(),
     );
   }
 

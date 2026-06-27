@@ -42,21 +42,18 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     LoadReferralEarningsUseCase? loadEarningsUseCase,
     LoadReferralUsersUseCase? loadReferralUsersUseCase,
     LoadReferralWithdrawalsUseCase? loadWithdrawalsUseCase,
-  })  : _getReferralInfoUseCase = getReferralInfoUseCase ?? getIt<GetReferralInfoUseCase>(),
-        _getReferralPerksUseCase = getReferralPerksUseCase ?? getIt<GetReferralPerksUseCase>(),
-        _updateReferralCodeUseCase = updateReferralCodeUseCase ?? getIt<UpdateReferralCodeUseCase>(),
-        _createWithdrawalUseCase = createWithdrawalUseCase ?? getIt<CreateWithdrawalUseCase>(),
-        _loadEarningsUseCase = loadEarningsUseCase ?? getIt<LoadReferralEarningsUseCase>(),
-        _loadReferralUsersUseCase = loadReferralUsersUseCase ?? getIt<LoadReferralUsersUseCase>(),
-        _loadWithdrawalsUseCase = loadWithdrawalsUseCase ?? getIt<LoadReferralWithdrawalsUseCase>(),
-        super(ReferralState.initial());
+  }) : _getReferralInfoUseCase = getReferralInfoUseCase ?? getIt<GetReferralInfoUseCase>(),
+       _getReferralPerksUseCase = getReferralPerksUseCase ?? getIt<GetReferralPerksUseCase>(),
+       _updateReferralCodeUseCase = updateReferralCodeUseCase ?? getIt<UpdateReferralCodeUseCase>(),
+       _createWithdrawalUseCase = createWithdrawalUseCase ?? getIt<CreateWithdrawalUseCase>(),
+       _loadEarningsUseCase = loadEarningsUseCase ?? getIt<LoadReferralEarningsUseCase>(),
+       _loadReferralUsersUseCase = loadReferralUsersUseCase ?? getIt<LoadReferralUsersUseCase>(),
+       _loadWithdrawalsUseCase = loadWithdrawalsUseCase ?? getIt<LoadReferralWithdrawalsUseCase>(),
+       super(ReferralState.initial());
 
   Future<void> load() async {
     emit(state.copyWith(status: StateStatus.loading()));
-    final results = await Future.wait([
-      _getReferralInfoUseCase(),
-      _getReferralPerksUseCase(),
-    ]);
+    final results = await Future.wait([_getReferralInfoUseCase(), _getReferralPerksUseCase()]);
 
     final infoResult = results[0] as dynamic;
     final perksResult = results[1] as dynamic;
@@ -64,22 +61,12 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     ReferralInfo? info;
     ReferralPerks? perks;
 
-    infoResult.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (data) => info = data,
-    );
+    infoResult.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (data) => info = data);
 
-    perksResult.fold(
-      (_) {},
-      (data) => perks = data,
-    );
+    perksResult.fold((_) {}, (data) => perks = data);
 
     if (info != null) {
-      emit(state.copyWith(
-        status: StateStatus.success(),
-        info: info,
-        perks: perks,
-      ));
+      emit(state.copyWith(status: StateStatus.success(), info: info, perks: perks));
     }
   }
 
@@ -88,18 +75,15 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     emit(state.copyWith(earningsStatus: _earningsPagination.getLoadingStatus()));
     _earningsPagination.onLoadStart();
     final result = await _loadEarningsUseCase(ReferralListParams(page: _earningsPagination.currentPage));
-    result.fold(
-      (failure) => emit(state.copyWith(earningsStatus: mapFailure(failure))),
-      (response) {
-        _earningsPagination.onLoadEnd(response.lastPage);
-        emit(state.copyWith(
-          earningsStatus: response.data.isEmpty && state.earnings.isEmpty
-              ? StateStatus.empty()
-              : StateStatus.success(),
+    result.fold((failure) => emit(state.copyWith(earningsStatus: mapFailure(failure))), (response) {
+      _earningsPagination.onLoadEnd(response.lastPage);
+      emit(
+        state.copyWith(
+          earningsStatus: response.data.isEmpty && state.earnings.isEmpty ? StateStatus.empty() : StateStatus.success(),
           earnings: [...state.earnings, ...response.data],
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   Future<void> loadReferrals() async {
@@ -107,18 +91,17 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     emit(state.copyWith(referralsStatus: _referralsPagination.getLoadingStatus()));
     _referralsPagination.onLoadStart();
     final result = await _loadReferralUsersUseCase(ReferralListParams(page: _referralsPagination.currentPage));
-    result.fold(
-      (failure) => emit(state.copyWith(referralsStatus: mapFailure(failure))),
-      (response) {
-        _referralsPagination.onLoadEnd(response.lastPage);
-        emit(state.copyWith(
+    result.fold((failure) => emit(state.copyWith(referralsStatus: mapFailure(failure))), (response) {
+      _referralsPagination.onLoadEnd(response.lastPage);
+      emit(
+        state.copyWith(
           referralsStatus: response.data.isEmpty && state.referrals.isEmpty
               ? StateStatus.empty()
               : StateStatus.success(),
           referrals: [...state.referrals, ...response.data],
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   Future<void> loadWithdrawals() async {
@@ -126,18 +109,17 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     emit(state.copyWith(withdrawalsStatus: _withdrawalsPagination.getLoadingStatus()));
     _withdrawalsPagination.onLoadStart();
     final result = await _loadWithdrawalsUseCase(ReferralListParams(page: _withdrawalsPagination.currentPage));
-    result.fold(
-      (failure) => emit(state.copyWith(withdrawalsStatus: mapFailure(failure))),
-      (response) {
-        _withdrawalsPagination.onLoadEnd(response.lastPage);
-        emit(state.copyWith(
+    result.fold((failure) => emit(state.copyWith(withdrawalsStatus: mapFailure(failure))), (response) {
+      _withdrawalsPagination.onLoadEnd(response.lastPage);
+      emit(
+        state.copyWith(
           withdrawalsStatus: response.data.isEmpty && state.withdrawals.isEmpty
               ? StateStatus.empty()
               : StateStatus.success(),
           withdrawals: [...state.withdrawals, ...response.data],
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   void setTabIndex(int index) {
@@ -158,30 +140,24 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
   Future<void> updateCode(String code) async {
     emit(state.copyWith(updateCodeStatus: StateStatus.loading()));
     final result = await _updateReferralCodeUseCase(code);
-    result.fold(
-      (failure) => emit(state.copyWith(updateCodeStatus: mapFailure(failure))),
-      (newCode) {
-        final updatedInfo = state.info != null
-            ? ReferralInfo(
-                code: newCode,
-                link: state.info!.link?.replaceAll(RegExp(r'ref=.*'), 'ref=$newCode'),
-                tier: state.info!.tier,
-                rate: state.info!.rate,
-                isActive: state.info!.isActive,
-                totalReferrals: state.info!.totalReferrals,
-                activeReferrals: state.info!.activeReferrals,
-                pendingReferrals: state.info!.pendingReferrals,
-                pendingBalance: state.info!.pendingBalance,
-                availableBalance: state.info!.availableBalance,
-                lifetimeEarned: state.info!.lifetimeEarned,
-              )
-            : null;
-        emit(state.copyWith(
-          updateCodeStatus: StateStatus.successWithMessage(''),
-          info: updatedInfo,
-        ));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(updateCodeStatus: mapFailure(failure))), (newCode) {
+      final updatedInfo = state.info != null
+          ? ReferralInfo(
+              code: newCode,
+              link: state.info!.link?.replaceAll(RegExp(r'ref=.*'), 'ref=$newCode'),
+              tier: state.info!.tier,
+              rate: state.info!.rate,
+              isActive: state.info!.isActive,
+              totalReferrals: state.info!.totalReferrals,
+              activeReferrals: state.info!.activeReferrals,
+              pendingReferrals: state.info!.pendingReferrals,
+              pendingBalance: state.info!.pendingBalance,
+              availableBalance: state.info!.availableBalance,
+              lifetimeEarned: state.info!.lifetimeEarned,
+            )
+          : null;
+      emit(state.copyWith(updateCodeStatus: StateStatus.successWithMessage(''), info: updatedInfo));
+    });
   }
 
   Future<void> createWithdrawal({
@@ -190,11 +166,9 @@ class ReferralCubit extends Cubit<ReferralState> with StateMapHelper {
     required String cardHolderName,
   }) async {
     emit(state.copyWith(withdrawalCreateStatus: StateStatus.loading()));
-    final result = await _createWithdrawalUseCase(CreateWithdrawalParams(
-      amount: amount,
-      cardLast4: cardLast4,
-      cardHolderName: cardHolderName,
-    ));
+    final result = await _createWithdrawalUseCase(
+      CreateWithdrawalParams(amount: amount, cardLast4: cardLast4, cardHolderName: cardHolderName),
+    );
     result.fold(
       (failure) => emit(state.copyWith(withdrawalCreateStatus: mapFailure(failure))),
       (_) => emit(state.copyWith(withdrawalCreateStatus: StateStatus.successWithMessage(''))),

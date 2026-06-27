@@ -78,10 +78,12 @@ class ReferralRepositoryImpl extends ReferralRepository with RepositorySafeCallM
 
   @override
   Future<Either<Failure, void>> createWithdrawal(CreateWithdrawalParams params) {
-    return safeCall(() => _dataSource.createWithdrawal(
-          amount: params.amount,
-          cardLast4: params.cardLast4,
-          cardHolderName: params.cardHolderName,
-        ));
+    return safeCall(
+      () => _dataSource.createWithdrawal(
+        amount: params.amount,
+        cardLast4: params.cardLast4,
+        cardHolderName: params.cardHolderName,
+      ),
+    );
   }
 }

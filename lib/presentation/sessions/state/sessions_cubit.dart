@@ -21,10 +21,10 @@ class SessionsCubit extends Cubit<SessionsState> with StateMapHelper {
     GetSessionsUseCase? getSessionsUseCase,
     LogoutSessionUseCase? logoutSessionUseCase,
     LogoutUseCase? logoutUseCase,
-  })  : _getSessionsUseCase = getSessionsUseCase ?? getIt<GetSessionsUseCase>(),
-        _logoutSessionUseCase = logoutSessionUseCase ?? getIt<LogoutSessionUseCase>(),
-        _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
-        super(SessionsState.initial());
+  }) : _getSessionsUseCase = getSessionsUseCase ?? getIt<GetSessionsUseCase>(),
+       _logoutSessionUseCase = logoutSessionUseCase ?? getIt<LogoutSessionUseCase>(),
+       _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
+       super(SessionsState.initial());
 
   Future<void> init() => _loadSessions();
 
@@ -33,25 +33,24 @@ class SessionsCubit extends Cubit<SessionsState> with StateMapHelper {
     final result = await _getSessionsUseCase();
     result.fold(
       (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (response) => emit(state.copyWith(
-        status: StateStatus.success(),
-        currentSession: response.currentSession,
-        otherSessions: response.otherSessions,
-      )),
+      (response) => emit(
+        state.copyWith(
+          status: StateStatus.success(),
+          currentSession: response.currentSession,
+          otherSessions: response.otherSessions,
+        ),
+      ),
     );
   }
 
   Future<void> logoutCurrentSession() async {
     emit(state.copyWith(logoutStatus: StateStatus.loading()));
     final result = await _logoutUseCase();
-    result.fold(
-      (failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))),
-      (_) {
-        PrefUtil.remove(AppPreferenceKeys.authToken);
-        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
-        emit(state.copyWith(logoutStatus: StateStatus.success()));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))), (_) {
+      PrefUtil.remove(AppPreferenceKeys.authToken);
+      PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
+      emit(state.copyWith(logoutStatus: StateStatus.success()));
+    });
   }
 
   Future<void> terminateSession(int tokenId) async {
@@ -65,11 +64,13 @@ class SessionsCubit extends Cubit<SessionsState> with StateMapHelper {
       (message) {
         final updated = {...state.terminateStatus}..remove(tokenId);
         final others = state.otherSessions.where((s) => s.id != tokenId).toList();
-        emit(state.copyWith(
-          terminateStatus: updated,
-          otherSessions: others,
-          status: StateStatus.successWithMessage(message),
-        ));
+        emit(
+          state.copyWith(
+            terminateStatus: updated,
+            otherSessions: others,
+            status: StateStatus.successWithMessage(message),
+          ),
+        );
       },
     );
   }

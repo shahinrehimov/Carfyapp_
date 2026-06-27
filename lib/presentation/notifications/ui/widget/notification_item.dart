@@ -19,10 +19,7 @@ class _NotificationItemState extends State<_NotificationItem> with SingleTickerP
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     _slideAnimation = Tween<Offset>(
       begin: Offset.zero,
       end: const Offset(-1, 0),
@@ -107,10 +104,7 @@ class _NotificationItemState extends State<_NotificationItem> with SingleTickerP
             AnimatedBuilder(
               animation: _slideAnimation,
               builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(_slideAnimation.value.dx * _actionWidth, 0),
-                  child: child,
-                );
+                return Transform.translate(offset: Offset(_slideAnimation.value.dx * _actionWidth, 0), child: child);
               },
               child: GestureDetector(
                 onHorizontalDragUpdate: _onHorizontalDragUpdate,
@@ -121,9 +115,7 @@ class _NotificationItemState extends State<_NotificationItem> with SingleTickerP
                   padding: const EdgeInsets.all(20),
                   decoration: ShapeDecoration(
                     color: const Color(0xFFFBFBFB),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,10 +164,7 @@ class _NotificationItemState extends State<_NotificationItem> with SingleTickerP
                         Container(
                           width: 14,
                           height: 14,
-                          decoration: const ShapeDecoration(
-                            color: Color(0xFFDA0E0E),
-                            shape: OvalBorder(),
-                          ),
+                          decoration: const ShapeDecoration(color: Color(0xFFDA0E0E), shape: OvalBorder()),
                         ),
                       ],
                     ],
@@ -196,12 +185,7 @@ class _SwipeAction extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const _SwipeAction({
-    required this.color,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+  const _SwipeAction({required this.color, required this.icon, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -217,11 +201,7 @@ class _SwipeAction extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500),
             ),
           ],
         ),

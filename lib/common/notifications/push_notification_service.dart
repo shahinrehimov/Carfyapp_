@@ -44,12 +44,7 @@ class PushNotificationService {
       } else {
         await _localNotifications
             .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-            ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-          critical: true,
-        );
+            ?.requestPermissions(alert: true, badge: true, sound: true, critical: true);
       }
       return true;
     } catch (e) {

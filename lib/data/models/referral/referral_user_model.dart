@@ -4,12 +4,7 @@ class ReferralUserModel {
   final String? activatedAt;
   final String joinedAt;
 
-  ReferralUserModel({
-    required this.referredName,
-    required this.status,
-    this.activatedAt,
-    required this.joinedAt,
-  });
+  ReferralUserModel({required this.referredName, required this.status, this.activatedAt, required this.joinedAt});
 
   factory ReferralUserModel.fromJson(Map<String, dynamic> json) {
     return ReferralUserModel(

@@ -28,12 +28,12 @@ class NotificationsCubit extends Cubit<NotificationsState> with StateMapHelper {
     ReadAllNotificationsUseCase? readAllNotificationsUseCase,
     DeleteNotificationUseCase? deleteNotificationUseCase,
     DeleteAllNotificationsUseCase? deleteAllNotificationsUseCase,
-  })  : _loadNotificationsUseCase = loadNotificationsUseCase ?? getIt<LoadNotificationsUseCase>(),
-        _readNotificationUseCase = readNotificationUseCase ?? getIt<ReadNotificationUseCase>(),
-        _readAllNotificationsUseCase = readAllNotificationsUseCase ?? getIt<ReadAllNotificationsUseCase>(),
-        _deleteNotificationUseCase = deleteNotificationUseCase ?? getIt<DeleteNotificationUseCase>(),
-        _deleteAllNotificationsUseCase = deleteAllNotificationsUseCase ?? getIt<DeleteAllNotificationsUseCase>(),
-        super(NotificationsState.initial());
+  }) : _loadNotificationsUseCase = loadNotificationsUseCase ?? getIt<LoadNotificationsUseCase>(),
+       _readNotificationUseCase = readNotificationUseCase ?? getIt<ReadNotificationUseCase>(),
+       _readAllNotificationsUseCase = readAllNotificationsUseCase ?? getIt<ReadAllNotificationsUseCase>(),
+       _deleteNotificationUseCase = deleteNotificationUseCase ?? getIt<DeleteNotificationUseCase>(),
+       _deleteAllNotificationsUseCase = deleteAllNotificationsUseCase ?? getIt<DeleteAllNotificationsUseCase>(),
+       super(NotificationsState.initial());
 
   Future<void> init() async {
     _loadNotifications();
@@ -45,20 +45,14 @@ class NotificationsCubit extends Cubit<NotificationsState> with StateMapHelper {
     emit(state.copyWith(status: _paginationHelper.getLoadingStatus()));
     _paginationHelper.onLoadStart();
 
-    final result = await _loadNotificationsUseCase(
-      NotificationsLoadParams(page: _paginationHelper.currentPage),
-    );
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (response) {
-        _paginationHelper.onLoadEnd(response.lastPage);
-        final updated = [...state.notifications, ...response.data];
-        emit(state.copyWith(
-          status: updated.isEmpty ? StateStatus.empty() : StateStatus.success(),
-          notifications: updated,
-        ));
-      },
-    );
+    final result = await _loadNotificationsUseCase(NotificationsLoadParams(page: _paginationHelper.currentPage));
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (response) {
+      _paginationHelper.onLoadEnd(response.lastPage);
+      final updated = [...state.notifications, ...response.data];
+      emit(
+        state.copyWith(status: updated.isEmpty ? StateStatus.empty() : StateStatus.success(), notifications: updated),
+      );
+    });
   }
 
   Future<void> loadNextPage() async {
@@ -70,70 +64,71 @@ class NotificationsCubit extends Cubit<NotificationsState> with StateMapHelper {
     if (!_paginationHelper.shouldLoad()) return;
     _paginationHelper.onLoadStart();
 
-    final result = await _loadNotificationsUseCase(
-      NotificationsLoadParams(page: _paginationHelper.currentPage),
-    );
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (response) {
-        _paginationHelper.onLoadEnd(response.lastPage);
-        emit(state.copyWith(
+    final result = await _loadNotificationsUseCase(NotificationsLoadParams(page: _paginationHelper.currentPage));
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (response) {
+      _paginationHelper.onLoadEnd(response.lastPage);
+      emit(
+        state.copyWith(
           status: response.data.isEmpty ? StateStatus.empty() : StateStatus.success(),
           notifications: response.data,
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   Future<void> readNotification(int id) async {
     final result = await _readNotificationUseCase(id);
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (_) {
-        final updated = state.notifications.map((n) {
-          if (n.id == id) {
-            return AppNotification(
-              id: n.id, uuid: n.uuid, title: n.title, body: n.body,
-              image: n.image, actionType: n.actionType, actionId: n.actionId,
-              isRead: true, date: n.date, dateRaw: n.dateRaw,
-            );
-          }
-          return n;
-        }).toList();
-        emit(state.copyWith(notifications: updated));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (_) {
+      final updated = state.notifications.map((n) {
+        if (n.id == id) {
+          return AppNotification(
+            id: n.id,
+            uuid: n.uuid,
+            title: n.title,
+            body: n.body,
+            image: n.image,
+            actionType: n.actionType,
+            actionId: n.actionId,
+            isRead: true,
+            date: n.date,
+            dateRaw: n.dateRaw,
+          );
+        }
+        return n;
+      }).toList();
+      emit(state.copyWith(notifications: updated));
+    });
   }
 
   Future<void> readAllNotifications() async {
     final result = await _readAllNotificationsUseCase();
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (_) {
-        final updated = state.notifications.map((n) {
-          return AppNotification(
-            id: n.id, uuid: n.uuid, title: n.title, body: n.body,
-            image: n.image, actionType: n.actionType, actionId: n.actionId,
-            isRead: true, date: n.date, dateRaw: n.dateRaw,
-          );
-        }).toList();
-        emit(state.copyWith(notifications: updated));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (_) {
+      final updated = state.notifications.map((n) {
+        return AppNotification(
+          id: n.id,
+          uuid: n.uuid,
+          title: n.title,
+          body: n.body,
+          image: n.image,
+          actionType: n.actionType,
+          actionId: n.actionId,
+          isRead: true,
+          date: n.date,
+          dateRaw: n.dateRaw,
+        );
+      }).toList();
+      emit(state.copyWith(notifications: updated));
+    });
   }
 
   Future<void> deleteNotification(int id) async {
     final result = await _deleteNotificationUseCase(id);
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (_) {
-        final updated = state.notifications.where((n) => n.id != id).toList();
-        emit(state.copyWith(
-          notifications: updated,
-          status: updated.isEmpty ? StateStatus.empty() : StateStatus.success(),
-        ));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (_) {
+      final updated = state.notifications.where((n) => n.id != id).toList();
+      emit(
+        state.copyWith(notifications: updated, status: updated.isEmpty ? StateStatus.empty() : StateStatus.success()),
+      );
+    });
   }
 
   Future<void> deleteAllNotifications() async {

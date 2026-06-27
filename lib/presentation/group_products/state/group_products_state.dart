@@ -9,10 +9,7 @@ class GroupProductsState extends Equatable {
   factory GroupProductsState.initial() => GroupProductsState(status: StateStatus.initial());
 
   GroupProductsState copyWith({StateStatus? status, List<Product>? products}) {
-    return GroupProductsState(
-      status: status ?? this.status,
-      products: products ?? this.products,
-    );
+    return GroupProductsState(status: status ?? this.status, products: products ?? this.products);
   }
 
   @override

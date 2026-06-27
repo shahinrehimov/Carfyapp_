@@ -70,20 +70,13 @@ class _CarPickerBottomSheetState extends State<CarPickerBottomSheet> {
                 child: Container(
                   width: 54,
                   height: 3,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(100)),
                 ),
               ),
               // Title
               Text(
                 context.localization.selectCarModel,
-                style: TextStyle(
-                  color: context.theme.colors.textDark,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 16),
               // List
@@ -91,54 +84,54 @@ class _CarPickerBottomSheetState extends State<CarPickerBottomSheet> {
                 child: _isLoading
                     ? _buildLoading()
                     : _cars == null || _cars!.isEmpty
-                        ? Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 32),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    context.localization.profileMyCarsEmpty,
-                                    style: TextStyle(fontSize: 18, color: context.theme.colors.black),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  CustomButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      context.pushRoute(CarFormRoute());
-                                    },
-                                    text: context.localization.profileMyCarsAddBtn,
-                                    height: 48,
-                                  ),
-                                ],
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                context.localization.profileMyCarsEmpty,
+                                style: TextStyle(fontSize: 18, color: context.theme.colors.black),
                               ),
-                            ),
-                          )
-                        : ListView.separated(
-                            controller: scrollController,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            itemCount: _cars!.length,
-                            separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFEDEDED)),
-                            itemBuilder: (context, index) {
-                              final car = _cars![index];
-                              return InkWell(
-                                onTap: () => Navigator.pop(context, car),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  child: Center(
-                                    child: Text(
-                                      '${car.brand.title} ${car.brandModel.title}',
-                                      style: TextStyle(
-                                        color: context.theme.colors.textDark,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                              const SizedBox(height: 16),
+                              CustomButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  context.pushRoute(CarFormRoute());
+                                },
+                                text: context.localization.profileMyCarsAddBtn,
+                                height: 48,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : ListView.separated(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: _cars!.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFEDEDED)),
+                        itemBuilder: (context, index) {
+                          final car = _cars![index];
+                          return InkWell(
+                            onTap: () => Navigator.pop(context, car),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Center(
+                                child: Text(
+                                  '${car.brand.title} ${car.brandModel.title}',
+                                  style: TextStyle(
+                                    color: context.theme.colors.textDark,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
               // Cancel button
               Padding(
@@ -159,11 +152,7 @@ class _CarPickerBottomSheetState extends State<CarPickerBottomSheet> {
                     ),
                     child: Text(
                       context.localization.carPickerCancel,
-                      style: TextStyle(
-                        color: context.theme.colors.primary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: TextStyle(color: context.theme.colors.primary, fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -184,10 +173,7 @@ class _CarPickerBottomSheetState extends State<CarPickerBottomSheet> {
         child: ShimmerWrapper(
           child: Container(
             height: 20,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
           ),
         ),
       ),

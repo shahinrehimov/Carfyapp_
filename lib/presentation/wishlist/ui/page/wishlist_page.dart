@@ -28,32 +28,29 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
         context.read<WishlistCubit>().onWishlistIdsChanged(wishlistManagerState.wishlistIds);
       },
       child: Scaffold(
-      backgroundColor: context.theme.colors.bg,
-      appBar: CustomAppBar(
-        title: context.localization.mainFavorite,
-        actions: [const NotificationIconButton()],
-      ),
-      body: BlocBuilder<WishlistCubit, WishlistState>(
-        builder: (context, state) {
-          final isEmpty = state.status.maybeWhen(success: () => state.products.isEmpty, orElse: () => false);
-          if (isEmpty) return const _WishlistEmpty();
+        backgroundColor: context.theme.colors.bg,
+        appBar: CustomAppBar(title: context.localization.mainFavorite, actions: [const NotificationIconButton()]),
+        body: BlocBuilder<WishlistCubit, WishlistState>(
+          builder: (context, state) {
+            final isEmpty = state.status.maybeWhen(success: () => state.products.isEmpty, orElse: () => false);
+            if (isEmpty) return const _WishlistEmpty();
 
-          return PullToRefreshWrapper(
-            onRefresh: () async {
-              await context.read<WishlistCubit>().refresh();
-            },
-            child: PaginationScrollWrapper(
-              onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
-              child: state.status.maybeWhen(
-                success: () => _WishlistGrid(products: state.products),
-                paginationLoading: () => _WishlistGrid(products: state.products, isLoadingMore: true),
-                orElse: () => const _WishlistLoading(),
+            return PullToRefreshWrapper(
+              onRefresh: () async {
+                await context.read<WishlistCubit>().refresh();
+              },
+              child: PaginationScrollWrapper(
+                onLoadMore: () => context.read<WishlistCubit>().loadNextPage(),
+                child: state.status.maybeWhen(
+                  success: () => _WishlistGrid(products: state.products),
+                  paginationLoading: () => _WishlistGrid(products: state.products, isLoadingMore: true),
+                  orElse: () => const _WishlistLoading(),
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
-    ),
     );
   }
 }
@@ -100,10 +97,7 @@ class _WishlistEmpty extends StatelessWidget {
         children: [
           Image.asset(Assets.images.favoriteNotLogged.path, height: 168),
           const SizedBox(height: 16),
-          Text(
-            context.localization.wishlistEmpty,
-            style: TextStyle(fontSize: 18, color: context.theme.colors.black),
-          ),
+          Text(context.localization.wishlistEmpty, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
         ],
       ),
     );

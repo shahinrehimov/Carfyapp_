@@ -33,21 +33,13 @@ class ConfirmationDialog extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF242323),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: const TextStyle(color: Color(0xFF242323), fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 16),
               Text(
                 description,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w300),
               ),
               const SizedBox(height: 32),
               Row(
@@ -66,10 +58,7 @@ class ConfirmationDialog extends StatelessWidget {
                   const SizedBox(width: 6),
                   // Cancel button
                   Expanded(
-                    child: _GradientButton(
-                      text: cancelText,
-                      onTap: () => Navigator.of(context).pop(),
-                    ),
+                    child: _GradientButton(text: cancelText, onTap: () => Navigator.of(context).pop()),
                   ),
                 ],
               ),
@@ -144,9 +133,7 @@ class _GradientButton extends StatelessWidget {
       child: Container(
         height: 48,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF3696E7), Color(0xFF00569C)],
-          ),
+          gradient: const LinearGradient(colors: [Color(0xFF3696E7), Color(0xFF00569C)]),
           borderRadius: BorderRadius.circular(40),
         ),
         alignment: Alignment.center,

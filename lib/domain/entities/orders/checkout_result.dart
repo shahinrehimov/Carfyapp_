@@ -3,11 +3,7 @@ class CheckoutResult {
   final bool redirect;
   final String? redirectUrl;
 
-  CheckoutResult({
-    this.message,
-    required this.redirect,
-    this.redirectUrl,
-  });
+  CheckoutResult({this.message, required this.redirect, this.redirectUrl});
 
   bool get requiresWebviewPayment => redirect && redirectUrl != null && redirectUrl!.isNotEmpty;
 }

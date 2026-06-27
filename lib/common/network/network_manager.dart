@@ -21,19 +21,13 @@ class NetworkManager {
         validateStatus: (_) => true,
         baseUrl: Constants.baseUrl,
         connectTimeout: const Duration(seconds: 10),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Token": Constants.securityToken,
-        },
+        headers: {"Accept": "application/json", "Content-Type": "application/json", "Token": Constants.securityToken},
       ),
     );
     dio.interceptors.addAll([
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final guestIdentifier = PrefUtil.getString(
-            AppPreferenceKeys.guestIdentifier,
-          );
+          final guestIdentifier = PrefUtil.getString(AppPreferenceKeys.guestIdentifier);
           if (guestIdentifier != null && guestIdentifier.isNotEmpty) {
             options.headers["identifier"] = guestIdentifier;
           }
@@ -44,31 +38,21 @@ class NetworkManager {
           }
 
           final language =
-              PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ??
-              PlatformDispatcher.instance.locale.languageCode;
+              PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? PlatformDispatcher.instance.locale.languageCode;
           options.headers["Accept-Language"] = language;
 
           return handler.next(options);
         },
       ),
-      if (kDebugMode)
-        CurlLoggingInterceptor(showResponseLog: true, showRequestLog: true),
+      if (kDebugMode) CurlLoggingInterceptor(showResponseLog: true, showRequestLog: true),
     ]);
   }
 
-  Future<Response> post(
-    String url, {
-    dynamic data,
-    dynamic queryParameters,
-  }) async {
+  Future<Response> post(String url, {dynamic data, dynamic queryParameters}) async {
     return await dio.post(url, data: data, queryParameters: queryParameters);
   }
 
-  Future<Response> put(
-    String url, {
-    dynamic data,
-    dynamic queryParameters,
-  }) async {
+  Future<Response> put(String url, {dynamic data, dynamic queryParameters}) async {
     return await dio.put(url, data: data, queryParameters: queryParameters);
   }
 
@@ -76,11 +60,7 @@ class NetworkManager {
     return await dio.patch(url, data: data);
   }
 
-  Future<Response> delete(
-    String url, {
-    dynamic data,
-    dynamic queryParameters,
-  }) async {
+  Future<Response> delete(String url, {dynamic data, dynamic queryParameters}) async {
     return await dio.delete(url, data: data, queryParameters: queryParameters);
   }
 
@@ -88,10 +68,7 @@ class NetworkManager {
     return await dio.get(url, queryParameters: queryParams);
   }
 
-  Future<dynamic> getFile(
-    String url, {
-    Map<String, dynamic>? queryParams,
-  }) async {
+  Future<dynamic> getFile(String url, {Map<String, dynamic>? queryParams}) async {
     return await dio.get(
       url,
       queryParameters: queryParams,

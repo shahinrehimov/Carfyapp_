@@ -14,20 +14,14 @@ class MessagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
-      appBar: CustomAppBar(
-        title: context.localization.mainMessage,
-        actions: [const NotificationIconButton()],
-      ),
+      appBar: CustomAppBar(title: context.localization.mainMessage, actions: [const NotificationIconButton()]),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(Assets.images.messageNotLogged.path, height: 168),
             const SizedBox(height: 16),
-            Text(
-              context.localization.messagesEmpty,
-              style: TextStyle(fontSize: 18, color: context.theme.colors.black),
-            ),
+            Text(context.localization.messagesEmpty, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
           ],
         ),
       ),

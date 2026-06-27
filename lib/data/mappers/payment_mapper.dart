@@ -4,9 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class PaymentMapper {
-  PaymentMethod mapPaymentMethod(PaymentMethodModel model) => PaymentMethod(
-        value: model.value,
-        label: model.label,
-        requiredFields: model.requiredFields,
-      );
+  PaymentMethod mapPaymentMethod(PaymentMethodModel model) =>
+      PaymentMethod(value: model.value, label: model.label, requiredFields: model.requiredFields);
 }

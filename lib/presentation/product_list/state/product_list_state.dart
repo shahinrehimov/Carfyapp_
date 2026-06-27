@@ -67,11 +67,8 @@ class ProductListState extends Equatable {
     return count;
   }
 
-  factory ProductListState.initial() => ProductListState(
-    status: StateStatus.loading(),
-    products: const [],
-    totalCount: 0,
-  );
+  factory ProductListState.initial() =>
+      ProductListState(status: StateStatus.loading(), products: const [], totalCount: 0);
 
   ProductListState copyWith({
     StateStatus? status,
@@ -117,8 +114,23 @@ class ProductListState extends Equatable {
 
   @override
   List<Object?> get props => [
-    status, products, totalCount, search, sort, sortType,
-    brands, categories, subCategories, isSet, minPrice, maxPrice,
-    cityId, sellerStoreCode, colors, conditions, minYear, maxYear,
+    status,
+    products,
+    totalCount,
+    search,
+    sort,
+    sortType,
+    brands,
+    categories,
+    subCategories,
+    isSet,
+    minPrice,
+    maxPrice,
+    cityId,
+    sellerStoreCode,
+    colors,
+    conditions,
+    minYear,
+    maxYear,
   ];
 }

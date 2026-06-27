@@ -104,9 +104,7 @@ class _CustomDatePickerFieldState extends State<CustomDatePickerField> {
       builder: (BuildContext context) {
         return Container(
           color: CupertinoColors.white,
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.4,
-          ),
+          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.4),
           child: SafeArea(
             top: false,
             child: CupertinoDatePicker(
@@ -179,10 +177,7 @@ class _CustomDatePickerFieldState extends State<CustomDatePickerField> {
                           ),
                         ),
                       ),
-                      if (widget.suffix != null) ...[
-                        const SizedBox(width: 8),
-                        widget.suffix!,
-                      ]
+                      if (widget.suffix != null) ...[const SizedBox(width: 8), widget.suffix!],
                     ],
                   ),
                 ),

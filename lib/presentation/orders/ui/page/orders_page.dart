@@ -21,10 +21,7 @@ class OrdersPage extends StatelessWidget implements AutoRouteWrapper {
   const OrdersPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => OrdersCubit()..init(),
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => OrdersCubit()..init(), child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +104,7 @@ class _EmptyOrdersView extends StatelessWidget {
         children: [
           Image.asset(Assets.images.basketNotLogged.path, height: 168),
           const SizedBox(height: 16),
-          Text(
-            context.localization.ordersEmpty,
-            style: TextStyle(fontSize: 18, color: context.theme.colors.black),
-          ),
+          Text(context.localization.ordersEmpty, style: TextStyle(fontSize: 18, color: context.theme.colors.black)),
         ],
       ),
     );
@@ -129,10 +123,7 @@ class _OrdersListShimmer extends StatelessWidget {
       itemBuilder: (_, __) => ShimmerWrapper(
         child: Container(
           height: 80,
-          decoration: BoxDecoration(
-            color: context.theme.colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
+          decoration: BoxDecoration(color: context.theme.colors.white, borderRadius: BorderRadius.circular(12)),
         ),
       ),
     );

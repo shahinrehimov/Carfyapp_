@@ -43,11 +43,7 @@ class HomeCubit extends Cubit<HomeState> with StateMapHelper {
 
   Future<void> refresh() async {
     _paymentPaginationHelper.reset();
-    await Future.wait([
-      _loadCategories(silent: true),
-      _loadGroups(silent: true),
-      _loadProducts(replace: true),
-    ]);
+    await Future.wait([_loadCategories(silent: true), _loadGroups(silent: true), _loadProducts(replace: true)]);
   }
 
   Future<void> _loadCategories({bool silent = false}) async {

@@ -8,8 +8,6 @@ class SessionsResponseModel {
 
   factory SessionsResponseModel.fromJson(Map<String, dynamic> json) => SessionsResponseModel(
     currentSession: SessionModel.fromJson(json['current_session']),
-    otherSessions: (json['other_sessions'] as List? ?? [])
-        .map((e) => SessionModel.fromJson(e))
-        .toList(),
+    otherSessions: (json['other_sessions'] as List? ?? []).map((e) => SessionModel.fromJson(e)).toList(),
   );
 }

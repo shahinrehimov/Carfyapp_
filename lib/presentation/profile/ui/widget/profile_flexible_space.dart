@@ -29,44 +29,46 @@ class _ProfileName extends StatelessWidget {
       onTap: user == null
           ? null
           : () async {
-              final updated = await context.pushRoute<dynamic>(
-                ProfileUpdateRoute(user: user),
-              );
+              final updated = await context.pushRoute<dynamic>(ProfileUpdateRoute(user: user));
               if (updated != null && context.mounted) {
                 context.read<ProfileCubit>().init();
               }
             },
       child: Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-      child: Row(
-        children: [
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: context.theme.colors.white.withValues(alpha: 0.3),
+        alignment: Alignment.bottomLeft,
+        padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+        child: Row(
+          children: [
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: context.theme.colors.white.withValues(alpha: 0.3),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  Assets.icons.profile,
+                  width: 32,
+                  height: 32,
+                  colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                ),
+              ),
             ),
-            child: Center(
-              child: SvgPicture.asset(Assets.icons.profile, width: 32, height: 32,
-                colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(color: context.theme.colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              name,
-              style: TextStyle(color: context.theme.colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+            SvgPicture.asset(
+              Assets.icons.chevronRight,
+              height: 26,
+              colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
             ),
-          ),
-          SvgPicture.asset(
-            Assets.icons.chevronRight,
-            height: 26,
-            colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
@@ -86,10 +88,7 @@ class _ProfileNameShimmer extends StatelessWidget {
             child: Container(
               width: 70,
               height: 70,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: context.theme.colors.white,
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: context.theme.colors.white),
             ),
           ),
           const SizedBox(width: 12),

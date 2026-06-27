@@ -51,9 +51,7 @@ class UserCarModel {
       transmissionType: json['transmission_type'] != null
           ? CarLibraryItemModel.fromJson(json['transmission_type'] as Map<String, dynamic>)
           : null,
-      carColor: json['car_color'] != null
-          ? CarColorModel.fromJson(json['car_color'] as Map<String, dynamic>)
-          : null,
+      carColor: json['car_color'] != null ? CarColorModel.fromJson(json['car_color'] as Map<String, dynamic>) : null,
       seatCount: json['seat_count'] as int?,
       year: json['year'] as int,
       engineNumber: json['engine_number'] as String?,

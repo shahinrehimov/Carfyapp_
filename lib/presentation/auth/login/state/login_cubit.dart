@@ -52,7 +52,9 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
     );
 
     final deviceName = await DeviceUtil.getDeviceName();
-    final result = await _loginWithEmailUseCase(LoginWithEmailParams(email: email, password: password, deviceName: deviceName));
+    final result = await _loginWithEmailUseCase(
+      LoginWithEmailParams(email: email, password: password, deviceName: deviceName),
+    );
     result.fold(
       (failure) {
         emit(state.copyWith(emailLoginState: mapFailure(failure)));

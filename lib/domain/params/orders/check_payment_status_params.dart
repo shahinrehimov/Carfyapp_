@@ -3,9 +3,5 @@ class CheckPaymentStatusParams {
   final String paymentMethod;
   final String token;
 
-  CheckPaymentStatusParams({
-    required this.orderUuid,
-    required this.paymentMethod,
-    required this.token,
-  });
+  CheckPaymentStatusParams({required this.orderUuid, required this.paymentMethod, required this.token});
 }

@@ -49,8 +49,8 @@ class ProductDetailModel {
           : null,
       categories: json['categories'] != null
           ? (json['categories'] as List<dynamic>)
-              .map((e) => ProductCategoryModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => ProductCategoryModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
       title: json['title'] as String,
       descriptionShort: json['description_short'] as String?,
@@ -59,13 +59,9 @@ class ProductDetailModel {
       note: json['note'] as String?,
       mainImage: json['main_image'] as String?,
       hoverImage: json['hover_image'] as String?,
-      images: json['images'] != null
-          ? (json['images'] as List<dynamic>).map((e) => e as String).toList()
-          : [],
+      images: json['images'] != null ? (json['images'] as List<dynamic>).map((e) => e as String).toList() : [],
       isSet: json['is_set'] as bool? ?? false,
-      brand: json['brand'] != null
-          ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
-          : null,
+      brand: json['brand'] != null ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>) : null,
     );
   }
 }

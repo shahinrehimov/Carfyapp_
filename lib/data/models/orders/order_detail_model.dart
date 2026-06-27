@@ -44,8 +44,12 @@ class OrderDetailModel {
       amountFinal: (json['amount_final'] as num).toDouble(),
       paymentMethod: OrderPaymentMethodModel.fromJson(json['payment_method'] as Map<String, dynamic>),
       address: OrderAddressModel.fromJson(json['address'] as Map<String, dynamic>),
-      statusTree: (json['status_tree'] as List).map((e) => OrderStatusTreeModel.fromJson(e as Map<String, dynamic>)).toList(),
-      statuses: (json['statuses'] as List).map((e) => OrderStatusHistoryModel.fromJson(e as Map<String, dynamic>)).toList(),
+      statusTree: (json['status_tree'] as List)
+          .map((e) => OrderStatusTreeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      statuses: (json['statuses'] as List)
+          .map((e) => OrderStatusHistoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       items: (json['items'] as List).map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
   }
@@ -113,10 +117,7 @@ class OrderAddressTypeModel {
   OrderAddressTypeModel({required this.id, required this.title});
 
   factory OrderAddressTypeModel.fromJson(Map<String, dynamic> json) {
-    return OrderAddressTypeModel(
-      id: json['id'] as int,
-      title: json['title'] as String,
-    );
+    return OrderAddressTypeModel(id: json['id'] as int, title: json['title'] as String);
   }
 }
 
@@ -127,10 +128,7 @@ class OrderCityModel {
   OrderCityModel({required this.id, required this.title});
 
   factory OrderCityModel.fromJson(Map<String, dynamic> json) {
-    return OrderCityModel(
-      id: json['id'] as int,
-      title: json['title'] as String,
-    );
+    return OrderCityModel(id: json['id'] as int, title: json['title'] as String);
   }
 }
 
@@ -140,12 +138,7 @@ class OrderStatusTreeModel {
   final bool isChecked;
   final String? date;
 
-  OrderStatusTreeModel({
-    required this.status,
-    required this.statusLabel,
-    required this.isChecked,
-    this.date,
-  });
+  OrderStatusTreeModel({required this.status, required this.statusLabel, required this.isChecked, this.date});
 
   factory OrderStatusTreeModel.fromJson(Map<String, dynamic> json) {
     return OrderStatusTreeModel(
@@ -163,12 +156,7 @@ class OrderStatusHistoryModel {
   final String statusLabel;
   final String date;
 
-  OrderStatusHistoryModel({
-    required this.id,
-    required this.status,
-    required this.statusLabel,
-    required this.date,
-  });
+  OrderStatusHistoryModel({required this.id, required this.status, required this.statusLabel, required this.date});
 
   factory OrderStatusHistoryModel.fromJson(Map<String, dynamic> json) {
     return OrderStatusHistoryModel(
@@ -186,12 +174,7 @@ class OrderItemModel {
   final double amountFinal;
   final OrderItemProductModel product;
 
-  OrderItemModel({
-    required this.quantity,
-    required this.amount,
-    required this.amountFinal,
-    required this.product,
-  });
+  OrderItemModel({required this.quantity, required this.amount, required this.amountFinal, required this.product});
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
     return OrderItemModel(
@@ -250,12 +233,7 @@ class OrderItemSellerModel {
   final String label;
   final OrderCityModel city;
 
-  OrderItemSellerModel({
-    required this.uuid,
-    required this.storeCode,
-    required this.label,
-    required this.city,
-  });
+  OrderItemSellerModel({required this.uuid, required this.storeCode, required this.label, required this.city});
 
   factory OrderItemSellerModel.fromJson(Map<String, dynamic> json) {
     return OrderItemSellerModel(

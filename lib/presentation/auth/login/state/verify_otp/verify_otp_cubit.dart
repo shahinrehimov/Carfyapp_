@@ -66,7 +66,9 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
     emit(state.copyWith(verifyState: StateStatus.loading()));
 
     final deviceName = await DeviceUtil.getDeviceName();
-    final result = await _loginWithPhoneUseCase(LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp), deviceName: deviceName));
+    final result = await _loginWithPhoneUseCase(
+      LoginWithPhoneSubmitParams(phone: phone, otp: int.parse(otp), deviceName: deviceName),
+    );
 
     result.fold(
       (failure) {

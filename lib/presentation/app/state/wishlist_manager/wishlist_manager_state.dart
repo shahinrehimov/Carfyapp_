@@ -4,20 +4,12 @@ class WishlistManagerState extends Equatable {
   final Set<String> wishlistIds;
   final StateStatus actionStatus;
 
-  const WishlistManagerState({
-    required this.wishlistIds,
-    required this.actionStatus,
-  });
+  const WishlistManagerState({required this.wishlistIds, required this.actionStatus});
 
-  factory WishlistManagerState.initial() => WishlistManagerState(
-    wishlistIds: const {},
-    actionStatus: StateStatus.initial(),
-  );
+  factory WishlistManagerState.initial() =>
+      WishlistManagerState(wishlistIds: const {}, actionStatus: StateStatus.initial());
 
-  WishlistManagerState copyWith({
-    Set<String>? wishlistIds,
-    StateStatus? actionStatus,
-  }) {
+  WishlistManagerState copyWith({Set<String>? wishlistIds, StateStatus? actionStatus}) {
     return WishlistManagerState(
       wishlistIds: wishlistIds ?? this.wishlistIds,
       actionStatus: actionStatus ?? this.actionStatus,

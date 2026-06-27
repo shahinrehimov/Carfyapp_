@@ -35,9 +35,7 @@ class OtherSellerModel {
       discountType: json['discount_type'] as String?,
       discount: (json['discount'] as num).toDouble(),
       stock: json['stock'] as int,
-      city: json['city'] != null
-          ? CityModel.fromJson(json['city'] as Map<String, dynamic>)
-          : null,
+      city: json['city'] != null ? CityModel.fromJson(json['city'] as Map<String, dynamic>) : null,
       images: json['images'] != null
           ? (json['images'] as List<dynamic>).map((e) {
               if (e is String) return e;

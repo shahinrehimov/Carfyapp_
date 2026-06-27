@@ -14,9 +14,9 @@ class MyCarsCubit extends Cubit<MyCarsState> with StateMapHelper {
   final DeleteCarUseCase _deleteCarUseCase;
 
   MyCarsCubit({GetCarsUseCase? getCarsUseCase, DeleteCarUseCase? deleteCarUseCase})
-      : _getCarsUseCase = getCarsUseCase ?? getIt<GetCarsUseCase>(),
-        _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
-        super(MyCarsState.initial());
+    : _getCarsUseCase = getCarsUseCase ?? getIt<GetCarsUseCase>(),
+      _deleteCarUseCase = deleteCarUseCase ?? getIt<DeleteCarUseCase>(),
+      super(MyCarsState.initial());
 
   Future<void> init() => _loadCars();
 

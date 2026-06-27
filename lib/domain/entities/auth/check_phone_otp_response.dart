@@ -3,9 +3,5 @@ class CheckPhoneOtpResponse {
   final String phoneConfirmationToken;
   final String message;
 
-  CheckPhoneOtpResponse({
-    required this.step,
-    required this.phoneConfirmationToken,
-    required this.message,
-  });
+  CheckPhoneOtpResponse({required this.step, required this.phoneConfirmationToken, required this.message});
 }

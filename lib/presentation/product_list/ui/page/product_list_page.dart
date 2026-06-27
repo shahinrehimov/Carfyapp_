@@ -69,10 +69,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colors.bg,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: ProductListAppBar(),
-      ),
+      appBar: const PreferredSize(preferredSize: Size.fromHeight(60), child: ProductListAppBar()),
       body: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

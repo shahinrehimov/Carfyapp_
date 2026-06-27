@@ -30,11 +30,11 @@ class OrderConfirmState extends Equatable {
   });
 
   factory OrderConfirmState.initial() => OrderConfirmState(
-        addressesStatus: StateStatus.initial(),
-        paymentMethodsStatus: StateStatus.initial(),
-        previewStatus: StateStatus.initial(),
-        checkoutStatus: StateStatus.initial(),
-      );
+    addressesStatus: StateStatus.initial(),
+    paymentMethodsStatus: StateStatus.initial(),
+    previewStatus: StateStatus.initial(),
+    checkoutStatus: StateStatus.initial(),
+  );
 
   OrderConfirmState copyWith({
     StateStatus? addressesStatus,
@@ -68,17 +68,17 @@ class OrderConfirmState extends Equatable {
 
   @override
   List<Object?> get props => [
-        addressesStatus,
-        addresses,
-        selectedAddress,
-        paymentMethodsStatus,
-        paymentMethods,
-        selectedPaymentMethod,
-        note,
-        useReferralBalance,
-        previewStatus,
-        preview,
-        checkoutStatus,
-        checkoutResult,
-      ];
+    addressesStatus,
+    addresses,
+    selectedAddress,
+    paymentMethodsStatus,
+    paymentMethods,
+    selectedPaymentMethod,
+    note,
+    useReferralBalance,
+    previewStatus,
+    preview,
+    checkoutStatus,
+    checkoutResult,
+  ];
 }

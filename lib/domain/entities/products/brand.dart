@@ -7,11 +7,5 @@ class Brand {
   final String title;
   final List<BrandModelItem> models;
 
-  Brand({
-    required this.id,
-    this.uuid,
-    required this.slug,
-    required this.title,
-    this.models = const [],
-  });
+  Brand({required this.id, this.uuid, required this.slug, required this.title, this.models = const []});
 }

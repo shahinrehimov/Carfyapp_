@@ -29,10 +29,7 @@ class GroupRepositoryImpl extends GroupRepository with RepositorySafeCallMixin {
   @override
   Future<Either<Failure, Group>> getGroup(GroupParams params) {
     return safeCall(() async {
-      final queryParams = GroupQueryParams(
-        slug: params.slug,
-        limit: params.limit,
-      );
+      final queryParams = GroupQueryParams(slug: params.slug, limit: params.limit);
       final res = await _remoteDataSource.fetchGroup(queryParams);
       return _mapper.mapGroup(res);
     });

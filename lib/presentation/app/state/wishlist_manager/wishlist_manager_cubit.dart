@@ -18,17 +18,14 @@ class WishlistManagerCubit extends Cubit<WishlistManagerState> with StateMapHelp
     GetWishlistIdsUseCase? getWishlistIdsUseCase,
     AddToWishlistUseCase? addToWishlistUseCase,
     RemoveFromWishlistUseCase? removeFromWishlistUseCase,
-  })  : _getWishlistIdsUseCase = getWishlistIdsUseCase ?? getIt<GetWishlistIdsUseCase>(),
-        _addToWishlistUseCase = addToWishlistUseCase ?? getIt<AddToWishlistUseCase>(),
-        _removeFromWishlistUseCase = removeFromWishlistUseCase ?? getIt<RemoveFromWishlistUseCase>(),
-        super(WishlistManagerState.initial());
+  }) : _getWishlistIdsUseCase = getWishlistIdsUseCase ?? getIt<GetWishlistIdsUseCase>(),
+       _addToWishlistUseCase = addToWishlistUseCase ?? getIt<AddToWishlistUseCase>(),
+       _removeFromWishlistUseCase = removeFromWishlistUseCase ?? getIt<RemoveFromWishlistUseCase>(),
+       super(WishlistManagerState.initial());
 
   Future<void> loadWishlistIds() async {
     final result = await _getWishlistIdsUseCase();
-    result.fold(
-      (_) {},
-      (ids) => emit(state.copyWith(wishlistIds: ids.toSet())),
-    );
+    result.fold((_) {}, (ids) => emit(state.copyWith(wishlistIds: ids.toSet())));
   }
 
   bool isInWishlist(String cpvUuid) => state.wishlistIds.contains(cpvUuid);
@@ -47,17 +44,11 @@ class WishlistManagerCubit extends Cubit<WishlistManagerState> with StateMapHelp
     emit(state.copyWith(wishlistIds: updatedIds));
 
     final result = await _addToWishlistUseCase(cpvUuid);
-    result.fold(
-      (failure) {
-        // Rollback
-        final rolledBack = Set<String>.from(state.wishlistIds)..remove(cpvUuid);
-        emit(state.copyWith(
-          wishlistIds: rolledBack,
-          actionStatus: mapFailure(failure),
-        ));
-      },
-      (_) {},
-    );
+    result.fold((failure) {
+      // Rollback
+      final rolledBack = Set<String>.from(state.wishlistIds)..remove(cpvUuid);
+      emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
+    }, (_) {});
   }
 
   Future<void> _remove(String cpvUuid) async {
@@ -66,17 +57,11 @@ class WishlistManagerCubit extends Cubit<WishlistManagerState> with StateMapHelp
     emit(state.copyWith(wishlistIds: updatedIds));
 
     final result = await _removeFromWishlistUseCase(cpvUuid);
-    result.fold(
-      (failure) {
-        // Rollback
-        final rolledBack = Set<String>.from(state.wishlistIds)..add(cpvUuid);
-        emit(state.copyWith(
-          wishlistIds: rolledBack,
-          actionStatus: mapFailure(failure),
-        ));
-      },
-      (_) {},
-    );
+    result.fold((failure) {
+      // Rollback
+      final rolledBack = Set<String>.from(state.wishlistIds)..add(cpvUuid);
+      emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
+    }, (_) {});
   }
 
   void clearActionStatus() {

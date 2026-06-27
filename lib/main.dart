@@ -18,17 +18,20 @@ import 'package:carfy/presentation/app/ui/app.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  runZonedGuarded(() async {
-    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  runZonedGuarded(
+    () async {
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-    await _config();
+      await _config();
 
-    runApp(const CarfyApp());
-    FlutterNativeSplash.remove();
-  }, (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  });
+      runApp(const CarfyApp());
+      FlutterNativeSplash.remove();
+    },
+    (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    },
+  );
 }
 
 Future<void> _config() async {

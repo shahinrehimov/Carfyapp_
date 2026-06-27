@@ -10,6 +10,5 @@ class GetOrderDetailsUseCase {
 
   GetOrderDetailsUseCase(this._repository);
 
-  Future<Either<Failure, OrderDetail>> call(int id) =>
-      _repository.getOrderDetails(id);
+  Future<Either<Failure, OrderDetail>> call(int id) => _repository.getOrderDetails(id);
 }

@@ -59,20 +59,20 @@ class AddressFormState extends Equatable {
   });
 
   factory AddressFormState.initial() => AddressFormState(
-        addressTypesStatus: StateStatus.initial(),
-        citiesStatus: StateStatus.initial(),
-        submitStatus: StateStatus.initial(),
-        deleteStatus: StateStatus.initial(),
-        addressTypes: [],
-        countries: [],
-        flatCities: [],
-        addressLine1: '',
-        addressLine2: '',
-        phone: '',
-        addressLine1ValidationState: FieldValidationState.pure(),
-        addressLine2ValidationState: FieldValidationState.pure(),
-        phoneValidationState: FieldValidationState.pure(),
-      );
+    addressTypesStatus: StateStatus.initial(),
+    citiesStatus: StateStatus.initial(),
+    submitStatus: StateStatus.initial(),
+    deleteStatus: StateStatus.initial(),
+    addressTypes: [],
+    countries: [],
+    flatCities: [],
+    addressLine1: '',
+    addressLine2: '',
+    phone: '',
+    addressLine1ValidationState: FieldValidationState.pure(),
+    addressLine2ValidationState: FieldValidationState.pure(),
+    phoneValidationState: FieldValidationState.pure(),
+  );
 
   AddressFormState copyWith({
     StateStatus? addressTypesStatus,
@@ -132,11 +132,27 @@ class AddressFormState extends Equatable {
 
   @override
   List<Object?> get props => [
-        addressTypesStatus, citiesStatus, submitStatus, deleteStatus,
-        addressTypes, countries, flatCities,
-        selectedAddressType, selectedCity,
-        addressLine1, addressLine2, phone, latitude, longitude,
-        addressTypeError, cityError, addressLine1Error, phoneError, locationError,
-        addressLine1ValidationState, addressLine2ValidationState, phoneValidationState,
-      ];
+    addressTypesStatus,
+    citiesStatus,
+    submitStatus,
+    deleteStatus,
+    addressTypes,
+    countries,
+    flatCities,
+    selectedAddressType,
+    selectedCity,
+    addressLine1,
+    addressLine2,
+    phone,
+    latitude,
+    longitude,
+    addressTypeError,
+    cityError,
+    addressLine1Error,
+    phoneError,
+    locationError,
+    addressLine1ValidationState,
+    addressLine2ValidationState,
+    phoneValidationState,
+  ];
 }

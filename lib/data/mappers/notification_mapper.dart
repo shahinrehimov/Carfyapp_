@@ -5,15 +5,15 @@ import 'package:injectable/injectable.dart';
 @injectable
 class NotificationMapper {
   AppNotification mapNotification(AppNotificationModel model) => AppNotification(
-        id: model.id,
-        uuid: model.uuid,
-        title: model.title,
-        body: model.body,
-        image: model.image,
-        actionType: model.actionType,
-        actionId: model.actionId,
-        isRead: model.isRead,
-        date: model.date,
-        dateRaw: model.dateRaw,
-      );
+    id: model.id,
+    uuid: model.uuid,
+    title: model.title,
+    body: model.body,
+    image: model.image,
+    actionType: model.actionType,
+    actionId: model.actionId,
+    isRead: model.isRead,
+    date: model.date,
+    dateRaw: model.dateRaw,
+  );
 }

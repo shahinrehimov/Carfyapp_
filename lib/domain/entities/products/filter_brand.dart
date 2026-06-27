@@ -6,10 +6,5 @@ class FilterBrand {
   final String title;
   final List<BrandModelItem> models;
 
-  FilterBrand({
-    required this.id,
-    required this.slug,
-    required this.title,
-    this.models = const [],
-  });
+  FilterBrand({required this.id, required this.slug, required this.title, this.models = const []});
 }

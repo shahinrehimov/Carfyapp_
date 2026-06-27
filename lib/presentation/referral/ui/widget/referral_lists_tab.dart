@@ -19,8 +19,7 @@ class ReferralListsTab extends StatefulWidget {
   State<ReferralListsTab> createState() => _ReferralListsTabState();
 }
 
-class _ReferralListsTabState extends State<ReferralListsTab>
-    with SingleTickerProviderStateMixin {
+class _ReferralListsTabState extends State<ReferralListsTab> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   final _loadedTabs = <int>{};
 
@@ -67,10 +66,7 @@ class _ReferralListsTabState extends State<ReferralListsTab>
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF2F2F2),
-            borderRadius: BorderRadius.circular(12),
-          ),
+          decoration: BoxDecoration(color: const Color(0xFFF2F2F2), borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.all(4),
           child: TabBar(
             controller: _tabController,
@@ -78,25 +74,11 @@ class _ReferralListsTabState extends State<ReferralListsTab>
             indicator: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x14000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
-                ),
-              ],
+              boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 4, offset: Offset(0, 1))],
             ),
             dividerColor: Colors.transparent,
-            labelStyle: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: context.theme.colors.primary,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-              color: Color(0xFF717171),
-            ),
+            labelStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: context.theme.colors.primary),
+            unselectedLabelStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Color(0xFF717171)),
             splashBorderRadius: BorderRadius.circular(10),
             tabs: [
               Tab(text: context.localization.referralEarnings, height: 36),
@@ -120,18 +102,12 @@ class _ReferralListsTabState extends State<ReferralListsTab>
   }
 }
 
-const _loader = Center(
-  child: SizedBox(height: 200, child: CupertinoActivityIndicator()),
-);
+const _loader = Center(child: SizedBox(height: 200, child: CupertinoActivityIndicator()));
 const _paginationLoader = Center(
-  child: Padding(
-    padding: EdgeInsets.all(16),
-    child: CupertinoActivityIndicator(),
-  ),
+  child: Padding(padding: EdgeInsets.all(16), child: CupertinoActivityIndicator()),
 );
 
-bool _isLoadingOrInitial(StateStatus status) =>
-    status is StateStatusLoading || status is StateStatusInitial;
+bool _isLoadingOrInitial(StateStatus status) => status is StateStatusLoading || status is StateStatusInitial;
 
 // ── Earnings Tab ──
 
@@ -139,9 +115,7 @@ class _EarningsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
-      buildWhen: (prev, curr) =>
-          prev.earningsStatus != curr.earningsStatus ||
-          prev.earnings != curr.earnings,
+      buildWhen: (prev, curr) => prev.earningsStatus != curr.earningsStatus || prev.earnings != curr.earnings,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.earningsStatus)) return _loader;
         if (state.earningsStatus is StateStatusEmpty) {
@@ -156,9 +130,7 @@ class _EarningsTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount:
-              state.earnings.length +
-              (state.earningsStatus is StateStatusPaginationLoading ? 1 : 0),
+          itemCount: state.earnings.length + (state.earningsStatus is StateStatusPaginationLoading ? 1 : 0),
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
             if (index == state.earnings.length) return _paginationLoader;
@@ -192,19 +164,12 @@ class _EarningItem extends StatelessWidget {
               children: [
                 Text(
                   '${earning.orderAmount.toStringAsFixed(2)} ₼',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF242323),
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${earning.rate} · ${earning.tier}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF717171),
-                  ),
+                  style: const TextStyle(fontSize: 12, color: Color(0xFF717171)),
                 ),
               ],
             ),
@@ -214,11 +179,7 @@ class _EarningItem extends StatelessWidget {
             children: [
               Text(
                 '+${earning.amount.toStringAsFixed(2)} ₼',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF4CAF50),
-                ),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF4CAF50)),
               ),
               const SizedBox(height: 4),
               _EarningStatusBadge(status: earning.status),
@@ -236,9 +197,7 @@ class _ReferralsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
-      buildWhen: (prev, curr) =>
-          prev.referralsStatus != curr.referralsStatus ||
-          prev.referrals != curr.referrals,
+      buildWhen: (prev, curr) => prev.referralsStatus != curr.referralsStatus || prev.referrals != curr.referrals,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.referralsStatus)) return _loader;
         if (state.referralsStatus is StateStatusEmpty) {
@@ -253,9 +212,7 @@ class _ReferralsTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount:
-              state.referrals.length +
-              (state.referralsStatus is StateStatusPaginationLoading ? 1 : 0),
+          itemCount: state.referrals.length + (state.referralsStatus is StateStatusPaginationLoading ? 1 : 0),
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
             if (index == state.referrals.length) return _paginationLoader;
@@ -290,11 +247,7 @@ class _ReferralUserItem extends StatelessWidget {
               color: const Color(0xFF3696E7).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
-              Icons.person_outline,
-              size: 20,
-              color: Color(0xFF3696E7),
-            ),
+            child: const Icon(Icons.person_outline, size: 20, color: Color(0xFF3696E7)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -303,20 +256,10 @@ class _ReferralUserItem extends StatelessWidget {
               children: [
                 Text(
                   user.referredName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF242323),
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  user.joinedAt.substring(0, 10),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF717171),
-                  ),
-                ),
+                Text(user.joinedAt.substring(0, 10), style: const TextStyle(fontSize: 12, color: Color(0xFF717171))),
               ],
             ),
           ),
@@ -334,8 +277,7 @@ class _WithdrawalsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ReferralCubit, ReferralState>(
       buildWhen: (prev, curr) =>
-          prev.withdrawalsStatus != curr.withdrawalsStatus ||
-          prev.withdrawals != curr.withdrawals,
+          prev.withdrawalsStatus != curr.withdrawalsStatus || prev.withdrawals != curr.withdrawals,
       builder: (context, state) {
         if (_isLoadingOrInitial(state.withdrawalsStatus)) return _loader;
         if (state.withdrawalsStatus is StateStatusEmpty) {
@@ -350,9 +292,7 @@ class _WithdrawalsTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount:
-              state.withdrawals.length +
-              (state.withdrawalsStatus is StateStatusPaginationLoading ? 1 : 0),
+          itemCount: state.withdrawals.length + (state.withdrawalsStatus is StateStatusPaginationLoading ? 1 : 0),
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
             if (index == state.withdrawals.length) return _paginationLoader;
@@ -386,19 +326,12 @@ class _WithdrawalItem extends StatelessWidget {
               children: [
                 Text(
                   '**** ${withdrawal.cardLast4}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF242323),
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   withdrawal.requestedAt.substring(0, 10),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF717171),
-                  ),
+                  style: const TextStyle(fontSize: 12, color: Color(0xFF717171)),
                 ),
               ],
             ),
@@ -408,11 +341,7 @@ class _WithdrawalItem extends StatelessWidget {
             children: [
               Text(
                 '-${withdrawal.amount.toStringAsFixed(2)} ₼',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFF6683C),
-                ),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFF6683C)),
               ),
               const SizedBox(height: 4),
               _WithdrawalStatusBadge(status: withdrawal.status),
@@ -434,8 +363,7 @@ class _EarningStatusBadge extends StatelessWidget {
   Color get _color => switch (status) {
     EarningStatus.available => const Color(0xFF4CAF50),
     EarningStatus.pending => const Color(0xFFF6A623),
-    EarningStatus.refunded ||
-    EarningStatus.cancelled => const Color(0xFFF44336),
+    EarningStatus.refunded || EarningStatus.cancelled => const Color(0xFFF44336),
     EarningStatus.fraudHold => const Color(0xFFFF9800),
   };
 
@@ -451,17 +379,10 @@ class _EarningStatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-      ),
+      decoration: BoxDecoration(color: _color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
       child: Text(
         _label(context),
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: _color,
-        ),
+        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: _color),
       ),
     );
   }
@@ -483,25 +404,17 @@ class _AttributionStatusBadge extends StatelessWidget {
   String _label(BuildContext context) => switch (status) {
     AttributionStatus.pending => context.localization.attributionStatusPending,
     AttributionStatus.active => context.localization.attributionStatusActive,
-    AttributionStatus.fraudBlocked =>
-      context.localization.attributionStatusFraudBlocked,
+    AttributionStatus.fraudBlocked => context.localization.attributionStatusFraudBlocked,
   };
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-      ),
+      decoration: BoxDecoration(color: _color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
       child: Text(
         _label(context),
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: _color,
-        ),
+        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: _color),
       ),
     );
   }
@@ -532,17 +445,10 @@ class _WithdrawalStatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-      ),
+      decoration: BoxDecoration(color: _color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
       child: Text(
         _label(context),
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: _color,
-        ),
+        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: _color),
       ),
     );
   }

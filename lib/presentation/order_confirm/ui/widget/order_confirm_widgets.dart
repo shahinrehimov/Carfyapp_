@@ -31,7 +31,8 @@ class OrderConfirmAddressCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 24, height: 24,
+              width: 24,
+              height: 24,
               child: SvgPicture.asset(
                 selectedAddress == null ? Assets.icons.plusSquare : Assets.icons.map,
                 colorFilter: ColorFilter.mode(context.theme.colors.primary, BlendMode.srcIn),
@@ -44,18 +45,50 @@ class OrderConfirmAddressCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(context.localization.orderConfirmAddAddress, style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w400, height: 1.6, letterSpacing: 0.42)),
-                        Text(context.localization.orderConfirmAddAddressHint, style: const TextStyle(color: Color(0xFF717171), fontSize: 9, fontWeight: FontWeight.w400, height: 1.6, letterSpacing: 0.27)),
+                        Text(
+                          context.localization.orderConfirmAddAddress,
+                          style: const TextStyle(
+                            color: Color(0xFF292929),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 1.6,
+                            letterSpacing: 0.42,
+                          ),
+                        ),
+                        Text(
+                          context.localization.orderConfirmAddAddressHint,
+                          style: const TextStyle(
+                            color: Color(0xFF717171),
+                            fontSize: 9,
+                            fontWeight: FontWeight.w400,
+                            height: 1.6,
+                            letterSpacing: 0.27,
+                          ),
+                        ),
                       ],
                     )
                   : Text(
                       '${selectedAddress!.city.title},\n${selectedAddress!.addressLine1}',
-                      style: const TextStyle(color: Color(0xFF717171), fontSize: 12, fontWeight: FontWeight.w400, height: 1.6, letterSpacing: 0.36),
+                      style: const TextStyle(
+                        color: Color(0xFF717171),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.6,
+                        letterSpacing: 0.36,
+                      ),
                     ),
             ),
             if (selectedAddress != null) ...[
               const SizedBox(width: 8),
-              Text(context.localization.orderConfirmEditAddress, style: TextStyle(color: context.theme.colors.secondary, fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.36)),
+              Text(
+                context.localization.orderConfirmEditAddress,
+                style: TextStyle(
+                  color: context.theme.colors.secondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.36,
+                ),
+              ),
             ],
           ],
         ),
@@ -80,11 +113,18 @@ class PaymentMethodsSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10),
-          child: Text(context.localization.orderConfirmPaymentMethod, style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
+          child: Text(
+            context.localization.orderConfirmPaymentMethod,
+            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
         ),
         const SizedBox(height: 12),
         for (int i = 0; i < methods.length; i++) ...[
-          _PaymentMethodTile(method: methods[i], isSelected: selected?.value == methods[i].value, onTap: () => onSelected(methods[i])),
+          _PaymentMethodTile(
+            method: methods[i],
+            isSelected: selected?.value == methods[i].value,
+            onTap: () => onSelected(methods[i]),
+          ),
           if (i != methods.length - 1) const SizedBox(height: 8),
         ],
       ],
@@ -113,7 +153,12 @@ class _PaymentMethodTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(child: Text(method.label, style: const TextStyle(color: Color(0xFF242323), fontSize: 14, fontWeight: FontWeight.w400))),
+            Expanded(
+              child: Text(
+                method.label,
+                style: const TextStyle(color: Color(0xFF242323), fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ),
             _RadioDot(isSelected: isSelected),
           ],
         ),
@@ -131,16 +176,24 @@ class _RadioDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      width: 18, height: 18,
+      width: 18,
+      height: 18,
       decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(side: const BorderSide(width: 1, color: Color(0xFF3696E7)), borderRadius: BorderRadius.circular(17)),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 1, color: Color(0xFF3696E7)),
+          borderRadius: BorderRadius.circular(17),
+        ),
       ),
       alignment: Alignment.center,
       child: AnimatedScale(
         scale: isSelected ? 1 : 0,
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOutBack,
-        child: Container(width: 12, height: 12, decoration: const ShapeDecoration(color: Color(0xFF3696E7), shape: OvalBorder())),
+        child: Container(
+          width: 12,
+          height: 12,
+          decoration: const ShapeDecoration(color: Color(0xFF3696E7), shape: OvalBorder()),
+        ),
       ),
     );
   }
@@ -180,7 +233,10 @@ class _NoteSectionState extends State<NoteSection> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10),
-          child: Text(context.localization.orderConfirmNote, style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
+          child: Text(
+            context.localization.orderConfirmNote,
+            style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
         ),
         const SizedBox(height: 8),
         CustomTextField(
@@ -206,7 +262,10 @@ class ItemsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShimmerWrapper(
-      child: Container(height: 200, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16))),
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      ),
     );
   }
 }
@@ -217,7 +276,10 @@ class AddressShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShimmerWrapper(
-      child: Container(height: 60, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12))),
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 }
@@ -229,10 +291,16 @@ class PaymentMethodsShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWrapper(
       child: Column(
-        children: List.generate(2, (_) => Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Container(height: 64, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16))),
-        )),
+        children: List.generate(
+          2,
+          (_) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Container(
+              height: 64,
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+            ),
+          ),
+        ),
       ),
     );
   }

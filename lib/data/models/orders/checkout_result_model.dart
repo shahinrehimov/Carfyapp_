@@ -3,11 +3,7 @@ class CheckoutResultModel {
   final bool redirect;
   final String? redirectUrl;
 
-  CheckoutResultModel({
-    this.message,
-    required this.redirect,
-    this.redirectUrl,
-  });
+  CheckoutResultModel({this.message, required this.redirect, this.redirectUrl});
 
   factory CheckoutResultModel.fromJson(Map<String, dynamic> json) {
     return CheckoutResultModel(

@@ -5,9 +5,5 @@ class RegisterPhoneResponse {
   final AuthUser user;
   final String message;
 
-  RegisterPhoneResponse({
-    required this.step,
-    required this.user,
-    required this.message,
-  });
+  RegisterPhoneResponse({required this.step, required this.user, required this.message});
 }

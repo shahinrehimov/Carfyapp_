@@ -10,6 +10,5 @@ class CheckPaymentStatusUseCase {
 
   CheckPaymentStatusUseCase(this._repository);
 
-  Future<Either<Failure, String>> call(CheckPaymentStatusParams params) =>
-      _repository.checkPaymentStatus(params);
+  Future<Either<Failure, String>> call(CheckPaymentStatusParams params) => _repository.checkPaymentStatus(params);
 }

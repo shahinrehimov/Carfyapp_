@@ -15,8 +15,8 @@ class OrdersCubit extends Cubit<OrdersState> with StateMapHelper {
   final PaginationHelper _paginationHelper = PaginationHelper();
 
   OrdersCubit({LoadOrdersUseCase? loadOrdersUseCase})
-      : _loadOrdersUseCase = loadOrdersUseCase ?? getIt<LoadOrdersUseCase>(),
-        super(OrdersState.initial());
+    : _loadOrdersUseCase = loadOrdersUseCase ?? getIt<LoadOrdersUseCase>(),
+      super(OrdersState.initial());
 
   Future<void> init() async {
     _loadOrders();
@@ -28,20 +28,17 @@ class OrdersCubit extends Cubit<OrdersState> with StateMapHelper {
     emit(state.copyWith(status: _paginationHelper.getLoadingStatus()));
     _paginationHelper.onLoadStart();
 
-    final result = await _loadOrdersUseCase(
-      OrdersLoadParams(page: _paginationHelper.currentPage),
-    );
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (response) {
-        _paginationHelper.onLoadEnd(response.lastPage);
-        final updatedOrders = [...state.orders, ...response.data];
-        emit(state.copyWith(
+    final result = await _loadOrdersUseCase(OrdersLoadParams(page: _paginationHelper.currentPage));
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (response) {
+      _paginationHelper.onLoadEnd(response.lastPage);
+      final updatedOrders = [...state.orders, ...response.data];
+      emit(
+        state.copyWith(
           status: updatedOrders.isEmpty ? StateStatus.empty() : StateStatus.success(),
           orders: updatedOrders,
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 
   Future<void> loadNextPage() async {
@@ -53,18 +50,15 @@ class OrdersCubit extends Cubit<OrdersState> with StateMapHelper {
     if (!_paginationHelper.shouldLoad()) return;
     _paginationHelper.onLoadStart();
 
-    final result = await _loadOrdersUseCase(
-      OrdersLoadParams(page: _paginationHelper.currentPage),
-    );
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (response) {
-        _paginationHelper.onLoadEnd(response.lastPage);
-        emit(state.copyWith(
+    final result = await _loadOrdersUseCase(OrdersLoadParams(page: _paginationHelper.currentPage));
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (response) {
+      _paginationHelper.onLoadEnd(response.lastPage);
+      emit(
+        state.copyWith(
           status: response.data.isEmpty ? StateStatus.empty() : StateStatus.success(),
           orders: response.data,
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 }

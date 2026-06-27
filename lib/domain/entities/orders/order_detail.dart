@@ -86,12 +86,7 @@ class OrderStatusTree {
   final bool isChecked;
   final String? date;
 
-  OrderStatusTree({
-    required this.status,
-    required this.statusLabel,
-    required this.isChecked,
-    this.date,
-  });
+  OrderStatusTree({required this.status, required this.statusLabel, required this.isChecked, this.date});
 }
 
 class OrderStatusHistory {
@@ -100,12 +95,7 @@ class OrderStatusHistory {
   final String statusLabel;
   final String date;
 
-  OrderStatusHistory({
-    required this.id,
-    required this.status,
-    required this.statusLabel,
-    required this.date,
-  });
+  OrderStatusHistory({required this.id, required this.status, required this.statusLabel, required this.date});
 }
 
 class OrderItem {
@@ -114,12 +104,7 @@ class OrderItem {
   final double amountFinal;
   final OrderItemProduct product;
 
-  OrderItem({
-    required this.quantity,
-    required this.amount,
-    required this.amountFinal,
-    required this.product,
-  });
+  OrderItem({required this.quantity, required this.amount, required this.amountFinal, required this.product});
 }
 
 class OrderItemProduct {
@@ -154,10 +139,5 @@ class OrderItemSeller {
   final String label;
   final OrderCity city;
 
-  OrderItemSeller({
-    required this.uuid,
-    required this.storeCode,
-    required this.label,
-    required this.city,
-  });
+  OrderItemSeller({required this.uuid, required this.storeCode, required this.label, required this.city});
 }

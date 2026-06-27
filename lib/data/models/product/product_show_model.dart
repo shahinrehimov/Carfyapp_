@@ -79,14 +79,10 @@ class ProductShowModel {
       title: json['title'] as String,
       mainImage: json['main_image'] as String?,
       hoverImage: json['hover_image'] as String?,
-      images: json['images'] != null
-          ? (json['images'] as List<dynamic>).map((e) => e as String).toList()
-          : [],
+      images: json['images'] != null ? (json['images'] as List<dynamic>).map((e) => e as String).toList() : [],
       isSet: json['is_set'] as bool? ?? false,
       sets: json['sets'] != null
-          ? (json['sets'] as List<dynamic>)
-              .map((e) => SetItemModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+          ? (json['sets'] as List<dynamic>).map((e) => SetItemModel.fromJson(e as Map<String, dynamic>)).toList()
           : [],
       stock: json['stock'] as int,
       price: (json['price'] as num).toDouble(),
@@ -100,40 +96,34 @@ class ProductShowModel {
       inBasket: json['in_basket'] as bool,
       brandModels: json['brand_models'] != null
           ? (json['brand_models'] as List<dynamic>)
-              .map((e) => BrandModelItemModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => BrandModelItemModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
       options: json['options'] != null
           ? (json['options'] as List<dynamic>)
-              .map((e) => ProductOptionModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => ProductOptionModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
-      ratings: json['ratings'] != null
-          ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>)
-          : null,
-      seller: json['seller'] != null
-          ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>)
-          : null,
+      ratings: json['ratings'] != null ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>) : null,
+      seller: json['seller'] != null ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>) : null,
       sellersCount: json['sellers_count'] as int? ?? 0,
       gallery: json['seller'] != null && json['seller']['gallery'] != null
           ? (json['seller']['gallery'] as List<dynamic>)
-              .map((e) => GalleryImageModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => GalleryImageModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
       otherSellers: json['other_sellers'] != null
           ? (json['other_sellers'] as List<dynamic>)
-              .map((e) => OtherSellerModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => OtherSellerModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
       otherSellersTotal: json['other_sellers_total'] as int? ?? 0,
       relatedProducts: json['related_products'] != null
           ? (json['related_products'] as List<dynamic>)
-              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
-      product: json['product'] != null
-          ? ProductDetailModel.fromJson(json['product'] as Map<String, dynamic>)
-          : null,
+      product: json['product'] != null ? ProductDetailModel.fromJson(json['product'] as Map<String, dynamic>) : null,
     );
   }
 }

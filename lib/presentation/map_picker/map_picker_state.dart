@@ -31,14 +31,13 @@ class MapPickerState extends Equatable {
     LatLng? moveToPosition,
     bool clearSearchResults = false,
     bool clearMoveToPosition = false,
-  }) =>
-      MapPickerState(
-        position: position ?? this.position,
-        searchResults: clearSearchResults ? [] : (searchResults ?? this.searchResults),
-        isSearching: isSearching ?? this.isSearching,
-        isLocating: isLocating ?? this.isLocating,
-        moveToPosition: clearMoveToPosition ? null : (moveToPosition ?? this.moveToPosition),
-      );
+  }) => MapPickerState(
+    position: position ?? this.position,
+    searchResults: clearSearchResults ? [] : (searchResults ?? this.searchResults),
+    isSearching: isSearching ?? this.isSearching,
+    isLocating: isLocating ?? this.isLocating,
+    moveToPosition: clearMoveToPosition ? null : (moveToPosition ?? this.moveToPosition),
+  );
 
   @override
   List<Object?> get props => [position, searchResults, isSearching, isLocating, moveToPosition];

@@ -109,9 +109,7 @@ class _CarColorPickerSheetState extends State<_CarColorPickerSheet> {
                     curve: Curves.easeOut,
                     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                     decoration: BoxDecoration(
-                      color: isSelected
-                          ? context.theme.colors.primary.withValues(alpha: 0.08)
-                          : Colors.transparent,
+                      color: isSelected ? context.theme.colors.primary.withValues(alpha: 0.08) : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
@@ -167,12 +165,7 @@ class _CarColorPickerSheetState extends State<_CarColorPickerSheet> {
           ),
           if (widget.multiSelect)
             Padding(
-              padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 8,
-                bottom: MediaQuery.of(context).padding.bottom + 16,
-              ),
+              padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: MediaQuery.of(context).padding.bottom + 16),
               child: CustomButton(
                 onPressed: () => Navigator.of(context).pop(_selected),
                 text: widget.doneText ?? '',
@@ -318,9 +311,7 @@ class CarColorMultiPickerField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasSelection = selectedIds.isNotEmpty;
-    final selectedColors = hasSelection
-        ? colors.where((c) => selectedIds.contains(c.id)).toList()
-        : const <CarColor>[];
+    final selectedColors = hasSelection ? colors.where((c) => selectedIds.contains(c.id)).toList() : const <CarColor>[];
     return GestureDetector(
       onTap: () => _open(context),
       child: Container(
@@ -332,10 +323,7 @@ class CarColorMultiPickerField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            if (selectedColors.isNotEmpty) ...[
-              _SwatchStack(colors: selectedColors),
-              const SizedBox(width: 10),
-            ],
+            if (selectedColors.isNotEmpty) ...[_SwatchStack(colors: selectedColors), const SizedBox(width: 10)],
             Expanded(
               child: Text(
                 hasSelection ? selectedColors.map((c) => c.title).join(', ') : hint,

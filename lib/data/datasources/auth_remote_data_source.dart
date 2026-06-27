@@ -198,7 +198,10 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   @override
   Future<GuestIdentifierResponseModel> generateGuestIdentifier() {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.generateIdentifier, data: {'device_type': Platform.isAndroid ? 'android' : 'ios'}),
+      () => _networkManager.post(
+        EndpointPaths.generateIdentifier,
+        data: {'device_type': Platform.isAndroid ? 'android' : 'ios'},
+      ),
       map: (json) => GuestIdentifierResponseModel.fromJson(json),
     );
   }

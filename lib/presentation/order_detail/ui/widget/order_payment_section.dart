@@ -12,11 +12,7 @@ class _OrderPaymentSection extends StatelessWidget {
       children: [
         Text(
           context.localization.paymentTitle,
-          style: const TextStyle(
-            color: Color(0xFF292929),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Container(
@@ -24,9 +20,7 @@ class _OrderPaymentSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
           decoration: ShapeDecoration(
             color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,10 +36,7 @@ class _OrderPaymentSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              _PaymentStatusBadge(
-                status: paymentMethod.paymentStatus,
-                label: paymentMethod.paymentStatusLabel,
-              ),
+              _PaymentStatusBadge(status: paymentMethod.paymentStatus, label: paymentMethod.paymentStatusLabel),
             ],
           ),
         ),
@@ -71,17 +62,10 @@ class _PaymentStatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(20)),
       child: Text(
         label,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-        ),
+        style: TextStyle(color: textColor, fontSize: 11, fontWeight: FontWeight.w500),
       ),
     );
   }

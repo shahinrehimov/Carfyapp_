@@ -33,25 +33,15 @@ class ProductFiltersModel {
   factory ProductFiltersModel.fromJson(Map<String, dynamic> json) {
     final data = (json['data'] as Map<String, dynamic>?) ?? json;
     return ProductFiltersModel(
-      categories: (data['categories'] as List)
-          .map((e) => FilterCategoryModel.fromJson(e))
-          .toList(),
-      brands: (data['brands'] as List)
-          .map((e) => FilterBrandModel.fromJson(e))
-          .toList(),
-      cities: (data['cities'] as List)
-          .map((e) => CityModel.fromJson(e))
-          .toList(),
+      categories: (data['categories'] as List).map((e) => FilterCategoryModel.fromJson(e)).toList(),
+      brands: (data['brands'] as List).map((e) => FilterBrandModel.fromJson(e)).toList(),
+      cities: (data['cities'] as List).map((e) => CityModel.fromJson(e)).toList(),
       priceRange: PriceRangeModel.fromJson(data['price_ranges']),
-      colors: data['colors'] != null
-          ? (data['colors'] as List).map((e) => CarColorModel.fromJson(e)).toList()
-          : [],
+      colors: data['colors'] != null ? (data['colors'] as List).map((e) => CarColorModel.fromJson(e)).toList() : [],
       conditions: data['conditions'] != null
           ? (data['conditions'] as List).map((e) => FilterOptionModel.fromJson(e)).toList()
           : [],
-      yearRange: data['year_range'] != null
-          ? YearRangeModel.fromJson(data['year_range'])
-          : null,
+      yearRange: data['year_range'] != null ? YearRangeModel.fromJson(data['year_range']) : null,
       sortOptions: data['sort_options'] != null
           ? (data['sort_options'] as List).map((e) => SortOptionModel.fromJson(e)).toList()
           : [],

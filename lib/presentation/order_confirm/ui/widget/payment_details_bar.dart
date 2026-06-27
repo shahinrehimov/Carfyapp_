@@ -28,8 +28,7 @@ class PaymentDetailsBar extends StatefulWidget {
   State<PaymentDetailsBar> createState() => PaymentDetailsBarState();
 }
 
-class PaymentDetailsBarState extends State<PaymentDetailsBar>
-    with SingleTickerProviderStateMixin {
+class PaymentDetailsBarState extends State<PaymentDetailsBar> with SingleTickerProviderStateMixin {
   OverlayEntry? _overlayEntry;
   late final AnimationController _animController;
   double _dragOffset = 0;
@@ -38,10 +37,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
+    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
   }
 
   double _effectiveTotal() {
@@ -82,9 +78,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
         return AnimatedBuilder(
           animation: _animController,
           builder: (context, _) {
-            final slideOffset = _dragOffset > 0
-                ? _dragOffset
-                : (_panelHeight * (1 - _animController.value));
+            final slideOffset = _dragOffset > 0 ? _dragOffset : (_panelHeight * (1 - _animController.value));
 
             return Stack(
               children: [
@@ -95,11 +89,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                   bottom: aboveBarHeight,
                   child: GestureDetector(
                     onTap: _animateClose,
-                    child: Container(
-                      color: Colors.black26.withValues(
-                        alpha: 0.26 * _animController.value,
-                      ),
-                    ),
+                    child: Container(color: Colors.black26.withValues(alpha: 0.26 * _animController.value)),
                   ),
                 ),
                 Positioned(
@@ -114,14 +104,11 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                         offset: Offset(0, slideOffset),
                         child: GestureDetector(
                           onVerticalDragUpdate: (details) {
-                            _dragOffset =
-                                (_dragOffset + (details.primaryDelta ?? 0))
-                                    .clamp(0.0, double.infinity);
+                            _dragOffset = (_dragOffset + (details.primaryDelta ?? 0)).clamp(0.0, double.infinity);
                             _overlayEntry?.markNeedsBuild();
                           },
                           onVerticalDragEnd: (details) {
-                            if (_dragOffset > 80 ||
-                                (details.primaryVelocity ?? 0) > 500) {
+                            if (_dragOffset > 80 || (details.primaryVelocity ?? 0) > 500) {
                               _animateClose();
                             } else {
                               _dragOffset = 0;
@@ -132,17 +119,12 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                             value: cubit,
                             child: Material(
                               color: Colors.white,
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16),
-                              ),
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                               child: _MeasureSize(
                                 onChange: (size) {
-                                  if (_panelHeight != size.height)
-                                    _panelHeight = size.height;
+                                  if (_panelHeight != size.height) _panelHeight = size.height;
                                 },
-                                child: _PaymentDetailsSheetContent(
-                                  preview: widget.preview,
-                                ),
+                                child: _PaymentDetailsSheetContent(preview: widget.preview),
                               ),
                             ),
                           ),
@@ -166,8 +148,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
 
   void _animateClose() {
     if (_panelHeight > 0 && _dragOffset > 0) {
-      final currentProgress =
-          1.0 - (_dragOffset / _panelHeight).clamp(0.0, 1.0);
+      final currentProgress = 1.0 - (_dragOffset / _panelHeight).clamp(0.0, 1.0);
       _animController.value = currentProgress;
     }
     _dragOffset = 0;
@@ -202,12 +183,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        bottom: bottomPadding,
-        top: 8,
-      ),
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: bottomPadding, top: 8),
       child: Container(
         height: 56,
         decoration: BoxDecoration(
@@ -231,11 +207,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                         AnimatedRotation(
                           turns: isOpen ? 0.5 : 0,
                           duration: const Duration(milliseconds: 200),
-                          child: Icon(
-                            Icons.keyboard_arrow_up_rounded,
-                            size: 20,
-                            color: context.theme.colors.primary,
-                          ),
+                          child: Icon(Icons.keyboard_arrow_up_rounded, size: 20, color: context.theme.colors.primary),
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -265,10 +237,7 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                     bottomRight: Radius.circular(15),
                   ),
                   child: InkWell(
-                    onTap:
-                        widget.canCheckout &&
-                            !widget.isLoading &&
-                            !widget.isPreviewLoading
+                    onTap: widget.canCheckout && !widget.isLoading && !widget.isPreviewLoading
                         ? () {
                             closeIfOpen();
                             widget.onCheckout();
@@ -283,18 +252,11 @@ class PaymentDetailsBarState extends State<PaymentDetailsBar>
                           ? const SizedBox(
                               width: 22,
                               height: 22,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2.5,
-                              ),
+                              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
                             )
                           : Text(
                               context.localization.formOrder,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                     ),
                   ),
@@ -319,10 +281,7 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final r = preview.referral;
     final hasPerks = r != null && (r.freeDeliveryApplied || r.discountApplied);
-    final totalItems = preview.sellers.fold<int>(
-      0,
-      (sum, s) => sum + s.items.fold<int>(0, (a, i) => a + i.quantity),
-    );
+    final totalItems = preview.sellers.fold<int>(0, (sum, s) => sum + s.items.fold<int>(0, (a, i) => a + i.quantity));
     final displayTotal = hasPerks ? r.grandTotalAfterPerks : preview.grandTotal;
     final isFreeShipping = r?.freeDeliveryApplied == true;
 
@@ -335,20 +294,13 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
             child: Container(
               width: 40,
               height: 4,
-              decoration: BoxDecoration(
-                color: const Color(0xFFD9D9D9),
-                borderRadius: BorderRadius.circular(2),
-              ),
+              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(2)),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             context.localization.paymentDetails,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF242323),
-            ),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xFF242323)),
           ),
           const SizedBox(height: 16),
           if (hasPerks) ...[
@@ -366,40 +318,23 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
                   if (r.freeDeliveryApplied)
                     Row(
                       children: [
-                        const Icon(
-                          Icons.local_shipping_outlined,
-                          size: 14,
-                          color: Color(0xFF4CAF50),
-                        ),
+                        const Icon(Icons.local_shipping_outlined, size: 14, color: Color(0xFF4CAF50)),
                         const SizedBox(width: 6),
                         Text(
                           context.localization.freeDeliveryApplied,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF242323),
-                          ),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
                         ),
                       ],
                     ),
-                  if (r.freeDeliveryApplied && r.discountApplied)
-                    const SizedBox(height: 4),
+                  if (r.freeDeliveryApplied && r.discountApplied) const SizedBox(height: 4),
                   if (r.discountApplied)
                     Row(
                       children: [
-                        const Icon(
-                          Icons.discount_outlined,
-                          size: 14,
-                          color: Color(0xFF3696E7),
-                        ),
+                        const Icon(Icons.discount_outlined, size: 14, color: Color(0xFF3696E7)),
                         const SizedBox(width: 6),
                         Text(
                           '${context.localization.referralDiscountApplied}: -${r.discountAmount.manatFormatted}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF242323),
-                          ),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF242323)),
                         ),
                       ],
                     ),
@@ -408,14 +343,8 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
           ],
-          _DetailRow(
-            label: context.localization.amount,
-            value: preview.subtotal.manatFormatted,
-          ),
-          _DetailRow(
-            label: context.localization.productCount,
-            value: '$totalItems ${context.localization.piece}',
-          ),
+          _DetailRow(label: context.localization.amount, value: preview.subtotal.manatFormatted),
+          _DetailRow(label: context.localization.productCount, value: '$totalItems ${context.localization.piece}'),
           _DeliveryRow(
             label: context.localization.deliveryFee,
             originalPrice: preview.totalShipping,
@@ -429,11 +358,9 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
               valueColor: const Color(0xFF00569C),
             ),
           BlocBuilder<OrderConfirmCubit, OrderConfirmState>(
-            buildWhen: (prev, curr) =>
-                prev.useReferralBalance != curr.useReferralBalance,
+            buildWhen: (prev, curr) => prev.useReferralBalance != curr.useReferralBalance,
             builder: (context, state) {
-              final balanceDeduction =
-                  (r != null && r.canUseBalance && state.useReferralBalance)
+              final balanceDeduction = (r != null && r.canUseBalance && state.useReferralBalance)
                   ? r.availableBalance.clamp(0.0, displayTotal)
                   : 0.0;
               final finalTotal = displayTotal - balanceDeduction;
@@ -460,9 +387,8 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
                   if (r != null && r.canUseBalance) ...[
                     const SizedBox(height: 12),
                     GestureDetector(
-                      onTap: () => context
-                          .read<OrderConfirmCubit>()
-                          .toggleUseReferralBalance(!state.useReferralBalance),
+                      onTap: () =>
+                          context.read<OrderConfirmCubit>().toggleUseReferralBalance(!state.useReferralBalance),
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -477,15 +403,11 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
                               height: 20,
                               child: Checkbox(
                                 value: state.useReferralBalance,
-                                onChanged: (v) => context
-                                    .read<OrderConfirmCubit>()
-                                    .toggleUseReferralBalance(v ?? false),
+                                onChanged: (v) =>
+                                    context.read<OrderConfirmCubit>().toggleUseReferralBalance(v ?? false),
                                 activeColor: context.theme.colors.primary,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -503,10 +425,7 @@ class _PaymentDetailsSheetContent extends StatelessWidget {
                                   ),
                                   Text(
                                     '${context.localization.referralAvailableBalance}: ${r.availableBalance.manatFormatted}',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Color(0xFF717171),
-                                    ),
+                                    style: const TextStyle(fontSize: 10, color: Color(0xFF717171)),
                                   ),
                                 ],
                               ),
@@ -534,12 +453,7 @@ class _DetailRow extends StatelessWidget {
   final bool isBold;
   final Color? valueColor;
 
-  const _DetailRow({
-    required this.label,
-    required this.value,
-    this.isBold = false,
-    this.valueColor,
-  });
+  const _DetailRow({required this.label, required this.value, this.isBold = false, this.valueColor});
 
   @override
   Widget build(BuildContext context) {
@@ -576,12 +490,7 @@ class _DeliveryRow extends StatelessWidget {
   final bool isFree;
   final String freeLabel;
 
-  const _DeliveryRow({
-    required this.label,
-    required this.originalPrice,
-    required this.isFree,
-    required this.freeLabel,
-  });
+  const _DeliveryRow({required this.label, required this.originalPrice, required this.isFree, required this.freeLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -592,11 +501,7 @@ class _DeliveryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color(0xFF242323),
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFF242323)),
           ),
           if (isFree)
             Row(
@@ -614,22 +519,14 @@ class _DeliveryRow extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   freeLabel,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF4CAF50),
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF4CAF50)),
                 ),
               ],
             )
           else
             Text(
               originalPrice.manatFormatted,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF717171),
-              ),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF717171)),
             ),
         ],
       ),

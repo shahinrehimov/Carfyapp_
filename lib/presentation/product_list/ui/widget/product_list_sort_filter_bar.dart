@@ -127,11 +127,19 @@ class ProductListSortFilterBar extends StatelessWidget {
                           final filterState = context.read<FilterCubit>().state;
                           context.read<ProductListCubit>().applyFilters(
                             brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
-                            categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
-                            subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
+                            categories: filterState.selectedCategories.isNotEmpty
+                                ? filterState.selectedCategories.toList()
+                                : null,
+                            subCategories: filterState.selectedSubCategories.isNotEmpty
+                                ? filterState.selectedSubCategories.toList()
+                                : null,
                             cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
-                            colors: filterState.selectedColorIds.isNotEmpty ? filterState.selectedColorIds.toList() : null,
-                            conditions: filterState.selectedConditionSlugs.isNotEmpty ? filterState.selectedConditionSlugs.toList() : null,
+                            colors: filterState.selectedColorIds.isNotEmpty
+                                ? filterState.selectedColorIds.toList()
+                                : null,
+                            conditions: filterState.selectedConditionSlugs.isNotEmpty
+                                ? filterState.selectedConditionSlugs.toList()
+                                : null,
                             minYear: filterState.minYear,
                             maxYear: filterState.maxYear,
                             minPrice: filterState.minPrice != null && filterState.minPrice!.isNotEmpty

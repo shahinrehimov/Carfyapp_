@@ -47,9 +47,7 @@ class _AppBar extends StatelessWidget {
                     onTap: () async {
                       final result = await context.pushRoute<String>(SearchRoute());
                       if (result != null && result.isNotEmpty && context.mounted) {
-                        context.pushRoute(ProductListRoute(
-                          params: ProductListPageParams(search: result),
-                        ));
+                        context.pushRoute(ProductListRoute(params: ProductListPageParams(search: result)));
                       }
                     },
                     child: Hero(
@@ -79,10 +77,16 @@ class _AppBar extends StatelessWidget {
                           params: ProductListPageParams(
                             fromFilter: true,
                             brands: filterState.selectedBrand != null ? [filterState.selectedBrand!.slug] : null,
-                            categories: filterState.selectedCategories.isNotEmpty ? filterState.selectedCategories.toList() : null,
-                            subCategories: filterState.selectedSubCategories.isNotEmpty ? filterState.selectedSubCategories.toList() : null,
+                            categories: filterState.selectedCategories.isNotEmpty
+                                ? filterState.selectedCategories.toList()
+                                : null,
+                            subCategories: filterState.selectedSubCategories.isNotEmpty
+                                ? filterState.selectedSubCategories.toList()
+                                : null,
                             cityId: filterState.selectedCityIds.isNotEmpty ? filterState.selectedCityIds.first : null,
-                            colors: filterState.selectedColorIds.isNotEmpty ? filterState.selectedColorIds.toList() : null,
+                            colors: filterState.selectedColorIds.isNotEmpty
+                                ? filterState.selectedColorIds.toList()
+                                : null,
                             conditions: filterState.selectedConditionSlugs.isNotEmpty
                                 ? filterState.selectedConditionSlugs.toList()
                                 : null,

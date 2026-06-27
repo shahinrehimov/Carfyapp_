@@ -3,19 +3,12 @@ class ProductRatings {
   final int count;
   final List<RatingEntry> list;
 
-  ProductRatings({
-    required this.average,
-    required this.count,
-    this.list = const [],
-  });
+  ProductRatings({required this.average, required this.count, this.list = const []});
 }
 
 class RatingEntry {
   final int rating;
   final int count;
 
-  RatingEntry({
-    required this.rating,
-    required this.count,
-  });
+  RatingEntry({required this.rating, required this.count});
 }

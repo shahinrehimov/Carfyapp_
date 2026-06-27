@@ -12,8 +12,8 @@ class OrderDetailCubit extends Cubit<OrderDetailState> with StateMapHelper {
   final GetOrderDetailsUseCase _getOrderDetailsUseCase;
 
   OrderDetailCubit({GetOrderDetailsUseCase? getOrderDetailsUseCase})
-      : _getOrderDetailsUseCase = getOrderDetailsUseCase ?? getIt<GetOrderDetailsUseCase>(),
-        super(OrderDetailState.initial());
+    : _getOrderDetailsUseCase = getOrderDetailsUseCase ?? getIt<GetOrderDetailsUseCase>(),
+      super(OrderDetailState.initial());
 
   Future<void> init(int orderId) async {
     emit(state.copyWith(status: StateStatus.loading()));

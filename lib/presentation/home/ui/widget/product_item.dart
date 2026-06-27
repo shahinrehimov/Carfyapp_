@@ -48,11 +48,7 @@ class ProductItem extends StatelessWidget {
                   child: CachedNetworkImage(imageUrl: product.hoverImage!, height: 118, fit: BoxFit.cover),
                 ),
                 const SizedBox(width: double.maxFinite),
-                Positioned(
-                  right: 10,
-                  top: 6,
-                  child: WishlistHeartButton(cpvUuid: product.seller?.uuid),
-                ),
+                Positioned(right: 10, top: 6, child: WishlistHeartButton(cpvUuid: product.seller?.uuid)),
               ],
             ),
             const SizedBox(height: 6),
@@ -94,9 +90,7 @@ class ProductItem extends StatelessWidget {
                       width: 12,
                       height: 12,
                       colorFilter: ColorFilter.mode(
-                        index < product.ratings!.average.round()
-                            ? const Color(0xFFFE764C)
-                            : const Color(0xFFDFDFDF),
+                        index < product.ratings!.average.round() ? const Color(0xFFFE764C) : const Color(0xFFDFDFDF),
                         BlendMode.srcIn,
                       ),
                     );
@@ -104,11 +98,7 @@ class ProductItem extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(
                     '(${product.ratings!.count} ${context.localization.ratingLabel})',
-                    style: TextStyle(
-                      color: context.theme.colors.textDark,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w300,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textDark, fontSize: 10, fontWeight: FontWeight.w300),
                   ),
                 ],
               ),

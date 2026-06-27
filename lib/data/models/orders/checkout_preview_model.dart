@@ -5,11 +5,7 @@ class CheckoutPreviewItemModel {
   final double price;
   final ProductModel product;
 
-  CheckoutPreviewItemModel({
-    required this.quantity,
-    required this.price,
-    required this.product,
-  });
+  CheckoutPreviewItemModel({required this.quantity, required this.price, required this.product});
 
   factory CheckoutPreviewItemModel.fromJson(Map<String, dynamic> json) {
     return CheckoutPreviewItemModel(

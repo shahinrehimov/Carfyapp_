@@ -5,11 +5,7 @@ class BasketQuantityResponseModel {
   final int quantity;
   final BasketDataModel basketData;
 
-  BasketQuantityResponseModel({
-    required this.message,
-    required this.quantity,
-    required this.basketData,
-  });
+  BasketQuantityResponseModel({required this.message, required this.quantity, required this.basketData});
 
   factory BasketQuantityResponseModel.fromJson(Map<String, dynamic> json) {
     return BasketQuantityResponseModel(

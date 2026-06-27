@@ -26,55 +26,53 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
     GetPaymentMethodsUseCase? getPaymentMethodsUseCase,
     GetAddressesUseCase? getAddressesUseCase,
     CheckoutUseCase? checkoutUseCase,
-  })  : _getCheckoutPreviewUseCase = getCheckoutPreviewUseCase ?? getIt<GetCheckoutPreviewUseCase>(),
-        _getPaymentMethodsUseCase = getPaymentMethodsUseCase ?? getIt<GetPaymentMethodsUseCase>(),
-        _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
-        _checkoutUseCase = checkoutUseCase ?? getIt<CheckoutUseCase>(),
-        super(OrderConfirmState.initial());
+  }) : _getCheckoutPreviewUseCase = getCheckoutPreviewUseCase ?? getIt<GetCheckoutPreviewUseCase>(),
+       _getPaymentMethodsUseCase = getPaymentMethodsUseCase ?? getIt<GetPaymentMethodsUseCase>(),
+       _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
+       _checkoutUseCase = checkoutUseCase ?? getIt<CheckoutUseCase>(),
+       super(OrderConfirmState.initial());
 
   Future<void> load() async {
-    emit(state.copyWith(
-      addressesStatus: StateStatus.loading(),
-      paymentMethodsStatus: StateStatus.loading(),
-    ));
+    emit(state.copyWith(addressesStatus: StateStatus.loading(), paymentMethodsStatus: StateStatus.loading()));
     await Future.wait([_loadAddresses(), _loadPaymentMethods()]);
   }
 
   Future<void> _loadAddresses() async {
     final result = await _getAddressesUseCase();
-    result.fold(
-      (failure) => emit(state.copyWith(addressesStatus: mapFailure(failure))),
-      (addresses) {
-        Address? primary;
-        for (final a in addresses) {
-          if (a.isDefault) {
-            primary = a;
-            break;
-          }
+    result.fold((failure) => emit(state.copyWith(addressesStatus: mapFailure(failure))), (addresses) {
+      Address? primary;
+      for (final a in addresses) {
+        if (a.isDefault) {
+          primary = a;
+          break;
         }
-        primary ??= addresses.isNotEmpty ? addresses.first : null;
-        emit(state.copyWith(
+      }
+      primary ??= addresses.isNotEmpty ? addresses.first : null;
+      emit(
+        state.copyWith(
           addressesStatus: StateStatus.success(),
           addresses: addresses,
           selectedAddress: primary,
           previewStatus: primary == null ? StateStatus.initial() : null,
-        ));
-        if (primary != null) {
-          _loadPreview(primary.id);
-        }
-      },
-    );
+        ),
+      );
+      if (primary != null) {
+        _loadPreview(primary.id);
+      }
+    });
   }
 
   Future<void> _loadPaymentMethods() async {
     final result = await _getPaymentMethodsUseCase();
     result.fold(
       (failure) => emit(state.copyWith(paymentMethodsStatus: mapFailure(failure))),
-      (methods) => emit(state.copyWith(
-        paymentMethodsStatus: StateStatus.success(),
-        paymentMethods: methods,
-        selectedPaymentMethod: methods.isNotEmpty ? methods.first : null,
-      )),
+      (methods) => emit(
+        state.copyWith(
+          paymentMethodsStatus: StateStatus.success(),
+          paymentMethods: methods,
+          selectedPaymentMethod: methods.isNotEmpty ? methods.first : null,
+        ),
+      ),
     );
   }
 
@@ -123,10 +121,7 @@ class OrderConfirmCubit extends Cubit<OrderConfirmState> with StateMapHelper {
 
     result.fold(
       (failure) => emit(state.copyWith(checkoutStatus: mapFailure(failure))),
-      (checkoutResult) => emit(state.copyWith(
-        checkoutStatus: StateStatus.success(),
-        checkoutResult: checkoutResult,
-      )),
+      (checkoutResult) => emit(state.copyWith(checkoutStatus: StateStatus.success(), checkoutResult: checkoutResult)),
     );
   }
 

@@ -3,9 +3,5 @@ class ProductOption {
   final String label;
   final String value;
 
-  ProductOption({
-    required this.name,
-    required this.label,
-    required this.value,
-  });
+  ProductOption({required this.name, required this.label, required this.value});
 }

@@ -20,8 +20,7 @@ class ReferralPage extends StatelessWidget implements AutoRouteWrapper {
   const ReferralPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(create: (_) => ReferralCubit()..load(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => ReferralCubit()..load(), child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -30,40 +29,42 @@ class ReferralPage extends StatelessWidget implements AutoRouteWrapper {
       appBar: CustomAppBarWhite(title: context.localization.profileReferrals),
       body: PaginationScrollWrapper(
         onLoadMore: () => context.read<ReferralCubit>().loadMoreCurrentTab(),
-        child: Column(children: [
-          const SizedBox(height: 24),
-          BlocBuilder<ReferralCubit, ReferralState>(
-            buildWhen: (prev, curr) =>
-                prev.status != curr.status || prev.info != curr.info || prev.perks != curr.perks,
-            builder: (context, state) {
-              final isLoading = state.status is StateStatusLoading;
-              return Column(
-                children: [
-                  Bonus(bonus: state.info?.availableBalance ?? 0, loading: isLoading),
-                  const SizedBox(height: 16),
-                  BalanceDetails(
-                    info: state.info,
-                    loading: isLoading,
-                    onWithdraw: () => showWithdrawalBottomSheet(context),
-                  ),
-                  const SizedBox(height: 16),
-                  ReferralInfoCard(
-                    info: state.info,
-                    loading: isLoading,
-                    onEditCode: () => showUpdateCodeBottomSheet(context),
-                  ),
-                  if (state.perks != null && state.perks!.hasPerks) ...[
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            BlocBuilder<ReferralCubit, ReferralState>(
+              buildWhen: (prev, curr) =>
+                  prev.status != curr.status || prev.info != curr.info || prev.perks != curr.perks,
+              builder: (context, state) {
+                final isLoading = state.status is StateStatusLoading;
+                return Column(
+                  children: [
+                    Bonus(bonus: state.info?.availableBalance ?? 0, loading: isLoading),
                     const SizedBox(height: 16),
-                    ReferralPerksCard(perks: state.perks!),
+                    BalanceDetails(
+                      info: state.info,
+                      loading: isLoading,
+                      onWithdraw: () => showWithdrawalBottomSheet(context),
+                    ),
+                    const SizedBox(height: 16),
+                    ReferralInfoCard(
+                      info: state.info,
+                      loading: isLoading,
+                      onEditCode: () => showUpdateCodeBottomSheet(context),
+                    ),
+                    if (state.perks != null && state.perks!.hasPerks) ...[
+                      const SizedBox(height: 16),
+                      ReferralPerksCard(perks: state.perks!),
+                    ],
                   ],
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-          const ReferralListsTab(),
-          const SizedBox(height: 24),
-        ]),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            const ReferralListsTab(),
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     );
   }

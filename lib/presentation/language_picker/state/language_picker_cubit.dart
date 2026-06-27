@@ -12,18 +12,17 @@ class LanguagePickerCubit extends Cubit<LanguagePickerState> with StateMapHelper
   final GetLanguagesListUseCase _getLanguagesListUseCase;
 
   LanguagePickerCubit({GetLanguagesListUseCase? getLanguagesListUseCase})
-      : _getLanguagesListUseCase = getLanguagesListUseCase ?? getIt<GetLanguagesListUseCase>(),
-        super(LanguagePickerState.initial());
+    : _getLanguagesListUseCase = getLanguagesListUseCase ?? getIt<GetLanguagesListUseCase>(),
+      super(LanguagePickerState.initial());
 
   Future<void> load() async {
     emit(state.copyWith(status: StateStatus.loading()));
     final result = await _getLanguagesListUseCase();
     result.fold(
       (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (languages) => emit(state.copyWith(
-        status: languages.isEmpty ? StateStatus.empty() : StateStatus.success(),
-        languages: languages,
-      )),
+      (languages) => emit(
+        state.copyWith(status: languages.isEmpty ? StateStatus.empty() : StateStatus.success(), languages: languages),
+      ),
     );
   }
 }

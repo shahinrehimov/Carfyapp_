@@ -7,13 +7,7 @@ class BrandModel {
   final String title;
   final List<BrandModelItemModel> models;
 
-  BrandModel({
-    required this.id,
-    this.uuid,
-    required this.slug,
-    required this.title,
-    this.models = const [],
-  });
+  BrandModel({required this.id, this.uuid, required this.slug, required this.title, this.models = const []});
 
   factory BrandModel.fromJson(Map<String, dynamic> json) {
     return BrandModel(
@@ -23,8 +17,8 @@ class BrandModel {
       title: json['title'] as String,
       models: (json['brand_models'] ?? json['models']) != null
           ? ((json['brand_models'] ?? json['models']) as List<dynamic>)
-              .map((item) => BrandModelItemModel.fromJson(item as Map<String, dynamic>))
-              .toList()
+                .map((item) => BrandModelItemModel.fromJson(item as Map<String, dynamic>))
+                .toList()
           : [],
     );
   }

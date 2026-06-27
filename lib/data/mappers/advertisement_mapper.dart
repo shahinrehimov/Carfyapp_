@@ -4,10 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class AdvertisementMapper {
-  Advertisement mapAdvertisement(AdvertisementModel model) => Advertisement(
-    title: model.title,
-    key: model.key,
-    imageUrl: model.imageUrl,
-    link: model.link,
-  );
+  Advertisement mapAdvertisement(AdvertisementModel model) =>
+      Advertisement(title: model.title, key: model.key, imageUrl: model.imageUrl, link: model.link);
 }

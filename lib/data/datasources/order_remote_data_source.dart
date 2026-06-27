@@ -26,10 +26,7 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource with DataSourceMix
   @override
   Future<CheckoutPreviewModel> getCheckoutPreview(int addressId) {
     return handleResponse(
-      () => _networkManager.get(
-        EndpointPaths.checkoutPreview,
-        queryParams: {'address_id': addressId},
-      ),
+      () => _networkManager.get(EndpointPaths.checkoutPreview, queryParams: {'address_id': addressId}),
       map: (json) => CheckoutPreviewModel.fromJson(json),
     );
   }

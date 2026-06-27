@@ -16,8 +16,7 @@ class ContactUsPage extends StatefulWidget implements AutoRouteWrapper {
   const ContactUsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(create: (_) => ContactUsCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => ContactUsCubit()..init(), child: this);
 
   @override
   State<ContactUsPage> createState() => _ContactUsPageState();
@@ -109,20 +108,12 @@ class _ContactUsPageState extends State<ContactUsPage> {
                 else ...[
                   Text(
                     state.user!.fullName,
-                    style: TextStyle(
-                      color: context.theme.colors.textDark,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textDark, fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     state.user!.email,
-                    style: TextStyle(
-                      color: context.theme.colors.textLight,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textLight, fontSize: 12, fontWeight: FontWeight.w300),
                   ),
                   const SizedBox(height: 16),
                   const Divider(color: Color(0xFFE0E7F8), height: 1),
@@ -146,18 +137,10 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     expands: true,
                     textAlignVertical: TextAlignVertical.top,
                     onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-                    style: TextStyle(
-                      color: context.theme.colors.textDark,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300,
-                    ),
+                    style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w300),
                     decoration: InputDecoration(
                       hintText: context.localization.contactMessageHint,
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF83847E),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      hintStyle: const TextStyle(color: Color(0xFF83847E), fontSize: 14, fontWeight: FontWeight.w300),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.all(16),
                     ),
@@ -167,11 +150,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   const SizedBox(height: 4),
                   Text(
                     state.messageValidationState.message!,
-                    style: TextStyle(
-                      color: context.theme.colors.error,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: TextStyle(color: context.theme.colors.error, fontSize: 11, fontWeight: FontWeight.w400),
                   ),
                 ],
                 const SizedBox(height: 20),

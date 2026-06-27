@@ -17,11 +17,7 @@ class OrderSuccessPage extends StatelessWidget {
   final CheckoutPreview preview;
   final Address address;
 
-  const OrderSuccessPage({
-    super.key,
-    required this.preview,
-    required this.address,
-  });
+  const OrderSuccessPage({super.key, required this.preview, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +46,7 @@ class OrderSuccessPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           CustomButton(
-            onPressed: () =>
-                context.router.replaceAll([const MainRoute()]),
+            onPressed: () => context.router.replaceAll([const MainRoute()]),
             text: context.localization.orderSuccessGoHome,
           ),
         ],

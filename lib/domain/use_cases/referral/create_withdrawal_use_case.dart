@@ -10,6 +10,5 @@ class CreateWithdrawalUseCase {
 
   CreateWithdrawalUseCase(this._repository);
 
-  Future<Either<Failure, void>> call(CreateWithdrawalParams params) =>
-      _repository.createWithdrawal(params);
+  Future<Either<Failure, void>> call(CreateWithdrawalParams params) => _repository.createWithdrawal(params);
 }

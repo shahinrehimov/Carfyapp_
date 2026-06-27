@@ -87,9 +87,7 @@ class _SubCategoryItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         context.router.root.pop();
-        context.router.root.push(ProductListRoute(
-          params: ProductListPageParams(subCategories: [subCategory.slug]),
-        ));
+        context.router.root.push(ProductListRoute(params: ProductListPageParams(subCategories: [subCategory.slug])));
       },
       child: Column(
         children: [

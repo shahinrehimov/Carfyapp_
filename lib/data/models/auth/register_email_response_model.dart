@@ -5,11 +5,7 @@ class RegisterEmailResponseModel {
   final AuthUserModel user;
   final String message;
 
-  RegisterEmailResponseModel({
-    required this.step,
-    required this.user,
-    required this.message,
-  });
+  RegisterEmailResponseModel({required this.step, required this.user, required this.message});
 
   factory RegisterEmailResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterEmailResponseModel(

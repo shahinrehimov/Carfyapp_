@@ -21,9 +21,8 @@ class GroupRemoteDataSourceImpl extends GroupRemoteDataSource with DataSourceMix
   Future<List<GroupModel>> fetchGroupsList() {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.groupsList),
-      map: (json) => (json['data'] as List<dynamic>)
-          .map((item) => GroupModel.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      map: (json) =>
+          (json['data'] as List<dynamic>).map((item) => GroupModel.fromJson(item as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -39,9 +38,8 @@ class GroupRemoteDataSourceImpl extends GroupRemoteDataSource with DataSourceMix
   Future<List<GroupModel>> fetchGroupsBulk(GroupsBulkQueryParams params) {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.groupsBulkProducts, queryParams: params.toQueryParameters()),
-      map: (json) => (json['data'] as List<dynamic>)
-          .map((item) => GroupModel.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      map: (json) =>
+          (json['data'] as List<dynamic>).map((item) => GroupModel.fromJson(item as Map<String, dynamic>)).toList(),
     );
   }
 }

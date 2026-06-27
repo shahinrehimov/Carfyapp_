@@ -19,10 +19,7 @@ class OrderConfirmPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (_) => OrderConfirmCubit()..load(),
-      child: this,
-    );
+    return BlocProvider(create: (_) => OrderConfirmCubit()..load(), child: this);
   }
 
   @override
@@ -89,9 +86,7 @@ class OrderConfirmPage extends StatelessWidget implements AutoRouteWrapper {
     if (result == null || preview == null || address == null) return;
 
     if (result.requiresWebviewPayment) {
-      final paid = await context.router.push<bool>(
-        PaymentWebviewRoute(redirectUrl: result.redirectUrl!),
-      );
+      final paid = await context.router.push<bool>(PaymentWebviewRoute(redirectUrl: result.redirectUrl!));
       if (!context.mounted) return;
       if (paid == true) {
         await context.router.replaceAll([const MainRoute(), OrderSuccessRoute(preview: preview, address: address)]);
@@ -145,10 +140,7 @@ class _OrderConfirmContent extends StatelessWidget {
             onSelected: (method) => context.read<OrderConfirmCubit>().selectPaymentMethod(method),
           ),
         const SizedBox(height: 20),
-        NoteSection(
-          initialNote: state.note,
-          onChanged: (value) => context.read<OrderConfirmCubit>().setNote(value),
-        ),
+        NoteSection(initialNote: state.note, onChanged: (value) => context.read<OrderConfirmCubit>().setNote(value)),
       ],
     );
   }

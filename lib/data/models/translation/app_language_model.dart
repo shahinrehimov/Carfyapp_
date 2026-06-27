@@ -5,9 +5,6 @@ class AppLanguageModel {
   AppLanguageModel({required this.id, required this.key});
 
   factory AppLanguageModel.fromJson(Map<String, dynamic> json) {
-    return AppLanguageModel(
-      id: json['id'] as int,
-      key: json['key'] as String,
-    );
+    return AppLanguageModel(id: json['id'] as int, key: json['key'] as String);
   }
 }

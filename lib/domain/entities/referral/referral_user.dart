@@ -6,10 +6,5 @@ class ReferralUser {
   final String? activatedAt;
   final String joinedAt;
 
-  ReferralUser({
-    required this.referredName,
-    required this.status,
-    this.activatedAt,
-    required this.joinedAt,
-  });
+  ReferralUser({required this.referredName, required this.status, this.activatedAt, required this.joinedAt});
 }

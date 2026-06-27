@@ -12,19 +12,15 @@ class AdsCubit extends Cubit<AdsState> with StateMapHelper {
   final GetActiveAdvertisementsUseCase _getActiveAdvertisementsUseCase;
 
   AdsCubit({GetActiveAdvertisementsUseCase? getActiveAdvertisementsUseCase})
-    : _getActiveAdvertisementsUseCase =
-          getActiveAdvertisementsUseCase ?? getIt<GetActiveAdvertisementsUseCase>(),
+    : _getActiveAdvertisementsUseCase = getActiveAdvertisementsUseCase ?? getIt<GetActiveAdvertisementsUseCase>(),
       super(AdsState.initial());
 
   Future<void> load() async {
     emit(state.copyWith(status: StateStatus.loading()));
     final result = await _getActiveAdvertisementsUseCase();
-    result.fold(
-      (failure) => emit(state.copyWith(status: mapFailure(failure))),
-      (ads) {
-        final visible = ads.where((a) => a.imageUrl != null && a.imageUrl!.isNotEmpty).toList();
-        emit(state.copyWith(status: StateStatus.success(), ads: visible));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(status: mapFailure(failure))), (ads) {
+      final visible = ads.where((a) => a.imageUrl != null && a.imageUrl!.isNotEmpty).toList();
+      emit(state.copyWith(status: StateStatus.success(), ads: visible));
+    });
   }
 }

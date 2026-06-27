@@ -12,11 +12,7 @@ class _OrderProductsSection extends StatelessWidget {
       children: [
         Text(
           context.localization.orderSuccessProducts,
-          style: const TextStyle(
-            color: Color(0xFF292929),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         ListView.separated(
@@ -25,8 +21,7 @@ class _OrderProductsSection extends StatelessWidget {
           itemCount: items.length,
           padding: EdgeInsets.zero,
           separatorBuilder: (_, __) => const SizedBox(height: 8),
-          itemBuilder: (context, index) =>
-              _OrderProductItem(item: items[index]),
+          itemBuilder: (context, index) => _OrderProductItem(item: items[index]),
         ),
       ],
     );
@@ -59,20 +54,12 @@ class _OrderProductItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: UnconstrainedBox(
                 child: item.product.hoverImage != null
-                    ? CachedNetworkImage(
-                        imageUrl: item.product.hoverImage!,
-                        fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
-                      )
+                    ? CachedNetworkImage(imageUrl: item.product.hoverImage!, fit: BoxFit.cover, width: 90, height: 90)
                     : Container(
                         width: 97,
                         height: 97,
                         color: const Color(0xFFF5F5F5),
-                        child: const Icon(
-                          Icons.image_outlined,
-                          color: Colors.grey,
-                        ),
+                        child: const Icon(Icons.image_outlined, color: Colors.grey),
                       ),
               ),
             ),
@@ -86,11 +73,7 @@ class _OrderProductItem extends StatelessWidget {
                 children: [
                   Text(
                     item.product.title,
-                    style: const TextStyle(
-                      color: Color(0xFF292929),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w400),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -108,11 +91,7 @@ class _OrderProductItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '${item.amountFinal.toStringAsFixed(2)} \u20BC',
-                    style: TextStyle(
-                      color: context.theme.colors.primary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(color: context.theme.colors.primary, fontSize: 12, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 4),
                   Text(

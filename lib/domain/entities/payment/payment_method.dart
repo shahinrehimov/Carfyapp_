@@ -3,9 +3,5 @@ class PaymentMethod {
   final String label;
   final List<String> requiredFields;
 
-  PaymentMethod({
-    required this.value,
-    required this.label,
-    required this.requiredFields,
-  });
+  PaymentMethod({required this.value, required this.label, required this.requiredFields});
 }

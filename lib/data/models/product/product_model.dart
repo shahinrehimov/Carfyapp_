@@ -60,13 +60,9 @@ class ProductModel {
       discount: (json['discount'] as num).toDouble(),
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
-      seller: json['seller'] != null
-          ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>)
-          : null,
+      seller: json['seller'] != null ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>) : null,
       product: ProductInfoModel.fromJson(json['product'] as Map<String, dynamic>),
-      ratings: json['ratings'] != null
-          ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>)
-          : null,
+      ratings: json['ratings'] != null ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>) : null,
     );
   }
 }

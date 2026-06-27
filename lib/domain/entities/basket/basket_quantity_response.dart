@@ -5,9 +5,5 @@ class BasketQuantityResponse {
   final int quantity;
   final BasketData basketData;
 
-  BasketQuantityResponse({
-    required this.message,
-    required this.quantity,
-    required this.basketData,
-  });
+  BasketQuantityResponse({required this.message, required this.quantity, required this.basketData});
 }

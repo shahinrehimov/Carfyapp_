@@ -49,10 +49,6 @@ class _PaginationScrollWrapperState extends State<PaginationScrollWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: _scrollController,
-      physics: widget.physics,
-      child: widget.child,
-    );
+    return SingleChildScrollView(controller: _scrollController, physics: widget.physics, child: widget.child);
   }
 }

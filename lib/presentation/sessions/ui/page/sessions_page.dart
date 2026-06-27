@@ -17,8 +17,7 @@ class SessionsPage extends StatelessWidget implements AutoRouteWrapper {
   const SessionsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(create: (_) => SessionsCubit()..init(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(create: (_) => SessionsCubit()..init(), child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +26,7 @@ class SessionsPage extends StatelessWidget implements AutoRouteWrapper {
       backgroundColor: Colors.white,
       appBar: CustomAppBarWhite(title: context.localization.sessionsTitle),
       body: BlocListener<SessionsCubit, SessionsState>(
-        listenWhen: (prev, curr) =>
-            prev.status != curr.status || prev.logoutStatus != curr.logoutStatus,
+        listenWhen: (prev, curr) => prev.status != curr.status || prev.logoutStatus != curr.logoutStatus,
         listener: (context, state) {
           showStateStatusToast(context, state.status);
           showStateStatusToast(context, state.logoutStatus);
@@ -93,25 +91,26 @@ class _SessionsBody extends StatelessWidget {
             ),
           )
         else
-          ...state.otherSessions.map((session) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: BlocBuilder<SessionsCubit, SessionsState>(
-              buildWhen: (prev, curr) =>
-                  prev.terminateStatus[session.id] != curr.terminateStatus[session.id],
-              builder: (context, s) => _SessionCard(
-                session: session,
-                isTerminating: s.terminateStatus[session.id] is StateStatusLoading,
-                onTerminate: () => showConfirmationDialog(
-                  context: context,
-                  title: context.localization.sessionsTerminateConfirmTitle,
-                  description: context.localization.sessionsTerminateConfirmDescription,
-                  confirmText: context.localization.sessionsTerminate,
-                  cancelText: context.localization.cancel,
-                  onConfirm: () => cubit.terminateSession(session.id),
+          ...state.otherSessions.map(
+            (session) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: BlocBuilder<SessionsCubit, SessionsState>(
+                buildWhen: (prev, curr) => prev.terminateStatus[session.id] != curr.terminateStatus[session.id],
+                builder: (context, s) => _SessionCard(
+                  session: session,
+                  isTerminating: s.terminateStatus[session.id] is StateStatusLoading,
+                  onTerminate: () => showConfirmationDialog(
+                    context: context,
+                    title: context.localization.sessionsTerminateConfirmTitle,
+                    description: context.localization.sessionsTerminateConfirmDescription,
+                    confirmText: context.localization.sessionsTerminate,
+                    cancelText: context.localization.cancel,
+                    onConfirm: () => cubit.terminateSession(session.id),
+                  ),
                 ),
               ),
             ),
-          )),
+          ),
       ],
     );
   }
@@ -125,11 +124,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-      ),
+      style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w400),
     );
   }
 }
@@ -139,11 +134,7 @@ class _SessionCard extends StatelessWidget {
   final bool isTerminating;
   final VoidCallback? onTerminate;
 
-  const _SessionCard({
-    required this.session,
-    required this.isTerminating,
-    required this.onTerminate,
-  });
+  const _SessionCard({required this.session, required this.isTerminating, required this.onTerminate});
 
   @override
   Widget build(BuildContext context) {
@@ -165,29 +156,19 @@ class _SessionCard extends StatelessWidget {
             top: 21,
             child: Text(
               session.deviceName,
-              style: const TextStyle(
-                color: Color(0xFF292929),
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(color: Color(0xFF292929), fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ),
           if (session.location != null)
             Positioned(
               left: 19,
               top: 45,
-              child: Text(
-                session.location!,
-                style: const TextStyle(color: Color(0xFF717171), fontSize: 12),
-              ),
+              child: Text(session.location!, style: const TextStyle(color: Color(0xFF717171), fontSize: 12)),
             ),
           Positioned(
             left: 19,
             top: session.location != null ? 61 : 45,
-            child: Text(
-              session.createdAt,
-              style: const TextStyle(color: Color(0xFF717171), fontSize: 12),
-            ),
+            child: Text(session.createdAt, style: const TextStyle(color: Color(0xFF717171), fontSize: 12)),
           ),
           if (onTerminate != null)
             Positioned(
@@ -197,10 +178,7 @@ class _SessionCard extends StatelessWidget {
                   ? SizedBox(
                       width: 20,
                       height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: colors.secondary,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2, color: colors.secondary),
                     )
                   : GestureDetector(
                       onTap: onTerminate,
@@ -215,11 +193,7 @@ class _SessionCard extends StatelessWidget {
                         ),
                         child: Text(
                           context.localization.sessionsTerminate,
-                          style: TextStyle(
-                            color: colors.secondary,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: TextStyle(color: colors.secondary, fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
@@ -242,10 +216,7 @@ class _SessionsShimmer extends StatelessWidget {
       itemBuilder: (_, __) => ShimmerWrapper(
         child: Container(
           height: 90,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
         ),
       ),
     );

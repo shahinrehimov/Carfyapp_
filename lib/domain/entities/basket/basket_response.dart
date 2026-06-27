@@ -5,8 +5,5 @@ class BasketResponse {
   final List<BasketProduct> items;
   final BasketData basketData;
 
-  BasketResponse({
-    required this.items,
-    required this.basketData,
-  });
+  BasketResponse({required this.items, required this.basketData});
 }

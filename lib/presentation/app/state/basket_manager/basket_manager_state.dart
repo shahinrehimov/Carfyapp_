@@ -5,11 +5,7 @@ class QuantityUpdate {
   final int quantity;
   final BasketData basketData;
 
-  const QuantityUpdate({
-    required this.cpvUuid,
-    required this.quantity,
-    required this.basketData,
-  });
+  const QuantityUpdate({required this.cpvUuid, required this.quantity, required this.basketData});
 }
 
 class BasketManagerState extends Equatable {
@@ -23,10 +19,8 @@ class BasketManagerState extends Equatable {
     this.quantityUpdate,
   });
 
-  factory BasketManagerState.initial() => BasketManagerState(
-        productLoadingStates: {},
-        basketActionStatus: StateStatus.initial(),
-      );
+  factory BasketManagerState.initial() =>
+      BasketManagerState(productLoadingStates: {}, basketActionStatus: StateStatus.initial());
 
   bool isLoading(String cpvUuid) => productLoadingStates[cpvUuid] is StateStatusLoading;
 

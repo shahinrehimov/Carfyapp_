@@ -6,12 +6,7 @@ class AddressCity {
   final int countryId;
   final String countryTitle;
 
-  AddressCity({
-    required this.id,
-    required this.title,
-    required this.countryId,
-    required this.countryTitle,
-  });
+  AddressCity({required this.id, required this.title, required this.countryId, required this.countryTitle});
 }
 
 class Address {

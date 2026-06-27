@@ -18,13 +18,11 @@ class MapPickerPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (_) => MapPickerCubit(
-          initial: initialLatitude != null && initialLongitude != null
-              ? LatLng(initialLatitude!, initialLongitude!)
-              : null,
-        ),
-        child: this,
-      );
+    create: (_) => MapPickerCubit(
+      initial: initialLatitude != null && initialLongitude != null ? LatLng(initialLatitude!, initialLongitude!) : null,
+    ),
+    child: this,
+  );
 
   @override
   State<MapPickerPage> createState() => _MapPickerPageState();
@@ -65,10 +63,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                initialCenter: LatLng(
-                  widget.initialLatitude ?? 40.4093,
-                  widget.initialLongitude ?? 49.8671,
-                ),
+                initialCenter: LatLng(widget.initialLatitude ?? 40.4093, widget.initialLongitude ?? 49.8671),
                 initialZoom: 13,
                 onPositionChanged: (position, _) {
                   _cubit.updatePosition(position.center);

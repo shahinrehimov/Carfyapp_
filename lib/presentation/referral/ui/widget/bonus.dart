@@ -21,45 +21,30 @@ class Bonus extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              gradient: const LinearGradient(
-                colors: [Color(0xFF3696E7), Color(0xFF00569C)],
-              ),
+              gradient: const LinearGradient(colors: [Color(0xFF3696E7), Color(0xFF00569C)]),
             ),
           ),
           SvgPicture.asset(Assets.icons.bonusBgLeft, height: 200),
-          Positioned(
-            right: 0,
-            child: SvgPicture.asset(Assets.icons.bonusBgRight, height: 200),
-          ),
+          Positioned(right: 0, child: SvgPicture.asset(Assets.icons.bonusBgRight, height: 200)),
           Center(
             child: Column(
               children: [
                 const SizedBox(height: 40),
                 Text(
                   context.localization.referralBonuses,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: context.theme.colors.white,
-                  ),
+                  style: TextStyle(fontSize: 18, color: context.theme.colors.white),
                 ),
                 const SizedBox(height: 12),
                 if (loading)
                   const SizedBox(
                     width: 32,
                     height: 32,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 3,
-                    ),
+                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3),
                   )
                 else
                   Text(
                     bonus.toStringAsFixed(2),
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w700,
-                      color: context.theme.colors.white,
-                    ),
+                    style: TextStyle(fontSize: 48, fontWeight: FontWeight.w700, color: context.theme.colors.white),
                   ),
               ],
             ),

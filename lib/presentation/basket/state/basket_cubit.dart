@@ -15,8 +15,8 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
   BasketData? _snapshotBasketData;
 
   BasketCubit({GetBasketUseCase? getBasketUseCase})
-      : _getBasketUseCase = getBasketUseCase ?? getIt<GetBasketUseCase>(),
-        super(BasketState.initial());
+    : _getBasketUseCase = getBasketUseCase ?? getIt<GetBasketUseCase>(),
+      super(BasketState.initial());
 
   Future<void> init() async {
     _loadBasket();

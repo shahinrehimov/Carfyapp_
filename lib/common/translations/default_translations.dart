@@ -34,7 +34,8 @@ class TranslationDefaults {
       TranslationKeys.phoneVerification: 'Nömrənin təstiqlənməsi',
       TranslationKeys.emailVerification: 'Elektron poçtun təsdiqlənməsi',
       TranslationKeys.otpSentToNumber: '{number} nömrəsinə SMS-kod göndərildi',
-      TranslationKeys.otpSentToEmail: '{email} ünvanına təsdiq kodu göndərildi. Zəhmət olmasa 4 rəqəmli kodu daxil edin.',
+      TranslationKeys.otpSentToEmail:
+          '{email} ünvanına təsdiq kodu göndərildi. Zəhmət olmasa 4 rəqəmli kodu daxil edin.',
       TranslationKeys.confirm: 'Təsdiqlə',
       TranslationKeys.passwordRecovery: 'Şifrə bərpası',
       TranslationKeys.alreadyHaveAccount: 'Hesabınız var?',
@@ -143,7 +144,8 @@ class TranslationDefaults {
       TranslationKeys.logoutConfirmTitle: 'Çıxış',
       TranslationKeys.logoutConfirmDescription: 'Hesabdan çıxmaq istəyirsiniz?',
       TranslationKeys.deleteAccountConfirmTitle: 'Hesabı sil',
-      TranslationKeys.deleteAccountConfirmDescription: 'Hesabınızı silmək istəyirsiniz? 15 gün ərzində hesabınıza daxil olmasanız, hesabınız silinəcək.',
+      TranslationKeys.deleteAccountConfirmDescription:
+          'Hesabınızı silmək istəyirsiniz? 15 gün ərzində hesabınıza daxil olmasanız, hesabınız silinəcək.',
 
       // Sessions
       TranslationKeys.sessionsTitle: 'Aktiv seanslar',
@@ -213,7 +215,8 @@ class TranslationDefaults {
       TranslationKeys.giveRating: 'Məhsula qiymət verin',
       TranslationKeys.writeReviewHint: 'Rəy yaz',
       TranslationKeys.addPhotos: 'Məhsulun şəkillərini əlavə et',
-      TranslationKeys.reviewConsent: 'Rəylərdə adımın göstərilməsinə və rəy məlumatlarımın platforma miqyasında istifadəsinə razılıq verirəm.',
+      TranslationKeys.reviewConsent:
+          'Rəylərdə adımın göstərilməsinə və rəy məlumatlarımın platforma miqyasında istifadəsinə razılıq verirəm.',
       TranslationKeys.send: 'Göndər',
       TranslationKeys.reviewSubmitSuccess: 'Rəyiniz uğurla göndərildi',
       TranslationKeys.ratingLabel: 'reytinq',

@@ -17,26 +17,26 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
   final UpdateProfileUseCase _updateProfileUseCase;
   final LogoutUseCase _logoutUseCase;
 
-  ProfileUpdateCubit({
-    UpdateProfileUseCase? updateProfileUseCase,
-    LogoutUseCase? logoutUseCase,
-  })  : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
-        _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
-        super(ProfileUpdateState.initial());
+  ProfileUpdateCubit({UpdateProfileUseCase? updateProfileUseCase, LogoutUseCase? logoutUseCase})
+    : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
+      _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
+      super(ProfileUpdateState.initial());
 
   void init(AuthUser user) {
     // Normalize birthDate: API returns yyyy-MM-dd, convert to dd.MM.yyyy
     final birthDate = _normalizeBirthDate(user.birthDate);
-    emit(state.copyWith(
-      name: user.name,
-      surname: user.surname,
-      selectedGender: user.gender,
-      birthDate: birthDate,
-      initialName: user.name,
-      initialSurname: user.surname,
-      initialGender: user.gender,
-      initialBirthDate: birthDate,
-    ));
+    emit(
+      state.copyWith(
+        name: user.name,
+        surname: user.surname,
+        selectedGender: user.gender,
+        birthDate: birthDate,
+        initialName: user.name,
+        initialSurname: user.surname,
+        initialGender: user.gender,
+        initialBirthDate: birthDate,
+      ),
+    );
   }
 
   String? _normalizeBirthDate(String? raw) {
@@ -56,12 +56,14 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
     final hasName = state.name.trim().isNotEmpty;
     final hasSurname = state.surname.trim().isNotEmpty;
 
-    emit(state.copyWith(
-      nameError: hasName ? null : ProfileUpdateFieldError.required,
-      clearNameError: hasName,
-      surnameError: hasSurname ? null : ProfileUpdateFieldError.required,
-      clearSurnameError: hasSurname,
-    ));
+    emit(
+      state.copyWith(
+        nameError: hasName ? null : ProfileUpdateFieldError.required,
+        clearNameError: hasName,
+        surnameError: hasSurname ? null : ProfileUpdateFieldError.required,
+        clearSurnameError: hasSurname,
+      ),
+    );
 
     if (!hasName || !hasSurname) return;
 
@@ -82,18 +84,20 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
       },
       (user) {
         final birthDate = _normalizeBirthDate(user.birthDate);
-        emit(state.copyWith(
-          submitStatus: StateStatus.success(),
-          name: user.name,
-          surname: user.surname,
-          selectedGender: user.gender,
-          birthDate: birthDate,
-          initialName: user.name,
-          initialSurname: user.surname,
-          initialGender: user.gender,
-          initialBirthDate: birthDate,
-          updatedUser: user,
-        ));
+        emit(
+          state.copyWith(
+            submitStatus: StateStatus.success(),
+            name: user.name,
+            surname: user.surname,
+            selectedGender: user.gender,
+            birthDate: birthDate,
+            initialName: user.name,
+            initialSurname: user.surname,
+            initialGender: user.gender,
+            initialBirthDate: birthDate,
+            updatedUser: user,
+          ),
+        );
       },
     );
   }
@@ -101,22 +105,21 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
   Future<void> logout() async {
     emit(state.copyWith(logoutStatus: StateStatus.loading()));
     final result = await _logoutUseCase();
-    result.fold(
-      (failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))),
-      (_) {
-        PrefUtil.remove(AppPreferenceKeys.authToken);
-        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
-        emit(state.copyWith(logoutStatus: StateStatus.success()));
-      },
-    );
+    result.fold((failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))), (_) {
+      PrefUtil.remove(AppPreferenceKeys.authToken);
+      PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
+      emit(state.copyWith(logoutStatus: StateStatus.success()));
+    });
   }
 
   void _emitValidationErrors(ValidationFailure failure) {
-    emit(state.copyWith(
-      nameValidationError: failure.errors['name']?.firstOrNull,
-      surnameValidationError: failure.errors['surname']?.firstOrNull,
-      genderValidationError: failure.errors['gender']?.firstOrNull,
-      birthDateValidationError: failure.errors['birth_date']?.firstOrNull,
-    ));
+    emit(
+      state.copyWith(
+        nameValidationError: failure.errors['name']?.firstOrNull,
+        surnameValidationError: failure.errors['surname']?.firstOrNull,
+        genderValidationError: failure.errors['gender']?.firstOrNull,
+        birthDateValidationError: failure.errors['birth_date']?.firstOrNull,
+      ),
+    );
   }
 }

@@ -23,28 +23,18 @@ class NotificationIconButton extends StatelessWidget {
           return Stack(
             clipBehavior: Clip.none,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: SvgPicture.asset(Assets.icons.notification),
-              ),
+              Padding(padding: const EdgeInsets.only(top: 5), child: SvgPicture.asset(Assets.icons.notification)),
               if (count > 0)
                 Positioned(
                   right: -6,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF44336),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    decoration: BoxDecoration(color: const Color(0xFFF44336), borderRadius: BorderRadius.circular(8)),
                     constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
                     alignment: Alignment.center,
                     child: Text(
                       count > 99 ? '99+' : '$count',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

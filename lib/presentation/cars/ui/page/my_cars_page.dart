@@ -43,7 +43,8 @@ class MyCarsPage extends StatelessWidget implements AutoRouteWrapper {
                 builder: (context, state) {
                   return state.status.maybeWhen(
                     loading: () => const _CarListShimmer(),
-                    orElse: () => state.cars.isEmpty ? const _EmptyCarsView() : _CarList(cars: state.cars, cubit: cubit),
+                    orElse: () =>
+                        state.cars.isEmpty ? const _EmptyCarsView() : _CarList(cars: state.cars, cubit: cubit),
                   );
                 },
               ),
@@ -119,12 +120,7 @@ class _CarList extends StatelessWidget {
             filterCubit.apply();
 
             if (!context.mounted) return;
-            context.pushRoute(ProductListRoute(
-              params: ProductListPageParams(
-                brands: [brand.slug],
-                fromFilter: true,
-              ),
-            ));
+            context.pushRoute(ProductListRoute(params: ProductListPageParams(brands: [brand.slug], fromFilter: true)));
           },
         ),
       ),

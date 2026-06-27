@@ -30,10 +30,7 @@ class PaymentWebviewPage extends StatelessWidget implements AutoRouteWrapper {
           children: [
             InAppWebView(
               initialUrlRequest: URLRequest(url: WebUri(redirectUrl)),
-              initialSettings: InAppWebViewSettings(
-                javaScriptEnabled: true,
-                useShouldOverrideUrlLoading: true,
-              ),
+              initialSettings: InAppWebViewSettings(javaScriptEnabled: true, useShouldOverrideUrlLoading: true),
               shouldOverrideUrlLoading: (controller, navigationAction) async {
                 final uri = navigationAction.request.url;
                 final cubit = context.read<PaymentWebviewCubit>();

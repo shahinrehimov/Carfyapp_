@@ -34,7 +34,7 @@ class CarFormState extends Equatable {
   final String vinNumber;
   final String seatCount;
   final String? selectedPhotoPath; // newly picked local file
-  final bool deleteExistingPhoto;  // user removed the existing network photo
+  final bool deleteExistingPhoto; // user removed the existing network photo
 
   // Client-side validation errors
   final CarFormFieldError? brandError;

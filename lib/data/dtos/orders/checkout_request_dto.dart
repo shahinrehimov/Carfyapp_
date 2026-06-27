@@ -12,9 +12,9 @@ class CheckoutRequestDto {
   });
 
   Map<String, dynamic> toJson() => {
-        'payment_method': paymentMethod,
-        'address_id': addressId,
-        if (note != null && note!.isNotEmpty) 'note': note,
-        if (useReferralBalance) 'use_referral_balance': true,
-      };
+    'payment_method': paymentMethod,
+    'address_id': addressId,
+    if (note != null && note!.isNotEmpty) 'note': note,
+    if (useReferralBalance) 'use_referral_balance': true,
+  };
 }

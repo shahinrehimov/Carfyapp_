@@ -10,16 +10,8 @@ class _GroupsSection extends StatelessWidget {
           previous.groupsStatus != current.groupsStatus || previous.groups != current.groups,
       builder: (context, state) {
         return state.groupsStatus.maybeWhen(
-          success: () => Column(
-            children: state.groups.map((group) => _GroupItem(group: group)).toList(),
-          ),
-          orElse: () => const Column(
-            children: [
-              SizedBox(height: 12),
-              _GroupProductsLoading(),
-              SizedBox(height: 24),
-            ],
-          ),
+          success: () => Column(children: state.groups.map((group) => _GroupItem(group: group)).toList()),
+          orElse: () => const Column(children: [SizedBox(height: 12), _GroupProductsLoading(), SizedBox(height: 24)]),
         );
       },
     );
