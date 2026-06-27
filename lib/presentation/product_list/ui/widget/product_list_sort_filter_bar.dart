@@ -1,3 +1,4 @@
+import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
@@ -23,35 +24,93 @@ class ProductListSortFilterBar extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () async {
-                      final listCubit = context.read<ProductListCubit>();
-                      final current = listCubit.state;
-                      final result = await SortBottomSheet.show(
-                        context,
-                        currentSort: current.sort,
-                        currentSortType: current.sortType,
-                      );
-                      if (result != null) {
-                        listCubit.updateSort(result.sort, result.sortType);
+                  child: BlocBuilder<ProductListCubit, ProductListState>(
+                    buildWhen: (p, c) => p.sort != c.sort || p.sortType != c.sortType,
+                    builder: (context, listState) {
+                      final hasSort = listState.sort != null && listState.sortType != null;
+                      String? sortLabel;
+                      if (hasSort) {
+                        final filterState = context.read<FilterCubit>().state;
+                        final sortOptions = filterState.filtersData?.sortOptions ?? [];
+                        final sortTypes = filterState.filtersData?.sortTypes ?? [];
+                        final option = sortOptions.where((o) => o.id == listState.sort).firstOrNull;
+                        final type = sortTypes.where((t) => t.id == listState.sortType).firstOrNull;
+                        if (option != null && type != null) {
+                          sortLabel = '${option.title} - ${type.title}';
+                        }
                       }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          context.localization.sorting,
-                          style: const TextStyle(
-                            color: Color(0xFF5F5F5F),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                          ),
+                      if (hasSort && sortLabel != null) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () async {
+                                  final listCubit = context.read<ProductListCubit>();
+                                  final result = await SortBottomSheet.show(
+                                    context,
+                                    currentSort: listCubit.state.sort,
+                                    currentSortType: listCubit.state.sortType,
+                                  );
+                                  if (result != null) {
+                                    listCubit.updateSort(result.sort, result.sortType);
+                                  }
+                                },
+                                child: Text(
+                                  sortLabel,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: context.theme.colors.primary,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () => context.read<ProductListCubit>().resetSort(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Icon(Icons.close, size: 16, color: context.theme.colors.primary),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () async {
+                          final listCubit = context.read<ProductListCubit>();
+                          final result = await SortBottomSheet.show(
+                            context,
+                            currentSort: listCubit.state.sort,
+                            currentSortType: listCubit.state.sortType,
+                          );
+                          if (result != null) {
+                            listCubit.updateSort(result.sort, result.sortType);
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              context.localization.sorting,
+                              style: const TextStyle(
+                                color: Color(0xFF5F5F5F),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            SvgPicture.asset(Assets.icons.list1, width: 24),
+                          ],
                         ),
-                        const SizedBox(width: 4),
-                        SvgPicture.asset(Assets.icons.list1, width: 24),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
                 Container(width: 1, height: 48, color: const Color(0xFFEDEDED)),

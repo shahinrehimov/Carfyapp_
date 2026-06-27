@@ -175,4 +175,27 @@ class ProductListCubit extends Cubit<ProductListState> with StateMapHelper {
     emit(state.copyWith(sort: sort, sortType: sortType, products: [], totalCount: 0));
     _loadProducts();
   }
+
+  void resetSort() {
+    _paginationHelper.reset();
+    emit(ProductListState(
+      status: StateStatus.loading(),
+      products: const [],
+      totalCount: 0,
+      search: state.search,
+      brands: state.brands,
+      categories: state.categories,
+      subCategories: state.subCategories,
+      isSet: state.isSet,
+      minPrice: state.minPrice,
+      maxPrice: state.maxPrice,
+      cityId: state.cityId,
+      sellerStoreCode: state.sellerStoreCode,
+      colors: state.colors,
+      conditions: state.conditions,
+      minYear: state.minYear,
+      maxYear: state.maxYear,
+    ));
+    _loadProducts();
+  }
 }
