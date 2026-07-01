@@ -26,7 +26,6 @@ void main() async {
       await _config();
 
       runApp(const CarfyApp());
-      FlutterNativeSplash.remove();
     },
     (error, stack) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);

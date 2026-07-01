@@ -1,15 +1,8 @@
 import 'package:auto_route/annotations.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:carfy/common/theme/theme.dart';
-import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/presentation/splash/state/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/common/translations/translation_context_extension.dart';
-import 'package:carfy/common/widgets/state_status_toast.dart';
-import 'package:carfy/gen/assets.gen.dart';
 
 @RoutePage()
 class SplashPage extends StatelessWidget {
@@ -18,31 +11,9 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+      lazy: false,
       create: (_) => SplashCubit()..init(),
-      child: Scaffold(
-        backgroundColor: context.theme.colors.bg,
-        body: BlocConsumer<SplashCubit, SplashState>(
-          listener: (context, state) {
-            showStateStatusToast(context, state.guestIdentifierState);
-          },
-          builder: (context, state) {
-            return Column(
-              mainAxisAlignment: state.firstEnter ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
-              children: [
-                const SizedBox(width: double.maxFinite),
-                Image.asset(Assets.images.splashLogo.path, width: 250),
-                if (state.firstEnter)
-                  CustomButton(
-                    onPressed: () => context.read<SplashCubit>().generateGuestIdentifier(),
-                    text: context.localization.continueBtn,
-                    loading: state.guestIdentifierState is StateStatusLoading,
-                    width: 268,
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
+      child: Scaffold(backgroundColor: context.theme.colors.bg),
     );
   }
 }
