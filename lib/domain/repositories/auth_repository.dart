@@ -67,4 +67,15 @@ abstract class AuthRepository {
   Future<Either<Failure, SessionsResponse>> getSessions();
 
   Future<Either<Failure, String>> logoutSession(int tokenId);
+
+  // Local session persistence (SharedPreferences-backed).
+  Future<Either<Failure, String?>> getAuthToken();
+  Future<Either<Failure, Unit>> saveAuthToken(String token);
+  Future<Either<Failure, Unit>> clearAuthToken();
+
+  Future<Either<Failure, String?>> getGuestIdentifier();
+  Future<Either<Failure, Unit>> saveGuestIdentifier(String id);
+  Future<Either<Failure, Unit>> clearGuestIdentifier();
+
+  Future<Either<Failure, bool>> isLoggedIn();
 }

@@ -3,6 +3,7 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
+import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart';
 import 'package:carfy/domain/use_cases/product/get_product_filters_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,28 +12,32 @@ part 'filter_state.dart';
 
 class FilterCubit extends Cubit<FilterState> with StateMapHelper {
   final GetProductFiltersUseCase _getProductFiltersUseCase;
+  final CheckLoggedUseCase _checkLoggedUseCase;
   FilterState? _snapshot;
 
-  FilterCubit({GetProductFiltersUseCase? getProductFiltersUseCase})
+  FilterCubit({GetProductFiltersUseCase? getProductFiltersUseCase, CheckLoggedUseCase? checkLoggedUseCase})
     : _getProductFiltersUseCase = getProductFiltersUseCase ?? getIt<GetProductFiltersUseCase>(),
+      _checkLoggedUseCase = checkLoggedUseCase ?? getIt<CheckLoggedUseCase>(),
       super(FilterState.initial());
 
   Future<void> loadFilters() async {
     if (state.filtersData != null) return;
     emit(state.copyWith(loadStatus: StateStatus.loading()));
+    final loggedIn = (await _checkLoggedUseCase()).getOrElse(() => false);
     final result = await _getProductFiltersUseCase();
     result.fold(
-      (failure) => emit(state.copyWith(loadStatus: mapFailure(failure))),
-      (filters) => emit(state.copyWith(loadStatus: StateStatus.success(), filtersData: filters)),
+      (failure) => emit(state.copyWith(loadStatus: mapFailure(failure), isLoggedIn: loggedIn)),
+      (filters) => emit(state.copyWith(loadStatus: StateStatus.success(), filtersData: filters, isLoggedIn: loggedIn)),
     );
   }
 
   Future<void> reloadFilters() async {
     emit(FilterState(loadStatus: StateStatus.loading()));
+    final loggedIn = (await _checkLoggedUseCase()).getOrElse(() => false);
     final result = await _getProductFiltersUseCase();
     result.fold(
-      (failure) => emit(state.copyWith(loadStatus: mapFailure(failure))),
-      (filters) => emit(state.copyWith(loadStatus: StateStatus.success(), filtersData: filters)),
+      (failure) => emit(state.copyWith(loadStatus: mapFailure(failure), isLoggedIn: loggedIn)),
+      (filters) => emit(state.copyWith(loadStatus: StateStatus.success(), filtersData: filters, isLoggedIn: loggedIn)),
     );
   }
 

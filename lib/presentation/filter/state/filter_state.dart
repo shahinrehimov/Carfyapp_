@@ -14,6 +14,7 @@ class FilterState extends Equatable {
   final int? maxYear;
   final String? minPrice;
   final String? maxPrice;
+  final bool isLoggedIn;
 
   const FilterState({
     required this.loadStatus,
@@ -29,6 +30,7 @@ class FilterState extends Equatable {
     this.maxYear,
     this.minPrice,
     this.maxPrice,
+    this.isLoggedIn = false,
   });
 
   factory FilterState.initial() => FilterState(loadStatus: StateStatus.initial());
@@ -67,6 +69,7 @@ class FilterState extends Equatable {
     bool clearMinPrice = false,
     String? maxPrice,
     bool clearMaxPrice = false,
+    bool? isLoggedIn,
   }) {
     return FilterState(
       loadStatus: loadStatus ?? this.loadStatus,
@@ -82,6 +85,7 @@ class FilterState extends Equatable {
       maxYear: clearMaxYear ? null : (maxYear ?? this.maxYear),
       minPrice: clearMinPrice ? null : (minPrice ?? this.minPrice),
       maxPrice: clearMaxPrice ? null : (maxPrice ?? this.maxPrice),
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
     );
   }
 
@@ -100,5 +104,6 @@ class FilterState extends Equatable {
     maxYear,
     minPrice,
     maxPrice,
+    isLoggedIn,
   ];
 }

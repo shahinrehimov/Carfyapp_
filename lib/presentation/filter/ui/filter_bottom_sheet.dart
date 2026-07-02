@@ -1,7 +1,5 @@
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/common/widgets/car_color_picker.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
@@ -252,7 +250,7 @@ class _FilterContent extends StatelessWidget {
                 if (result != null) cubit.setConditions(result);
               },
             ),
-            if (PrefUtil.getString(AppPreferenceKeys.authToken) != null) ...[
+            if (state.isLoggedIn) ...[
               const SizedBox(height: 16),
               // Search by car button
               CustomButton(

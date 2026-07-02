@@ -9,6 +9,7 @@ class WriteReviewState extends Equatable {
   final FieldValidationState emailValidationState;
   final FieldValidationState reviewValidationState;
   final FieldValidationState imagesValidationState;
+  final bool isGuest;
 
   const WriteReviewState({
     required this.submitStatus,
@@ -19,6 +20,7 @@ class WriteReviewState extends Equatable {
     required this.emailValidationState,
     required this.reviewValidationState,
     required this.imagesValidationState,
+    this.isGuest = false,
   });
 
   factory WriteReviewState.initial() => WriteReviewState(
@@ -40,6 +42,7 @@ class WriteReviewState extends Equatable {
     FieldValidationState? emailValidationState,
     FieldValidationState? reviewValidationState,
     FieldValidationState? imagesValidationState,
+    bool? isGuest,
   }) => WriteReviewState(
     submitStatus: submitStatus ?? this.submitStatus,
     user: user ?? this.user,
@@ -49,6 +52,7 @@ class WriteReviewState extends Equatable {
     emailValidationState: emailValidationState ?? this.emailValidationState,
     reviewValidationState: reviewValidationState ?? this.reviewValidationState,
     imagesValidationState: imagesValidationState ?? this.imagesValidationState,
+    isGuest: isGuest ?? this.isGuest,
   );
 
   @override
@@ -61,5 +65,6 @@ class WriteReviewState extends Equatable {
     emailValidationState,
     reviewValidationState,
     imagesValidationState,
+    isGuest,
   ];
 }

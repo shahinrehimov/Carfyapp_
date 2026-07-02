@@ -6,12 +6,10 @@ import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
 import 'package:carfy/domain/use_cases/auth/send_phone_login_otp_use_case.dart';
 
@@ -74,10 +72,8 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
       (failure) {
         emit(state.copyWith(verifyState: mapFailure(failure)));
       },
-      (success) {
+      (_) {
         emit(state.copyWith(verifyState: StateStatus.success()));
-        PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
         _appRouter.replaceAll([const MainRoute()]);
       },
     );

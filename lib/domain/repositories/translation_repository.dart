@@ -12,4 +12,10 @@ abstract class TranslationRepository {
   Future<Either<Failure, Unit>> saveTranslationsToCache(String languageCode, Translations translations);
 
   Future<Either<Failure, List<AppLanguage>>> getLanguagesList();
+
+  Future<Either<Failure, String?>> getSelectedLanguage();
+  Future<Either<Failure, Unit>> saveSelectedLanguage(String code);
+
+  Future<Either<Failure, int>> getSavedTranslationVersion(String code);
+  Future<Either<Failure, Unit>> saveTranslationVersion(String code, int version);
 }

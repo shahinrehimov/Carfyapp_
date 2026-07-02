@@ -1,9 +1,8 @@
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
+import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,17 +11,20 @@ part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> with StateMapHelper {
   final GetProfileUseCase _getProfileUseCase;
+  final CheckLoggedUseCase _checkLoggedUseCase;
 
-  ProfileCubit({GetProfileUseCase? getProfileUseCase})
+  ProfileCubit({GetProfileUseCase? getProfileUseCase, CheckLoggedUseCase? checkLoggedUseCase})
     : _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
+      _checkLoggedUseCase = checkLoggedUseCase ?? getIt<CheckLoggedUseCase>(),
       super(ProfileState.initial());
 
-  void init() {
-    _checkAuthenticated();
+  Future<void> init() async {
+    await _checkAuthenticated();
   }
 
-  void _checkAuthenticated() {
-    final bool authenticated = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
+  Future<void> _checkAuthenticated() async {
+    final result = await _checkLoggedUseCase();
+    final authenticated = result.getOrElse(() => false);
     emit(state.copyWith(authenticated: authenticated));
     if (authenticated) {
       _loadProfile();

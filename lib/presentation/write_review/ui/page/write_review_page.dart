@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
@@ -41,17 +39,22 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
   final _emailController = TextEditingController();
   bool _consentChecked = false;
   final List<String> _selectedImages = [];
-  late final bool _isGuest = PrefUtil.getString(AppPreferenceKeys.authToken) == null;
+  bool _guestListenersAttached = false;
+
+  bool get _isGuest => context.read<WriteReviewCubit>().state.isGuest;
 
   @override
   void initState() {
     super.initState();
     _reviewController.addListener(() => setState(() {}));
-    if (_isGuest) {
-      _nameController.addListener(() => setState(() {}));
-      _surnameController.addListener(() => setState(() {}));
-      _emailController.addListener(() => setState(() {}));
-    }
+  }
+
+  void _attachGuestListenersIfNeeded(bool isGuest) {
+    if (!isGuest || _guestListenersAttached) return;
+    _guestListenersAttached = true;
+    _nameController.addListener(() => setState(() {}));
+    _surnameController.addListener(() => setState(() {}));
+    _emailController.addListener(() => setState(() {}));
   }
 
   @override
@@ -133,15 +136,23 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocListener<WriteReviewCubit, WriteReviewState>(
-        listenWhen: (prev, curr) => prev.submitStatus != curr.submitStatus,
-        listener: (context, state) {
-          showStateStatusToast(context, state.submitStatus);
-          if (state.submitStatus is StateStatusSuccessWithMessage) {
-            _resetForm();
-            context.router.maybePop(true);
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<WriteReviewCubit, WriteReviewState>(
+            listenWhen: (prev, curr) => prev.submitStatus != curr.submitStatus,
+            listener: (context, state) {
+              showStateStatusToast(context, state.submitStatus);
+              if (state.submitStatus is StateStatusSuccessWithMessage) {
+                _resetForm();
+                context.router.maybePop(true);
+              }
+            },
+          ),
+          BlocListener<WriteReviewCubit, WriteReviewState>(
+            listenWhen: (prev, curr) => prev.isGuest != curr.isGuest,
+            listener: (context, state) => _attachGuestListenersIfNeeded(state.isGuest),
+          ),
+        ],
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Container(

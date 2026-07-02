@@ -14,6 +14,7 @@ import 'package:carfy/data/datasources/address_remote_data_source.dart'
     as _i930;
 import 'package:carfy/data/datasources/advertisement_remote_data_source.dart'
     as _i951;
+import 'package:carfy/data/datasources/auth_local_data_source.dart' as _i1016;
 import 'package:carfy/data/datasources/auth_remote_data_source.dart' as _i250;
 import 'package:carfy/data/datasources/basket_remote_data_source.dart' as _i490;
 import 'package:carfy/data/datasources/car_remote_data_source.dart' as _i304;
@@ -22,6 +23,7 @@ import 'package:carfy/data/datasources/category_remote_data_source.dart'
 import 'package:carfy/data/datasources/contact_remote_data_source.dart'
     as _i1057;
 import 'package:carfy/data/datasources/group_remote_data_source.dart' as _i874;
+import 'package:carfy/data/datasources/locale_local_data_source.dart' as _i561;
 import 'package:carfy/data/datasources/notification_remote_data_source.dart'
     as _i49;
 import 'package:carfy/data/datasources/order_remote_data_source.dart' as _i150;
@@ -31,6 +33,8 @@ import 'package:carfy/data/datasources/product_remote_data_source.dart'
     as _i881;
 import 'package:carfy/data/datasources/referral_remote_data_source.dart'
     as _i861;
+import 'package:carfy/data/datasources/search_history_local_data_source.dart'
+    as _i352;
 import 'package:carfy/data/datasources/translation_local_data_source.dart'
     as _i1053;
 import 'package:carfy/data/datasources/translation_remote_data_source.dart'
@@ -66,6 +70,8 @@ import 'package:carfy/data/repositories/order_repository_impl.dart' as _i506;
 import 'package:carfy/data/repositories/payment_repository_impl.dart' as _i390;
 import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
 import 'package:carfy/data/repositories/referral_repository_impl.dart' as _i655;
+import 'package:carfy/data/repositories/search_history_repository_impl.dart'
+    as _i741;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
@@ -85,6 +91,8 @@ import 'package:carfy/domain/repositories/order_repository.dart' as _i603;
 import 'package:carfy/domain/repositories/payment_repository.dart' as _i504;
 import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/referral_repository.dart' as _i200;
+import 'package:carfy/domain/repositories/search_history_repository.dart'
+    as _i64;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
 import 'package:carfy/domain/repositories/wishlist_repository.dart' as _i54;
@@ -105,14 +113,24 @@ import 'package:carfy/domain/use_cases/address/update_address_use_case.dart'
 import 'package:carfy/domain/use_cases/advertisements/get_active_advertisements_use_case.dart'
     as _i524;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
+import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart'
+    as _i110;
 import 'package:carfy/domain/use_cases/auth/check_phone_otp_use_case.dart'
     as _i818;
+import 'package:carfy/domain/use_cases/auth/clear_auth_token_use_case.dart'
+    as _i1020;
+import 'package:carfy/domain/use_cases/auth/clear_guest_identifier_use_case.dart'
+    as _i330;
 import 'package:carfy/domain/use_cases/auth/forgot_password_use_case.dart'
     as _i62;
 import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.dart'
     as _i593;
+import 'package:carfy/domain/use_cases/auth/get_auth_token_use_case.dart'
+    as _i660;
 import 'package:carfy/domain/use_cases/auth/get_google_auth_redirect_use_case.dart'
     as _i559;
+import 'package:carfy/domain/use_cases/auth/get_guest_identifier_use_case.dart'
+    as _i282;
 import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart' as _i2;
 import 'package:carfy/domain/use_cases/auth/get_sessions_use_case.dart'
     as _i236;
@@ -128,6 +146,10 @@ import 'package:carfy/domain/use_cases/auth/register_with_email_use_case.dart'
     as _i401;
 import 'package:carfy/domain/use_cases/auth/register_with_phone_use_case.dart'
     as _i71;
+import 'package:carfy/domain/use_cases/auth/save_auth_token_use_case.dart'
+    as _i0;
+import 'package:carfy/domain/use_cases/auth/save_guest_identifier_use_case.dart'
+    as _i934;
 import 'package:carfy/domain/use_cases/auth/send_phone_login_otp_use_case.dart'
     as _i90;
 import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart'
@@ -237,12 +259,28 @@ import 'package:carfy/domain/use_cases/referral/load_referral_withdrawals_use_ca
     as _i414;
 import 'package:carfy/domain/use_cases/referral/update_referral_code_use_case.dart'
     as _i247;
+import 'package:carfy/domain/use_cases/search/add_search_history_use_case.dart'
+    as _i217;
+import 'package:carfy/domain/use_cases/search/clear_search_history_use_case.dart'
+    as _i1011;
+import 'package:carfy/domain/use_cases/search/get_search_history_use_case.dart'
+    as _i967;
+import 'package:carfy/domain/use_cases/search/remove_search_history_use_case.dart'
+    as _i565;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_languages_list_use_case.dart'
     as _i731;
 import 'package:carfy/domain/use_cases/translations/get_remote_translations_use_case.dart'
     as _i567;
+import 'package:carfy/domain/use_cases/translations/get_selected_language_use_case.dart'
+    as _i783;
+import 'package:carfy/domain/use_cases/translations/get_translation_version_use_case.dart'
+    as _i815;
+import 'package:carfy/domain/use_cases/translations/save_selected_language_use_case.dart'
+    as _i785;
+import 'package:carfy/domain/use_cases/translations/save_translation_version_use_case.dart'
+    as _i842;
 import 'package:carfy/domain/use_cases/translations/save_translations_use_case.dart'
     as _i740;
 import 'package:carfy/domain/use_cases/version/get_versions_use_case.dart'
@@ -274,7 +312,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i237.PaymentMapper>(() => _i237.PaymentMapper());
     gh.factory<_i344.ProductMapper>(() => _i344.ProductMapper());
     gh.factory<_i839.ReferralMapper>(() => _i839.ReferralMapper());
-    gh.singleton<_i597.NetworkManager>(() => _i597.NetworkManager());
     gh.factory<_i1057.ContactRemoteDataSource>(
       () => _i1057.ContactRemoteDataSourceImpl(),
     );
@@ -299,11 +336,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i881.ProductRemoteDataSource>(
       () => _i881.ProductRemoteDataSourceImpl(),
     );
+    gh.factory<_i561.LocaleLocalDataSource>(
+      () => _i561.LocaleLocalDataSourceImpl(),
+    );
     gh.factory<_i54.WishlistRepository>(
       () => _i224.WishlistRepositoryImpl(
         gh<_i685.WishlistRemoteDataSource>(),
         gh<_i344.ProductMapper>(),
       ),
+    );
+    gh.factory<_i1016.AuthLocalDataSource>(
+      () => _i1016.AuthLocalDataSourceImpl(),
     );
     gh.factory<_i504.PaymentRepository>(
       () => _i390.PaymentRepositoryImpl(
@@ -340,6 +383,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i250.AuthRemoteDataSource>(
       () => _i250.AuthRemoteDataSourceImpl(),
+    );
+    gh.factory<_i352.SearchHistoryLocalDataSource>(
+      () => _i352.SearchHistoryLocalDataSourceImpl(),
     );
     gh.factory<_i150.OrderRemoteDataSource>(
       () => _i150.OrderRemoteDataSourceImpl(),
@@ -392,6 +438,25 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i787.NotificationMapper>(),
       ),
     );
+    gh.factory<_i64.SearchHistoryRepository>(
+      () => _i741.SearchHistoryRepositoryImpl(
+        gh<_i352.SearchHistoryLocalDataSource>(),
+      ),
+    );
+    gh.factory<_i217.AddSearchHistoryUseCase>(
+      () => _i217.AddSearchHistoryUseCase(gh<_i64.SearchHistoryRepository>()),
+    );
+    gh.factory<_i1011.ClearSearchHistoryUseCase>(
+      () =>
+          _i1011.ClearSearchHistoryUseCase(gh<_i64.SearchHistoryRepository>()),
+    );
+    gh.factory<_i967.GetSearchHistoryUseCase>(
+      () => _i967.GetSearchHistoryUseCase(gh<_i64.SearchHistoryRepository>()),
+    );
+    gh.factory<_i565.RemoveSearchHistoryUseCase>(
+      () =>
+          _i565.RemoveSearchHistoryUseCase(gh<_i64.SearchHistoryRepository>()),
+    );
     gh.factory<_i524.GetActiveAdvertisementsUseCase>(
       () => _i524.GetActiveAdvertisementsUseCase(
         gh<_i443.AdvertisementRepository>(),
@@ -440,6 +505,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i344.ProductMapper>(),
       ),
     );
+    gh.singleton<_i597.NetworkManager>(
+      () => _i597.NetworkManager(
+        gh<_i1016.AuthLocalDataSource>(),
+        gh<_i561.LocaleLocalDataSource>(),
+      ),
+    );
     gh.factory<_i557.CategoryRepository>(
       () => _i395.CategoryRepositoryImpl(
         gh<_i861.CategoryRemoteDataSource>(),
@@ -484,6 +555,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i139.StoreReviewUseCase>(
       () => _i139.StoreReviewUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i655.AuthRepository>(
+      () => _i407.AuthRepositoryImpl(
+        gh<_i250.AuthRemoteDataSource>(),
+        gh<_i1016.AuthLocalDataSource>(),
+        gh<_i163.AuthMapper>(),
+      ),
     );
     gh.factory<_i914.SendContactUseCase>(
       () => _i914.SendContactUseCase(gh<_i157.ContactRepository>()),
@@ -530,18 +608,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i936.UpdateCarUseCase>(
       () => _i936.UpdateCarUseCase(gh<_i194.CarRepository>()),
     );
-    gh.factory<_i655.AuthRepository>(
-      () => _i407.AuthRepositoryImpl(
-        gh<_i250.AuthRemoteDataSource>(),
-        gh<_i163.AuthMapper>(),
-      ),
-    );
-    gh.factory<_i611.TranslationRepository>(
-      () => _i35.TranslationsRepositoryImpl(
-        gh<_i387.TranslationRemoteDataSource>(),
-        gh<_i1053.TranslationLocalDataSource>(),
-      ),
-    );
     gh.factory<_i449.BasketRepository>(
       () => _i522.BasketRepositoryImpl(
         gh<_i490.BasketRemoteDataSource>(),
@@ -552,6 +618,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i294.GroupRepositoryImpl(
         gh<_i874.GroupRemoteDataSource>(),
         gh<_i12.GroupMapper>(),
+      ),
+    );
+    gh.factory<_i611.TranslationRepository>(
+      () => _i35.TranslationsRepositoryImpl(
+        gh<_i387.TranslationRemoteDataSource>(),
+        gh<_i1053.TranslationLocalDataSource>(),
+        gh<_i561.LocaleLocalDataSource>(),
       ),
     );
     gh.factory<_i442.GetGroupUseCase>(
@@ -609,17 +682,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i581.CheckEmailUseCase>(
       () => _i581.CheckEmailUseCase(gh<_i655.AuthRepository>()),
     );
+    gh.factory<_i110.CheckLoggedUseCase>(
+      () => _i110.CheckLoggedUseCase(gh<_i655.AuthRepository>()),
+    );
     gh.factory<_i818.CheckPhoneOtpUseCase>(
       () => _i818.CheckPhoneOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i1020.ClearAuthTokenUseCase>(
+      () => _i1020.ClearAuthTokenUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i330.ClearGuestIdentifierUseCase>(
+      () => _i330.ClearGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i62.ForgotPasswordUseCase>(
       () => _i62.ForgotPasswordUseCase(gh<_i655.AuthRepository>()),
     );
-    gh.factory<_i593.GenerateGuestIdentifierUseCase>(
-      () => _i593.GenerateGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
+    gh.factory<_i660.GetAuthTokenUseCase>(
+      () => _i660.GetAuthTokenUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i559.GetGoogleAuthRedirectUseCase>(
       () => _i559.GetGoogleAuthRedirectUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i282.GetGuestIdentifierUseCase>(
+      () => _i282.GetGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i2.GetProfileUseCase>(
       () => _i2.GetProfileUseCase(gh<_i655.AuthRepository>()),
@@ -627,26 +712,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i236.GetSessionsUseCase>(
       () => _i236.GetSessionsUseCase(gh<_i655.AuthRepository>()),
     );
-    gh.factory<_i601.LoginWithEmailUseCase>(
-      () => _i601.LoginWithEmailUseCase(gh<_i655.AuthRepository>()),
-    );
-    gh.factory<_i963.LoginWithPhoneUseCase>(
-      () => _i963.LoginWithPhoneUseCase(gh<_i655.AuthRepository>()),
-    );
     gh.factory<_i311.LogoutAllUseCase>(
       () => _i311.LogoutAllUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i521.LogoutSessionUseCase>(
       () => _i521.LogoutSessionUseCase(gh<_i655.AuthRepository>()),
     );
-    gh.factory<_i992.LogoutUseCase>(
-      () => _i992.LogoutUseCase(gh<_i655.AuthRepository>()),
-    );
     gh.factory<_i401.RegisterWithEmailUseCase>(
       () => _i401.RegisterWithEmailUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i71.RegisterWithPhoneUseCase>(
       () => _i71.RegisterWithPhoneUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i0.SaveAuthTokenUseCase>(
+      () => _i0.SaveAuthTokenUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i934.SaveGuestIdentifierUseCase>(
+      () => _i934.SaveGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i90.SendPhoneLoginOtpUseCase>(
       () => _i90.SendPhoneLoginOtpUseCase(gh<_i655.AuthRepository>()),
@@ -665,6 +747,26 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i346.VerifyEmailOtpUseCase>(
       () => _i346.VerifyEmailOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i593.GenerateGuestIdentifierUseCase>(
+      () => _i593.GenerateGuestIdentifierUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i934.SaveGuestIdentifierUseCase>(),
+      ),
+    );
+    gh.factory<_i601.LoginWithEmailUseCase>(
+      () => _i601.LoginWithEmailUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i0.SaveAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
+    );
+    gh.factory<_i963.LoginWithPhoneUseCase>(
+      () => _i963.LoginWithPhoneUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i0.SaveAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
     );
     gh.factory<_i307.AddToBasketUseCase>(
       () => _i307.AddToBasketUseCase(gh<_i449.BasketRepository>()),
@@ -701,8 +803,31 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i567.GetRemoteTranslationsUseCase(gh<_i611.TranslationRepository>()),
     );
+    gh.factory<_i783.GetSelectedLanguageUseCase>(
+      () => _i783.GetSelectedLanguageUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i815.GetTranslationVersionUseCase>(
+      () =>
+          _i815.GetTranslationVersionUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i785.SaveSelectedLanguageUseCase>(
+      () =>
+          _i785.SaveSelectedLanguageUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i842.SaveTranslationVersionUseCase>(
+      () => _i842.SaveTranslationVersionUseCase(
+        gh<_i611.TranslationRepository>(),
+      ),
+    );
     gh.factory<_i740.SaveTranslationsUseCase>(
       () => _i740.SaveTranslationsUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i992.LogoutUseCase>(
+      () => _i992.LogoutUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i1020.ClearAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
     );
     return this;
   }

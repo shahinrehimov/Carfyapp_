@@ -1069,10 +1069,12 @@ class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
       final args = data.argsAs<SearchRouteArgs>(
         orElse: () => const SearchRouteArgs(),
       );
-      return SearchPage(
-        key: args.key,
-        heroTag: args.heroTag,
-        initialQuery: args.initialQuery,
+      return WrappedRoute(
+        child: SearchPage(
+          key: args.key,
+          heroTag: args.heroTag,
+          initialQuery: args.initialQuery,
+        ),
       );
     },
   );

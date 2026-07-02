@@ -13,8 +13,12 @@ class TranslationLocalModelAdapter extends TypeAdapter<TranslationLocalModel> {
   @override
   TranslationLocalModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read()};
-    return TranslationLocalModel(translations: (fields[0] as Map).cast<String, String>());
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return TranslationLocalModel(
+      translations: (fields[0] as Map).cast<String, String>(),
+    );
   }
 
   @override
@@ -31,5 +35,7 @@ class TranslationLocalModelAdapter extends TypeAdapter<TranslationLocalModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TranslationLocalModelAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      other is TranslationLocalModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

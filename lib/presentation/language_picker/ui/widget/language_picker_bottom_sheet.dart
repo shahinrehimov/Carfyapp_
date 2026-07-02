@@ -89,11 +89,11 @@ class _LanguageList extends StatelessWidget {
         final isSelected = lang.key == currentCode;
         final display = Language.fromValue(lang.key).displayName;
         return InkWell(
-          onTap: () {
+          onTap: () async {
             if (!isSelected) {
-              context.read<LocalizationCubit>().changeLanguage(lang.key);
+              await context.read<LocalizationCubit>().changeLanguage(lang.key);
             }
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 14),

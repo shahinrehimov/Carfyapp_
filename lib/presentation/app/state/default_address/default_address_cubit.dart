@@ -1,8 +1,7 @@
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/entities/address/address.dart';
 import 'package:carfy/domain/use_cases/address/get_addresses_use_case.dart';
+import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,13 +9,16 @@ part 'default_address_state.dart';
 
 class DefaultAddressCubit extends Cubit<DefaultAddressState> {
   final GetAddressesUseCase _getAddressesUseCase;
+  final CheckLoggedUseCase _checkLoggedUseCase;
 
-  DefaultAddressCubit({GetAddressesUseCase? getAddressesUseCase})
-    : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
-      super(const DefaultAddressState());
+  DefaultAddressCubit({GetAddressesUseCase? getAddressesUseCase, CheckLoggedUseCase? checkLoggedUseCase})
+      : _getAddressesUseCase = getAddressesUseCase ?? getIt<GetAddressesUseCase>(),
+        _checkLoggedUseCase = checkLoggedUseCase ?? getIt<CheckLoggedUseCase>(),
+        super(const DefaultAddressState());
 
   Future<void> refresh() async {
-    final isLoggedIn = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
+    final loggedResult = await _checkLoggedUseCase();
+    final isLoggedIn = loggedResult.getOrElse(() => false);
     if (!isLoggedIn) {
       emit(const DefaultAddressState());
       return;

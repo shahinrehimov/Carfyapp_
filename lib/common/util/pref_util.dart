@@ -27,16 +27,16 @@ class PrefUtil {
     return decrypted;
   }
 
-  static setString(String key, String value) {
-    preferences.setString(key, _encryptData(value));
+  static Future<bool> setString(String key, String value) {
+    return preferences.setString(key, _encryptData(value));
   }
 
-  static setBool(String key, bool value) {
-    preferences.setBool(key, value);
+  static Future<bool> setBool(String key, bool value) {
+    return preferences.setBool(key, value);
   }
 
-  static setInt(String key, int value) {
-    preferences.setInt(key, value);
+  static Future<bool> setInt(String key, int value) {
+    return preferences.setInt(key, value);
   }
 
   static String? getString(String key) {
@@ -55,19 +55,19 @@ class PrefUtil {
     return preferences.getBool(key);
   }
 
-  static void setStringList(String key, List<String> value) {
-    preferences.setStringList(key, value);
+  static Future<bool> setStringList(String key, List<String> value) {
+    return preferences.setStringList(key, value);
   }
 
   static List<String>? getStringList(String key) {
     return preferences.getStringList(key);
   }
 
-  static void remove(String key) {
-    preferences.remove(key);
+  static Future<bool> remove(String key) {
+    return preferences.remove(key);
   }
 
-  static void clear() {
-    preferences.clear();
+  static Future<bool> clear() {
+    return preferences.clear();
   }
 }

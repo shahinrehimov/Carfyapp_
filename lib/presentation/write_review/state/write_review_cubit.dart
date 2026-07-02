@@ -1,12 +1,11 @@
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/error/failure.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/params/product/store_review_params.dart';
+import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart';
 import 'package:carfy/domain/use_cases/product/store_review_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -17,15 +16,21 @@ part 'write_review_state.dart';
 class WriteReviewCubit extends Cubit<WriteReviewState> with StateMapHelper {
   final StoreReviewUseCase _storeReviewUseCase;
   final GetProfileUseCase _getProfileUseCase;
+  final CheckLoggedUseCase _checkLoggedUseCase;
 
-  WriteReviewCubit({StoreReviewUseCase? storeReviewUseCase, GetProfileUseCase? getProfileUseCase})
-    : _storeReviewUseCase = storeReviewUseCase ?? getIt<StoreReviewUseCase>(),
-      _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
-      super(WriteReviewState.initial());
-
-  bool get isGuest => PrefUtil.getString(AppPreferenceKeys.authToken) == null;
+  WriteReviewCubit({
+    StoreReviewUseCase? storeReviewUseCase,
+    GetProfileUseCase? getProfileUseCase,
+    CheckLoggedUseCase? checkLoggedUseCase,
+  }) : _storeReviewUseCase = storeReviewUseCase ?? getIt<StoreReviewUseCase>(),
+       _getProfileUseCase = getProfileUseCase ?? getIt<GetProfileUseCase>(),
+       _checkLoggedUseCase = checkLoggedUseCase ?? getIt<CheckLoggedUseCase>(),
+       super(WriteReviewState.initial());
 
   Future<void> init() async {
+    final loggedResult = await _checkLoggedUseCase();
+    final isGuest = !loggedResult.getOrElse(() => false);
+    emit(state.copyWith(isGuest: isGuest));
     if (isGuest) return;
     final result = await _getProfileUseCase();
     result.fold((_) {}, (user) => emit(state.copyWith(user: user)));

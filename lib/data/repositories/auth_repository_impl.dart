@@ -34,6 +34,7 @@ import 'package:carfy/domain/params/auth/update_profile_params.dart';
 
 import 'package:carfy/domain/repositories/auth_repository.dart';
 
+import 'package:carfy/data/datasources/auth_local_data_source.dart';
 import 'package:carfy/data/datasources/auth_remote_data_source.dart';
 import 'package:carfy/data/mappers/auth_mapper.dart';
 
@@ -53,9 +54,10 @@ import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   final AuthRemoteDataSource _dataSource;
+  final AuthLocalDataSource _localDataSource;
   final AuthMapper _mapper;
 
-  AuthRepositoryImpl(this._dataSource, this._mapper);
+  AuthRepositoryImpl(this._dataSource, this._localDataSource, this._mapper);
 
   @override
   Future<Either<Failure, GoogleAuthRedirect>> getGoogleAuthRedirect() {
@@ -250,6 +252,56 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   Future<Either<Failure, String>> logoutSession(int tokenId) {
     return safeCall(() async {
       return await _dataSource.logoutSession(tokenId);
+    });
+  }
+
+  @override
+  Future<Either<Failure, String?>> getAuthToken() {
+    return safeCall(() => _localDataSource.getAuthToken());
+  }
+
+  @override
+  Future<Either<Failure, Unit>> saveAuthToken(String token) {
+    return safeCall(() async {
+      await _localDataSource.saveAuthToken(token);
+      return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> clearAuthToken() {
+    return safeCall(() async {
+      await _localDataSource.clearAuthToken();
+      return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, String?>> getGuestIdentifier() {
+    return safeCall(() => _localDataSource.getGuestIdentifier());
+  }
+
+  @override
+  Future<Either<Failure, Unit>> saveGuestIdentifier(String id) {
+    return safeCall(() async {
+      await _localDataSource.saveGuestIdentifier(id);
+      return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> clearGuestIdentifier() {
+    return safeCall(() async {
+      await _localDataSource.clearGuestIdentifier();
+      return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>> isLoggedIn() {
+    return safeCall(() async {
+      final token = await _localDataSource.getAuthToken();
+      return token != null && token.isNotEmpty;
     });
   }
 }

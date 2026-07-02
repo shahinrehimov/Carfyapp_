@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:carfy/common/constants/preference_keys.dart';
-import 'package:carfy/common/util/pref_util.dart';
+import 'package:carfy/common/di/di.dart';
+import 'package:carfy/domain/use_cases/translations/get_selected_language_use_case.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,10 +12,13 @@ part 'map_picker_state.dart';
 
 class MapPickerCubit extends Cubit<MapPickerState> {
   final Dio _dio = Dio(BaseOptions(connectTimeout: const Duration(seconds: 10)));
+  final GetSelectedLanguageUseCase _getSelectedLanguageUseCase;
   Timer? _debounce;
   CancelToken? _cancelToken;
 
-  MapPickerCubit({LatLng? initial}) : super(MapPickerState(position: initial ?? const LatLng(40.4093, 49.8671)));
+  MapPickerCubit({LatLng? initial, GetSelectedLanguageUseCase? getSelectedLanguageUseCase})
+      : _getSelectedLanguageUseCase = getSelectedLanguageUseCase ?? getIt<GetSelectedLanguageUseCase>(),
+        super(MapPickerState(position: initial ?? const LatLng(40.4093, 49.8671)));
 
   void updatePosition(LatLng position) => emit(state.copyWith(position: position));
 
@@ -34,6 +37,8 @@ class MapPickerCubit extends Cubit<MapPickerState> {
     _cancelToken = CancelToken();
     try {
       final pos = state.position;
+      final langResult = await _getSelectedLanguageUseCase();
+      final lang = langResult.getOrElse(() => null) ?? 'az';
       final response = await _dio.get(
         'https://photon.komoot.io/api/',
         queryParameters: {
@@ -41,7 +46,7 @@ class MapPickerCubit extends Cubit<MapPickerState> {
           'limit': 7,
           'lat': pos.latitude,
           'lon': pos.longitude,
-          'lang': PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? 'az',
+          'lang': lang,
         },
         options: Options(
           headers: {'User-Agent': 'Mozilla/5.0 (compatible; CarfyApp/1.0)', 'Accept': 'application/json'},

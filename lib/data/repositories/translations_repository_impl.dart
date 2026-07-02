@@ -1,4 +1,5 @@
 import 'package:carfy/common/error/failure.dart';
+import 'package:carfy/data/datasources/locale_local_data_source.dart';
 import 'package:carfy/data/datasources/translation_local_data_source.dart';
 import 'package:carfy/data/datasources/translation_remote_data_source.dart';
 import 'package:carfy/data/models/translation/translation_local_model.dart';
@@ -14,8 +15,9 @@ import 'package:carfy/common/mixin/repository_safe_call_mixin.dart';
 class TranslationsRepositoryImpl extends TranslationRepository with RepositorySafeCallMixin {
   final TranslationRemoteDataSource _remoteDataSource;
   final TranslationLocalDataSource _localDataSource;
+  final LocaleLocalDataSource _localeLocalDataSource;
 
-  TranslationsRepositoryImpl(this._remoteDataSource, this._localDataSource);
+  TranslationsRepositoryImpl(this._remoteDataSource, this._localDataSource, this._localeLocalDataSource);
 
   @override
   Future<Either<Failure, Translations>> getRemoteTranslations(String languageCode) {
@@ -51,6 +53,32 @@ class TranslationsRepositoryImpl extends TranslationRepository with RepositorySa
     return safeCall(() async {
       final res = await _remoteDataSource.getLanguagesList();
       return res.map((m) => AppLanguage(id: m.id, key: m.key)).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, String?>> getSelectedLanguage() {
+    return safeCall(() => _localeLocalDataSource.getSelectedLanguage());
+  }
+
+  @override
+  Future<Either<Failure, Unit>> saveSelectedLanguage(String code) {
+    return safeCall(() async {
+      await _localeLocalDataSource.saveSelectedLanguage(code);
+      return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, int>> getSavedTranslationVersion(String code) {
+    return safeCall(() => _localeLocalDataSource.getTranslationVersion(code));
+  }
+
+  @override
+  Future<Either<Failure, Unit>> saveTranslationVersion(String code, int version) {
+    return safeCall(() async {
+      await _localeLocalDataSource.saveTranslationVersion(code, version);
+      return unit;
     });
   }
 }

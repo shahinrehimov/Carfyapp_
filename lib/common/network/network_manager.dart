@@ -6,14 +6,16 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:carfy/common/constants/constants.dart';
-import 'package:carfy/common/constants/preference_keys.dart';
-import 'package:carfy/common/util/pref_util.dart';
+import 'package:carfy/data/datasources/auth_local_data_source.dart';
+import 'package:carfy/data/datasources/locale_local_data_source.dart';
 
 @singleton
 class NetworkManager {
   late Dio dio;
+  final AuthLocalDataSource _authLocal;
+  final LocaleLocalDataSource _localeLocal;
 
-  NetworkManager() {
+  NetworkManager(this._authLocal, this._localeLocal) {
     dio = Dio(
       BaseOptions(
         contentType: Headers.jsonContentType,
@@ -27,18 +29,18 @@ class NetworkManager {
     dio.interceptors.addAll([
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final guestIdentifier = PrefUtil.getString(AppPreferenceKeys.guestIdentifier);
+          final guestIdentifier = await _authLocal.getGuestIdentifier();
           if (guestIdentifier != null && guestIdentifier.isNotEmpty) {
             options.headers["identifier"] = guestIdentifier;
           }
 
-          final authToken = PrefUtil.getString(AppPreferenceKeys.authToken);
+          final authToken = await _authLocal.getAuthToken();
           if (authToken != null && authToken.isNotEmpty) {
             options.headers["Authorization"] = 'Bearer $authToken';
           }
 
-          final language =
-              PrefUtil.getString(AppPreferenceKeys.selectedLanguage) ?? PlatformDispatcher.instance.locale.languageCode;
+          final language = await _localeLocal.getSelectedLanguage() ??
+              PlatformDispatcher.instance.locale.languageCode;
           options.headers["Accept-Language"] = language;
 
           return handler.next(options);

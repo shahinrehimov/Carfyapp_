@@ -1,11 +1,9 @@
-import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
-import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/params/auth/login_with_email_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
 import 'package:carfy/domain/use_cases/auth/login_with_email_use_case.dart';
@@ -67,10 +65,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
           );
         }
       },
-      (success) {
+      (_) {
         emit(state.copyWith(emailLoginState: StateStatus.success()));
-        PrefUtil.setString(AppPreferenceKeys.authToken, success.token);
-        PrefUtil.remove(AppPreferenceKeys.guestIdentifier);
         _appRouter.pushAndPopUntil(const MainRoute(), predicate: (_) => false);
       },
     );
