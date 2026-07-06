@@ -44,11 +44,14 @@ class WishlistManagerCubit extends Cubit<WishlistManagerState> with StateMapHelp
     emit(state.copyWith(wishlistIds: updatedIds));
 
     final result = await _addToWishlistUseCase(cpvUuid);
-    result.fold((failure) {
-      // Rollback
-      final rolledBack = Set<String>.from(state.wishlistIds)..remove(cpvUuid);
-      emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
-    }, (_) {});
+    result.fold(
+      (failure) {
+        // Rollback
+        final rolledBack = Set<String>.from(state.wishlistIds)..remove(cpvUuid);
+        emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
+      },
+      (_) => emit(state.copyWith(actionStatus: StateStatus.success())),
+    );
   }
 
   Future<void> _remove(String cpvUuid) async {
@@ -57,11 +60,14 @@ class WishlistManagerCubit extends Cubit<WishlistManagerState> with StateMapHelp
     emit(state.copyWith(wishlistIds: updatedIds));
 
     final result = await _removeFromWishlistUseCase(cpvUuid);
-    result.fold((failure) {
-      // Rollback
-      final rolledBack = Set<String>.from(state.wishlistIds)..add(cpvUuid);
-      emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
-    }, (_) {});
+    result.fold(
+      (failure) {
+        // Rollback
+        final rolledBack = Set<String>.from(state.wishlistIds)..add(cpvUuid);
+        emit(state.copyWith(wishlistIds: rolledBack, actionStatus: mapFailure(failure)));
+      },
+      (_) => emit(state.copyWith(actionStatus: StateStatus.success())),
+    );
   }
 
   void clearActionStatus() {

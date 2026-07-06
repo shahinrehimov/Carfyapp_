@@ -3,6 +3,7 @@ import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/pagination_scroll_wrapper.dart';
+import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/widgets/pull_to_refresh_wrapper.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/common/widgets/notification_icon_button.dart';
@@ -30,11 +31,26 @@ class WishlistPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WishlistManagerCubit, WishlistManagerState>(
-      listenWhen: (prev, curr) => prev.wishlistIds != curr.wishlistIds,
-      listener: (context, wishlistManagerState) {
-        context.read<WishlistCubit>().onWishlistIdsChanged(wishlistManagerState.wishlistIds);
-      },
+    return MultiBlocListener(
+      listeners: [
+        // Sync the visible list with optimistic removals only. Additions come from the server via the
+        // actionStatus listener below — refreshing on optimistic ids races the pending add-to-wishlist request.
+        BlocListener<WishlistManagerCubit, WishlistManagerState>(
+          listenWhen: (prev, curr) => prev.wishlistIds != curr.wishlistIds,
+          listener: (context, wishlistManagerState) {
+            context.read<WishlistCubit>().syncWithWishlistIds(wishlistManagerState.wishlistIds);
+          },
+        ),
+        // Refresh after the server confirms an add / remove — mirrors the basket flow.
+        BlocListener<WishlistManagerCubit, WishlistManagerState>(
+          listenWhen: (prev, curr) =>
+              prev.actionStatus != curr.actionStatus && curr.actionStatus is StateStatusSuccess,
+          listener: (context, _) {
+            context.read<WishlistCubit>().refresh();
+            context.read<WishlistManagerCubit>().clearActionStatus();
+          },
+        ),
+      ],
       child: Scaffold(
         backgroundColor: context.theme.colors.bg,
         appBar: CustomAppBar(title: context.localization.mainFavorite, actions: [const NotificationIconButton()]),
