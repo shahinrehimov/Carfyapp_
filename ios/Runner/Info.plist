@@ -26,6 +26,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Hazırki yerinizi xəritədə göstərmək üçün lokasiyaya giriş lazımdır.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Hazırki yerinizi xəritədə göstərmək üçün lokasiyaya giriş lazımdır.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
