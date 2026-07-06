@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -20,10 +21,11 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 void main() async {
   runZonedGuarded(
     () async {
-      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       await _config();
+      await _waitForConnectivity();
 
       runApp(const CarfyApp());
     },
@@ -45,6 +47,7 @@ Future<void> _config() async {
   };
   // Disable collection in debug; keep it on for release/profile.
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(!kDebugMode);
 
   await PrefUtil.init();
   await _initLocalStorage();
@@ -52,11 +55,19 @@ Future<void> _config() async {
   GetIt.I.allowReassignment = true;
   configureDependencies();
   getIt.registerSingleton<AppRouter>(AppRouter());
-  getIt.registerSingleton<FirebaseAnalytics>(FirebaseAnalytics.instance);
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark),
+  );
+}
+
+Future<void> _waitForConnectivity() async {
+  final connectivity = Connectivity();
+  final result = await connectivity.checkConnectivity();
+  if (result.any((r) => r != ConnectivityResult.none)) return;
+  await connectivity.onConnectivityChanged.firstWhere(
+    (results) => results.any((r) => r != ConnectivityResult.none),
   );
 }
 

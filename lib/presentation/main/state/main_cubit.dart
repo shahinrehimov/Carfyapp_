@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:carfy/common/notifications/push_notification_service.dart';
+import 'package:carfy/common/service/push_notification_service.dart';
 import 'package:carfy/presentation/main/ui/enum/main_pages.dart';
 
 class MainCubit extends Cubit<MainPages> {
