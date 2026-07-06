@@ -54,17 +54,19 @@ class ProductBottomBar extends StatelessWidget {
               buildWhen: (prev, curr) {
                 final cpvUuid = product.seller?.uuid;
                 if (cpvUuid == null) return false;
-                return prev.isLoading(cpvUuid) != curr.isLoading(cpvUuid);
+                return prev.isLoading(cpvUuid) != curr.isLoading(cpvUuid) ||
+                    prev.isInBasket(cpvUuid) != curr.isInBasket(cpvUuid);
               },
               builder: (context, state) {
                 final cpvUuid = product.seller?.uuid;
                 final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
+                final isInBasket = cpvUuid != null && state.isInBasket(cpvUuid);
                 return CustomButton(
-                  onPressed: isLoading || cpvUuid == null
-                      ? () {}
+                  onPressed: isLoading || cpvUuid == null || isInBasket
+                      ? null
                       : () => context.read<BasketManagerCubit>().addToBasket(cpvUuid),
                   loading: isLoading,
-                  text: context.localization.addToBasket,
+                  text: isInBasket ? context.localization.inBasket : context.localization.addToBasket,
                   height: 48,
                   prefix: isLoading
                       ? null

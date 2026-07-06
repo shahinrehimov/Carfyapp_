@@ -4,6 +4,7 @@ import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/basket/basket_data.dart';
 import 'package:carfy/domain/use_cases/basket/add_to_basket_use_case.dart';
 import 'package:carfy/domain/use_cases/basket/decrement_quantity_use_case.dart';
+import 'package:carfy/domain/use_cases/basket/get_basket_use_case.dart';
 import 'package:carfy/domain/use_cases/basket/increment_quantity_use_case.dart';
 import 'package:carfy/domain/use_cases/basket/remove_from_basket_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -12,21 +13,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'basket_manager_state.dart';
 
 class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
+  final GetBasketUseCase _getBasketUseCase;
   final AddToBasketUseCase _addToBasketUseCase;
   final RemoveFromBasketUseCase _removeFromBasketUseCase;
   final IncrementQuantityUseCase _incrementQuantityUseCase;
   final DecrementQuantityUseCase _decrementQuantityUseCase;
 
   BasketManagerCubit({
+    GetBasketUseCase? getBasketUseCase,
     AddToBasketUseCase? addToBasketUseCase,
     RemoveFromBasketUseCase? removeFromBasketUseCase,
     IncrementQuantityUseCase? incrementQuantityUseCase,
     DecrementQuantityUseCase? decrementQuantityUseCase,
-  }) : _addToBasketUseCase = addToBasketUseCase ?? getIt<AddToBasketUseCase>(),
+  }) : _getBasketUseCase = getBasketUseCase ?? getIt<GetBasketUseCase>(),
+       _addToBasketUseCase = addToBasketUseCase ?? getIt<AddToBasketUseCase>(),
        _removeFromBasketUseCase = removeFromBasketUseCase ?? getIt<RemoveFromBasketUseCase>(),
        _incrementQuantityUseCase = incrementQuantityUseCase ?? getIt<IncrementQuantityUseCase>(),
        _decrementQuantityUseCase = decrementQuantityUseCase ?? getIt<DecrementQuantityUseCase>(),
        super(BasketManagerState.initial());
+
+  Future<void> loadBasketIds() async {
+    final result = await _getBasketUseCase();
+    result.fold((_) {}, (response) {
+      final ids = <String>{};
+      for (final item in response.items) {
+        final uuid = item.product.seller?.uuid ?? item.product.uuid;
+        ids.add(uuid);
+      }
+      emit(state.copyWith(basketIds: ids));
+    });
+  }
+
+  bool isInBasket(String cpvUuid) => state.basketIds.contains(cpvUuid);
 
   Future<void> addToBasket(String cpvUuid) async {
     _setProductState(cpvUuid, StateStatus.loading());
@@ -36,6 +54,7 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
         _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
+        _addToBasketIds(cpvUuid);
         _setProductState(cpvUuid, StateStatus.successWithMessage(response.message));
         _setBasketActionStatus(StateStatus.success());
       },
@@ -51,6 +70,7 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
         _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
+        _removeFromBasketIds(cpvUuid);
         _setProductState(cpvUuid, StateStatus.success());
         _emitQuantityUpdate(cpvUuid, 0, response.basketData);
       },
@@ -66,6 +86,7 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
         _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
+        _addToBasketIds(cpvUuid);
         _setProductState(cpvUuid, StateStatus.success());
         _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
       },
@@ -81,10 +102,24 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
         _setProductState(cpvUuid, mapFailure(failure));
       },
       (response) {
+        if (response.quantity <= 0) {
+          _removeFromBasketIds(cpvUuid);
+        }
         _setProductState(cpvUuid, StateStatus.success());
         _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
       },
     );
+  }
+
+  void _addToBasketIds(String cpvUuid) {
+    if (state.basketIds.contains(cpvUuid)) return;
+    emit(state.copyWith(basketIds: {...state.basketIds, cpvUuid}));
+  }
+
+  void _removeFromBasketIds(String cpvUuid) {
+    if (!state.basketIds.contains(cpvUuid)) return;
+    final updated = Set<String>.from(state.basketIds)..remove(cpvUuid);
+    emit(state.copyWith(basketIds: updated));
   }
 
   void _emitQuantityUpdate(String cpvUuid, int quantity, BasketData basketData) {

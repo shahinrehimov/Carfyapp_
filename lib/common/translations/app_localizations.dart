@@ -133,6 +133,8 @@ class AppLocalizations {
 
   String get addToBasket => _tr(TranslationKeys.addToBasket);
 
+  String get inBasket => _tr(TranslationKeys.inBasket);
+
   // Payment
   String get paymentDetails => _tr(TranslationKeys.paymentDetails);
 

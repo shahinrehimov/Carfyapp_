@@ -27,6 +27,7 @@ class MultiProviderWrap extends StatelessWidget {
         listener: (context, state) {
           context.read<FilterCubit>().reloadFilters();
           context.read<WishlistManagerCubit>().loadWishlistIds();
+          context.read<BasketManagerCubit>().loadBasketIds();
           context.read<DefaultAddressCubit>().refresh();
         },
         child: child,

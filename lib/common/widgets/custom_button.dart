@@ -64,7 +64,7 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Ink(
           decoration: BoxDecoration(
-            color: isDisabled ? const Color(0xFFD0D0D0) : backgroundColor,
+            color: isDisabled ? context.theme.colors.lightGray : backgroundColor,
             gradient: isDisabled || backgroundColor != null
                 ? null
                 : LinearGradient(
@@ -89,7 +89,7 @@ class CustomButton extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: fontWeight ?? FontWeight.w400,
                               fontSize: fontSize ?? 16,
-                              color: isDisabled ? const Color(0xFF9E9E9E) : (color ?? colors.white),
+                              color: (color ?? colors.white),
                             ),
                           ),
                           if (suffix != null) ...[SizedBox(width: suffixPadding ?? 10), suffix!],

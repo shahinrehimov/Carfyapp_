@@ -20,7 +20,7 @@ import 'dart:io';
 
 import 'package:carfy/common/translations/default_translations.dart';
 
-const _bearerToken = '253|I7UCr2Oy6V0zFC2lcBDhWLqyOPDppDPHdax18DWW1f9b145b';
+const _bearerToken = '314|d5wqKdoGr4Kztmj1Y2Wbe0P8I1n6Nk9Fv7Sol5zhe87db3ea';
 const _securityToken = 'development-token-test-1907-fb';
 const _baseUrl = 'https://api.carfy.az/api';
 const _group = 'app';

@@ -19,6 +19,7 @@ class _BasketManagerListenerState extends State<BasketManagerListener> {
   void initState() {
     super.initState();
     context.read<WishlistManagerCubit>().loadWishlistIds();
+    context.read<BasketManagerCubit>().loadBasketIds();
   }
 
   @override

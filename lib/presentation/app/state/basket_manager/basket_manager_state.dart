@@ -12,11 +12,13 @@ class BasketManagerState extends Equatable {
   final Map<String, StateStatus> productLoadingStates;
   final StateStatus basketActionStatus;
   final QuantityUpdate? quantityUpdate;
+  final Set<String> basketIds;
 
   const BasketManagerState({
     this.productLoadingStates = const {},
     this.basketActionStatus = const StateStatus(),
     this.quantityUpdate,
+    this.basketIds = const {},
   });
 
   factory BasketManagerState.initial() =>
@@ -26,20 +28,24 @@ class BasketManagerState extends Equatable {
 
   bool get isBasketActionLoading => basketActionStatus is StateStatusLoading;
 
+  bool isInBasket(String cpvUuid) => basketIds.contains(cpvUuid);
+
   StateStatus? getStatus(String cpvUuid) => productLoadingStates[cpvUuid];
 
   BasketManagerState copyWith({
     Map<String, StateStatus>? productLoadingStates,
     StateStatus? basketActionStatus,
     QuantityUpdate? quantityUpdate,
+    Set<String>? basketIds,
   }) {
     return BasketManagerState(
       productLoadingStates: productLoadingStates ?? this.productLoadingStates,
       basketActionStatus: basketActionStatus ?? this.basketActionStatus,
       quantityUpdate: quantityUpdate,
+      basketIds: basketIds ?? this.basketIds,
     );
   }
 
   @override
-  List<Object?> get props => [productLoadingStates, basketActionStatus, quantityUpdate];
+  List<Object?> get props => [productLoadingStates, basketActionStatus, quantityUpdate, basketIds];
 }
