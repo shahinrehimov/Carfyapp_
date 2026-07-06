@@ -1,8 +1,10 @@
 import 'package:carfy/common/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/gen/assets.gen.dart';
+import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:carfy/presentation/main/ui/enum/main_pages.dart';
 import 'package:carfy/presentation/main/ui/widgets/navbar_item.dart';
 
@@ -46,13 +48,17 @@ class CustomBottomNav extends StatelessWidget {
               },
               isActive: activePage == MainPages.favorites,
             ),
-            NavBarItem(
-              image: Assets.icons.mainBasket,
-              text: context.localization.mainBasket,
-              onTap: () {
-                onTap(MainPages.basket);
-              },
-              isActive: activePage == MainPages.basket,
+            BlocSelector<BasketManagerCubit, BasketManagerState, int>(
+              selector: (state) => state.basketIds.length,
+              builder: (context, count) => NavBarItem(
+                image: Assets.icons.mainBasket,
+                text: context.localization.mainBasket,
+                onTap: () {
+                  onTap(MainPages.basket);
+                },
+                isActive: activePage == MainPages.basket,
+                badgeCount: count,
+              ),
             ),
             NavBarItem(
               image: Assets.icons.mainProfile,

@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NavBarItem extends StatefulWidget {
-  const NavBarItem({super.key, this.onTap, required this.image, required this.text, this.isActive = false});
+  const NavBarItem({
+    super.key,
+    this.onTap,
+    required this.image,
+    required this.text,
+    this.isActive = false,
+    this.badgeCount = 0,
+  });
 
   final void Function()? onTap;
   final String image;
   final String text;
   final bool isActive;
+  final int badgeCount;
 
   @override
   State<NavBarItem> createState() => _NavBarItemState();
@@ -52,14 +60,37 @@ class _NavBarItemState extends State<NavBarItem> with SingleTickerProviderStateM
           children: [
             ScaleTransition(
               scale: _tapScale,
-              child: TweenAnimationBuilder<Color?>(
-                duration: const Duration(milliseconds: 260),
-                tween: ColorTween(begin: targetColor, end: targetColor),
-                builder: (context, color, _) => SvgPicture.asset(
-                  widget.image,
-                  height: 24,
-                  colorFilter: ColorFilter.mode(color ?? inactiveColor, BlendMode.srcIn),
-                ),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  TweenAnimationBuilder<Color?>(
+                    duration: const Duration(milliseconds: 260),
+                    tween: ColorTween(begin: targetColor, end: targetColor),
+                    builder: (context, color, _) => SvgPicture.asset(
+                      widget.image,
+                      height: 24,
+                      colorFilter: ColorFilter.mode(color ?? inactiveColor, BlendMode.srcIn),
+                    ),
+                  ),
+                  if (widget.badgeCount > 0)
+                    Positioned(
+                      top: -6,
+                      right: -8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF44336),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                        alignment: Alignment.center,
+                        child: Text(
+                          widget.badgeCount > 99 ? '99+' : '${widget.badgeCount}',
+                          style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             const SizedBox(height: 9),
