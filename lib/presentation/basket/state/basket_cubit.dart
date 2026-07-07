@@ -1,6 +1,8 @@
+import 'package:carfy/common/constants/preference_keys.dart';
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
+import 'package:carfy/common/util/pref_util.dart';
 import 'package:carfy/domain/entities/basket/basket_data.dart';
 import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/domain/use_cases/basket/get_basket_use_case.dart';
@@ -19,6 +21,8 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
       super(BasketState.initial());
 
   Future<void> init() async {
+    final isAuthenticated = PrefUtil.getString(AppPreferenceKeys.authToken) != null;
+    emit(state.copyWith(isAuthenticated: isAuthenticated));
     _loadBasket();
   }
 
