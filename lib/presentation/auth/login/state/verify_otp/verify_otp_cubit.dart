@@ -74,7 +74,7 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> with StateMapHelper {
       },
       (_) {
         emit(state.copyWith(verifyState: StateStatus.success()));
-        _appRouter.replaceAll([const MainRoute()]);
+        _appRouter.pushAndPopUntil(const MainRoute(), predicate: (_) => false);
       },
     );
   }
