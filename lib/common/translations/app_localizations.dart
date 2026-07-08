@@ -597,4 +597,10 @@ class AppLocalizations {
   String get useReferralBalance => _tr(TranslationKeys.useReferralBalance);
 
   String get freeLabel => _tr(TranslationKeys.freeLabel);
+
+  String get forceUpdateTitle => _tr(TranslationKeys.forceUpdateTitle);
+
+  String get forceUpdateMessage => _tr(TranslationKeys.forceUpdateMessage);
+
+  String get forceUpdateButton => _tr(TranslationKeys.forceUpdateButton);
 }

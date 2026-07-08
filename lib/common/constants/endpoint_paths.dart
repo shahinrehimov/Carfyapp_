@@ -101,6 +101,7 @@ class EndpointPaths {
   static const activeAdvertisements = '/app/advertisements/active';
 
   // Contact Endpoints
+  static const appSetting = '/app/services/load?services[1][key]=setting';
   static const contactSend = '/app/contact/send';
 
   // Order Endpoints

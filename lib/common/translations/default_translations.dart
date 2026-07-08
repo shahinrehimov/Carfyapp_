@@ -317,6 +317,9 @@ class TranslationDefaults {
       TranslationKeys.referralDiscountApplied: 'Referral endirimi tətbiq edildi',
       TranslationKeys.useReferralBalance: 'Referral balansı istifadə et',
       TranslationKeys.freeLabel: 'Pulsuz',
+      TranslationKeys.forceUpdateTitle: 'Yeniləmə tələb olunur',
+      TranslationKeys.forceUpdateMessage: 'Tətbiqdən istifadə etməyə davam etmək üçün zəhmət olmasa onu yeniləyin.',
+      TranslationKeys.forceUpdateButton: 'Yenilə',
     },
     'en': {
       TranslationKeys.appName: 'Carfy',
@@ -633,6 +636,9 @@ class TranslationDefaults {
       TranslationKeys.referralDiscountApplied: 'Referral discount applied',
       TranslationKeys.useReferralBalance: 'Use referral balance',
       TranslationKeys.freeLabel: 'Free',
+      TranslationKeys.forceUpdateTitle: 'Update Required',
+      TranslationKeys.forceUpdateMessage: 'Please update the app to continue using it.',
+      TranslationKeys.forceUpdateButton: 'Update',
     },
     'ru': {
       TranslationKeys.appName: 'Carfy',
@@ -948,6 +954,9 @@ class TranslationDefaults {
       TranslationKeys.referralDiscountApplied: 'Реферальная скидка применена',
       TranslationKeys.useReferralBalance: 'Использовать реферальный баланс',
       TranslationKeys.freeLabel: 'Бесплатно',
+      TranslationKeys.forceUpdateTitle: 'Требуется обновление',
+      TranslationKeys.forceUpdateMessage: 'Пожалуйста, обновите приложение, чтобы продолжить его использование.',
+      TranslationKeys.forceUpdateButton: 'Обновить',
     },
   };
 }

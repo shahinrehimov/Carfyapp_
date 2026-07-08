@@ -35,6 +35,8 @@ import 'package:carfy/data/datasources/referral_remote_data_source.dart'
     as _i861;
 import 'package:carfy/data/datasources/search_history_local_data_source.dart'
     as _i352;
+import 'package:carfy/data/datasources/setting_remote_data_source.dart'
+    as _i525;
 import 'package:carfy/data/datasources/translation_local_data_source.dart'
     as _i1053;
 import 'package:carfy/data/datasources/translation_remote_data_source.dart'
@@ -72,6 +74,7 @@ import 'package:carfy/data/repositories/product_repository_impl.dart' as _i848;
 import 'package:carfy/data/repositories/referral_repository_impl.dart' as _i655;
 import 'package:carfy/data/repositories/search_history_repository_impl.dart'
     as _i741;
+import 'package:carfy/data/repositories/setting_repository_impl.dart' as _i1015;
 import 'package:carfy/data/repositories/translations_repository_impl.dart'
     as _i35;
 import 'package:carfy/data/repositories/version_repository_impl.dart' as _i235;
@@ -93,6 +96,7 @@ import 'package:carfy/domain/repositories/product_repository.dart' as _i39;
 import 'package:carfy/domain/repositories/referral_repository.dart' as _i200;
 import 'package:carfy/domain/repositories/search_history_repository.dart'
     as _i64;
+import 'package:carfy/domain/repositories/setting_repository.dart' as _i755;
 import 'package:carfy/domain/repositories/translation_repository.dart' as _i611;
 import 'package:carfy/domain/repositories/version_repository.dart' as _i745;
 import 'package:carfy/domain/repositories/wishlist_repository.dart' as _i54;
@@ -158,8 +162,6 @@ import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart'
     as _i620;
 import 'package:carfy/domain/use_cases/auth/send_verification_email_use_case.dart'
     as _i25;
-import 'package:carfy/domain/use_cases/auth/third_party_login_use_case.dart'
-    as _i401;
 import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart'
     as _i915;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
@@ -269,6 +271,8 @@ import 'package:carfy/domain/use_cases/search/get_search_history_use_case.dart'
     as _i967;
 import 'package:carfy/domain/use_cases/search/remove_search_history_use_case.dart'
     as _i565;
+import 'package:carfy/domain/use_cases/setting/get_setting_use_case.dart'
+    as _i113;
 import 'package:carfy/domain/use_cases/translations/get_cached_translations_use_case.dart'
     as _i187;
 import 'package:carfy/domain/use_cases/translations/get_languages_list_use_case.dart'
@@ -331,6 +335,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i49.NotificationRemoteDataSource>(
       () => _i49.NotificationRemoteDataSourceImpl(),
+    );
+    gh.factory<_i525.SettingRemoteDataSource>(
+      () => _i525.SettingRemoteDataSourceImpl(),
     );
     gh.factory<_i713.VersionRemoteDataSource>(
       () => _i713.VersionRemoteDataSourceImpl(),
@@ -513,6 +520,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i561.LocaleLocalDataSource>(),
       ),
     );
+    gh.factory<_i755.SettingRepository>(
+      () => _i1015.SettingRepositoryImpl(gh<_i525.SettingRemoteDataSource>()),
+    );
     gh.factory<_i557.CategoryRepository>(
       () => _i395.CategoryRepositoryImpl(
         gh<_i861.CategoryRemoteDataSource>(),
@@ -663,6 +673,9 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i788.RegisterDeviceTokenUseCase(gh<_i765.NotificationRepository>()),
     );
+    gh.factory<_i113.GetSettingUseCase>(
+      () => _i113.GetSettingUseCase(gh<_i755.SettingRepository>()),
+    );
     gh.factory<_i450.GetVersionsUseCase>(
       () => _i450.GetVersionsUseCase(gh<_i745.VersionRepository>()),
     );
@@ -740,9 +753,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i25.SendVerificationEmailUseCase>(
       () => _i25.SendVerificationEmailUseCase(gh<_i655.AuthRepository>()),
-    );
-    gh.factory<_i401.ThirdPartyLoginUseCase>(
-      () => _i401.ThirdPartyLoginUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i915.UpdateProfileUseCase>(
       () => _i915.UpdateProfileUseCase(gh<_i655.AuthRepository>()),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
 import 'package:carfy/presentation/app/state/default_address/default_address_cubit.dart';
 import 'package:carfy/presentation/app/state/localization/localization_cubit.dart';
+import 'package:carfy/presentation/app/state/settings/settings_cubit.dart';
 import 'package:carfy/presentation/app/state/wishlist_manager/wishlist_manager_cubit.dart';
 import 'package:carfy/presentation/filter/state/filter_cubit.dart';
 
@@ -21,6 +22,7 @@ class MultiProviderWrap extends StatelessWidget {
         BlocProvider<WishlistManagerCubit>(create: (_) => WishlistManagerCubit(), lazy: false),
         BlocProvider<FilterCubit>(create: (_) => FilterCubit()..loadFilters(), lazy: false),
         BlocProvider<DefaultAddressCubit>(create: (_) => DefaultAddressCubit()..refresh(), lazy: false),
+        BlocProvider<SettingsCubit>(create: (_) => SettingsCubit()..load(), lazy: false),
       ],
       child: BlocListener<LocalizationCubit, LocalizationState>(
         listenWhen: (prev, curr) => prev.appLanguage != curr.appLanguage,

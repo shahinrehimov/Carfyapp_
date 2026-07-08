@@ -248,6 +248,22 @@ class ContactUsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ForceUpdatePage]
+class ForceUpdateRoute extends PageRouteInfo<void> {
+  const ForceUpdateRoute({List<PageRouteInfo>? children})
+    : super(ForceUpdateRoute.name, initialChildren: children);
+
+  static const String name = 'ForceUpdateRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ForceUpdatePage();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})

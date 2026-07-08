@@ -318,4 +318,9 @@ class TranslationKeys {
   static const String referralDiscountApplied = 'referral_discount_applied';
   static const String useReferralBalance = 'use_referral_balance';
   static const String freeLabel = 'free_label';
+
+  // Force update
+  static const String forceUpdateTitle = 'force_update_title';
+  static const String forceUpdateMessage = 'force_update_message';
+  static const String forceUpdateButton = 'force_update_button';
 }
