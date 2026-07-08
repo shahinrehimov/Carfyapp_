@@ -14,7 +14,7 @@ class CustomToast {
       style: ToastificationStyle.fillColored,
       alignment: Alignment.topCenter,
       autoCloseDuration: duration,
-      title: Text(message),
+      title: Text(message, maxLines: 3,),
       showProgressBar: false,
       dragToClose: true,
       closeOnClick: true,

@@ -14,7 +14,7 @@ class EndpointPaths {
   static const loginSendPhoneOtp = '/app/login/with-phone/send-otp';
   static const loginWithPhone = '/app/login/with-phone/submit';
 
-  static const thirdPartyLogin = '/app/third-party-login';
+  static const appleNativeLogin = '/app/auth/apple/native';
 
   static const logout = '/app/logout';
   static const logoutAll = '/app/logout-all';

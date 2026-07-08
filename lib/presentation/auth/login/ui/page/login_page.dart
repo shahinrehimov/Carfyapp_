@@ -8,6 +8,7 @@ import 'package:carfy/common/widgets/custom_phone_field.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:carfy/common/widgets/tab_bar.dart';
 import 'package:carfy/presentation/auth/login/state/login_cubit.dart';
+import 'package:carfy/presentation/auth/ui/widget/social_login_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';

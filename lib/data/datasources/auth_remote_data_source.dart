@@ -16,7 +16,7 @@ import 'package:carfy/data/dtos/auth/register_with_phone_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
-import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -53,7 +53,7 @@ abstract class AuthRemoteDataSource {
 
   Future<LoginResponseModel> loginWithPhone(LoginWithPhoneSubmitRequestDto dto);
 
-  Future<LoginResponseModel> thirdPartyLogin(ThirdPartyLoginRequestDto dto);
+  Future<LoginResponseModel> appleNativeLogin(AppleNativeLoginRequestDto dto);
 
   Future<LogoutResponseModel> logout();
 
@@ -159,9 +159,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
-  Future<LoginResponseModel> thirdPartyLogin(ThirdPartyLoginRequestDto dto) {
+  Future<LoginResponseModel> appleNativeLogin(AppleNativeLoginRequestDto dto) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.thirdPartyLogin, data: dto.toJson()),
+      () => _networkManager.post(EndpointPaths.appleNativeLogin, data: dto.toJson()),
       map: (json) => LoginResponseModel.fromJson(json),
     );
   }

@@ -28,7 +28,7 @@ import 'package:carfy/domain/params/auth/register_with_phone_params.dart';
 import 'package:carfy/domain/params/auth/login_with_email_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
-import 'package:carfy/domain/params/auth/third_party_login_params.dart';
+import 'package:carfy/domain/params/auth/apple_native_login_params.dart';
 import 'package:carfy/domain/params/auth/forgot_password_params.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
 
@@ -47,7 +47,7 @@ import 'package:carfy/data/dtos/auth/register_with_phone_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
-import 'package:carfy/data/dtos/auth/third_party_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -170,10 +170,15 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   }
 
   @override
-  Future<Either<Failure, LoginResponse>> thirdPartyLogin({required ThirdPartyLoginParams params}) {
+  Future<Either<Failure, LoginResponse>> appleNativeLogin({required AppleNativeLoginParams params}) {
     return safeCall(() async {
-      final res = await _dataSource.thirdPartyLogin(
-        ThirdPartyLoginRequestDto(deviceType: params.deviceType, provider: params.provider, token: params.token),
+      final res = await _dataSource.appleNativeLogin(
+        AppleNativeLoginRequestDto(
+          identityToken: params.identityToken,
+          authorizationCode: params.authorizationCode,
+          name: params.name,
+          surname: params.surname,
+        ),
       );
       return _mapper.mapLogin(res);
     });

@@ -48,6 +48,7 @@ dependencies:
   flutter_inappwebview: ^6.1.5
   collection: ^1.19.0
   connectivity_plus: ^6.0.0
+  sign_in_with_apple: ^6.1.4
 
 
 dev_dependencies:

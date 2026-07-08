@@ -112,6 +112,8 @@ import 'package:carfy/domain/use_cases/address/update_address_use_case.dart'
     as _i438;
 import 'package:carfy/domain/use_cases/advertisements/get_active_advertisements_use_case.dart'
     as _i524;
+import 'package:carfy/domain/use_cases/auth/apple_native_login_use_case.dart'
+    as _i258;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart'
     as _i110;
@@ -752,6 +754,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i593.GenerateGuestIdentifierUseCase(
         gh<_i655.AuthRepository>(),
         gh<_i934.SaveGuestIdentifierUseCase>(),
+      ),
+    );
+    gh.factory<_i258.AppleNativeLoginUseCase>(
+      () => _i258.AppleNativeLoginUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i0.SaveAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
       ),
     );
     gh.factory<_i601.LoginWithEmailUseCase>(
