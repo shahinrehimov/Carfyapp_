@@ -17,6 +17,7 @@ import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/google_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -54,6 +55,8 @@ abstract class AuthRemoteDataSource {
   Future<LoginResponseModel> loginWithPhone(LoginWithPhoneSubmitRequestDto dto);
 
   Future<LoginResponseModel> appleNativeLogin(AppleNativeLoginRequestDto dto);
+
+  Future<LoginResponseModel> googleNativeLogin(GoogleNativeLoginRequestDto dto);
 
   Future<LogoutResponseModel> logout();
 
@@ -154,6 +157,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   Future<LoginResponseModel> loginWithPhone(LoginWithPhoneSubmitRequestDto dto) async {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.loginWithPhone, data: dto.toJson()),
+      map: (json) => LoginResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<LoginResponseModel> googleNativeLogin(GoogleNativeLoginRequestDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.googleNativeLogin, data: dto.toJson()),
       map: (json) => LoginResponseModel.fromJson(json),
     );
   }

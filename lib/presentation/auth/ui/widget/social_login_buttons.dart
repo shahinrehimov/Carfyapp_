@@ -18,20 +18,33 @@ class SocialLoginButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SocialLoginCubit(),
-      child: BlocListener<SocialLoginCubit, SocialLoginState>(
-        listenWhen: (prev, curr) => prev.appleStatus != curr.appleStatus,
-        listener: (context, state) => showStateStatusToast(context, state.appleStatus),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<SocialLoginCubit, SocialLoginState>(
+            listenWhen: (prev, curr) => prev.googleStatus != curr.googleStatus,
+            listener: (context, state) => showStateStatusToast(context, state.googleStatus),
+          ),
+          BlocListener<SocialLoginCubit, SocialLoginState>(
+            listenWhen: (prev, curr) => prev.appleStatus != curr.appleStatus,
+            listener: (context, state) => showStateStatusToast(context, state.appleStatus),
+          ),
+        ],
         child: Column(
           children: [
-            CustomButton(
-              onPressed: () {},
-              text: context.localization.google,
-              backgroundColor: Colors.transparent,
-              outlineColor: context.theme.colors.secondary,
-              color: const Color(0xFF0E1217),
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-              prefix: SvgPicture.asset(Assets.icons.googleIconLogo),
+            BlocBuilder<SocialLoginCubit, SocialLoginState>(
+              buildWhen: (prev, curr) => prev.googleStatus != curr.googleStatus,
+              builder: (context, state) => CustomButton(
+                onPressed: state.googleStatus is StateStatusLoading
+                    ? null
+                    : () => context.read<SocialLoginCubit>().loginWithGoogle(),
+                text: context.localization.google,
+                backgroundColor: Colors.transparent,
+                outlineColor: context.theme.colors.secondary,
+                color: const Color(0xFF0E1217),
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                prefix: SvgPicture.asset(Assets.icons.googleIconLogo),
+              ),
             ),
             if (Platform.isIOS) ...[
               const SizedBox(height: 16),

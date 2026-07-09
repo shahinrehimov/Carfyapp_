@@ -15,6 +15,7 @@ class EndpointPaths {
   static const loginWithPhone = '/app/login/with-phone/submit';
 
   static const appleNativeLogin = '/app/auth/apple/native';
+  static const googleNativeLogin = '/app/auth/google/native';
 
   static const logout = '/app/logout';
   static const logoutAll = '/app/logout-all';

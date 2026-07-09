@@ -29,6 +29,7 @@ import 'package:carfy/domain/params/auth/login_with_email_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_otp_params.dart';
 import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
 import 'package:carfy/domain/params/auth/apple_native_login_params.dart';
+import 'package:carfy/domain/params/auth/google_native_login_params.dart';
 import 'package:carfy/domain/params/auth/forgot_password_params.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
 
@@ -48,6 +49,7 @@ import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/google_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -164,6 +166,16 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final res = await _dataSource.loginWithPhone(
         LoginWithPhoneSubmitRequestDto(phone: params.phone, otp: params.otp, deviceName: params.deviceName),
+      );
+      return _mapper.mapLogin(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, LoginResponse>> googleNativeLogin({required GoogleNativeLoginParams params}) {
+    return safeCall(() async {
+      final res = await _dataSource.googleNativeLogin(
+        GoogleNativeLoginRequestDto(idToken: params.idToken, deviceType: params.deviceType),
       );
       return _mapper.mapLogin(res);
     });

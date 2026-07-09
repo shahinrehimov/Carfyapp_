@@ -24,6 +24,7 @@ import 'package:carfy/domain/params/auth/register_with_email_params.dart';
 import 'package:carfy/domain/params/auth/register_with_phone_params.dart';
 import 'package:carfy/domain/params/auth/send_phone_otp_params.dart';
 import 'package:carfy/domain/params/auth/apple_native_login_params.dart';
+import 'package:carfy/domain/params/auth/google_native_login_params.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
 import 'package:carfy/domain/params/auth/verify_email_otp_params.dart';
 
@@ -49,6 +50,8 @@ abstract class AuthRepository {
   Future<Either<Failure, LoginResponse>> loginWithPhone({required LoginWithPhoneSubmitParams params});
 
   Future<Either<Failure, LoginResponse>> appleNativeLogin({required AppleNativeLoginParams params});
+
+  Future<Either<Failure, LoginResponse>> googleNativeLogin({required GoogleNativeLoginParams params});
 
   Future<Either<Failure, LogoutResponse>> logout();
 
