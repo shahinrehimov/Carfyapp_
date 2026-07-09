@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
@@ -31,22 +33,24 @@ class SocialLoginButtons extends StatelessWidget {
               fontSize: 18,
               prefix: SvgPicture.asset(Assets.icons.googleIconLogo),
             ),
-            const SizedBox(height: 16),
-            BlocBuilder<SocialLoginCubit, SocialLoginState>(
-              buildWhen: (prev, curr) => prev.appleStatus != curr.appleStatus,
-              builder: (context, state) => CustomButton(
-                onPressed: state.appleStatus is StateStatusLoading
-                    ? null
-                    : () => context.read<SocialLoginCubit>().loginWithApple(),
-                text: context.localization.apple,
-                backgroundColor: Colors.transparent,
-                outlineColor: context.theme.colors.secondary,
-                color: const Color(0xFF0E1217),
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
-                prefix: SvgPicture.asset(Assets.icons.appleIconLogo),
+            if (Platform.isIOS) ...[
+              const SizedBox(height: 16),
+              BlocBuilder<SocialLoginCubit, SocialLoginState>(
+                buildWhen: (prev, curr) => prev.appleStatus != curr.appleStatus,
+                builder: (context, state) => CustomButton(
+                  onPressed: state.appleStatus is StateStatusLoading
+                      ? null
+                      : () => context.read<SocialLoginCubit>().loginWithApple(),
+                  text: context.localization.apple,
+                  backgroundColor: Colors.transparent,
+                  outlineColor: context.theme.colors.secondary,
+                  color: const Color(0xFF0E1217),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  prefix: SvgPicture.asset(Assets.icons.appleIconLogo),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),
