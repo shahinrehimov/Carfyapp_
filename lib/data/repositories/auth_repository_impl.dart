@@ -213,6 +213,14 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
   }
 
   @override
+  Future<Either<Failure, LogoutResponse>> deleteAccount() {
+    return safeCall(() async {
+      final res = await _dataSource.deleteAccount();
+      return _mapper.mapLogout(res);
+    });
+  }
+
+  @override
   Future<Either<Failure, void>> sendVerificationEmail() {
     return safeCall(() async {
       await _dataSource.sendVerificationEmail();

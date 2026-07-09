@@ -127,6 +127,8 @@ import 'package:carfy/domain/use_cases/auth/clear_auth_token_use_case.dart'
     as _i1020;
 import 'package:carfy/domain/use_cases/auth/clear_guest_identifier_use_case.dart'
     as _i330;
+import 'package:carfy/domain/use_cases/auth/delete_account_use_case.dart'
+    as _i315;
 import 'package:carfy/domain/use_cases/auth/forgot_password_use_case.dart'
     as _i62;
 import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.dart'
@@ -849,6 +851,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i740.SaveTranslationsUseCase>(
       () => _i740.SaveTranslationsUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i315.DeleteAccountUseCase>(
+      () => _i315.DeleteAccountUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i1020.ClearAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
     );
     gh.factory<_i992.LogoutUseCase>(
       () => _i992.LogoutUseCase(

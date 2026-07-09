@@ -64,14 +64,18 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
     final cubit = context.read<ProfileUpdateCubit>();
 
     return BlocListener<ProfileUpdateCubit, ProfileUpdateState>(
-      listenWhen: (prev, curr) => prev.submitStatus != curr.submitStatus || prev.logoutStatus != curr.logoutStatus,
+      listenWhen: (prev, curr) =>
+          prev.submitStatus != curr.submitStatus ||
+          prev.logoutStatus != curr.logoutStatus ||
+          prev.deleteStatus != curr.deleteStatus,
       listener: (context, state) {
         showStateStatusToast(context, state.submitStatus);
         showStateStatusToast(context, state.logoutStatus);
+        showStateStatusToast(context, state.deleteStatus);
         if (state.submitStatus is StateStatusSuccess) {
           context.maybePop(state.updatedUser);
         }
-        if (state.logoutStatus is StateStatusSuccess) {
+        if (state.logoutStatus is StateStatusSuccess || state.deleteStatus is StateStatusSuccess) {
           context.router.replaceAll([const LoginRoute()]);
         }
       },
@@ -201,7 +205,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   description: context.localization.deleteAccountConfirmDescription,
                   confirmText: context.localization.profileDeleteAccount,
                   cancelText: context.localization.cancel,
-                  onConfirm: cubit.logout,
+                  onConfirm: cubit.deleteAccount,
                 ),
                 child: Text(
                   context.localization.profileDeleteAccount,

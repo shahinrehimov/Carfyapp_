@@ -19,6 +19,7 @@ class EndpointPaths {
 
   static const logout = '/app/logout';
   static const logoutAll = '/app/logout-all';
+  static const deleteAccount = '/app/profile/delete-account';
 
   static const sendVerificationEmail = '/app/send-verification-email';
 

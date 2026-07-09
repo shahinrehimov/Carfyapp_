@@ -57,6 +57,8 @@ abstract class AuthRepository {
 
   Future<Either<Failure, LogoutResponse>> logoutAll();
 
+  Future<Either<Failure, LogoutResponse>> deleteAccount();
+
   Future<Either<Failure, void>> sendVerificationEmail();
 
   Future<Either<Failure, ForgotPasswordResponse>> forgotPassword({required ForgotPasswordParams params});

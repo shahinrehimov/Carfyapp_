@@ -4,6 +4,7 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
+import 'package:carfy/domain/use_cases/auth/delete_account_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/logout_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -14,11 +15,16 @@ part 'profile_update_state.dart';
 class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
   final UpdateProfileUseCase _updateProfileUseCase;
   final LogoutUseCase _logoutUseCase;
+  final DeleteAccountUseCase _deleteAccountUseCase;
 
-  ProfileUpdateCubit({UpdateProfileUseCase? updateProfileUseCase, LogoutUseCase? logoutUseCase})
-    : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
-      _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
-      super(ProfileUpdateState.initial());
+  ProfileUpdateCubit({
+    UpdateProfileUseCase? updateProfileUseCase,
+    LogoutUseCase? logoutUseCase,
+    DeleteAccountUseCase? deleteAccountUseCase,
+  }) : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
+       _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
+       _deleteAccountUseCase = deleteAccountUseCase ?? getIt<DeleteAccountUseCase>(),
+       super(ProfileUpdateState.initial());
 
   void init(AuthUser user) {
     // Normalize birthDate: API returns yyyy-MM-dd, convert to dd.MM.yyyy
@@ -106,6 +112,15 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
     result.fold(
       (failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))),
       (_) => emit(state.copyWith(logoutStatus: StateStatus.success())),
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    emit(state.copyWith(deleteStatus: StateStatus.loading()));
+    final result = await _deleteAccountUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(deleteStatus: mapFailure(failure))),
+      (_) => emit(state.copyWith(deleteStatus: StateStatus.success())),
     );
   }
 

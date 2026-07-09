@@ -62,6 +62,8 @@ abstract class AuthRemoteDataSource {
 
   Future<LogoutResponseModel> logoutAll();
 
+  Future<LogoutResponseModel> deleteAccount();
+
   Future<void> sendVerificationEmail();
 
   Future<SimpleMessageModel> forgotPassword(ForgotPasswordRequestDto dto);
@@ -189,6 +191,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   Future<LogoutResponseModel> logoutAll() {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.logoutAll),
+      map: (json) => LogoutResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<LogoutResponseModel> deleteAccount() {
+    return handleResponse(
+      () => _networkManager.delete(EndpointPaths.deleteAccount),
       map: (json) => LogoutResponseModel.fromJson(json),
     );
   }
