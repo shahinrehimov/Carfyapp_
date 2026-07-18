@@ -3,6 +3,7 @@ import 'package:carfy/common/widgets/wishlist_heart_button.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/presentation/product_detail/state/product_detail_cubit.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_detail_helpers.dart';
+import 'package:carfy/presentation/product_detail/ui/widget/product_image_fullscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,10 +25,13 @@ class ProductMainImage extends StatelessWidget {
             buildWhen: (prev, curr) => prev.selectedImageIndex != curr.selectedImageIndex,
             builder: (context, state) {
               final index = state.selectedImageIndex.clamp(0, images.length - 1);
-              return SizedBox(
-                width: double.infinity,
-                height: 300,
-                child: CachedNetworkImage(imageUrl: images[index], fit: BoxFit.contain),
+              return GestureDetector(
+                onTap: () => showFullscreenImages(context, images, index),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 300,
+                  child: CachedNetworkImage(imageUrl: images[index], fit: BoxFit.contain),
+                ),
               );
             },
           ),
