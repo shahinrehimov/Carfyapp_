@@ -20,24 +20,24 @@ class CategoryItem extends StatelessWidget {
           onTap ??
           () => context.pushRoute(ProductListRoute(params: ProductListPageParams(categories: [category.slug]))),
       child: Container(
-        width: 124,
+        width: 80,
         margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
           color: context.theme.colors.white,
           border: Border.all(width: 1, color: context.theme.colors.border2),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            CachedNetworkImage(imageUrl: category.image, fit: BoxFit.contain, height: 32),
+            const SizedBox(height: 8),
+            CachedNetworkImage(imageUrl: category.image, fit: BoxFit.fitHeight, height: 30),
             const SizedBox(height: 4),
             Text(
               category.title,
               style: TextStyle(color: context.theme.colors.primary, fontSize: 10, fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+              maxLines: 3,
               textAlign: TextAlign.center,
             ),
           ],

@@ -6,7 +6,7 @@ class _CategoriesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 83,
+      height: 80,
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           return state.categoriesStatus.maybeWhen(

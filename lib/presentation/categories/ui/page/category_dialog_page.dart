@@ -39,15 +39,27 @@ class CategoriesPage extends StatelessWidget {
               itemCount: state.categories.length,
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 20),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 3,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 181 / 104,
+                childAspectRatio: 150 / 104,
               ),
-              itemBuilder: (context, index) => CategoryItem(
-                category: state.categories[index],
-                onTap: () => context.router.push(SubCategoriesRoute(category: state.categories[index])),
-              ),
+              itemBuilder: (context, index) {
+                final category = state.categories[index];
+                return CategoryItem(
+                  category: category,
+                  onTap: () {
+                    if (category.subs.isEmpty) {
+                      context.router.root.pop();
+                      context.router.root.push(
+                        ProductListRoute(params: ProductListPageParams(categories: [category.slug])),
+                      );
+                    } else {
+                      context.router.push(SubCategoriesRoute(category: category));
+                    }
+                  },
+                );
+              },
             ),
             orElse: () => const _CategoriesLoading(),
           );
