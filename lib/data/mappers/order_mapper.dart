@@ -110,7 +110,6 @@ class OrderMapper {
     amountFinal: model.amountFinal,
     product: OrderItemProduct(
       uuid: model.product.uuid,
-      variantSlug: model.product.variantSlug,
       title: model.product.title,
       oemCode: model.product.oemCode,
       hoverImage: model.product.hoverImage,

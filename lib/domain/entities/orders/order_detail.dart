@@ -109,7 +109,6 @@ class OrderItem {
 
 class OrderItemProduct {
   final String uuid;
-  final String variantSlug;
   final String title;
   final String? oemCode;
   final String? hoverImage;
@@ -121,7 +120,6 @@ class OrderItemProduct {
 
   OrderItemProduct({
     required this.uuid,
-    required this.variantSlug,
     required this.title,
     this.oemCode,
     this.hoverImage,
