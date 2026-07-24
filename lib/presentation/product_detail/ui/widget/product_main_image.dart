@@ -7,33 +7,70 @@ import 'package:carfy/presentation/product_detail/ui/widget/product_image_fullsc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductMainImage extends StatelessWidget {
+class ProductMainImage extends StatefulWidget {
   final ProductShow product;
 
   const ProductMainImage({super.key, required this.product});
 
   @override
+  State<ProductMainImage> createState() => _ProductMainImageState();
+}
+
+class _ProductMainImageState extends State<ProductMainImage> {
+  late final List<String> _images;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _images = getAllImages(widget.product);
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final images = getAllImages(product);
-    if (images.isEmpty) return const SizedBox(height: 300);
+    if (_images.isEmpty) return const SizedBox(height: 300);
 
     return Container(
       color: Colors.white,
       child: Stack(
         children: [
-          BlocBuilder<ProductDetailCubit, ProductDetailState>(
-            buildWhen: (prev, curr) => prev.selectedImageIndex != curr.selectedImageIndex,
-            builder: (context, state) {
-              final index = state.selectedImageIndex.clamp(0, images.length - 1);
-              return GestureDetector(
-                onTap: () => showFullscreenImages(context, images, index),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 300,
-                  child: CachedNetworkImage(imageUrl: images[index], fit: BoxFit.contain),
-                ),
-              );
+          BlocListener<ProductDetailCubit, ProductDetailState>(
+            listenWhen: (prev, curr) => prev.selectedImageIndex != curr.selectedImageIndex,
+            listener: (context, state) {
+              final target = state.selectedImageIndex.clamp(0, _images.length - 1);
+              if (_pageController.hasClients &&
+                  _pageController.page?.round() != target) {
+                _pageController.animateToPage(
+                  target,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeInOut,
+                );
+              }
             },
+            child: SizedBox(
+              height: 300,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _images.length,
+                onPageChanged: (index) =>
+                    context.read<ProductDetailCubit>().selectImage(index),
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => showFullscreenImages(context, _images, index),
+                  child: CachedNetworkImage(
+                    imageUrl: _images[index],
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                  ),
+                ),
+              ),
+            ),
           ),
           Positioned(
             right: 16,
@@ -46,7 +83,7 @@ class ProductMainImage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: const [BoxShadow(color: Color(0x28000000), blurRadius: 8)],
               ),
-              child: Center(child: WishlistHeartButton(cpvUuid: product.seller?.uuid)),
+              child: Center(child: WishlistHeartButton(cpvUuid: widget.product.seller?.uuid)),
             ),
           ),
         ],
