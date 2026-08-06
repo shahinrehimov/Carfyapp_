@@ -17,6 +17,7 @@ class Product {
   final DiscountType? discountType;
   final String? discountTypeTitle;
   final double discount;
+  final bool isUniversal;
   final bool inWishlist;
   final bool inBasket;
   final Seller? seller;
@@ -37,6 +38,7 @@ class Product {
     required this.discountType,
     required this.discountTypeTitle,
     required this.discount,
+    required this.isUniversal,
     required this.inWishlist,
     required this.inBasket,
     this.seller,

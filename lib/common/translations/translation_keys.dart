@@ -319,6 +319,13 @@ class TranslationKeys {
   static const String useReferralBalance = 'use_referral_balance';
   static const String freeLabel = 'free_label';
 
+  // Fitment / universal product
+  static const String universalProduct = 'universal_product';
+  static const String fitsAllVehicles = 'fits_all_vehicles';
+  static const String compatibleVehicles = 'compatible_vehicles';
+  static const String vehicleModel = 'vehicle_model';
+  static const String vehicleModels = 'vehicle_models';
+
   // Force update
   static const String forceUpdateTitle = 'force_update_title';
   static const String forceUpdateMessage = 'force_update_message';

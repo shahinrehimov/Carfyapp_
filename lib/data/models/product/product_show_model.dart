@@ -1,4 +1,5 @@
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
+import 'package:carfy/data/models/product/fitment_model.dart';
 import 'package:carfy/data/models/product/gallery_image_model.dart';
 import 'package:carfy/data/models/product/other_seller_model.dart';
 import 'package:carfy/data/models/product/product_detail_model.dart';
@@ -25,7 +26,11 @@ class ProductShowModel {
   final String? discountType;
   final String? discountTypeTitle;
   final double discount;
+  final bool isUniversal;
   final int? year;
+  final int? yearFrom;
+  final int? yearTo;
+  final List<FitmentModel> fitments;
   final bool inWishlist;
   final bool inBasket;
   final List<BrandModelItemModel> brandModels;
@@ -56,7 +61,11 @@ class ProductShowModel {
     this.discountType,
     this.discountTypeTitle,
     required this.discount,
+    required this.isUniversal,
     this.year,
+    this.yearFrom,
+    this.yearTo,
+    this.fitments = const [],
     required this.inWishlist,
     required this.inBasket,
     this.brandModels = const [],
@@ -91,7 +100,13 @@ class ProductShowModel {
       discountType: json['discount_type'] as String?,
       discountTypeTitle: json['discount_type_title'] as String?,
       discount: (json['discount'] as num).toDouble(),
+      isUniversal: json['is_universal'] as bool? ?? false,
       year: json['year'] as int?,
+      yearFrom: json['year_from'] as int?,
+      yearTo: json['year_to'] as int?,
+      fitments: json['fitments'] != null
+          ? (json['fitments'] as List<dynamic>).map((e) => FitmentModel.fromJson(e as Map<String, dynamic>)).toList()
+          : [],
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
       brandModels: json['brand_models'] != null

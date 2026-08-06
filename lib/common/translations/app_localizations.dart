@@ -598,6 +598,16 @@ class AppLocalizations {
 
   String get freeLabel => _tr(TranslationKeys.freeLabel);
 
+  String get universalProduct => _tr(TranslationKeys.universalProduct);
+
+  String get fitsAllVehicles => _tr(TranslationKeys.fitsAllVehicles);
+
+  String get compatibleVehicles => _tr(TranslationKeys.compatibleVehicles);
+
+  String get vehicleModel => _tr(TranslationKeys.vehicleModel);
+
+  String get vehicleModels => _tr(TranslationKeys.vehicleModels);
+
   String get forceUpdateTitle => _tr(TranslationKeys.forceUpdateTitle);
 
   String get forceUpdateMessage => _tr(TranslationKeys.forceUpdateMessage);

@@ -4,6 +4,7 @@ import 'package:carfy/common/domain/entities/pagination_response.dart';
 import 'package:carfy/data/models/car/car_color_model.dart';
 import 'package:carfy/data/models/product/brand_model.dart';
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
+import 'package:carfy/data/models/product/fitment_model.dart';
 import 'package:carfy/data/models/product/category_slugs_model.dart';
 import 'package:carfy/data/models/product/city_model.dart';
 import 'package:carfy/data/models/product/filter_brand_model.dart';
@@ -28,6 +29,7 @@ import 'package:carfy/data/models/product/year_range_model.dart';
 import 'package:carfy/domain/entities/car/car_color.dart';
 import 'package:carfy/domain/entities/products/brand.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
+import 'package:carfy/domain/entities/products/fitment.dart';
 import 'package:carfy/domain/entities/products/category_slugs.dart';
 import 'package:carfy/domain/entities/products/city.dart';
 import 'package:carfy/domain/entities/products/filter_brand.dart';
@@ -54,6 +56,13 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ProductMapper {
+  Fitment mapFitment(FitmentModel model) => Fitment(
+    brand: model.brand != null ? mapBrandModelItem(model.brand!) : null,
+    brandModel: model.brandModel != null ? mapBrandModelItem(model.brandModel!) : null,
+    yearFrom: model.yearFrom,
+    yearTo: model.yearTo,
+  );
+
   Product mapProduct(ProductModel model) => Product(
     id: model.id,
     uuid: model.uuid,
@@ -68,6 +77,7 @@ class ProductMapper {
     discountType: DiscountType.fromString(model.discountType),
     discountTypeTitle: model.discountTypeTitle,
     discount: model.discount,
+    isUniversal: model.isUniversal,
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
     seller: model.seller != null ? mapSeller(model.seller!) : null,
@@ -233,7 +243,11 @@ class ProductMapper {
     discountType: DiscountType.fromString(model.discountType),
     discountTypeTitle: model.discountTypeTitle,
     discount: model.discount,
+    isUniversal: model.isUniversal,
     year: model.year,
+    yearFrom: model.yearFrom,
+    yearTo: model.yearTo,
+    fitments: model.fitments.map(mapFitment).toList(),
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
     brandModels: model.brandModels.map(mapBrandModelItem).toList(),
