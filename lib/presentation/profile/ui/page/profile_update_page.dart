@@ -241,6 +241,37 @@ class _ProfileImagePicker extends StatelessWidget {
   const _ProfileImagePicker({required this.cubit});
 
   Future<void> _pickImage(BuildContext context) async {
+    final hasImage = context.read<ProfileUpdateCubit>().state.currentImageUrl != null;
+
+    final action = await showModalBottomSheet<_ImageAction>(
+      context: context,
+      builder: (_) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from gallery'),
+              onTap: () => Navigator.pop(context, _ImageAction.pick),
+            ),
+            if (hasImage)
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                title: const Text('Remove photo', style: TextStyle(color: Colors.red)),
+                onTap: () => Navigator.pop(context, _ImageAction.delete),
+              ),
+          ],
+        ),
+      ),
+    );
+
+    if (action == null) return;
+
+    if (action == _ImageAction.delete) {
+      cubit.deleteProfileImage();
+      return;
+    }
+
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
     if (picked == null) return;
@@ -308,6 +339,8 @@ class _ProfileImagePicker extends StatelessWidget {
     );
   }
 }
+
+enum _ImageAction { pick, delete }
 
 class _GenderOption {
   final String value;
