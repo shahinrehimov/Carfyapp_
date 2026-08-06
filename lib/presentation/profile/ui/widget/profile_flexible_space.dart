@@ -29,8 +29,8 @@ class _ProfileName extends StatelessWidget {
       onTap: user == null
           ? null
           : () async {
-              final updated = await context.pushRoute<dynamic>(ProfileUpdateRoute(user: user));
-              if (updated != null && context.mounted) {
+              await context.pushRoute<dynamic>(ProfileUpdateRoute(user: user));
+              if (context.mounted) {
                 context.read<ProfileCubit>().init();
               }
             },

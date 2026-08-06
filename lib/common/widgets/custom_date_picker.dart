@@ -109,7 +109,11 @@ class _CustomDatePickerFieldState extends State<CustomDatePickerField> {
             top: false,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
-              initialDateTime: _selectedDate ?? DateTime.now(),
+              initialDateTime: () {
+                final max = widget.lastDate ?? DateTime(2100);
+                final initial = _selectedDate ?? DateTime.now();
+                return initial.isAfter(max) ? max : initial;
+              }(),
               minimumDate: widget.firstDate ?? DateTime(1900),
               maximumDate: widget.lastDate ?? DateTime(2100),
               onDateTimeChanged: (DateTime newDateTime) {
