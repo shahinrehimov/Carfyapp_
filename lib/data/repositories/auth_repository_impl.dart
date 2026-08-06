@@ -33,6 +33,7 @@ import 'package:carfy/domain/params/auth/login_with_phone_submit_params.dart';
 import 'package:carfy/domain/params/auth/apple_native_login_params.dart';
 import 'package:carfy/domain/params/auth/google_native_login_params.dart';
 import 'package:carfy/domain/params/auth/forgot_password_params.dart';
+import 'package:carfy/domain/entities/auth/change_contact_otp_response.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
 
 import 'package:carfy/domain/repositories/auth_repository.dart';
@@ -52,6 +53,10 @@ import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/google_native_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/change_email_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_email_verify_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_verify_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -344,6 +349,38 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
     return safeCall(() async {
       final token = await _localDataSource.getAuthToken();
       return token != null && token.isNotEmpty;
+    });
+  }
+
+  @override
+  Future<Either<Failure, ChangeContactOtpResponse>> changeEmailSendOtp(String email) {
+    return safeCall(() async {
+      final res = await _dataSource.changeEmailSendOtp(ChangeEmailSendOtpDto(email: email));
+      return _mapper.mapChangeContactOtp(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, AuthUser>> changeEmailVerify(String email, int otp) {
+    return safeCall(() async {
+      final res = await _dataSource.changeEmailVerify(ChangeEmailVerifyDto(email: email, otp: otp));
+      return _mapper.mapChangeContactVerify(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, ChangeContactOtpResponse>> changePhoneSendOtp(String phone) {
+    return safeCall(() async {
+      final res = await _dataSource.changePhoneSendOtp(ChangePhoneSendOtpDto(phone: phone));
+      return _mapper.mapChangeContactOtp(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, AuthUser>> changePhoneVerify(String phone, int otp) {
+    return safeCall(() async {
+      final res = await _dataSource.changePhoneVerify(ChangePhoneVerifyDto(phone: phone, otp: otp));
+      return _mapper.mapChangeContactVerify(res);
     });
   }
 }

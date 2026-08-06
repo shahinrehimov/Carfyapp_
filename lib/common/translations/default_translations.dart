@@ -320,6 +320,16 @@ class TranslationDefaults {
       TranslationKeys.forceUpdateTitle: 'Yeniləmə tələb olunur',
       TranslationKeys.forceUpdateMessage: 'Tətbiqdən istifadə etməyə davam etmək üçün zəhmət olmasa onu yeniləyin.',
       TranslationKeys.forceUpdateButton: 'Yenilə',
+
+      // Contact change
+      TranslationKeys.changeEmailTitle: 'Email dəyiş',
+      TranslationKeys.changePhoneTitle: 'Telefon dəyiş',
+      TranslationKeys.sendOtp: 'Kod göndər',
+      TranslationKeys.changeEmailNewHint: 'Yeni email ünvanı',
+      TranslationKeys.changePhoneNewHint: 'Yeni telefon nömrəsi',
+      TranslationKeys.changeEmailOtpDesc: '{value} ünvanına 4 rəqəmli kod göndərildi',
+      TranslationKeys.changePhoneOtpDesc: '{value} nömrəsinə 4 rəqəmli kod göndərildi',
+      TranslationKeys.otpExpiresIn: 'Kodun etibarlılığı: {time}',
     },
     'en': {
       TranslationKeys.appName: 'Carfy',
@@ -639,6 +649,16 @@ class TranslationDefaults {
       TranslationKeys.forceUpdateTitle: 'Update Required',
       TranslationKeys.forceUpdateMessage: 'Please update the app to continue using it.',
       TranslationKeys.forceUpdateButton: 'Update',
+
+      // Contact change
+      TranslationKeys.changeEmailTitle: 'Change Email',
+      TranslationKeys.changePhoneTitle: 'Change Phone',
+      TranslationKeys.sendOtp: 'Send Code',
+      TranslationKeys.changeEmailNewHint: 'New email address',
+      TranslationKeys.changePhoneNewHint: 'New phone number',
+      TranslationKeys.changeEmailOtpDesc: 'A 4-digit code was sent to {value}',
+      TranslationKeys.changePhoneOtpDesc: 'A 4-digit code was sent to {value}',
+      TranslationKeys.otpExpiresIn: 'Code expires in {time}',
     },
     'ru': {
       TranslationKeys.appName: 'Carfy',
@@ -957,6 +977,16 @@ class TranslationDefaults {
       TranslationKeys.forceUpdateTitle: 'Требуется обновление',
       TranslationKeys.forceUpdateMessage: 'Пожалуйста, обновите приложение, чтобы продолжить его использование.',
       TranslationKeys.forceUpdateButton: 'Обновить',
+
+      // Contact change
+      TranslationKeys.changeEmailTitle: 'Изменить email',
+      TranslationKeys.changePhoneTitle: 'Изменить телефон',
+      TranslationKeys.sendOtp: 'Отправить код',
+      TranslationKeys.changeEmailNewHint: 'Новый email адрес',
+      TranslationKeys.changePhoneNewHint: 'Новый номер телефона',
+      TranslationKeys.changeEmailOtpDesc: '4-значный код отправлен на {value}',
+      TranslationKeys.changePhoneOtpDesc: '4-значный код отправлен на {value}',
+      TranslationKeys.otpExpiresIn: 'Код действителен: {time}',
     },
   };
 }

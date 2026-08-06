@@ -50,6 +50,19 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
         initialGender: user.gender,
         initialBirthDate: birthDate,
         currentImageUrl: user.image,
+        email: user.email,
+        phone: user.phone,
+        registerType: user.registerType,
+      ),
+    );
+  }
+
+  void updateContact(AuthUser user) {
+    emit(
+      state.copyWith(
+        email: user.email,
+        phone: user.phone,
+        updatedUser: user,
       ),
     );
   }

@@ -11,6 +11,7 @@ class AuthUserModel {
   final bool phoneIsVerified;
   final String? token;
   final String? image;
+  final String? registerType;
 
   AuthUserModel({
     required this.uuid,
@@ -25,6 +26,7 @@ class AuthUserModel {
     required this.phoneIsVerified,
     this.token,
     this.image,
+    this.registerType,
   });
 
   factory AuthUserModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class AuthUserModel {
       phoneIsVerified: json['phone_is_verified'] ?? false,
       token: json['token'],
       image: json['image'],
+      registerType: json['register_type'],
     );
   }
 }

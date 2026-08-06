@@ -32,6 +32,12 @@ import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
 import 'package:carfy/data/models/auth/login_response_model.dart';
 import 'package:carfy/data/models/auth/logout_response_model.dart';
 import 'package:carfy/data/models/auth/sessions_response_model.dart';
+import 'package:carfy/data/models/auth/change_contact_otp_response_model.dart';
+import 'package:carfy/data/models/auth/change_contact_verify_response_model.dart';
+import 'package:carfy/data/dtos/auth/change_email_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_email_verify_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_verify_dto.dart';
 
 import 'package:carfy/common/constants/endpoint_paths.dart';
 
@@ -83,6 +89,11 @@ abstract class AuthRemoteDataSource {
   Future<SessionsResponseModel> getSessions();
 
   Future<String> logoutSession(int tokenId);
+
+  Future<ChangeContactOtpResponseModel> changeEmailSendOtp(ChangeEmailSendOtpDto dto);
+  Future<ChangeContactVerifyResponseModel> changeEmailVerify(ChangeEmailVerifyDto dto);
+  Future<ChangeContactOtpResponseModel> changePhoneSendOtp(ChangePhoneSendOtpDto dto);
+  Future<ChangeContactVerifyResponseModel> changePhoneVerify(ChangePhoneVerifyDto dto);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -279,6 +290,38 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.post(EndpointPaths.sessionLogout(tokenId)),
       map: (json) => json['message'] as String? ?? '',
+    );
+  }
+
+  @override
+  Future<ChangeContactOtpResponseModel> changeEmailSendOtp(ChangeEmailSendOtpDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changeEmailSendOtp, data: dto.toJson()),
+      map: (json) => ChangeContactOtpResponseModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<ChangeContactVerifyResponseModel> changeEmailVerify(ChangeEmailVerifyDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changeEmailVerify, data: dto.toJson()),
+      map: (json) => ChangeContactVerifyResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<ChangeContactOtpResponseModel> changePhoneSendOtp(ChangePhoneSendOtpDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changePhoneSendOtp, data: dto.toJson()),
+      map: (json) => ChangeContactOtpResponseModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<ChangeContactVerifyResponseModel> changePhoneVerify(ChangePhoneVerifyDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changePhoneVerify, data: dto.toJson()),
+      map: (json) => ChangeContactVerifyResponseModel.fromJson(json),
     );
   }
 }

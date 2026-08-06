@@ -1,6 +1,9 @@
+import 'package:carfy/data/models/auth/change_contact_otp_response_model.dart';
+import 'package:carfy/data/models/auth/change_contact_verify_response_model.dart';
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:carfy/data/models/auth/session_model.dart';
 import 'package:carfy/data/models/auth/sessions_response_model.dart';
+import 'package:carfy/domain/entities/auth/change_contact_otp_response.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/session.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
@@ -42,6 +45,7 @@ class AuthMapper {
     phoneIsVerified: model.phoneIsVerified,
     token: model.token,
     image: model.image,
+    registerType: model.registerType,
   );
 
   GoogleAuthRedirect mapGoogleRedirect(GoogleAuthRedirectModel model) =>
@@ -90,4 +94,9 @@ class AuthMapper {
     currentSession: mapSession(model.currentSession),
     otherSessions: model.otherSessions.map(mapSession).toList(),
   );
+
+  ChangeContactOtpResponse mapChangeContactOtp(ChangeContactOtpResponseModel model) =>
+      ChangeContactOtpResponse(message: model.message, otpExpiresIn: model.otpExpiresIn);
+
+  AuthUser mapChangeContactVerify(ChangeContactVerifyResponseModel model) => mapUser(model.user);
 }

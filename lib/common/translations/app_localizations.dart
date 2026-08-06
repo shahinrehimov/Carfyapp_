@@ -603,4 +603,24 @@ class AppLocalizations {
   String get forceUpdateMessage => _tr(TranslationKeys.forceUpdateMessage);
 
   String get forceUpdateButton => _tr(TranslationKeys.forceUpdateButton);
+
+  // Contact change
+  String get changeEmailTitle => _tr(TranslationKeys.changeEmailTitle);
+
+  String get changePhoneTitle => _tr(TranslationKeys.changePhoneTitle);
+
+  String get sendOtp => _tr(TranslationKeys.sendOtp);
+
+  String get changeEmailNewHint => _tr(TranslationKeys.changeEmailNewHint);
+
+  String get changePhoneNewHint => _tr(TranslationKeys.changePhoneNewHint);
+
+  String changeEmailOtpDesc(String value) =>
+      _tr(TranslationKeys.changeEmailOtpDesc).replaceAll('{value}', value);
+
+  String changePhoneOtpDesc(String value) =>
+      _tr(TranslationKeys.changePhoneOtpDesc).replaceAll('{value}', value);
+
+  String otpExpiresIn(String time) =>
+      _tr(TranslationKeys.otpExpiresIn).replaceAll('{time}', time);
 }

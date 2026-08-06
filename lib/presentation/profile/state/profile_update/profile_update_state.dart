@@ -28,6 +28,9 @@ class ProfileUpdateState extends Equatable {
 
   final AuthUser? updatedUser;
   final String? currentImageUrl;
+  final String email;
+  final String phone;
+  final String? registerType;
 
   bool get hasChanges =>
       name != initialName ||
@@ -56,6 +59,9 @@ class ProfileUpdateState extends Equatable {
     this.birthDateValidationError,
     this.updatedUser,
     this.currentImageUrl,
+    this.email = '',
+    this.phone = '',
+    this.registerType,
   });
 
   factory ProfileUpdateState.initial() => ProfileUpdateState(
@@ -94,6 +100,9 @@ class ProfileUpdateState extends Equatable {
     bool clearNameError = false,
     bool clearSurnameError = false,
     bool clearBirthDate = false,
+    String? email,
+    String? phone,
+    String? registerType,
   }) => ProfileUpdateState(
     submitStatus: submitStatus ?? this.submitStatus,
     logoutStatus: logoutStatus ?? this.logoutStatus,
@@ -115,6 +124,9 @@ class ProfileUpdateState extends Equatable {
     birthDateValidationError: birthDateValidationError ?? this.birthDateValidationError,
     updatedUser: updatedUser ?? this.updatedUser,
     currentImageUrl: clearCurrentImageUrl ? null : (currentImageUrl ?? this.currentImageUrl),
+    email: email ?? this.email,
+    phone: phone ?? this.phone,
+    registerType: registerType ?? this.registerType,
   );
 
   @override
@@ -139,5 +151,8 @@ class ProfileUpdateState extends Equatable {
     updatedUser,
     currentImageUrl,
     imageStatus,
+    email,
+    phone,
+    registerType,
   ];
 }

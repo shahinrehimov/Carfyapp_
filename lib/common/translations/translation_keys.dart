@@ -323,4 +323,14 @@ class TranslationKeys {
   static const String forceUpdateTitle = 'force_update_title';
   static const String forceUpdateMessage = 'force_update_message';
   static const String forceUpdateButton = 'force_update_button';
+
+  // Contact change (email / phone)
+  static const String changeEmailTitle = 'change_email_title';
+  static const String changePhoneTitle = 'change_phone_title';
+  static const String sendOtp = 'send_otp';
+  static const String changeEmailNewHint = 'change_email_new_hint';
+  static const String changePhoneNewHint = 'change_phone_new_hint';
+  static const String changeEmailOtpDesc = 'change_email_otp_desc';
+  static const String changePhoneOtpDesc = 'change_phone_otp_desc';
+  static const String otpExpiresIn = 'otp_expires_in';
 }

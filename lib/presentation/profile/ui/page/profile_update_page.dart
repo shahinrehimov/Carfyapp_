@@ -14,7 +14,9 @@ import 'package:carfy/common/widgets/confirmation_dialog.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
+import 'package:carfy/presentation/profile/state/change_contact/change_contact_cubit.dart';
 import 'package:carfy/presentation/profile/state/profile_update/profile_update_cubit.dart';
+import 'package:carfy/presentation/profile/ui/widget/change_contact_bottom_sheet.dart';
 import 'package:carfy/common/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -172,6 +174,47 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                     final formatted =
                         '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
                     cubit.setBirthDate(formatted);
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Email field
+              BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
+                buildWhen: (prev, curr) =>
+                    prev.email != curr.email || prev.registerType != curr.registerType,
+                builder: (context, state) => _ContactField(
+                  label: context.localization.email,
+                  value: state.email,
+                  canEdit: state.registerType != 'google' && state.registerType != 'apple',
+                  onEdit: () async {
+                    final user = await showChangeContactBottomSheet(
+                      context,
+                      ChangeContactType.email,
+                      currentValue: state.email,
+                    );
+                    if (user != null && context.mounted) {
+                      cubit.updateContact(user);
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Phone field
+              BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
+                buildWhen: (prev, curr) => prev.phone != curr.phone,
+                builder: (context, state) => _ContactField(
+                  label: context.localization.phone,
+                  value: state.phone,
+                  canEdit: true,
+                  onEdit: () async {
+                    final user = await showChangeContactBottomSheet(
+                      context,
+                      ChangeContactType.phone,
+                      currentValue: state.phone,
+                    );
+                    if (user != null && context.mounted) {
+                      cubit.updateContact(user);
+                    }
                   },
                 ),
               ),
@@ -341,6 +384,56 @@ class _ProfileImagePicker extends StatelessWidget {
 }
 
 enum _ImageAction { pick, delete }
+
+class _ContactField extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool canEdit;
+  final VoidCallback onEdit;
+
+  const _ContactField({
+    required this.label,
+    required this.value,
+    required this.canEdit,
+    required this.onEdit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(label, style: TextStyle(color: context.theme.colors.textLight, fontSize: 14)),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          decoration: BoxDecoration(
+            border: Border.all(color: context.theme.colors.border),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  value.isEmpty ? '—' : value,
+                  style: TextStyle(fontSize: 14, color: context.theme.colors.textDark),
+                ),
+              ),
+              if (canEdit)
+                GestureDetector(
+                  onTap: onEdit,
+                  child: Icon(Icons.edit_outlined, size: 20, color: context.theme.colors.primary),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class _GenderOption {
   final String value;

@@ -118,6 +118,14 @@ import 'package:carfy/domain/use_cases/advertisements/get_active_advertisements_
     as _i524;
 import 'package:carfy/domain/use_cases/auth/apple_native_login_use_case.dart'
     as _i258;
+import 'package:carfy/domain/use_cases/auth/change_email_send_otp_use_case.dart'
+    as _i1053;
+import 'package:carfy/domain/use_cases/auth/change_email_verify_use_case.dart'
+    as _i971;
+import 'package:carfy/domain/use_cases/auth/change_phone_send_otp_use_case.dart'
+    as _i714;
+import 'package:carfy/domain/use_cases/auth/change_phone_verify_use_case.dart'
+    as _i163;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart'
     as _i110;
@@ -701,6 +709,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i224.LoadOrdersUseCase>(
       () => _i224.LoadOrdersUseCase(gh<_i603.OrderRepository>()),
+    );
+    gh.factory<_i1053.ChangeEmailSendOtpUseCase>(
+      () => _i1053.ChangeEmailSendOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i971.ChangeEmailVerifyUseCase>(
+      () => _i971.ChangeEmailVerifyUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i714.ChangePhoneSendOtpUseCase>(
+      () => _i714.ChangePhoneSendOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i163.ChangePhoneVerifyUseCase>(
+      () => _i163.ChangePhoneVerifyUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i581.CheckEmailUseCase>(
       () => _i581.CheckEmailUseCase(gh<_i655.AuthRepository>()),
