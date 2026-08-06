@@ -2,7 +2,7 @@ import 'package:carfy/domain/entities/products/city.dart';
 
 class OtherSeller {
   final String uuid;
-  final String sellerLabel;
+  final String? sellerLabel;
   final double price;
   final double priceFinal;
   final bool hasDiscount;

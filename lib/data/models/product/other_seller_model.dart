@@ -2,7 +2,7 @@ import 'package:carfy/data/models/product/city_model.dart';
 
 class OtherSellerModel {
   final String uuid;
-  final String sellerLabel;
+  final String? sellerLabel;
   final double price;
   final double priceFinal;
   final bool hasDiscount;
@@ -28,7 +28,7 @@ class OtherSellerModel {
   factory OtherSellerModel.fromJson(Map<String, dynamic> json) {
     return OtherSellerModel(
       uuid: json['uuid'] as String,
-      sellerLabel: json['seller_label'] as String,
+      sellerLabel: json['seller_label'] as String?,
       price: (json['price'] as num).toDouble(),
       priceFinal: (json['price_final'] as num).toDouble(),
       hasDiscount: json['has_discount'] as bool,

@@ -12,27 +12,7 @@ class _AppBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: BlocBuilder<DefaultAddressCubit, DefaultAddressState>(
-                    builder: (context, state) {
-                      final address = state.address;
-                      if (address == null) return const SizedBox.shrink();
-                      return Row(
-                        children: [
-                          SvgPicture.asset(Assets.icons.locationIcon),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              address.city.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: context.theme.colors.white),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                const Expanded(child: SizedBox.shrink()),
                 SvgPicture.asset(Assets.icons.logoWhite),
                 const Expanded(
                   child: Align(alignment: Alignment.centerRight, child: NotificationIconButton()),
