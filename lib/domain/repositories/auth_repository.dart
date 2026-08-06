@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
@@ -68,6 +70,10 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthUser>> getProfile();
 
   Future<Either<Failure, AuthUser>> updateProfile({required UpdateProfileParams params});
+
+  Future<Either<Failure, AuthUser>> updateProfileImage(File image);
+
+  Future<Either<Failure, void>> deleteProfileImage();
 
   Future<Either<Failure, SessionsResponse>> getSessions();
 

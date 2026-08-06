@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carfy/common/state/state_status.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:carfy/common/translations/translation_context_extension.dart';
 import 'package:carfy/common/widgets/custom_app_bar.dart';
 import 'package:carfy/common/widgets/custom_button.dart';
@@ -67,11 +71,13 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
       listenWhen: (prev, curr) =>
           prev.submitStatus != curr.submitStatus ||
           prev.logoutStatus != curr.logoutStatus ||
-          prev.deleteStatus != curr.deleteStatus,
+          prev.deleteStatus != curr.deleteStatus ||
+          prev.imageStatus != curr.imageStatus,
       listener: (context, state) {
         showStateStatusToast(context, state.submitStatus);
         showStateStatusToast(context, state.logoutStatus);
         showStateStatusToast(context, state.deleteStatus);
+        showStateStatusToast(context, state.imageStatus);
         if (state.submitStatus is StateStatusSuccess) {
           context.maybePop(state.updatedUser);
         }
@@ -85,7 +91,9 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
+              _ProfileImagePicker(cubit: cubit),
+              const SizedBox(height: 24),
               // Name
               BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
                 buildWhen: (prev, curr) =>
@@ -223,6 +231,80 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ProfileImagePicker extends StatelessWidget {
+  final ProfileUpdateCubit cubit;
+
+  const _ProfileImagePicker({required this.cubit});
+
+  Future<void> _pickImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    if (picked == null) return;
+    cubit.updateProfileImage(File(picked.path));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
+      buildWhen: (prev, curr) =>
+          prev.currentImageUrl != curr.currentImageUrl || prev.imageStatus != curr.imageStatus,
+      builder: (context, state) {
+        final isLoading = state.imageStatus is StateStatusLoading;
+        return Center(
+          child: GestureDetector(
+            onTap: isLoading ? null : () => _pickImage(context),
+            child: Stack(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFEEEEEE),
+                  ),
+                  child: ClipOval(
+                    child: state.currentImageUrl != null
+                        ? CachedNetworkImage(
+                            imageUrl: state.currentImageUrl!,
+                            fit: BoxFit.cover,
+                            placeholder: (_, __) => const ColoredBox(color: Color(0xFFEEEEEE)),
+                            errorWidget: (_, __, ___) => const Icon(Icons.person, size: 40, color: Colors.grey),
+                          )
+                        : const Icon(Icons.person, size: 40, color: Colors.grey),
+                  ),
+                ),
+                if (isLoading)
+                  const Positioned.fill(
+                    child: ClipOval(
+                      child: ColoredBox(
+                        color: Colors.black26,
+                        child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))),
+                      ),
+                    ),
+                  ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF00569C),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: const Icon(Icons.edit, size: 14, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

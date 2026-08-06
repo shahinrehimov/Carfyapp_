@@ -58,6 +58,8 @@ class EndpointPaths {
   // Profile Endpoints
   static const profileMe = '/app/profile/me';
   static const profileUpdate = '/app/profile/update';
+  static const profileImageUpdate = '/app/profile/image';
+  static const profileImageDelete = '/app/profile/delete/image';
   static const sessionsLoad = '/app/profile/sessions/load';
   static String sessionLogout(int tokenId) => '/app/profile/sessions/$tokenId/logout';
 

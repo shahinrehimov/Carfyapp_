@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
@@ -73,6 +75,10 @@ abstract class AuthRemoteDataSource {
   Future<AuthUserModel> getProfile();
 
   Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto);
+
+  Future<AuthUserModel> updateProfileImage(File image);
+
+  Future<void> deleteProfileImage();
 
   Future<SessionsResponseModel> getSessions();
 
@@ -240,6 +246,23 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.post(EndpointPaths.profileUpdate, data: dto.toJson()),
       map: (json) => AuthUserModel.fromJson(json['user']),
+    );
+  }
+
+  @override
+  Future<AuthUserModel> updateProfileImage(File image) async {
+    final formData = FormData();
+    formData.files.add(MapEntry('image', await MultipartFile.fromFile(image.path)));
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.profileImageUpdate, data: formData),
+      map: (json) => AuthUserModel.fromJson(json['user']),
+    );
+  }
+
+  @override
+  Future<void> deleteProfileImage() {
+    return handleResponse(
+      () => _networkManager.delete(EndpointPaths.profileImageDelete),
     );
   }
 

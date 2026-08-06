@@ -41,6 +41,7 @@ class AuthMapper {
     emailIsVerified: model.emailIsVerified,
     phoneIsVerified: model.phoneIsVerified,
     token: model.token,
+    image: model.image,
   );
 
   GoogleAuthRedirect mapGoogleRedirect(GoogleAuthRedirectModel model) =>

@@ -10,6 +10,7 @@ class AuthUser {
   final bool emailIsVerified;
   final bool phoneIsVerified;
   final String? token;
+  final String? image;
 
   AuthUser({
     required this.uuid,
@@ -23,6 +24,7 @@ class AuthUser {
     required this.emailIsVerified,
     required this.phoneIsVerified,
     this.token,
+    this.image,
   });
 
   String get fullName => '$name $surname';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
@@ -262,6 +264,21 @@ class AuthRepositoryImpl extends AuthRepository with RepositorySafeCallMixin {
       );
       final res = await _dataSource.updateProfile(dto);
       return _mapper.mapUser(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, AuthUser>> updateProfileImage(File image) {
+    return safeCall(() async {
+      final res = await _dataSource.updateProfileImage(image);
+      return _mapper.mapUser(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteProfileImage() {
+    return safeCall(() async {
+      await _dataSource.deleteProfileImage();
     });
   }
 

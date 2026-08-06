@@ -129,6 +129,8 @@ import 'package:carfy/domain/use_cases/auth/clear_guest_identifier_use_case.dart
     as _i330;
 import 'package:carfy/domain/use_cases/auth/delete_account_use_case.dart'
     as _i315;
+import 'package:carfy/domain/use_cases/auth/delete_profile_image_use_case.dart'
+    as _i970;
 import 'package:carfy/domain/use_cases/auth/forgot_password_use_case.dart'
     as _i62;
 import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.dart'
@@ -166,6 +168,8 @@ import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart'
     as _i620;
 import 'package:carfy/domain/use_cases/auth/send_verification_email_use_case.dart'
     as _i25;
+import 'package:carfy/domain/use_cases/auth/update_profile_image_use_case.dart'
+    as _i96;
 import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart'
     as _i915;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
@@ -713,6 +717,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i330.ClearGuestIdentifierUseCase>(
       () => _i330.ClearGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
     );
+    gh.factory<_i970.DeleteProfileImageUseCase>(
+      () => _i970.DeleteProfileImageUseCase(gh<_i655.AuthRepository>()),
+    );
     gh.factory<_i62.ForgotPasswordUseCase>(
       () => _i62.ForgotPasswordUseCase(gh<_i655.AuthRepository>()),
     );
@@ -757,6 +764,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i25.SendVerificationEmailUseCase>(
       () => _i25.SendVerificationEmailUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i96.UpdateProfileImageUseCase>(
+      () => _i96.UpdateProfileImageUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i915.UpdateProfileUseCase>(
       () => _i915.UpdateProfileUseCase(gh<_i655.AuthRepository>()),
