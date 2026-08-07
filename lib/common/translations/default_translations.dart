@@ -335,6 +335,21 @@ class TranslationDefaults {
       TranslationKeys.changeEmailOtpDesc: '{value} ünvanına 4 rəqəmli kod göndərildi',
       TranslationKeys.changePhoneOtpDesc: '{value} nömrəsinə 4 rəqəmli kod göndərildi',
       TranslationKeys.otpExpiresIn: 'Kodun etibarlılığı: {time}',
+
+      // Store working hours
+      TranslationKeys.storeOpen: 'Açıq',
+      TranslationKeys.storeClosed: 'Bağlı',
+      TranslationKeys.storeWorkingHours: 'İş saatları',
+      TranslationKeys.storeClosedMessage: 'Mağaza hal-hazırda bağlıdır',
+      TranslationKeys.todayLabel: 'Bu gün',
+      TranslationKeys.closedForToday: 'Bu gün bağlıdır',
+      TranslationKeys.weekdayMonday: 'Bazar ertəsi',
+      TranslationKeys.weekdayTuesday: 'Çərşənbə axşamı',
+      TranslationKeys.weekdayWednesday: 'Çərşənbə',
+      TranslationKeys.weekdayThursday: 'Cümə axşamı',
+      TranslationKeys.weekdayFriday: 'Cümə',
+      TranslationKeys.weekdaySaturday: 'Şənbə',
+      TranslationKeys.weekdaySunday: 'Bazar',
     },
     'en': {
       TranslationKeys.appName: 'Carfy',
@@ -669,6 +684,21 @@ class TranslationDefaults {
       TranslationKeys.changeEmailOtpDesc: 'A 4-digit code was sent to {value}',
       TranslationKeys.changePhoneOtpDesc: 'A 4-digit code was sent to {value}',
       TranslationKeys.otpExpiresIn: 'Code expires in {time}',
+
+      // Store working hours
+      TranslationKeys.storeOpen: 'Open',
+      TranslationKeys.storeClosed: 'Closed',
+      TranslationKeys.storeWorkingHours: 'Working hours',
+      TranslationKeys.storeClosedMessage: 'The store is currently closed',
+      TranslationKeys.todayLabel: 'Today',
+      TranslationKeys.closedForToday: 'Closed for today',
+      TranslationKeys.weekdayMonday: 'Monday',
+      TranslationKeys.weekdayTuesday: 'Tuesday',
+      TranslationKeys.weekdayWednesday: 'Wednesday',
+      TranslationKeys.weekdayThursday: 'Thursday',
+      TranslationKeys.weekdayFriday: 'Friday',
+      TranslationKeys.weekdaySaturday: 'Saturday',
+      TranslationKeys.weekdaySunday: 'Sunday',
     },
     'ru': {
       TranslationKeys.appName: 'Carfy',
@@ -1002,6 +1032,21 @@ class TranslationDefaults {
       TranslationKeys.changeEmailOtpDesc: '4-значный код отправлен на {value}',
       TranslationKeys.changePhoneOtpDesc: '4-значный код отправлен на {value}',
       TranslationKeys.otpExpiresIn: 'Код действителен: {time}',
+
+      // Store working hours
+      TranslationKeys.storeOpen: 'Открыто',
+      TranslationKeys.storeClosed: 'Закрыто',
+      TranslationKeys.storeWorkingHours: 'Часы работы',
+      TranslationKeys.storeClosedMessage: 'Магазин сейчас закрыт',
+      TranslationKeys.todayLabel: 'Сегодня',
+      TranslationKeys.closedForToday: 'Закрыто на сегодня',
+      TranslationKeys.weekdayMonday: 'Понедельник',
+      TranslationKeys.weekdayTuesday: 'Вторник',
+      TranslationKeys.weekdayWednesday: 'Среда',
+      TranslationKeys.weekdayThursday: 'Четверг',
+      TranslationKeys.weekdayFriday: 'Пятница',
+      TranslationKeys.weekdaySaturday: 'Суббота',
+      TranslationKeys.weekdaySunday: 'Воскресенье',
     },
   };
 }

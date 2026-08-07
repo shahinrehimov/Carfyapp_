@@ -331,6 +331,21 @@ class TranslationKeys {
   static const String forceUpdateMessage = 'force_update_message';
   static const String forceUpdateButton = 'force_update_button';
 
+  // Store working hours
+  static const String storeOpen = 'store_open';
+  static const String storeClosed = 'store_closed';
+  static const String storeWorkingHours = 'store_working_hours';
+  static const String storeClosedMessage = 'store_closed_message';
+  static const String todayLabel = 'today_label';
+  static const String closedForToday = 'closed_for_today';
+  static const String weekdayMonday = 'weekday_monday';
+  static const String weekdayTuesday = 'weekday_tuesday';
+  static const String weekdayWednesday = 'weekday_wednesday';
+  static const String weekdayThursday = 'weekday_thursday';
+  static const String weekdayFriday = 'weekday_friday';
+  static const String weekdaySaturday = 'weekday_saturday';
+  static const String weekdaySunday = 'weekday_sunday';
+
   // Contact change (email / phone)
   static const String changeEmailTitle = 'change_email_title';
   static const String changePhoneTitle = 'change_phone_title';

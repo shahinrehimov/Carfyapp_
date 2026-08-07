@@ -15,6 +15,7 @@ import 'package:carfy/presentation/product_detail/ui/widget/product_main_image.d
 import 'package:carfy/presentation/product_detail/ui/widget/product_info_section.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_related_section.dart';
 import 'package:carfy/presentation/product_detail/ui/widget/product_reviews_section.dart';
+import 'package:carfy/presentation/product_detail/ui/widget/seller_availability_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,6 +68,7 @@ class _ProductDetailBody extends StatelessWidget {
         SliverToBoxAdapter(child: ProductMainImage(product: product)),
         SliverToBoxAdapter(child: ProductImageGallery(product: product)),
         SliverToBoxAdapter(child: ProductInfoSection(product: product)),
+        SliverToBoxAdapter(child: SellerAvailabilitySection(product: product)),
         SliverToBoxAdapter(child: ProductDetailsTable(product: product)),
         if (product.product?.descriptionShort != null)
           SliverToBoxAdapter(child: ProductDescriptionSection(description: product.product!.descriptionShort!)),

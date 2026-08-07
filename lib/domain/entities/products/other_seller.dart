@@ -1,3 +1,4 @@
+import 'package:carfy/domain/entities/products/availability.dart';
 import 'package:carfy/domain/entities/products/city.dart';
 
 class OtherSeller {
@@ -11,6 +12,7 @@ class OtherSeller {
   final int stock;
   final City? city;
   final List<String> images;
+  final Availability? availability;
 
   OtherSeller({
     required this.uuid,
@@ -23,5 +25,6 @@ class OtherSeller {
     required this.stock,
     this.city,
     this.images = const [],
+    this.availability,
   });
 }

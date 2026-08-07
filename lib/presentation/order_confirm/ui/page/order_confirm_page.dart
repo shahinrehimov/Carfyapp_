@@ -61,7 +61,9 @@ class OrderConfirmPage extends StatelessWidget implements AutoRouteWrapper {
             useReferralBalance: state.useReferralBalance,
             isLoading: state.checkoutStatus is StateStatusLoading,
             isPreviewLoading: state.previewStatus is StateStatusLoading,
-            canCheckout: state.selectedAddress != null && state.selectedPaymentMethod != null,
+            canCheckout: state.selectedAddress != null &&
+                state.selectedPaymentMethod != null &&
+                (state.preview?.canCheckout ?? true),
             onCheckout: () {
               if (state.selectedAddress == null) {
                 showStateStatusToast(context, StateStatus.failure(context.localization.orderConfirmAddressRequired));
@@ -112,11 +114,16 @@ class _OrderConfirmContent extends StatelessWidget {
       children: [
         if (state.previewStatus is StateStatusLoading)
           const ItemsShimmer()
-        else if (state.preview != null)
+        else if (state.preview != null) ...[
+          if (state.preview!.canCheckout == false && state.preview!.closedSellers.isNotEmpty)
+            _ClosedSellersWarning(messages: state.preview!.closedSellers.map((s) => s.message).whereType<String>().toList()),
+          if (state.preview!.canCheckout == false && state.preview!.closedSellers.isNotEmpty)
+            const SizedBox(height: 12),
           for (int i = 0; i < state.preview!.sellers.length; i++) ...[
             SellerCard(seller: state.preview!.sellers[i]),
             const SizedBox(height: 12),
           ],
+        ],
         const SizedBox(height: 4),
         if (state.addressesStatus is StateStatusLoading)
           const AddressShimmer()
@@ -142,6 +149,53 @@ class _OrderConfirmContent extends StatelessWidget {
         const SizedBox(height: 20),
         NoteSection(initialNote: state.note, onChanged: (value) => context.read<OrderConfirmCubit>().setNote(value)),
       ],
+    );
+  }
+}
+
+class _ClosedSellersWarning extends StatelessWidget {
+  final List<String> messages;
+
+  const _ClosedSellersWarning({required this.messages});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF3F0),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFF6683C).withValues(alpha: 0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.warning_amber_rounded, size: 16, color: Color(0xFFF6683C)),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  context.localization.storeClosed,
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFFF6683C)),
+                ),
+              ),
+            ],
+          ),
+          if (messages.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            for (final msg in messages)
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  msg,
+                  style: const TextStyle(fontSize: 12, color: Color(0xFFF6683C)),
+                ),
+              ),
+          ],
+        ],
+      ),
     );
   }
 }

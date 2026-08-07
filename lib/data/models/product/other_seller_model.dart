@@ -1,3 +1,4 @@
+import 'package:carfy/data/models/product/availability_model.dart';
 import 'package:carfy/data/models/product/city_model.dart';
 
 class OtherSellerModel {
@@ -11,6 +12,7 @@ class OtherSellerModel {
   final int stock;
   final CityModel? city;
   final List<String> images;
+  final AvailabilityModel? availability;
 
   OtherSellerModel({
     required this.uuid,
@@ -23,6 +25,7 @@ class OtherSellerModel {
     required this.stock,
     this.city,
     this.images = const [],
+    this.availability,
   });
 
   factory OtherSellerModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +46,9 @@ class OtherSellerModel {
               return '';
             }).toList()
           : [],
+      availability: json['availability'] != null
+          ? AvailabilityModel.fromJson(json['availability'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

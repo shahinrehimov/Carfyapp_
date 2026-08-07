@@ -1,3 +1,5 @@
+import 'package:carfy/data/models/orders/closed_seller_model.dart';
+import 'package:carfy/data/models/product/availability_model.dart';
 import 'package:carfy/data/models/product/product_model.dart';
 
 class CheckoutPreviewItemModel {
@@ -26,6 +28,8 @@ class CheckoutPreviewSellerModel {
   final int shippingEtaMinutes;
   final bool shippingIsEstimate;
   final bool isSedan;
+  final bool isOpen;
+  final AvailabilityModel? availability;
 
   CheckoutPreviewSellerModel({
     required this.companyId,
@@ -37,6 +41,8 @@ class CheckoutPreviewSellerModel {
     required this.shippingEtaMinutes,
     required this.shippingIsEstimate,
     required this.isSedan,
+    required this.isOpen,
+    this.availability,
   });
 
   factory CheckoutPreviewSellerModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +58,10 @@ class CheckoutPreviewSellerModel {
       shippingEtaMinutes: json['shipping_eta_minutes'] as int,
       shippingIsEstimate: json['shipping_is_estimate'] as bool,
       isSedan: json['is_sedan'] as bool,
+      isOpen: json['is_open'] as bool? ?? true,
+      availability: json['availability'] != null
+          ? AvailabilityModel.fromJson(json['availability'] as Map<String, dynamic>)
+          : null,
     );
   }
 }
@@ -103,6 +113,8 @@ class CheckoutPreviewModel {
   final double totalShipping;
   final double grandTotal;
   final CheckoutPreviewReferralModel? referral;
+  final bool canCheckout;
+  final List<ClosedSellerModel> closedSellers;
 
   CheckoutPreviewModel({
     required this.sellers,
@@ -110,6 +122,8 @@ class CheckoutPreviewModel {
     required this.totalShipping,
     required this.grandTotal,
     this.referral,
+    required this.canCheckout,
+    this.closedSellers = const [],
   });
 
   factory CheckoutPreviewModel.fromJson(Map<String, dynamic> json) {
@@ -123,6 +137,12 @@ class CheckoutPreviewModel {
       referral: json['referral'] != null
           ? CheckoutPreviewReferralModel.fromJson(json['referral'] as Map<String, dynamic>)
           : null,
+      canCheckout: json['can_checkout'] as bool? ?? true,
+      closedSellers: json['closed_sellers'] != null
+          ? (json['closed_sellers'] as List<dynamic>)
+              .map((e) => ClosedSellerModel.fromJson(e as Map<String, dynamic>))
+              .toList()
+          : [],
     );
   }
 }

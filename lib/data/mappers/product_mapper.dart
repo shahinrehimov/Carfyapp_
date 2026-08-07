@@ -2,6 +2,8 @@ import 'package:carfy/common/data/mappers/pagination_mapper.dart';
 import 'package:carfy/common/data/models/pagination_response_model.dart';
 import 'package:carfy/common/domain/entities/pagination_response.dart';
 import 'package:carfy/data/models/car/car_color_model.dart';
+import 'package:carfy/data/models/product/availability_model.dart';
+import 'package:carfy/data/models/product/availability_today_model.dart';
 import 'package:carfy/data/models/product/brand_model.dart';
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
 import 'package:carfy/data/models/product/fitment_model.dart';
@@ -25,8 +27,11 @@ import 'package:carfy/data/models/product/review_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
 import 'package:carfy/data/models/product/set_item_model.dart';
 import 'package:carfy/data/models/product/sort_option_model.dart';
+import 'package:carfy/data/models/product/working_hour_model.dart';
 import 'package:carfy/data/models/product/year_range_model.dart';
 import 'package:carfy/domain/entities/car/car_color.dart';
+import 'package:carfy/domain/entities/products/availability.dart';
+import 'package:carfy/domain/entities/products/availability_today.dart';
 import 'package:carfy/domain/entities/products/brand.dart';
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/fitment.dart';
@@ -50,6 +55,7 @@ import 'package:carfy/domain/entities/products/review.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/entities/products/set_item.dart';
 import 'package:carfy/domain/entities/products/sort_option.dart';
+import 'package:carfy/domain/entities/products/working_hour.dart';
 import 'package:carfy/domain/entities/products/year_range.dart';
 import 'package:carfy/domain/enums/discount_type.dart';
 import 'package:injectable/injectable.dart';
@@ -137,12 +143,38 @@ class ProductMapper {
 
   City mapCity(CityModel model) => City(id: model.id, title: model.title);
 
+  AvailabilityToday mapAvailabilityToday(AvailabilityTodayModel model) => AvailabilityToday(
+    isClosed: model.isClosed,
+    openTime: model.openTime,
+    closeTime: model.closeTime,
+  );
+
+  Availability mapAvailability(AvailabilityModel model) => Availability(
+    isOpen: model.isOpen,
+    status: model.status,
+    today: model.today != null ? mapAvailabilityToday(model.today!) : null,
+    closesAt: model.closesAt,
+    opensAt: model.opensAt,
+    opensAtTime: model.opensAtTime,
+    opensAtDayOfWeek: model.opensAtDayOfWeek,
+    message: model.message,
+  );
+
+  WorkingHour mapWorkingHour(WorkingHourModel model) => WorkingHour(
+    dayOfWeek: model.dayOfWeek,
+    isClosed: model.isClosed,
+    openTime: model.openTime,
+    closeTime: model.closeTime,
+  );
+
   Seller mapSeller(SellerModel model) => Seller(
     uuid: model.uuid,
     storeCode: model.storeCode,
     label: model.label,
     city: model.city != null ? mapCity(model.city!) : null,
     images: model.images,
+    availability: model.availability != null ? mapAvailability(model.availability!) : null,
+    workingHours: model.workingHours.map(mapWorkingHour).toList(),
   );
 
   PaginationResponse<Product> mapPaginationResponse(PaginationResponseModel<ProductModel> model) =>
@@ -215,6 +247,7 @@ class ProductMapper {
     stock: model.stock,
     city: model.city != null ? mapCity(model.city!) : null,
     images: model.images,
+    availability: model.availability != null ? mapAvailability(model.availability!) : null,
   );
 
   Review mapReview(ReviewModel model) => Review(
