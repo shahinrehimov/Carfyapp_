@@ -7,7 +7,7 @@ class Constants {
 
   // Store links
   static const String iosStoreUrl = 'https://apps.apple.com/app/6788002217';
-  static const String androidStoreUrl = 'https://play.google.com/store/apps/details?id=az.carfy.app';
+  static const String androidStoreUrl = 'https://play.google.com/store/apps/details?id=app.carfy.az';
 
   // Notifications
   static const String androidNotificationChannelId = 'carfy_default';
