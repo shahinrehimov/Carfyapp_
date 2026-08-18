@@ -11,6 +11,7 @@ import 'package:carfy/common/widgets/custom_date_picker.dart';
 import 'package:carfy/common/widgets/custom_dropdown.dart';
 import 'package:carfy/common/widgets/custom_text_field.dart';
 import 'package:carfy/common/widgets/confirmation_dialog.dart';
+import 'package:carfy/common/widgets/custom_toast.dart';
 import 'package:carfy/common/widgets/state_status_toast.dart';
 import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
@@ -81,6 +82,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
         showStateStatusToast(context, state.deleteStatus);
         showStateStatusToast(context, state.imageStatus);
         if (state.submitStatus is StateStatusSuccess) {
+          CustomToast.showSuccess(context, context.localization.profileUpdateSuccess);
           context.maybePop(state.updatedUser);
         }
         if (state.logoutStatus is StateStatusSuccess || state.deleteStatus is StateStatusSuccess) {
@@ -180,8 +182,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               const SizedBox(height: 16),
               // Email field
               BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
-                buildWhen: (prev, curr) =>
-                    prev.email != curr.email || prev.registerType != curr.registerType,
+                buildWhen: (prev, curr) => prev.email != curr.email || prev.registerType != curr.registerType,
                 builder: (context, state) => _ContactField(
                   label: context.localization.email,
                   value: state.email,
@@ -249,6 +250,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                 ),
               ),
               const SizedBox(height: 32),
+              // Delete button
               GestureDetector(
                 onTap: () => showConfirmationDialog(
                   context: context,
@@ -269,7 +271,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24 + MediaQuery.of(context).padding.bottom),
             ],
           ),
         ),
@@ -324,8 +326,7 @@ class _ProfileImagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileUpdateCubit, ProfileUpdateState>(
-      buildWhen: (prev, curr) =>
-          prev.currentImageUrl != curr.currentImageUrl || prev.imageStatus != curr.imageStatus,
+      buildWhen: (prev, curr) => prev.currentImageUrl != curr.currentImageUrl || prev.imageStatus != curr.imageStatus,
       builder: (context, state) {
         final isLoading = state.imageStatus is StateStatusLoading;
         return Center(
@@ -336,10 +337,7 @@ class _ProfileImagePicker extends StatelessWidget {
                 Container(
                   width: 90,
                   height: 90,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFEEEEEE),
-                  ),
+                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFFEEEEEE)),
                   child: ClipOval(
                     child: state.currentImageUrl != null
                         ? CachedNetworkImage(
@@ -356,7 +354,13 @@ class _ProfileImagePicker extends StatelessWidget {
                     child: ClipOval(
                       child: ColoredBox(
                         color: Colors.black26,
-                        child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))),
+                        child: Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -391,12 +395,7 @@ class _ContactField extends StatelessWidget {
   final bool canEdit;
   final VoidCallback onEdit;
 
-  const _ContactField({
-    required this.label,
-    required this.value,
-    required this.canEdit,
-    required this.onEdit,
-  });
+  const _ContactField({required this.label, required this.value, required this.canEdit, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
