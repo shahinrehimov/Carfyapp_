@@ -190,7 +190,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
             // Current location button
             Positioned(
               right: 12,
-              bottom: 90,
+              bottom: 90 + MediaQuery.of(context).padding.bottom,
               child: BlocBuilder<MapPickerCubit, MapPickerState>(
                 buildWhen: (prev, curr) => prev.isLocating != curr.isLocating,
                 builder: (context, state) => GestureDetector(
@@ -198,10 +198,10 @@ class _MapPickerPageState extends State<MapPickerPage> {
                   child: Container(
                     width: 44,
                     height: 44,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8, offset: const Offset(0, 2))],
+                      boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 2))],
                     ),
                     child: state.isLocating
                         ? Padding(
@@ -216,7 +216,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
 
             // Confirm button
             Positioned(
-              bottom: 24,
+              bottom: 24 + MediaQuery.of(context).padding.bottom,
               left: 24,
               right: 24,
               child: BlocBuilder<MapPickerCubit, MapPickerState>(
