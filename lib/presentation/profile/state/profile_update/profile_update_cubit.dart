@@ -4,7 +4,12 @@ import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
+import 'dart:io';
+
+import 'package:carfy/domain/use_cases/auth/delete_account_use_case.dart';
+import 'package:carfy/domain/use_cases/auth/delete_profile_image_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/logout_use_case.dart';
+import 'package:carfy/domain/use_cases/auth/update_profile_image_use_case.dart';
 import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +19,22 @@ part 'profile_update_state.dart';
 class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
   final UpdateProfileUseCase _updateProfileUseCase;
   final LogoutUseCase _logoutUseCase;
+  final DeleteAccountUseCase _deleteAccountUseCase;
+  final UpdateProfileImageUseCase _updateProfileImageUseCase;
+  final DeleteProfileImageUseCase _deleteProfileImageUseCase;
 
-  ProfileUpdateCubit({UpdateProfileUseCase? updateProfileUseCase, LogoutUseCase? logoutUseCase})
-    : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
-      _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
-      super(ProfileUpdateState.initial());
+  ProfileUpdateCubit({
+    UpdateProfileUseCase? updateProfileUseCase,
+    LogoutUseCase? logoutUseCase,
+    DeleteAccountUseCase? deleteAccountUseCase,
+    UpdateProfileImageUseCase? updateProfileImageUseCase,
+    DeleteProfileImageUseCase? deleteProfileImageUseCase,
+  }) : _updateProfileUseCase = updateProfileUseCase ?? getIt<UpdateProfileUseCase>(),
+       _logoutUseCase = logoutUseCase ?? getIt<LogoutUseCase>(),
+       _deleteAccountUseCase = deleteAccountUseCase ?? getIt<DeleteAccountUseCase>(),
+       _updateProfileImageUseCase = updateProfileImageUseCase ?? getIt<UpdateProfileImageUseCase>(),
+       _deleteProfileImageUseCase = deleteProfileImageUseCase ?? getIt<DeleteProfileImageUseCase>(),
+       super(ProfileUpdateState.initial());
 
   void init(AuthUser user) {
     // Normalize birthDate: API returns yyyy-MM-dd, convert to dd.MM.yyyy
@@ -33,6 +49,20 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
         initialSurname: user.surname,
         initialGender: user.gender,
         initialBirthDate: birthDate,
+        currentImageUrl: user.image,
+        email: user.email,
+        phone: user.phone,
+        registerType: user.registerType,
+      ),
+    );
+  }
+
+  void updateContact(AuthUser user) {
+    emit(
+      state.copyWith(
+        email: user.email,
+        phone: user.phone,
+        updatedUser: user,
       ),
     );
   }
@@ -106,6 +136,33 @@ class ProfileUpdateCubit extends Cubit<ProfileUpdateState> with StateMapHelper {
     result.fold(
       (failure) => emit(state.copyWith(logoutStatus: mapFailure(failure))),
       (_) => emit(state.copyWith(logoutStatus: StateStatus.success())),
+    );
+  }
+
+  Future<void> updateProfileImage(File image) async {
+    emit(state.copyWith(imageStatus: StateStatus.loading()));
+    final result = await _updateProfileImageUseCase(image);
+    result.fold(
+      (failure) => emit(state.copyWith(imageStatus: mapFailure(failure))),
+      (user) => emit(state.copyWith(imageStatus: StateStatus.success(), currentImageUrl: user.image)),
+    );
+  }
+
+  Future<void> deleteProfileImage() async {
+    emit(state.copyWith(imageStatus: StateStatus.loading()));
+    final result = await _deleteProfileImageUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(imageStatus: mapFailure(failure))),
+      (_) => emit(state.copyWith(imageStatus: StateStatus.success(), clearCurrentImageUrl: true)),
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    emit(state.copyWith(deleteStatus: StateStatus.loading()));
+    final result = await _deleteAccountUseCase();
+    result.fold(
+      (failure) => emit(state.copyWith(deleteStatus: mapFailure(failure))),
+      (_) => emit(state.copyWith(deleteStatus: StateStatus.success())),
     );
   }
 

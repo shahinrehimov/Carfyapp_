@@ -1,10 +1,12 @@
 import 'package:carfy/data/mappers/product_mapper.dart';
 import 'package:carfy/data/models/orders/checkout_preview_model.dart';
 import 'package:carfy/data/models/orders/checkout_result_model.dart';
+import 'package:carfy/data/models/orders/closed_seller_model.dart';
 import 'package:carfy/data/models/orders/order_detail_model.dart';
 import 'package:carfy/data/models/orders/order_summary_model.dart';
 import 'package:carfy/domain/entities/orders/checkout_preview.dart';
 import 'package:carfy/domain/entities/orders/checkout_result.dart';
+import 'package:carfy/domain/entities/orders/closed_seller.dart';
 import 'package:carfy/domain/entities/orders/order_detail.dart';
 import 'package:carfy/domain/entities/orders/order_summary.dart';
 import 'package:injectable/injectable.dart';
@@ -24,6 +26,13 @@ class OrderMapper {
     product: _productMapper.mapProduct(model.product),
   );
 
+  ClosedSeller mapClosedSeller(ClosedSellerModel model) => ClosedSeller(
+    companyId: model.companyId,
+    storeCode: model.storeCode,
+    opensAt: model.opensAt,
+    message: model.message,
+  );
+
   CheckoutPreviewSeller mapSeller(CheckoutPreviewSellerModel model) => CheckoutPreviewSeller(
     companyId: model.companyId,
     storeCode: model.storeCode,
@@ -34,6 +43,8 @@ class OrderMapper {
     shippingEtaMinutes: model.shippingEtaMinutes,
     shippingIsEstimate: model.shippingIsEstimate,
     isSedan: model.isSedan,
+    isOpen: model.isOpen,
+    availability: model.availability != null ? _productMapper.mapAvailability(model.availability!) : null,
   );
 
   CheckoutPreviewReferral? _mapReferral(CheckoutPreviewReferralModel? model) {
@@ -58,6 +69,8 @@ class OrderMapper {
     totalShipping: model.totalShipping,
     grandTotal: model.grandTotal,
     referral: _mapReferral(model.referral),
+    canCheckout: model.canCheckout,
+    closedSellers: model.closedSellers.map(mapClosedSeller).toList(),
   );
 
   OrderSummary mapOrderSummary(OrderSummaryModel model) => OrderSummary(
@@ -110,7 +123,6 @@ class OrderMapper {
     amountFinal: model.amountFinal,
     product: OrderItemProduct(
       uuid: model.product.uuid,
-      variantSlug: model.product.variantSlug,
       title: model.product.title,
       oemCode: model.product.oemCode,
       hoverImage: model.product.hoverImage,

@@ -598,9 +598,66 @@ class AppLocalizations {
 
   String get freeLabel => _tr(TranslationKeys.freeLabel);
 
+  String get universalProduct => _tr(TranslationKeys.universalProduct);
+
+  String get fitsAllVehicles => _tr(TranslationKeys.fitsAllVehicles);
+
+  String get compatibleVehicles => _tr(TranslationKeys.compatibleVehicles);
+
+  String get vehicleModel => _tr(TranslationKeys.vehicleModel);
+
+  String get vehicleModels => _tr(TranslationKeys.vehicleModels);
+
   String get forceUpdateTitle => _tr(TranslationKeys.forceUpdateTitle);
 
   String get forceUpdateMessage => _tr(TranslationKeys.forceUpdateMessage);
 
   String get forceUpdateButton => _tr(TranslationKeys.forceUpdateButton);
+
+  // Store working hours
+  String get storeOpen => _tr(TranslationKeys.storeOpen);
+
+  String get storeClosed => _tr(TranslationKeys.storeClosed);
+
+  String get storeWorkingHours => _tr(TranslationKeys.storeWorkingHours);
+
+  String get storeClosedMessage => _tr(TranslationKeys.storeClosedMessage);
+
+  String get todayLabel => _tr(TranslationKeys.todayLabel);
+
+  String get closedForToday => _tr(TranslationKeys.closedForToday);
+
+  String get weekdayMonday => _tr(TranslationKeys.weekdayMonday);
+
+  String get weekdayTuesday => _tr(TranslationKeys.weekdayTuesday);
+
+  String get weekdayWednesday => _tr(TranslationKeys.weekdayWednesday);
+
+  String get weekdayThursday => _tr(TranslationKeys.weekdayThursday);
+
+  String get weekdayFriday => _tr(TranslationKeys.weekdayFriday);
+
+  String get weekdaySaturday => _tr(TranslationKeys.weekdaySaturday);
+
+  String get weekdaySunday => _tr(TranslationKeys.weekdaySunday);
+
+  // Contact change
+  String get changeEmailTitle => _tr(TranslationKeys.changeEmailTitle);
+
+  String get changePhoneTitle => _tr(TranslationKeys.changePhoneTitle);
+
+  String get sendOtp => _tr(TranslationKeys.sendOtp);
+
+  String get changeEmailNewHint => _tr(TranslationKeys.changeEmailNewHint);
+
+  String get changePhoneNewHint => _tr(TranslationKeys.changePhoneNewHint);
+
+  String changeEmailOtpDesc(String value) =>
+      _tr(TranslationKeys.changeEmailOtpDesc).replaceAll('{value}', value);
+
+  String changePhoneOtpDesc(String value) =>
+      _tr(TranslationKeys.changePhoneOtpDesc).replaceAll('{value}', value);
+
+  String otpExpiresIn(String time) =>
+      _tr(TranslationKeys.otpExpiresIn).replaceAll('{time}', time);
 }

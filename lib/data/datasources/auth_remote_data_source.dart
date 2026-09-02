@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+
 import 'package:carfy/data/models/auth/guest_identifier_response_model.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,6 +19,7 @@ import 'package:carfy/data/dtos/auth/login_with_email_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_otp_request_dto.dart';
 import 'package:carfy/data/dtos/auth/login_with_phone_submit_request_dto.dart';
 import 'package:carfy/data/dtos/auth/apple_native_login_request_dto.dart';
+import 'package:carfy/data/dtos/auth/google_native_login_request_dto.dart';
 import 'package:carfy/data/dtos/auth/forgot_password_request_dto.dart';
 import 'package:carfy/data/dtos/auth/update_profile_request_dto.dart';
 
@@ -29,6 +32,12 @@ import 'package:carfy/data/models/auth/check_phone_otp_model.dart';
 import 'package:carfy/data/models/auth/login_response_model.dart';
 import 'package:carfy/data/models/auth/logout_response_model.dart';
 import 'package:carfy/data/models/auth/sessions_response_model.dart';
+import 'package:carfy/data/models/auth/change_contact_otp_response_model.dart';
+import 'package:carfy/data/models/auth/change_contact_verify_response_model.dart';
+import 'package:carfy/data/dtos/auth/change_email_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_email_verify_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_send_otp_dto.dart';
+import 'package:carfy/data/dtos/auth/change_phone_verify_dto.dart';
 
 import 'package:carfy/common/constants/endpoint_paths.dart';
 
@@ -55,9 +64,13 @@ abstract class AuthRemoteDataSource {
 
   Future<LoginResponseModel> appleNativeLogin(AppleNativeLoginRequestDto dto);
 
+  Future<LoginResponseModel> googleNativeLogin(GoogleNativeLoginRequestDto dto);
+
   Future<LogoutResponseModel> logout();
 
   Future<LogoutResponseModel> logoutAll();
+
+  Future<LogoutResponseModel> deleteAccount();
 
   Future<void> sendVerificationEmail();
 
@@ -69,9 +82,18 @@ abstract class AuthRemoteDataSource {
 
   Future<AuthUserModel> updateProfile(UpdateProfileRequestDto dto);
 
+  Future<AuthUserModel> updateProfileImage(File image);
+
+  Future<void> deleteProfileImage();
+
   Future<SessionsResponseModel> getSessions();
 
   Future<String> logoutSession(int tokenId);
+
+  Future<ChangeContactOtpResponseModel> changeEmailSendOtp(ChangeEmailSendOtpDto dto);
+  Future<ChangeContactVerifyResponseModel> changeEmailVerify(ChangeEmailVerifyDto dto);
+  Future<ChangeContactOtpResponseModel> changePhoneSendOtp(ChangePhoneSendOtpDto dto);
+  Future<ChangeContactVerifyResponseModel> changePhoneVerify(ChangePhoneVerifyDto dto);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -159,6 +181,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
+  Future<LoginResponseModel> googleNativeLogin(GoogleNativeLoginRequestDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.googleNativeLogin, data: dto.toJson()),
+      map: (json) => LoginResponseModel.fromJson(json),
+    );
+  }
+
+  @override
   Future<LoginResponseModel> appleNativeLogin(AppleNativeLoginRequestDto dto) {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.appleNativeLogin, data: dto.toJson()),
@@ -178,6 +208,14 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   Future<LogoutResponseModel> logoutAll() {
     return handleResponse(
       () => _networkManager.post(EndpointPaths.logoutAll),
+      map: (json) => LogoutResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<LogoutResponseModel> deleteAccount() {
+    return handleResponse(
+      () => _networkManager.delete(EndpointPaths.deleteAccount),
       map: (json) => LogoutResponseModel.fromJson(json),
     );
   }
@@ -223,6 +261,23 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
   }
 
   @override
+  Future<AuthUserModel> updateProfileImage(File image) async {
+    final formData = FormData();
+    formData.files.add(MapEntry('image', await MultipartFile.fromFile(image.path)));
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.profileImageUpdate, data: formData),
+      map: (json) => AuthUserModel.fromJson(json['user']),
+    );
+  }
+
+  @override
+  Future<void> deleteProfileImage() {
+    return handleResponse(
+      () => _networkManager.delete(EndpointPaths.profileImageDelete),
+    );
+  }
+
+  @override
   Future<SessionsResponseModel> getSessions() {
     return handleResponse(
       () => _networkManager.get(EndpointPaths.sessionsLoad),
@@ -235,6 +290,38 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource with DataSourceMixin
     return handleResponse(
       () => _networkManager.post(EndpointPaths.sessionLogout(tokenId)),
       map: (json) => json['message'] as String? ?? '',
+    );
+  }
+
+  @override
+  Future<ChangeContactOtpResponseModel> changeEmailSendOtp(ChangeEmailSendOtpDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changeEmailSendOtp, data: dto.toJson()),
+      map: (json) => ChangeContactOtpResponseModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<ChangeContactVerifyResponseModel> changeEmailVerify(ChangeEmailVerifyDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changeEmailVerify, data: dto.toJson()),
+      map: (json) => ChangeContactVerifyResponseModel.fromJson(json),
+    );
+  }
+
+  @override
+  Future<ChangeContactOtpResponseModel> changePhoneSendOtp(ChangePhoneSendOtpDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changePhoneSendOtp, data: dto.toJson()),
+      map: (json) => ChangeContactOtpResponseModel.fromJson(json['data']),
+    );
+  }
+
+  @override
+  Future<ChangeContactVerifyResponseModel> changePhoneVerify(ChangePhoneVerifyDto dto) {
+    return handleResponse(
+      () => _networkManager.post(EndpointPaths.changePhoneVerify, data: dto.toJson()),
+      map: (json) => ChangeContactVerifyResponseModel.fromJson(json),
     );
   }
 }

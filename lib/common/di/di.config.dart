@@ -118,6 +118,14 @@ import 'package:carfy/domain/use_cases/advertisements/get_active_advertisements_
     as _i524;
 import 'package:carfy/domain/use_cases/auth/apple_native_login_use_case.dart'
     as _i258;
+import 'package:carfy/domain/use_cases/auth/change_email_send_otp_use_case.dart'
+    as _i1053;
+import 'package:carfy/domain/use_cases/auth/change_email_verify_use_case.dart'
+    as _i971;
+import 'package:carfy/domain/use_cases/auth/change_phone_send_otp_use_case.dart'
+    as _i714;
+import 'package:carfy/domain/use_cases/auth/change_phone_verify_use_case.dart'
+    as _i163;
 import 'package:carfy/domain/use_cases/auth/check_email_use_case.dart' as _i581;
 import 'package:carfy/domain/use_cases/auth/check_logged_use_case.dart'
     as _i110;
@@ -127,6 +135,10 @@ import 'package:carfy/domain/use_cases/auth/clear_auth_token_use_case.dart'
     as _i1020;
 import 'package:carfy/domain/use_cases/auth/clear_guest_identifier_use_case.dart'
     as _i330;
+import 'package:carfy/domain/use_cases/auth/delete_account_use_case.dart'
+    as _i315;
+import 'package:carfy/domain/use_cases/auth/delete_profile_image_use_case.dart'
+    as _i970;
 import 'package:carfy/domain/use_cases/auth/forgot_password_use_case.dart'
     as _i62;
 import 'package:carfy/domain/use_cases/auth/generate_guest_identifier_use_case.dart'
@@ -140,6 +152,8 @@ import 'package:carfy/domain/use_cases/auth/get_guest_identifier_use_case.dart'
 import 'package:carfy/domain/use_cases/auth/get_profile_use_case.dart' as _i2;
 import 'package:carfy/domain/use_cases/auth/get_sessions_use_case.dart'
     as _i236;
+import 'package:carfy/domain/use_cases/auth/google_native_login_use_case.dart'
+    as _i753;
 import 'package:carfy/domain/use_cases/auth/login_with_email_use_case.dart'
     as _i601;
 import 'package:carfy/domain/use_cases/auth/login_with_phone_use_case.dart'
@@ -162,6 +176,8 @@ import 'package:carfy/domain/use_cases/auth/send_phone_otp_use_case.dart'
     as _i620;
 import 'package:carfy/domain/use_cases/auth/send_verification_email_use_case.dart'
     as _i25;
+import 'package:carfy/domain/use_cases/auth/update_profile_image_use_case.dart'
+    as _i96;
 import 'package:carfy/domain/use_cases/auth/update_profile_use_case.dart'
     as _i915;
 import 'package:carfy/domain/use_cases/auth/verify_email_otp_use_case.dart'
@@ -694,6 +710,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i224.LoadOrdersUseCase>(
       () => _i224.LoadOrdersUseCase(gh<_i603.OrderRepository>()),
     );
+    gh.factory<_i1053.ChangeEmailSendOtpUseCase>(
+      () => _i1053.ChangeEmailSendOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i971.ChangeEmailVerifyUseCase>(
+      () => _i971.ChangeEmailVerifyUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i714.ChangePhoneSendOtpUseCase>(
+      () => _i714.ChangePhoneSendOtpUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i163.ChangePhoneVerifyUseCase>(
+      () => _i163.ChangePhoneVerifyUseCase(gh<_i655.AuthRepository>()),
+    );
     gh.factory<_i581.CheckEmailUseCase>(
       () => _i581.CheckEmailUseCase(gh<_i655.AuthRepository>()),
     );
@@ -708,6 +736,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i330.ClearGuestIdentifierUseCase>(
       () => _i330.ClearGuestIdentifierUseCase(gh<_i655.AuthRepository>()),
+    );
+    gh.factory<_i970.DeleteProfileImageUseCase>(
+      () => _i970.DeleteProfileImageUseCase(gh<_i655.AuthRepository>()),
     );
     gh.factory<_i62.ForgotPasswordUseCase>(
       () => _i62.ForgotPasswordUseCase(gh<_i655.AuthRepository>()),
@@ -754,6 +785,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i25.SendVerificationEmailUseCase>(
       () => _i25.SendVerificationEmailUseCase(gh<_i655.AuthRepository>()),
     );
+    gh.factory<_i96.UpdateProfileImageUseCase>(
+      () => _i96.UpdateProfileImageUseCase(gh<_i655.AuthRepository>()),
+    );
     gh.factory<_i915.UpdateProfileUseCase>(
       () => _i915.UpdateProfileUseCase(gh<_i655.AuthRepository>()),
     );
@@ -768,6 +802,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i258.AppleNativeLoginUseCase>(
       () => _i258.AppleNativeLoginUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i0.SaveAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
+    );
+    gh.factory<_i753.GoogleNativeLoginUseCase>(
+      () => _i753.GoogleNativeLoginUseCase(
         gh<_i655.AuthRepository>(),
         gh<_i0.SaveAuthTokenUseCase>(),
         gh<_i330.ClearGuestIdentifierUseCase>(),
@@ -840,6 +881,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i740.SaveTranslationsUseCase>(
       () => _i740.SaveTranslationsUseCase(gh<_i611.TranslationRepository>()),
+    );
+    gh.factory<_i315.DeleteAccountUseCase>(
+      () => _i315.DeleteAccountUseCase(
+        gh<_i655.AuthRepository>(),
+        gh<_i1020.ClearAuthTokenUseCase>(),
+        gh<_i330.ClearGuestIdentifierUseCase>(),
+      ),
     );
     gh.factory<_i992.LogoutUseCase>(
       () => _i992.LogoutUseCase(

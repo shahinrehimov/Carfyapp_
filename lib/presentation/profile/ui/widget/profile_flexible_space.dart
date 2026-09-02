@@ -29,8 +29,8 @@ class _ProfileName extends StatelessWidget {
       onTap: user == null
           ? null
           : () async {
-              final updated = await context.pushRoute<dynamic>(ProfileUpdateRoute(user: user));
-              if (updated != null && context.mounted) {
+              await context.pushRoute<dynamic>(ProfileUpdateRoute(user: user));
+              if (context.mounted) {
                 context.read<ProfileCubit>().init();
               }
             },
@@ -46,13 +46,29 @@ class _ProfileName extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: context.theme.colors.white.withValues(alpha: 0.3),
               ),
-              child: Center(
-                child: SvgPicture.asset(
-                  Assets.icons.profile,
-                  width: 32,
-                  height: 32,
-                  colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
-                ),
+              child: ClipOval(
+                child: user?.image != null
+                    ? CachedNetworkImage(
+                        imageUrl: user!.image!,
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) => const SizedBox.shrink(),
+                        errorWidget: (_, __, ___) => Center(
+                          child: SvgPicture.asset(
+                            Assets.icons.profile,
+                            width: 32,
+                            height: 32,
+                            colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: SvgPicture.asset(
+                          Assets.icons.profile,
+                          width: 32,
+                          height: 32,
+                          colorFilter: ColorFilter.mode(context.theme.colors.white, BlendMode.srcIn),
+                        ),
+                      ),
               ),
             ),
             const SizedBox(width: 12),

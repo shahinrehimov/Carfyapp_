@@ -11,6 +11,9 @@ mixin StateMapHelper {
       return StateStatus.serverFailure();
     } else if (failure is UserFailure) {
       return StateStatus.failure(failure.message);
+    } else if (failure is ValidationFailure) {
+      final message = failure.errors.values.expand((e) => e).firstOrNull ?? '';
+      return StateStatus.failure(message);
     }
     return StateStatus.initial();
   }

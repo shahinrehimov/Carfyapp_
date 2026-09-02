@@ -48,6 +48,22 @@ class ProductItem extends StatelessWidget {
                   child: CachedNetworkImage(imageUrl: product.hoverImage!, height: 118, fit: BoxFit.cover),
                 ),
                 const SizedBox(width: double.maxFinite),
+                if (product.isUniversal)
+                  Positioned(
+                    left: 0,
+                    top: 6,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: context.theme.colors.primary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        context.localization.universalProduct,
+                        style: TextStyle(color: context.theme.colors.white, fontSize: 9, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
                 Positioned(right: 10, top: 6, child: WishlistHeartButton(cpvUuid: product.seller?.uuid)),
               ],
             ),

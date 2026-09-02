@@ -25,31 +25,34 @@ class OrderSuccessPage extends StatelessWidget {
     final totalItems = allItems.fold<int>(0, (sum, i) => sum + i.quantity);
     final discount = preview.subtotal + preview.totalShipping - preview.grandTotal;
 
-    return Scaffold(
-      backgroundColor: context.theme.colors.bg,
-      appBar: CustomAppBar(title: context.localization.orderSuccessTitle),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        children: [
-          _SuccessHeaderCard(),
-          const SizedBox(height: 16),
-          _ProductsSection(items: allItems),
-          const SizedBox(height: 16),
-          _DeliveryAddressSection(address: address),
-          const SizedBox(height: 16),
-          _PaymentDetailsCard(
-            subtotal: preview.subtotal,
-            totalShipping: preview.totalShipping,
-            grandTotal: preview.grandTotal,
-            discount: discount > 0 ? discount : 0.0,
-            totalItems: totalItems,
-          ),
-          const SizedBox(height: 16),
-          CustomButton(
-            onPressed: () => context.router.replaceAll([const MainRoute()]),
-            text: context.localization.orderSuccessGoHome,
-          ),
-        ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: context.theme.colors.bg,
+        appBar: CustomAppBar(title: context.localization.orderSuccessTitle, leading: const SizedBox.shrink()),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          children: [
+            _SuccessHeaderCard(),
+            const SizedBox(height: 16),
+            _ProductsSection(items: allItems),
+            const SizedBox(height: 16),
+            _DeliveryAddressSection(address: address),
+            const SizedBox(height: 16),
+            _PaymentDetailsCard(
+              subtotal: preview.subtotal,
+              totalShipping: preview.totalShipping,
+              grandTotal: preview.grandTotal,
+              discount: discount > 0 ? discount : 0.0,
+              totalItems: totalItems,
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              onPressed: () => context.router.pushAndPopUntil(const MainRoute(), predicate: (_) => false),
+              text: context.localization.orderSuccessGoHome,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -69,8 +72,7 @@ class _SuccessHeaderCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Assets.images.successfullyRegistered.image(width: 104, height: 75, fit: BoxFit.fill),
-          const SizedBox(height: 14),
+          Assets.images.successfullyRegistered.image(height: 100, fit: BoxFit.fill),
           Text(
             context.localization.orderSuccessTitle,
             style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),

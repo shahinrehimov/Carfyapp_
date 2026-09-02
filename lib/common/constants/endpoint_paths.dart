@@ -15,9 +15,11 @@ class EndpointPaths {
   static const loginWithPhone = '/app/login/with-phone/submit';
 
   static const appleNativeLogin = '/app/auth/apple/native';
+  static const googleNativeLogin = '/app/auth/google/native';
 
   static const logout = '/app/logout';
   static const logoutAll = '/app/logout-all';
+  static const deleteAccount = '/app/profile/delete-account';
 
   static const sendVerificationEmail = '/app/send-verification-email';
 
@@ -53,9 +55,17 @@ class EndpointPaths {
   static String wishlistAdd(String cpvUuid) => '/app/wishlist/add/$cpvUuid';
   static String wishlistRemove(String cpvUuid) => '/app/wishlist/remove/$cpvUuid';
 
+  // Profile Contact Change Endpoints
+  static const changeEmailSendOtp = '/app/profile/change-email/send-otp';
+  static const changeEmailVerify = '/app/profile/change-email/verify';
+  static const changePhoneSendOtp = '/app/profile/change-phone/send-otp';
+  static const changePhoneVerify = '/app/profile/change-phone/verify';
+
   // Profile Endpoints
   static const profileMe = '/app/profile/me';
   static const profileUpdate = '/app/profile/update';
+  static const profileImageUpdate = '/app/profile/image';
+  static const profileImageDelete = '/app/profile/image';
   static const sessionsLoad = '/app/profile/sessions/load';
   static String sessionLogout(int tokenId) => '/app/profile/sessions/$tokenId/logout';
 

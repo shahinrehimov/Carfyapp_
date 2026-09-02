@@ -3,6 +3,7 @@ import 'package:carfy/common/router/app_router.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
 import 'package:carfy/common/state/state_status.dart';
 import 'package:carfy/domain/use_cases/auth/apple_native_login_use_case.dart';
+import 'package:carfy/domain/use_cases/auth/google_native_login_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -11,14 +12,35 @@ part 'social_login_state.dart';
 
 class SocialLoginCubit extends Cubit<SocialLoginState> with StateMapHelper {
   final AppleNativeLoginUseCase _appleNativeLoginUseCase;
+  final GoogleNativeLoginUseCase _googleNativeLoginUseCase;
   final AppRouter _appRouter;
 
   SocialLoginCubit({
     AppleNativeLoginUseCase? appleNativeLoginUseCase,
+    GoogleNativeLoginUseCase? googleNativeLoginUseCase,
     AppRouter? appRouter,
   }) : _appleNativeLoginUseCase = appleNativeLoginUseCase ?? getIt<AppleNativeLoginUseCase>(),
+       _googleNativeLoginUseCase = googleNativeLoginUseCase ?? getIt<GoogleNativeLoginUseCase>(),
        _appRouter = appRouter ?? getIt<AppRouter>(),
        super(SocialLoginState.initial());
+
+  Future<void> loginWithGoogle() async {
+    try {
+      emit(state.copyWith(googleStatus: StateStatus.loading()));
+
+      final result = await _googleNativeLoginUseCase();
+
+      result.fold(
+        (failure) => emit(state.copyWith(googleStatus: mapFailure(failure))),
+        (_) {
+          emit(state.copyWith(googleStatus: StateStatus.success()));
+          _appRouter.pushAndPopUntil(const MainRoute(), predicate: (_) => false);
+        },
+      );
+    } catch (_) {
+      emit(state.copyWith(googleStatus: StateStatus.serverFailure()));
+    }
+  }
 
   Future<void> loginWithApple() async {
     try {

@@ -188,7 +188,6 @@ class OrderItemModel {
 
 class OrderItemProductModel {
   final String uuid;
-  final String variantSlug;
   final String title;
   final String? oemCode;
   final String? hoverImage;
@@ -200,7 +199,6 @@ class OrderItemProductModel {
 
   OrderItemProductModel({
     required this.uuid,
-    required this.variantSlug,
     required this.title,
     this.oemCode,
     this.hoverImage,
@@ -214,7 +212,6 @@ class OrderItemProductModel {
   factory OrderItemProductModel.fromJson(Map<String, dynamic> json) {
     return OrderItemProductModel(
       uuid: json['uuid'] as String,
-      variantSlug: json['variant_slug'] as String,
       title: json['title'] as String,
       oemCode: json['oem_code'] as String?,
       hoverImage: json['hover_image'] as String?,

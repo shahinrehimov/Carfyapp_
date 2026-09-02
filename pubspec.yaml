@@ -1,7 +1,7 @@
 name: carfy
 description: "A new Flutter project."
 
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ^3.9.0
@@ -49,6 +49,7 @@ dependencies:
   collection: ^1.19.0
   connectivity_plus: ^6.0.0
   sign_in_with_apple: ^6.1.4
+  google_sign_in: ^6.2.2
 
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carfy/domain/entities/auth/auth_user.dart';
 import 'package:carfy/domain/entities/auth/guest_identifier_response.dart';
 import 'package:carfy/domain/entities/auth/sessions_response.dart';
@@ -24,6 +26,8 @@ import 'package:carfy/domain/params/auth/register_with_email_params.dart';
 import 'package:carfy/domain/params/auth/register_with_phone_params.dart';
 import 'package:carfy/domain/params/auth/send_phone_otp_params.dart';
 import 'package:carfy/domain/params/auth/apple_native_login_params.dart';
+import 'package:carfy/domain/params/auth/google_native_login_params.dart';
+import 'package:carfy/domain/entities/auth/change_contact_otp_response.dart';
 import 'package:carfy/domain/params/auth/update_profile_params.dart';
 import 'package:carfy/domain/params/auth/verify_email_otp_params.dart';
 
@@ -50,9 +54,13 @@ abstract class AuthRepository {
 
   Future<Either<Failure, LoginResponse>> appleNativeLogin({required AppleNativeLoginParams params});
 
+  Future<Either<Failure, LoginResponse>> googleNativeLogin({required GoogleNativeLoginParams params});
+
   Future<Either<Failure, LogoutResponse>> logout();
 
   Future<Either<Failure, LogoutResponse>> logoutAll();
+
+  Future<Either<Failure, LogoutResponse>> deleteAccount();
 
   Future<Either<Failure, void>> sendVerificationEmail();
 
@@ -63,6 +71,10 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthUser>> getProfile();
 
   Future<Either<Failure, AuthUser>> updateProfile({required UpdateProfileParams params});
+
+  Future<Either<Failure, AuthUser>> updateProfileImage(File image);
+
+  Future<Either<Failure, void>> deleteProfileImage();
 
   Future<Either<Failure, SessionsResponse>> getSessions();
 
@@ -78,4 +90,9 @@ abstract class AuthRepository {
   Future<Either<Failure, Unit>> clearGuestIdentifier();
 
   Future<Either<Failure, bool>> isLoggedIn();
+
+  Future<Either<Failure, ChangeContactOtpResponse>> changeEmailSendOtp(String email);
+  Future<Either<Failure, AuthUser>> changeEmailVerify(String email, int otp);
+  Future<Either<Failure, ChangeContactOtpResponse>> changePhoneSendOtp(String phone);
+  Future<Either<Failure, AuthUser>> changePhoneVerify(String phone, int otp);
 }

@@ -1,4 +1,5 @@
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
+import 'package:carfy/domain/entities/products/fitment.dart';
 import 'package:carfy/domain/entities/products/gallery_image.dart';
 import 'package:carfy/domain/entities/products/other_seller.dart';
 import 'package:carfy/domain/entities/products/product.dart';
@@ -26,7 +27,11 @@ class ProductShow {
   final DiscountType? discountType;
   final String? discountTypeTitle;
   final double discount;
+  final bool isUniversal;
   final int? year;
+  final int? yearFrom;
+  final int? yearTo;
+  final List<Fitment> fitments;
   final bool inWishlist;
   final bool inBasket;
   final List<BrandModelItem> brandModels;
@@ -57,7 +62,11 @@ class ProductShow {
     this.discountType,
     this.discountTypeTitle,
     required this.discount,
+    required this.isUniversal,
     this.year,
+    this.yearFrom,
+    this.yearTo,
+    this.fitments = const [],
     required this.inWishlist,
     required this.inBasket,
     this.brandModels = const [],

@@ -16,6 +16,7 @@ class ProductModel {
   final String? discountType;
   final String? discountTypeTitle;
   final double discount;
+  final bool isUniversal;
   final bool inWishlist;
   final bool inBasket;
   final SellerModel? seller;
@@ -36,6 +37,7 @@ class ProductModel {
     required this.discountType,
     required this.discountTypeTitle,
     required this.discount,
+    required this.isUniversal,
     required this.inWishlist,
     required this.inBasket,
     this.seller,
@@ -58,6 +60,7 @@ class ProductModel {
       discountType: json['discount_type'] as String?,
       discountTypeTitle: json['discount_type_title'] as String?,
       discount: (json['discount'] as num).toDouble(),
+      isUniversal: json['is_universal'] as bool? ?? false,
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
       seller: json['seller'] != null ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>) : null,

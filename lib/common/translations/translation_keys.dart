@@ -319,8 +319,40 @@ class TranslationKeys {
   static const String useReferralBalance = 'use_referral_balance';
   static const String freeLabel = 'free_label';
 
+  // Fitment / universal product
+  static const String universalProduct = 'universal_product';
+  static const String fitsAllVehicles = 'fits_all_vehicles';
+  static const String compatibleVehicles = 'compatible_vehicles';
+  static const String vehicleModel = 'vehicle_model';
+  static const String vehicleModels = 'vehicle_models';
+
   // Force update
   static const String forceUpdateTitle = 'force_update_title';
   static const String forceUpdateMessage = 'force_update_message';
   static const String forceUpdateButton = 'force_update_button';
+
+  // Store working hours
+  static const String storeOpen = 'store_open';
+  static const String storeClosed = 'store_closed';
+  static const String storeWorkingHours = 'store_working_hours';
+  static const String storeClosedMessage = 'store_closed_message';
+  static const String todayLabel = 'today_label';
+  static const String closedForToday = 'closed_for_today';
+  static const String weekdayMonday = 'weekday_monday';
+  static const String weekdayTuesday = 'weekday_tuesday';
+  static const String weekdayWednesday = 'weekday_wednesday';
+  static const String weekdayThursday = 'weekday_thursday';
+  static const String weekdayFriday = 'weekday_friday';
+  static const String weekdaySaturday = 'weekday_saturday';
+  static const String weekdaySunday = 'weekday_sunday';
+
+  // Contact change (email / phone)
+  static const String changeEmailTitle = 'change_email_title';
+  static const String changePhoneTitle = 'change_phone_title';
+  static const String sendOtp = 'send_otp';
+  static const String changeEmailNewHint = 'change_email_new_hint';
+  static const String changePhoneNewHint = 'change_phone_new_hint';
+  static const String changeEmailOtpDesc = 'change_email_otp_desc';
+  static const String changePhoneOtpDesc = 'change_phone_otp_desc';
+  static const String otpExpiresIn = 'otp_expires_in';
 }

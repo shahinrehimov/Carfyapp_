@@ -24,6 +24,30 @@ class SellerCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (!seller.isOpen) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF3F0),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: const Color(0xFFF6683C).withValues(alpha: 0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.access_time_outlined, size: 14, color: Color(0xFFF6683C)),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      seller.availability?.message ?? context.localization.storeClosed,
+                      style: const TextStyle(fontSize: 12, color: Color(0xFFF6683C), fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
           Row(
             children: [
               Icon(Icons.storefront_outlined, size: 18, color: context.theme.colors.primary),

@@ -36,7 +36,20 @@
 	<string>Avtomobilinizin şəklini saxlamaq üçün qalereyanıza giriş lazımdır.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Avtomobilinizin şəklini seçmək üçün qalereyanıza giriş lazımdır.</string>
-<key>UIBackgroundModes</key>
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.386808043304-gbpik28oq32m3vukhv1vu9djj0gus95u</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>386808043304-gbpik28oq32m3vukhv1vu9djj0gus95u.apps.googleusercontent.com</string>
+	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>

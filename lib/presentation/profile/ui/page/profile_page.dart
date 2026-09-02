@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carfy/common/widgets/not_logged_view.dart';
 import 'package:carfy/common/widgets/shimmer_wrapper.dart';
 import 'package:carfy/common/widgets/notification_icon_button.dart';

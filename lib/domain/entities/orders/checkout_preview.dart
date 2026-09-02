@@ -1,3 +1,5 @@
+import 'package:carfy/domain/entities/orders/closed_seller.dart';
+import 'package:carfy/domain/entities/products/availability.dart';
 import 'package:carfy/domain/entities/products/product.dart';
 
 class CheckoutPreviewItem {
@@ -18,6 +20,8 @@ class CheckoutPreviewSeller {
   final int shippingEtaMinutes;
   final bool shippingIsEstimate;
   final bool isSedan;
+  final bool isOpen;
+  final Availability? availability;
 
   CheckoutPreviewSeller({
     required this.companyId,
@@ -29,6 +33,8 @@ class CheckoutPreviewSeller {
     required this.shippingEtaMinutes,
     required this.shippingIsEstimate,
     required this.isSedan,
+    required this.isOpen,
+    this.availability,
   });
 }
 
@@ -64,6 +70,8 @@ class CheckoutPreview {
   final double totalShipping;
   final double grandTotal;
   final CheckoutPreviewReferral? referral;
+  final bool canCheckout;
+  final List<ClosedSeller> closedSellers;
 
   CheckoutPreview({
     required this.sellers,
@@ -71,5 +79,7 @@ class CheckoutPreview {
     required this.totalShipping,
     required this.grandTotal,
     this.referral,
+    required this.canCheckout,
+    this.closedSellers = const [],
   });
 }
