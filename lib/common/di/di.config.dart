@@ -285,6 +285,8 @@ import 'package:carfy/domain/use_cases/search/clear_search_history_use_case.dart
     as _i1011;
 import 'package:carfy/domain/use_cases/search/get_search_history_use_case.dart'
     as _i967;
+import 'package:carfy/domain/use_cases/search/get_search_suggestions_use_case.dart'
+    as _i667;
 import 'package:carfy/domain/use_cases/search/remove_search_history_use_case.dart'
     as _i565;
 import 'package:carfy/domain/use_cases/setting/get_setting_use_case.dart'
@@ -583,6 +585,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i139.StoreReviewUseCase>(
       () => _i139.StoreReviewUseCase(gh<_i39.ProductRepository>()),
+    );
+    gh.factory<_i667.GetSearchSuggestionsUseCase>(
+      () => _i667.GetSearchSuggestionsUseCase(gh<_i39.ProductRepository>()),
     );
     gh.factory<_i655.AuthRepository>(
       () => _i407.AuthRepositoryImpl(

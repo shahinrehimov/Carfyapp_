@@ -5,6 +5,7 @@ import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/domain/entities/products/review.dart';
+import 'package:carfy/domain/entities/products/search_suggestions.dart';
 import 'package:carfy/domain/params/product/load_reviews_params.dart';
 import 'package:carfy/domain/params/product/other_sellers_params.dart';
 import 'package:carfy/domain/params/product/product_list_params.dart';
@@ -19,4 +20,5 @@ abstract class ProductRepository {
   Future<Either<Failure, PaginationResponse<OtherSeller>>> getOtherSellers(OtherSellersParams params);
   Future<Either<Failure, Review>> storeReview(StoreReviewParams params);
   Future<Either<Failure, PaginationResponse<Review>>> loadReviews(LoadReviewsParams params);
+  Future<Either<Failure, SearchSuggestions>> getSuggestions(String search);
 }

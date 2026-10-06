@@ -38,6 +38,7 @@ class EndpointPaths {
 
   // Product Endpoints
   static const products = '/app/products/load';
+  static const productSuggestions = '/app/products/suggestions';
   static const productFilters = '/app/products/filters';
   static String productShow(String cpvUuid) => '/app/products/show/$cpvUuid';
   static String otherSellers(int variantId) => '/app/products/$variantId/other-sellers';

@@ -24,6 +24,7 @@ import 'package:carfy/data/models/product/product_option_model.dart';
 import 'package:carfy/data/models/product/product_ratings_model.dart';
 import 'package:carfy/data/models/product/product_show_model.dart';
 import 'package:carfy/data/models/product/review_model.dart';
+import 'package:carfy/data/models/product/search_suggestions_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
 import 'package:carfy/data/models/product/set_item_model.dart';
 import 'package:carfy/data/models/product/sort_option_model.dart';
@@ -52,6 +53,7 @@ import 'package:carfy/domain/entities/products/product_option.dart';
 import 'package:carfy/domain/entities/products/product_ratings.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/domain/entities/products/review.dart';
+import 'package:carfy/domain/entities/products/search_suggestions.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
 import 'package:carfy/domain/entities/products/set_item.dart';
 import 'package:carfy/domain/entities/products/sort_option.dart';
@@ -300,4 +302,46 @@ class ProductMapper {
 
   PaginationResponse<Review> mapReviewsPaginationResponse(PaginationResponseModel<ReviewModel> model) =>
       PaginationMapper.map(model, mapReview);
+
+  SearchSuggestions mapSearchSuggestions(SearchSuggestionsModel model) => SearchSuggestions(
+    products: model.products.map(_mapSuggestionProduct).toList(),
+    categories: model.categories.map(_mapSuggestionCategory).toList(),
+  );
+
+  SuggestionProduct _mapSuggestionProduct(SuggestionProductModel model) => SuggestionProduct(
+    id: model.id,
+    uuid: model.uuid,
+    title: model.title,
+    oemCode: model.oemCode,
+    image: model.image,
+    price: model.price,
+    priceFinal: model.priceFinal,
+    hasDiscount: model.hasDiscount,
+    discountType: model.discountType,
+    discount: model.discount,
+    category: model.category != null ? _mapSuggestionProductCategory(model.category!) : null,
+    sellerStoreCode: model.seller.storeCode,
+    sellersCount: model.sellers.count,
+    minPrice: model.sellers.minPrice,
+    maxPrice: model.sellers.maxPrice,
+    hasOtherPrices: model.sellers.hasOtherPrices,
+  );
+
+  SuggestionProductCategory _mapSuggestionProductCategory(SuggestionProductCategoryModel model) =>
+      SuggestionProductCategory(
+        title: model.title,
+        slug: model.slug,
+        parentTitle: model.parentTitle,
+        parentSlug: model.parentSlug,
+      );
+
+  SuggestionCategory _mapSuggestionCategory(SuggestionCategoryModel model) => SuggestionCategory(
+    id: model.id,
+    title: model.title,
+    slug: model.slug,
+    isSub: model.isSub,
+    parentTitle: model.parent?.title,
+    parentSlug: model.parent?.slug,
+    productsCount: model.productsCount,
+  );
 }

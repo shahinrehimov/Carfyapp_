@@ -12,6 +12,7 @@ import 'package:carfy/data/models/product/product_filters_model.dart';
 import 'package:carfy/data/models/product/product_model.dart';
 import 'package:carfy/data/models/product/product_show_model.dart';
 import 'package:carfy/data/models/product/review_model.dart';
+import 'package:carfy/data/models/product/search_suggestions_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,6 +25,7 @@ abstract class ProductRemoteDataSource {
   Future<PaginationResponseModel<OtherSellerModel>> fetchOtherSellers(int variantId, OtherSellersQueryParams params);
   Future<ReviewModel> storeReview(String cpvUuid, StoreReviewDto dto);
   Future<PaginationResponseModel<ReviewModel>> loadReviews(String cpvUuid, LoadReviewsQueryParams params);
+  Future<SearchSuggestionsModel> fetchSuggestions(String search);
 }
 
 @Injectable(as: ProductRemoteDataSource)
@@ -86,6 +88,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource with DataSourc
     return handleResponse(
       () => _networkManager.get(EndpointPaths.reviewsLoad(cpvUuid), queryParams: params.toQueryParameters()),
       map: (json) => PaginationResponseModel.fromJson(json, (item) => ReviewModel.fromJson(item)),
+    );
+  }
+
+  @override
+  Future<SearchSuggestionsModel> fetchSuggestions(String search) {
+    return handleResponse(
+      () => _networkManager.get(EndpointPaths.productSuggestions, queryParams: {'search': search, 'limit': 6, 'categories_limit': 5}),
+      map: (json) => SearchSuggestionsModel.fromJson(json as Map<String, dynamic>),
     );
   }
 }

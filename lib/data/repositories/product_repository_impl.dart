@@ -14,6 +14,7 @@ import 'package:carfy/domain/entities/products/product.dart';
 import 'package:carfy/domain/entities/products/product_filters.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/domain/entities/products/review.dart';
+import 'package:carfy/domain/entities/products/search_suggestions.dart';
 import 'package:carfy/domain/params/product/load_reviews_params.dart';
 import 'package:carfy/domain/params/product/other_sellers_params.dart';
 import 'package:carfy/domain/params/product/product_list_params.dart';
@@ -106,6 +107,14 @@ class ProductRepositoryImpl extends ProductRepository with RepositorySafeCallMix
       final queryParams = LoadReviewsQueryParams(page: params.page, limit: params.limit);
       final res = await _remoteDataSource.loadReviews(params.cpvUuid, queryParams);
       return _mapper.mapReviewsPaginationResponse(res);
+    });
+  }
+
+  @override
+  Future<Either<Failure, SearchSuggestions>> getSuggestions(String search) {
+    return safeCall(() async {
+      final res = await _remoteDataSource.fetchSuggestions(search);
+      return _mapper.mapSearchSuggestions(res);
     });
   }
 }
