@@ -59,16 +59,17 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
     }
   }
 
-  void optimisticIncrement(String cpvUuid) {
+  void optimisticIncrement(String itemKey) {
     _saveSnapshot();
     final updatedItems = state.items.map((item) {
-      if (item.product.seller?.uuid == cpvUuid) {
+      if (item.itemKey == itemKey) {
         final newQty = item.basketQuantity + 1;
         return BasketProduct(
           product: item.product,
           basketQuantity: newQty,
           priceInBasket: item.product.price * newQty,
           priceFinalInBasket: item.product.priceFinal * newQty,
+          fitmentSelection: item.fitmentSelection,
         );
       }
       return item;
@@ -76,22 +77,23 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
     emit(state.copyWith(items: updatedItems, basketData: _recalculateBasketData(updatedItems)));
   }
 
-  void optimisticDecrement(String cpvUuid) {
+  void optimisticDecrement(String itemKey) {
     _saveSnapshot();
     final item = state.items.firstWhere(
-      (item) => item.product.seller?.uuid == cpvUuid,
+      (item) => item.itemKey == itemKey,
       orElse: () => state.items.first,
     );
     if (item.basketQuantity <= 1) return;
 
     final updatedItems = state.items.map((item) {
-      if (item.product.seller?.uuid == cpvUuid) {
+      if (item.itemKey == itemKey) {
         final newQty = item.basketQuantity - 1;
         return BasketProduct(
           product: item.product,
           basketQuantity: newQty,
           priceInBasket: item.product.price * newQty,
           priceFinalInBasket: item.product.priceFinal * newQty,
+          fitmentSelection: item.fitmentSelection,
         );
       }
       return item;
@@ -99,9 +101,9 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
     emit(state.copyWith(items: updatedItems, basketData: _recalculateBasketData(updatedItems)));
   }
 
-  void optimisticRemove(String cpvUuid) {
+  void optimisticRemove(String itemKey) {
     _saveSnapshot();
-    final updatedItems = state.items.where((item) => item.product.seller?.uuid != cpvUuid).toList();
+    final updatedItems = state.items.where((item) => item.itemKey != itemKey).toList();
     emit(state.copyWith(items: updatedItems, basketData: _recalculateBasketData(updatedItems)));
   }
 
@@ -123,19 +125,20 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
     );
   }
 
-  void updateItemQuantity(String cpvUuid, int newQuantity, BasketData newBasketData) {
+  void updateItemQuantity(String itemKey, int newQuantity, BasketData newBasketData) {
     if (newQuantity <= 0) {
-      final updatedItems = state.items.where((item) => item.product.seller?.uuid != cpvUuid).toList();
+      final updatedItems = state.items.where((item) => item.itemKey != itemKey).toList();
       emit(state.copyWith(items: updatedItems, basketData: newBasketData));
       return;
     }
     final updatedItems = state.items.map((item) {
-      if (item.product.seller?.uuid == cpvUuid) {
+      if (item.itemKey == itemKey) {
         return BasketProduct(
           product: item.product,
           basketQuantity: newQuantity,
           priceInBasket: item.product.price * newQuantity,
           priceFinalInBasket: item.product.priceFinal * newQuantity,
+          fitmentSelection: item.fitmentSelection,
         );
       }
       return item;
@@ -143,8 +146,8 @@ class BasketCubit extends Cubit<BasketState> with StateMapHelper {
     emit(state.copyWith(items: updatedItems, basketData: newBasketData));
   }
 
-  void removeItem(String cpvUuid, BasketData newBasketData) {
-    final updatedItems = state.items.where((item) => item.product.seller?.uuid != cpvUuid).toList();
+  void removeItem(String itemKey, BasketData newBasketData) {
+    final updatedItems = state.items.where((item) => item.itemKey != itemKey).toList();
     emit(state.copyWith(items: updatedItems, basketData: newBasketData));
   }
 

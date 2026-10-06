@@ -1,5 +1,6 @@
 import 'package:carfy/domain/entities/products/brand_model_item.dart';
 import 'package:carfy/domain/entities/products/fitment.dart';
+import 'package:carfy/domain/entities/products/fitment_selection_options.dart';
 import 'package:carfy/domain/entities/products/gallery_image.dart';
 import 'package:carfy/domain/entities/products/other_seller.dart';
 import 'package:carfy/domain/entities/products/product.dart';
@@ -28,6 +29,8 @@ class ProductShow {
   final String? discountTypeTitle;
   final double discount;
   final bool isUniversal;
+  final bool requiresFitmentSelection;
+  final FitmentSelectionOptions? fitmentSelectionOptions;
   final int? year;
   final int? yearFrom;
   final int? yearTo;
@@ -63,6 +66,8 @@ class ProductShow {
     this.discountTypeTitle,
     required this.discount,
     required this.isUniversal,
+    this.requiresFitmentSelection = false,
+    this.fitmentSelectionOptions,
     this.year,
     this.yearFrom,
     this.yearTo,

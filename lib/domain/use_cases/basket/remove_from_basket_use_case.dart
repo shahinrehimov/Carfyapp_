@@ -10,7 +10,7 @@ class RemoveFromBasketUseCase {
 
   RemoveFromBasketUseCase(this._repository);
 
-  Future<Either<Failure, BasketActionResponse>> call(String cpvUuid) async {
-    return await _repository.removeFromBasket(cpvUuid);
+  Future<Either<Failure, BasketActionResponse>> call(String cpvUuid, {int? brandId, int? brandModelId}) async {
+    return await _repository.removeFromBasket(cpvUuid, brandId: brandId, brandModelId: brandModelId);
   }
 }

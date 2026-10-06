@@ -20,6 +20,7 @@ class Product {
   final bool isUniversal;
   final bool inWishlist;
   final bool inBasket;
+  final bool requiresFitmentSelection;
   final Seller? seller;
   final ProductInfo product;
   final ProductRatings? ratings;
@@ -41,6 +42,7 @@ class Product {
     required this.isUniversal,
     required this.inWishlist,
     required this.inBasket,
+    this.requiresFitmentSelection = false,
     this.seller,
     required this.product,
     this.ratings,

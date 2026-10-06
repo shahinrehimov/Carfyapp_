@@ -46,9 +46,9 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
 
   bool isInBasket(String cpvUuid) => state.basketIds.contains(cpvUuid);
 
-  Future<void> addToBasket(String cpvUuid) async {
+  Future<void> addToBasket(String cpvUuid, {int? brandId, int? brandModelId}) async {
     _setProductState(cpvUuid, StateStatus.loading());
-    final result = await _addToBasketUseCase(cpvUuid);
+    final result = await _addToBasketUseCase(cpvUuid, brandId: brandId, brandModelId: brandModelId);
     result.fold(
       (failure) {
         _setProductState(cpvUuid, mapFailure(failure));
@@ -61,10 +61,10 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     );
   }
 
-  Future<void> removeFromBasket(String cpvUuid) async {
+  Future<void> removeFromBasket(String cpvUuid, {int? brandId, int? brandModelId}) async {
     _setProductState(cpvUuid, StateStatus.loading());
 
-    final result = await _removeFromBasketUseCase(cpvUuid);
+    final result = await _removeFromBasketUseCase(cpvUuid, brandId: brandId, brandModelId: brandModelId);
     result.fold(
       (failure) {
         _setProductState(cpvUuid, mapFailure(failure));
@@ -72,15 +72,15 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
       (response) {
         _removeFromBasketIds(cpvUuid);
         _setProductState(cpvUuid, StateStatus.success());
-        _emitQuantityUpdate(cpvUuid, 0, response.basketData);
+        _emitQuantityUpdate(cpvUuid, 0, response.basketData, brandId: brandId, brandModelId: brandModelId);
       },
     );
   }
 
-  Future<void> incrementQuantity(String cpvUuid) async {
+  Future<void> incrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) async {
     _setProductState(cpvUuid, StateStatus.loading());
 
-    final result = await _incrementQuantityUseCase(cpvUuid);
+    final result = await _incrementQuantityUseCase(cpvUuid, brandId: brandId, brandModelId: brandModelId);
     result.fold(
       (failure) {
         _setProductState(cpvUuid, mapFailure(failure));
@@ -88,15 +88,15 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
       (response) {
         _addToBasketIds(cpvUuid);
         _setProductState(cpvUuid, StateStatus.success());
-        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
+        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData, brandId: brandId, brandModelId: brandModelId);
       },
     );
   }
 
-  Future<void> decrementQuantity(String cpvUuid) async {
+  Future<void> decrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) async {
     _setProductState(cpvUuid, StateStatus.loading());
 
-    final result = await _decrementQuantityUseCase(cpvUuid);
+    final result = await _decrementQuantityUseCase(cpvUuid, brandId: brandId, brandModelId: brandModelId);
     result.fold(
       (failure) {
         _setProductState(cpvUuid, mapFailure(failure));
@@ -106,7 +106,7 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
           _removeFromBasketIds(cpvUuid);
         }
         _setProductState(cpvUuid, StateStatus.success());
-        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData);
+        _emitQuantityUpdate(cpvUuid, response.quantity, response.basketData, brandId: brandId, brandModelId: brandModelId);
       },
     );
   }
@@ -122,12 +122,9 @@ class BasketManagerCubit extends Cubit<BasketManagerState> with StateMapHelper {
     emit(state.copyWith(basketIds: updated));
   }
 
-  void _emitQuantityUpdate(String cpvUuid, int quantity, BasketData basketData) {
-    emit(
-      state.copyWith(
-        quantityUpdate: QuantityUpdate(cpvUuid: cpvUuid, quantity: quantity, basketData: basketData),
-      ),
-    );
+  void _emitQuantityUpdate(String cpvUuid, int quantity, BasketData basketData, {int? brandId, int? brandModelId}) {
+    final itemKey = '$cpvUuid:$brandId:$brandModelId';
+    emit(state.copyWith(quantityUpdate: QuantityUpdate(itemKey: itemKey, quantity: quantity, basketData: basketData)));
   }
 
   void _setProductState(String cpvUuid, StateStatus status) {

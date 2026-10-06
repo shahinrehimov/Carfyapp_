@@ -10,7 +10,7 @@ class IncrementQuantityUseCase {
 
   IncrementQuantityUseCase(this._repository);
 
-  Future<Either<Failure, BasketQuantityResponse>> call(String cpvUuid) async {
-    return await _repository.incrementQuantity(cpvUuid);
+  Future<Either<Failure, BasketQuantityResponse>> call(String cpvUuid, {int? brandId, int? brandModelId}) async {
+    return await _repository.incrementQuantity(cpvUuid, brandId: brandId, brandModelId: brandModelId);
   }
 }

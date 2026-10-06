@@ -19,6 +19,7 @@ class ProductModel {
   final bool isUniversal;
   final bool inWishlist;
   final bool inBasket;
+  final bool requiresFitmentSelection;
   final SellerModel? seller;
   final ProductInfoModel product;
   final ProductRatingsModel? ratings;
@@ -40,6 +41,7 @@ class ProductModel {
     required this.isUniversal,
     required this.inWishlist,
     required this.inBasket,
+    this.requiresFitmentSelection = false,
     this.seller,
     required this.product,
     this.ratings,
@@ -63,6 +65,7 @@ class ProductModel {
       isUniversal: json['is_universal'] as bool? ?? false,
       inWishlist: json['in_wishlist'] as bool,
       inBasket: json['in_basket'] as bool,
+      requiresFitmentSelection: json['requires_fitment_selection'] as bool? ?? false,
       seller: json['seller'] != null ? SellerModel.fromJson(json['seller'] as Map<String, dynamic>) : null,
       product: ProductInfoModel.fromJson(json['product'] as Map<String, dynamic>),
       ratings: json['ratings'] != null ? ProductRatingsModel.fromJson(json['ratings'] as Map<String, dynamic>) : null,

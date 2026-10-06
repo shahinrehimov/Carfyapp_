@@ -25,33 +25,33 @@ class BasketRepositoryImpl extends BasketRepository with RepositorySafeCallMixin
   }
 
   @override
-  Future<Either<Failure, BasketActionResponse>> addToBasket(String cpvUuid, {int quantity = 1}) {
+  Future<Either<Failure, BasketActionResponse>> addToBasket(String cpvUuid, {int quantity = 1, int? brandId, int? brandModelId}) {
     return safeCall(() async {
-      final res = await _remoteDataSource.addToBasket(cpvUuid, quantity: quantity);
+      final res = await _remoteDataSource.addToBasket(cpvUuid, quantity: quantity, brandId: brandId, brandModelId: brandModelId);
       return _mapper.mapBasketActionResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketActionResponse>> removeFromBasket(String cpvUuid) {
+  Future<Either<Failure, BasketActionResponse>> removeFromBasket(String cpvUuid, {int? brandId, int? brandModelId}) {
     return safeCall(() async {
-      final res = await _remoteDataSource.removeFromBasket(cpvUuid);
+      final res = await _remoteDataSource.removeFromBasket(cpvUuid, brandId: brandId, brandModelId: brandModelId);
       return _mapper.mapBasketActionResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(String cpvUuid) {
+  Future<Either<Failure, BasketQuantityResponse>> incrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) {
     return safeCall(() async {
-      final res = await _remoteDataSource.incrementQuantity(cpvUuid);
+      final res = await _remoteDataSource.incrementQuantity(cpvUuid, brandId: brandId, brandModelId: brandModelId);
       return _mapper.mapBasketQuantityResponse(res);
     });
   }
 
   @override
-  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(String cpvUuid) {
+  Future<Either<Failure, BasketQuantityResponse>> decrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) {
     return safeCall(() async {
-      final res = await _remoteDataSource.decrementQuantity(cpvUuid);
+      final res = await _remoteDataSource.decrementQuantity(cpvUuid, brandId: brandId, brandModelId: brandModelId);
       return _mapper.mapBasketQuantityResponse(res);
     });
   }

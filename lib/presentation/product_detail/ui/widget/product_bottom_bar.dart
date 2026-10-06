@@ -5,6 +5,7 @@ import 'package:carfy/common/widgets/custom_button.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
 import 'package:carfy/gen/assets.gen.dart';
 import 'package:carfy/presentation/app/state/basket_manager/basket_manager_cubit.dart';
+import 'package:carfy/presentation/product_detail/ui/widget/fitment_selection_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,12 +62,32 @@ class ProductBottomBar extends StatelessWidget {
                 final cpvUuid = product.seller?.uuid;
                 final isLoading = cpvUuid != null && state.isLoading(cpvUuid);
                 final isInBasket = cpvUuid != null && state.isInBasket(cpvUuid);
+                final requiresFitment = product.requiresFitmentSelection;
+
+                void onPressed() {
+                  if (cpvUuid == null) return;
+                  if (requiresFitment) {
+                    FitmentSelectionBottomSheet.show(
+                      context,
+                      cpvUuid: cpvUuid,
+                      preloadedOptions: product.fitmentSelectionOptions,
+                      onConfirm: (brandId, brandModelId) {
+                        context.read<BasketManagerCubit>().addToBasket(
+                          cpvUuid,
+                          brandId: brandId,
+                          brandModelId: brandModelId,
+                        );
+                      },
+                    );
+                  } else {
+                    context.read<BasketManagerCubit>().addToBasket(cpvUuid);
+                  }
+                }
+
                 return CustomButton(
-                  onPressed: isLoading || cpvUuid == null || isInBasket
-                      ? null
-                      : () => context.read<BasketManagerCubit>().addToBasket(cpvUuid),
+                  onPressed: isLoading || cpvUuid == null || (isInBasket && !requiresFitment) ? null : onPressed,
                   loading: isLoading,
-                  text: isInBasket ? context.localization.inBasket : context.localization.addToBasket,
+                  text: isInBasket && !requiresFitment ? context.localization.inBasket : context.localization.addToBasket,
                   height: 48,
                   prefix: isLoading
                       ? null

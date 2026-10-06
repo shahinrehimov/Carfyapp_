@@ -9,10 +9,10 @@ import 'package:injectable/injectable.dart';
 
 abstract class BasketRemoteDataSource {
   Future<BasketResponseModel> fetchBasket();
-  Future<BasketActionResponseModel> addToBasket(String cpvUuid, {int quantity = 1});
-  Future<BasketActionResponseModel> removeFromBasket(String cpvUuid);
-  Future<BasketQuantityResponseModel> incrementQuantity(String cpvUuid);
-  Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid);
+  Future<BasketActionResponseModel> addToBasket(String cpvUuid, {int quantity = 1, int? brandId, int? brandModelId});
+  Future<BasketActionResponseModel> removeFromBasket(String cpvUuid, {int? brandId, int? brandModelId});
+  Future<BasketQuantityResponseModel> incrementQuantity(String cpvUuid, {int? brandId, int? brandModelId});
+  Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid, {int? brandId, int? brandModelId});
   Future<BasketActionResponseModel> removeSetItem(String cpvUuid, int setItemId);
   Future<BasketQuantityResponseModel> incrementSetItem(String cpvUuid, int setItemId);
   Future<BasketQuantityResponseModel> decrementSetItem(String cpvUuid, int setItemId);
@@ -31,33 +31,46 @@ class BasketRemoteDataSourceImpl extends BasketRemoteDataSource with DataSourceM
   }
 
   @override
-  Future<BasketActionResponseModel> addToBasket(String cpvUuid, {int quantity = 1}) {
+  Future<BasketActionResponseModel> addToBasket(String cpvUuid, {int quantity = 1, int? brandId, int? brandModelId}) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.basketAdd(cpvUuid), data: {'quantity': quantity}),
+      () => _networkManager.post(EndpointPaths.basketAdd(cpvUuid), data: {
+        'quantity': quantity,
+        if (brandId != null) 'brand_id': brandId,
+        if (brandModelId != null) 'brand_model_id': brandModelId,
+      }),
       map: (json) => BasketActionResponseModel.fromJson(json),
     );
   }
 
   @override
-  Future<BasketActionResponseModel> removeFromBasket(String cpvUuid) {
+  Future<BasketActionResponseModel> removeFromBasket(String cpvUuid, {int? brandId, int? brandModelId}) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.basketRemove(cpvUuid)),
+      () => _networkManager.post(EndpointPaths.basketRemove(cpvUuid), data: {
+        if (brandId != null) 'brand_id': brandId,
+        if (brandModelId != null) 'brand_model_id': brandModelId,
+      }),
       map: (json) => BasketActionResponseModel.fromJson(json),
     );
   }
 
   @override
-  Future<BasketQuantityResponseModel> incrementQuantity(String cpvUuid) {
+  Future<BasketQuantityResponseModel> incrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.basketIncrement(cpvUuid)),
+      () => _networkManager.post(EndpointPaths.basketIncrement(cpvUuid), data: {
+        if (brandId != null) 'brand_id': brandId,
+        if (brandModelId != null) 'brand_model_id': brandModelId,
+      }),
       map: (json) => BasketQuantityResponseModel.fromJson(json),
     );
   }
 
   @override
-  Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid) {
+  Future<BasketQuantityResponseModel> decrementQuantity(String cpvUuid, {int? brandId, int? brandModelId}) {
     return handleResponse(
-      () => _networkManager.post(EndpointPaths.basketDecrement(cpvUuid)),
+      () => _networkManager.post(EndpointPaths.basketDecrement(cpvUuid), data: {
+        if (brandId != null) 'brand_id': brandId,
+        if (brandModelId != null) 'brand_model_id': brandModelId,
+      }),
       map: (json) => BasketQuantityResponseModel.fromJson(json),
     );
   }

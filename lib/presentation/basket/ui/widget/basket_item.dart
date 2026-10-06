@@ -21,6 +21,12 @@ class BasketItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isClosed = basketProduct.product.seller?.availability?.isOpen == false;
     final closedMessage = basketProduct.product.seller?.availability?.message;
+    final cpvUuid = basketProduct.product.seller?.uuid;
+    final brandId = basketProduct.fitmentSelection?.brand?.id;
+    final brandModelId = basketProduct.fitmentSelection?.brandModel?.id;
+    final fitmentLabel = basketProduct.fitmentSelection?.displayLabel;
+    final requiresFitment = basketProduct.product.requiresFitmentSelection;
+    final missingFitment = requiresFitment && basketProduct.fitmentSelection == null;
 
     return Container(
       width: double.maxFinite,
@@ -29,7 +35,7 @@ class BasketItem extends StatelessWidget {
         color: context.theme.colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isClosed
+          color: isClosed || missingFitment
               ? const Color(0xFFF6683C).withValues(alpha: 0.4)
               : context.theme.colors.border2,
         ),
@@ -38,26 +44,9 @@ class BasketItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (isClosed)
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFF3F0),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.access_time_outlined, size: 14, color: Color(0xFFF6683C)),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      closedMessage ?? context.localization.storeClosed,
-                      style: const TextStyle(fontSize: 11, color: Color(0xFFF6683C)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _WarningBanner(message: closedMessage ?? context.localization.storeClosed),
+          if (missingFitment)
+            _WarningBanner(message: 'Select a car for this product'),
           SizedBox(
             height: 112,
             child: Padding(
@@ -80,12 +69,19 @@ class BasketItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Title
                         Text(
                           basketProduct.product.title,
                           style: TextStyle(color: context.theme.colors.textDark, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
-                        // Price
+                        if (fitmentLabel != null && fitmentLabel.isNotEmpty)
+                          Text(
+                            fitmentLabel,
+                            style: TextStyle(
+                              color: context.theme.colors.primary,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         Row(
                           children: [
                             Text(
@@ -106,7 +102,6 @@ class BasketItem extends StatelessWidget {
                             ],
                           ],
                         ),
-                        // Quantity
                         Container(
                           width: 68,
                           height: 22,
@@ -120,10 +115,9 @@ class BasketItem extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  final cpvUuid = basketProduct.product.seller?.uuid;
                                   if (cpvUuid == null || basketProduct.basketQuantity <= 1) return;
-                                  context.read<BasketCubit>().optimisticDecrement(cpvUuid);
-                                  context.read<BasketManagerCubit>().decrementQuantity(cpvUuid);
+                                  context.read<BasketCubit>().optimisticDecrement(basketProduct.itemKey);
+                                  context.read<BasketManagerCubit>().decrementQuantity(cpvUuid, brandId: brandId, brandModelId: brandModelId);
                                 },
                                 child: Container(
                                   width: 18,
@@ -147,10 +141,9 @@ class BasketItem extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  final cpvUuid = basketProduct.product.seller?.uuid;
                                   if (cpvUuid == null) return;
-                                  context.read<BasketCubit>().optimisticIncrement(cpvUuid);
-                                  context.read<BasketManagerCubit>().incrementQuantity(cpvUuid);
+                                  context.read<BasketCubit>().optimisticIncrement(basketProduct.itemKey);
+                                  context.read<BasketManagerCubit>().incrementQuantity(cpvUuid, brandId: brandId, brandModelId: brandModelId);
                                 },
                                 child: Container(
                                   width: 18,
@@ -172,10 +165,9 @@ class BasketItem extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          final cpvUuid = basketProduct.product.seller?.uuid;
                           if (cpvUuid == null) return;
-                          context.read<BasketCubit>().optimisticRemove(cpvUuid);
-                          context.read<BasketManagerCubit>().removeFromBasket(cpvUuid);
+                          context.read<BasketCubit>().optimisticRemove(basketProduct.itemKey);
+                          context.read<BasketManagerCubit>().removeFromBasket(cpvUuid, brandId: brandId, brandModelId: brandModelId);
                         },
                         behavior: HitTestBehavior.opaque,
                         child: Padding(padding: const EdgeInsets.all(5.0), child: SvgPicture.asset(Assets.icons.closeSquare)),
@@ -187,6 +179,33 @@ class BasketItem extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WarningBanner extends StatelessWidget {
+  final String message;
+
+  const _WarningBanner({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: const BoxDecoration(
+        color: Color(0xFFFFF3F0),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.access_time_outlined, size: 14, color: Color(0xFFF6683C)),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(message, style: const TextStyle(fontSize: 11, color: Color(0xFFF6683C))),
           ),
         ],
       ),

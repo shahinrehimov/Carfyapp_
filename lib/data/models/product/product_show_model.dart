@@ -1,5 +1,6 @@
 import 'package:carfy/data/models/product/brand_model_item_model.dart';
 import 'package:carfy/data/models/product/fitment_model.dart';
+import 'package:carfy/data/models/product/fitment_selection_options_model.dart';
 import 'package:carfy/data/models/product/gallery_image_model.dart';
 import 'package:carfy/data/models/product/other_seller_model.dart';
 import 'package:carfy/data/models/product/product_detail_model.dart';
@@ -27,6 +28,8 @@ class ProductShowModel {
   final String? discountTypeTitle;
   final double discount;
   final bool isUniversal;
+  final bool requiresFitmentSelection;
+  final FitmentSelectionOptionsModel? fitmentSelectionOptions;
   final int? year;
   final int? yearFrom;
   final int? yearTo;
@@ -62,6 +65,8 @@ class ProductShowModel {
     this.discountTypeTitle,
     required this.discount,
     required this.isUniversal,
+    this.requiresFitmentSelection = false,
+    this.fitmentSelectionOptions,
     this.year,
     this.yearFrom,
     this.yearTo,
@@ -101,6 +106,10 @@ class ProductShowModel {
       discountTypeTitle: json['discount_type_title'] as String?,
       discount: (json['discount'] as num).toDouble(),
       isUniversal: json['is_universal'] as bool? ?? false,
+      requiresFitmentSelection: json['requires_fitment_selection'] as bool? ?? false,
+      fitmentSelectionOptions: json['fitment_selection_options'] != null
+          ? FitmentSelectionOptionsModel.fromJson(json['fitment_selection_options'] as Map<String, dynamic>)
+          : null,
       year: json['year'] as int?,
       yearFrom: json['year_from'] as int?,
       yearTo: json['year_to'] as int?,

@@ -1,11 +1,11 @@
 part of 'basket_manager_cubit.dart';
 
 class QuantityUpdate {
-  final String cpvUuid;
+  final String itemKey;
   final int quantity;
   final BasketData basketData;
 
-  const QuantityUpdate({required this.cpvUuid, required this.quantity, required this.basketData});
+  const QuantityUpdate({required this.itemKey, required this.quantity, required this.basketData});
 }
 
 class BasketManagerState extends Equatable {

@@ -23,6 +23,7 @@ import 'package:carfy/data/models/product/product_model.dart';
 import 'package:carfy/data/models/product/product_option_model.dart';
 import 'package:carfy/data/models/product/product_ratings_model.dart';
 import 'package:carfy/data/models/product/product_show_model.dart';
+import 'package:carfy/data/models/product/fitment_selection_options_model.dart';
 import 'package:carfy/data/models/product/review_model.dart';
 import 'package:carfy/data/models/product/search_suggestions_model.dart';
 import 'package:carfy/data/models/product/seller_model.dart';
@@ -52,6 +53,7 @@ import 'package:carfy/domain/entities/products/product_info.dart';
 import 'package:carfy/domain/entities/products/product_option.dart';
 import 'package:carfy/domain/entities/products/product_ratings.dart';
 import 'package:carfy/domain/entities/products/product_show.dart';
+import 'package:carfy/domain/entities/products/fitment_selection_options.dart';
 import 'package:carfy/domain/entities/products/review.dart';
 import 'package:carfy/domain/entities/products/search_suggestions.dart';
 import 'package:carfy/domain/entities/products/seller.dart';
@@ -88,6 +90,7 @@ class ProductMapper {
     isUniversal: model.isUniversal,
     inWishlist: model.inWishlist,
     inBasket: model.inBasket,
+    requiresFitmentSelection: model.requiresFitmentSelection,
     seller: model.seller != null ? mapSeller(model.seller!) : null,
     product: mapProductInfo(model.product),
     ratings: model.ratings != null ? mapProductRatings(model.ratings!) : null,
@@ -279,6 +282,10 @@ class ProductMapper {
     discountTypeTitle: model.discountTypeTitle,
     discount: model.discount,
     isUniversal: model.isUniversal,
+    requiresFitmentSelection: model.requiresFitmentSelection,
+    fitmentSelectionOptions: model.fitmentSelectionOptions != null
+        ? mapFitmentSelectionOptions(model.fitmentSelectionOptions!)
+        : null,
     year: model.year,
     yearFrom: model.yearFrom,
     yearTo: model.yearTo,
@@ -302,6 +309,19 @@ class ProductMapper {
 
   PaginationResponse<Review> mapReviewsPaginationResponse(PaginationResponseModel<ReviewModel> model) =>
       PaginationMapper.map(model, mapReview);
+
+  FitmentSelectionOptions mapFitmentSelectionOptions(FitmentSelectionOptionsModel model) =>
+      FitmentSelectionOptions(
+        anyBrand: model.anyBrand,
+        brands: model.brands.map(_mapFitmentBrandOption).toList(),
+      );
+
+  FitmentBrandOption _mapFitmentBrandOption(FitmentBrandOptionModel model) => FitmentBrandOption(
+    id: model.id,
+    title: model.title,
+    anyModel: model.anyModel,
+    models: model.models.map((m) => FitmentModelOption(id: m.id, title: m.title)).toList(),
+  );
 
   SearchSuggestions mapSearchSuggestions(SearchSuggestionsModel model) => SearchSuggestions(
     products: model.products.map(_mapSuggestionProduct).toList(),

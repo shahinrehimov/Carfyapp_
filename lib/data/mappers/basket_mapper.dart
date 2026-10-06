@@ -4,11 +4,13 @@ import 'package:carfy/data/models/basket/basket_data_model.dart';
 import 'package:carfy/data/models/basket/basket_product_model.dart';
 import 'package:carfy/data/models/basket/basket_quantity_response_model.dart';
 import 'package:carfy/data/models/basket/basket_response_model.dart';
+import 'package:carfy/data/models/basket/fitment_selection_model.dart';
 import 'package:carfy/domain/entities/basket/basket_action_response.dart';
 import 'package:carfy/domain/entities/basket/basket_data.dart';
 import 'package:carfy/domain/entities/basket/basket_product.dart';
 import 'package:carfy/domain/entities/basket/basket_quantity_response.dart';
 import 'package:carfy/domain/entities/basket/basket_response.dart';
+import 'package:carfy/domain/entities/basket/fitment_selection.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -30,6 +32,12 @@ class BasketMapper {
     basketQuantity: model.basketQuantity,
     priceInBasket: model.priceInBasket,
     priceFinalInBasket: model.priceFinalInBasket,
+    fitmentSelection: model.fitmentSelection != null ? _mapFitmentSelection(model.fitmentSelection!) : null,
+  );
+
+  FitmentSelection _mapFitmentSelection(FitmentSelectionModel model) => FitmentSelection(
+    brand: model.brand != null ? FitmentParty(id: model.brand!.id, title: model.brand!.title) : null,
+    brandModel: model.brandModel != null ? FitmentParty(id: model.brandModel!.id, title: model.brandModel!.title) : null,
   );
 
   BasketResponse mapBasketResponse(BasketResponseModel model) =>

@@ -202,9 +202,9 @@ class _BasketManagerListener extends StatelessWidget {
           listener: (context, managerState) {
             final update = managerState.quantityUpdate!;
             if (update.quantity <= 0) {
-              context.read<BasketCubit>().removeItem(update.cpvUuid, update.basketData);
+              context.read<BasketCubit>().removeItem(update.itemKey, update.basketData);
             } else {
-              context.read<BasketCubit>().updateItemQuantity(update.cpvUuid, update.quantity, update.basketData);
+              context.read<BasketCubit>().updateItemQuantity(update.itemKey, update.quantity, update.basketData);
             }
           },
         ),
