@@ -16,7 +16,7 @@ class Product {
   final bool hasDiscount;
   final DiscountType? discountType;
   final String? discountTypeTitle;
-  final double discount;
+  final double? discount;
   final bool isUniversal;
   final bool inWishlist;
   final bool inBasket;
