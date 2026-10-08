@@ -36,3 +36,12 @@ class ValidationFailure extends Failure {
   @override
   List<Object?> get props => [errors];
 }
+
+class RateLimitFailure extends Failure {
+  final int retryAfter;
+
+  RateLimitFailure({required this.retryAfter});
+
+  @override
+  List<Object?> get props => [retryAfter];
+}

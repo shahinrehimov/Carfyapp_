@@ -37,3 +37,9 @@ class UserException extends Equatable implements Exception {
   @override
   List<Object> get props => [];
 }
+
+class RateLimitException implements Exception {
+  final int retryAfter;
+
+  const RateLimitException({this.retryAfter = 60});
+}

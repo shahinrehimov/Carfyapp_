@@ -9,6 +9,9 @@ void showStateStatusToast(BuildContext context, StateStatus state) {
     case StateStatusFailure(msg: final msg):
       CustomToast.showError(context, msg);
       break;
+    case StateStatusBlockedFailure(seconds: final seconds):
+      CustomToast.showError(context, context.localization.tooManyAttemptsSeconds(seconds));
+      break;
     case StateStatusNetworkFailure():
       CustomToast.showError(context, context.localization.connectionFailure);
       break;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/state/field_validation_state.dart';
 import 'package:carfy/common/state/state_map_helper.dart';
@@ -20,6 +22,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> with StateMapHelper
       super(ForgotPasswordState.initial());
 
   final TextEditingController emailController = TextEditingController();
+  Timer? _rateLimitTimer;
 
   Future<void> sendOtp() async {
     emit(state.copyWith(sendOtpState: StateStatus.loading()));
@@ -30,7 +33,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> with StateMapHelper
     final result = await _forgotPasswordUseCase(ForgotPasswordParams(email: email));
     result.fold(
       (failure) {
-        emit(state.copyWith(sendOtpState: mapFailure(failure)));
+        final status = mapFailure(failure);
+        emit(state.copyWith(sendOtpState: status));
+        if (status is StateStatusBlockedFailure) {
+          _startCountdown(status.seconds);
+        }
         if (failure is ValidationFailure) {
           emit(state.copyWith(emailValidationState: mapValidationFailure('email', failure)));
         }
@@ -39,5 +46,28 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> with StateMapHelper
         emit(state.copyWith(sendOtpState: StateStatus.successWithMessage(success.message)));
       },
     );
+  }
+
+  void _startCountdown(int seconds) {
+    _rateLimitTimer?.cancel();
+    _rateLimitTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (isClosed) { timer.cancel(); return; }
+      final current = state.sendOtpState;
+      if (current is! StateStatusBlockedFailure) { timer.cancel(); return; }
+      final remaining = current.seconds - 1;
+      if (remaining <= 0) {
+        timer.cancel();
+        emit(state.copyWith(sendOtpState: StateStatus.initial()));
+      } else {
+        emit(state.copyWith(sendOtpState: StateStatus.blockedFailure(remaining)));
+      }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _rateLimitTimer?.cancel();
+    emailController.dispose();
+    return super.close();
   }
 }

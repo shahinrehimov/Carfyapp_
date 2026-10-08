@@ -48,6 +48,14 @@ class AppLocalizations {
 
   String get serverFailure => _tr(TranslationKeys.serverFailure);
 
+  String tooManyAttemptsSeconds(int n) {
+    final template = _tr(TranslationKeys.tooManyAttemptsFormat);
+    if (template == TranslationKeys.tooManyAttemptsFormat || template.isEmpty) {
+      return 'Too many attempts. Try again in $n seconds.';
+    }
+    return template.replaceAll('{n}', '$n');
+  }
+
   // Login/Register
   String get withNumber => _tr(TranslationKeys.withNumber);
 

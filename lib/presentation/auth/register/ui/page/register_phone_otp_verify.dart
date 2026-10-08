@@ -43,7 +43,10 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
         listener: (context, state) {
           showStateStatusToast(context, state.verifyState);
         },
-        listenWhen: (oldState, newState) => oldState.verifyState != newState.verifyState,
+        listenWhen: (oldState, newState) =>
+            oldState.verifyState != newState.verifyState &&
+            !(oldState.verifyState is StateStatusBlockedFailure &&
+                newState.verifyState is StateStatusBlockedFailure),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -88,10 +91,17 @@ class RegisterPhoneOtpVerifyPage extends StatelessWidget implements AutoRouteWra
               padding: const EdgeInsets.symmetric(horizontal: 26),
               child: BlocBuilder<PhoneVerifyOtpCubit, PhoneVerifyOtpState>(
                 builder: (context, state) {
+                  final blocked = state.verifyState is StateStatusBlockedFailure
+                      ? state.verifyState as StateStatusBlockedFailure
+                      : null;
                   return CustomButton(
-                    onPressed: () => context.read<PhoneVerifyOtpCubit>().verify(phone),
+                    onPressed: state.verifyState is StateStatusLoading || blocked != null
+                        ? null
+                        : () => context.read<PhoneVerifyOtpCubit>().verify(phone),
                     loading: state.verifyState is StateStatusLoading,
-                    text: context.localization.confirm,
+                    text: blocked != null
+                        ? '${context.localization.confirm} (${blocked.seconds}s)'
+                        : context.localization.confirm,
                   );
                 },
               ),

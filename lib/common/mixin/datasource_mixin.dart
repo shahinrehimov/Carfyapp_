@@ -28,6 +28,8 @@ mixin DataSourceMixin {
         return response.data;
       } else if (response.statusCode == 400) {
         throw UserException(message: response.data['message']);
+      } else if (response.statusCode == 404) {
+        throw UserException(message: response.data['message'] ?? 'Not found.');
       } else if (response.statusCode == 401) {
         throw UserException(message: response.data['message']);
       } else if (response.statusCode == 403) {
@@ -42,7 +44,9 @@ mixin DataSourceMixin {
         }
         throw ServerException();
       } else if (response.statusCode == 429) {
-        throw UserException(message: response.data['message']);
+        final retryAfterStr = response.headers.value('retry-after');
+        final retryAfter = int.tryParse(retryAfterStr ?? '') ?? 60;
+        throw RateLimitException(retryAfter: retryAfter);
       }
 
       throw ServerException();

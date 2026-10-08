@@ -13,7 +13,10 @@ class _LoginWithNumber extends StatelessWidget {
           listener: (context, state) {
             showStateStatusToast(context, state.phoneLoginState);
           },
-          listenWhen: (oldState, newState) => oldState.phoneLoginState != newState.phoneLoginState,
+          listenWhen: (oldState, newState) =>
+              oldState.phoneLoginState != newState.phoneLoginState &&
+              !(oldState.phoneLoginState is StateStatusBlockedFailure &&
+                  newState.phoneLoginState is StateStatusBlockedFailure),
           child: Column(
             children: [
               const SizedBox(height: 30),
@@ -35,10 +38,17 @@ class _LoginWithNumber extends StatelessWidget {
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.phoneLoginState != newState.phoneLoginState,
                 builder: (context, state) {
-                  return CustomButton(
-                    onPressed: () => cubit.loginWithNumber(),
+                  final blocked = state.phoneLoginState is StateStatusBlockedFailure
+                    ? state.phoneLoginState as StateStatusBlockedFailure
+                    : null;
+                return CustomButton(
+                    onPressed: state.phoneLoginState is StateStatusLoading || blocked != null
+                        ? null
+                        : () => cubit.loginWithNumber(),
                     loading: state.phoneLoginState is StateStatusLoading,
-                    text: context.localization.forward,
+                    text: blocked != null
+                        ? '${context.localization.forward} (${blocked.seconds}s)'
+                        : context.localization.forward,
                   );
                 },
               ),

@@ -11,6 +11,8 @@ class StateStatus {
 
   factory StateStatus.failure(String msg) = StateStatusFailure;
 
+  factory StateStatus.blockedFailure(int seconds) = StateStatusBlockedFailure;
+
   factory StateStatus.serverFailure() = StateStatusServerFailure;
 
   factory StateStatus.networkFailure() = StateStatusNetworkFailure;
@@ -38,6 +40,9 @@ class StateStatus {
     if (this is StateStatusEmpty && empty != null) return empty();
     if (this is StateStatusFailure && failure != null) {
       return failure((this as StateStatusFailure).msg);
+    }
+    if (this is StateStatusBlockedFailure && blockedFailure != null) {
+      return blockedFailure((this as StateStatusBlockedFailure).seconds);
     }
     if (this is StateStatusServerFailure && serverFailure != null) {
       return serverFailure();
@@ -73,6 +78,12 @@ class StateStatusFailure extends StateStatus {
   final String msg;
 
   StateStatusFailure(this.msg);
+}
+
+class StateStatusBlockedFailure extends StateStatus {
+  final int seconds;
+
+  StateStatusBlockedFailure(this.seconds);
 }
 
 class StateStatusServerFailure extends StateStatus {

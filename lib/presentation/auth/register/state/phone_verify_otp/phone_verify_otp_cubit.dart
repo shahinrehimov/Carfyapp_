@@ -21,6 +21,7 @@ class PhoneVerifyOtpCubit extends Cubit<PhoneVerifyOtpState> with StateMapHelper
 
   final TextEditingController otpController = TextEditingController();
   Timer? _timer;
+  Timer? _rateLimitTimer;
 
   PhoneVerifyOtpCubit({
     CheckPhoneOtpUseCase? checkPhoneOtpUseCase,
@@ -67,7 +68,12 @@ class PhoneVerifyOtpCubit extends Cubit<PhoneVerifyOtpState> with StateMapHelper
 
     result.fold(
       (failure) {
-        emit(state.copyWith(verifyState: mapFailure(failure)));
+        final status = mapFailure(failure);
+        emit(state.copyWith(verifyState: status));
+        if (status is StateStatusBlockedFailure) {
+          otpController.clear();
+          _startRateLimitCountdown(status.seconds);
+        }
       },
       (success) {
         emit(state.copyWith(verifyState: StateStatus.success()));
@@ -78,9 +84,26 @@ class PhoneVerifyOtpCubit extends Cubit<PhoneVerifyOtpState> with StateMapHelper
     );
   }
 
+  void _startRateLimitCountdown(int seconds) {
+    _rateLimitTimer?.cancel();
+    _rateLimitTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (isClosed) { timer.cancel(); return; }
+      final current = state.verifyState;
+      if (current is! StateStatusBlockedFailure) { timer.cancel(); return; }
+      final remaining = current.seconds - 1;
+      if (remaining <= 0) {
+        timer.cancel();
+        emit(state.copyWith(verifyState: StateStatus.initial()));
+      } else {
+        emit(state.copyWith(verifyState: StateStatus.blockedFailure(remaining)));
+      }
+    });
+  }
+
   @override
   Future<void> close() {
     _timer?.cancel();
+    _rateLimitTimer?.cancel();
     otpController.dispose();
     return super.close();
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carfy/common/di/di.dart';
 import 'package:carfy/common/util/device_util.dart';
 import 'package:carfy/common/router/app_router.dart';
@@ -32,6 +34,8 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  Timer? _emailRateLimitTimer;
+  Timer? _phoneRateLimitTimer;
 
   void toggleObscureText() {
     emit(state.copyWith(obscurePassword: !state.obscurePassword));
@@ -55,7 +59,11 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
     );
     result.fold(
       (failure) {
-        emit(state.copyWith(emailLoginState: mapFailure(failure)));
+        final status = mapFailure(failure);
+        emit(state.copyWith(emailLoginState: status));
+        if (status is StateStatusBlockedFailure) {
+          _startEmailCountdown(status.seconds);
+        }
         if (failure is ValidationFailure) {
           emit(
             state.copyWith(
@@ -81,7 +89,11 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
     final result = await _sendPhoneLoginOtpUseCase(LoginWithPhoneOtpParams(phone: phone));
     result.fold(
       (failure) {
-        emit(state.copyWith(phoneLoginState: mapFailure(failure)));
+        final status = mapFailure(failure);
+        emit(state.copyWith(phoneLoginState: status));
+        if (status is StateStatusBlockedFailure) {
+          _startPhoneCountdown(status.seconds);
+        }
         if (failure is ValidationFailure) {
           emit(state.copyWith(phoneValidationState: mapValidationFailure('phone', failure)));
         }
@@ -91,5 +103,47 @@ class LoginCubit extends Cubit<LoginState> with StateMapHelper {
         _appRouter.push(LoginPhoneVerifyRoute(phone: phone));
       },
     );
+  }
+
+  void _startEmailCountdown(int seconds) {
+    _emailRateLimitTimer?.cancel();
+    _emailRateLimitTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (isClosed) { timer.cancel(); return; }
+      final current = state.emailLoginState;
+      if (current is! StateStatusBlockedFailure) { timer.cancel(); return; }
+      final remaining = current.seconds - 1;
+      if (remaining <= 0) {
+        timer.cancel();
+        emit(state.copyWith(emailLoginState: StateStatus.initial()));
+      } else {
+        emit(state.copyWith(emailLoginState: StateStatus.blockedFailure(remaining)));
+      }
+    });
+  }
+
+  void _startPhoneCountdown(int seconds) {
+    _phoneRateLimitTimer?.cancel();
+    _phoneRateLimitTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (isClosed) { timer.cancel(); return; }
+      final current = state.phoneLoginState;
+      if (current is! StateStatusBlockedFailure) { timer.cancel(); return; }
+      final remaining = current.seconds - 1;
+      if (remaining <= 0) {
+        timer.cancel();
+        emit(state.copyWith(phoneLoginState: StateStatus.initial()));
+      } else {
+        emit(state.copyWith(phoneLoginState: StateStatus.blockedFailure(remaining)));
+      }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _emailRateLimitTimer?.cancel();
+    _phoneRateLimitTimer?.cancel();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
+    return super.close();
   }
 }

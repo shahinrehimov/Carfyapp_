@@ -37,7 +37,10 @@ class VerifyEmailPage extends StatelessWidget implements AutoRouteWrapper {
         listener: (context, state) {
           showStateStatusToast(context, state.verifyState);
         },
-        listenWhen: (oldState, newState) => oldState.verifyState != newState.verifyState,
+        listenWhen: (oldState, newState) =>
+            oldState.verifyState != newState.verifyState &&
+            !(oldState.verifyState is StateStatusBlockedFailure &&
+                newState.verifyState is StateStatusBlockedFailure),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -77,10 +80,17 @@ class VerifyEmailPage extends StatelessWidget implements AutoRouteWrapper {
               padding: const EdgeInsets.symmetric(horizontal: 26),
               child: BlocBuilder<EmailVerifyOtpCubit, EmailVerifyOtpState>(
                 builder: (context, state) {
+                  final blocked = state.verifyState is StateStatusBlockedFailure
+                      ? state.verifyState as StateStatusBlockedFailure
+                      : null;
                   return CustomButton(
-                    onPressed: () => context.read<EmailVerifyOtpCubit>().verify(email, userUuid),
+                    onPressed: state.verifyState is StateStatusLoading || blocked != null
+                        ? null
+                        : () => context.read<EmailVerifyOtpCubit>().verify(email, userUuid),
                     loading: state.verifyState is StateStatusLoading,
-                    text: context.localization.confirm,
+                    text: blocked != null
+                        ? '${context.localization.confirm} (${blocked.seconds}s)'
+                        : context.localization.confirm,
                   );
                 },
               ),

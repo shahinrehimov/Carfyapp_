@@ -38,7 +38,10 @@ class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
         listener: (context, state) {
           showStateStatusToast(context, state.sendOtpState);
         },
-        listenWhen: (oldState, newState) => oldState.sendOtpState != newState.sendOtpState,
+        listenWhen: (oldState, newState) =>
+            oldState.sendOtpState != newState.sendOtpState &&
+            !(oldState.sendOtpState is StateStatusBlockedFailure &&
+                newState.sendOtpState is StateStatusBlockedFailure),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 26),
           child: Column(
@@ -62,10 +65,17 @@ class ForgotPasswordPage extends StatelessWidget implements AutoRouteWrapper {
               const SizedBox(height: 16),
               BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                 builder: (context, state) {
-                  return CustomButton(
-                    onPressed: () => cubit.sendOtp(),
+                  final blocked = state.sendOtpState is StateStatusBlockedFailure
+                    ? state.sendOtpState as StateStatusBlockedFailure
+                    : null;
+                return CustomButton(
+                    onPressed: state.sendOtpState is StateStatusLoading || blocked != null
+                        ? null
+                        : () => cubit.sendOtp(),
                     loading: state.sendOtpState is StateStatusLoading,
-                    text: context.localization.continueBtn,
+                    text: blocked != null
+                        ? '${context.localization.continueBtn} (${blocked.seconds}s)'
+                        : context.localization.continueBtn,
                   );
                 },
               ),

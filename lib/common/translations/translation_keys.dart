@@ -13,6 +13,7 @@ class TranslationKeys {
   static const String or = 'or';
   static const String connectionFailure = 'connection_failure';
   static const String serverFailure = 'server_failure';
+  static const String tooManyAttemptsFormat = 'too_many_attempts_format';
   static const String withNumber = 'with_number';
   static const String withEmail = 'with_email';
   static const String entranceToAccount = 'entrance_to_account';

@@ -9,6 +9,8 @@ mixin StateMapHelper {
       return StateStatus.networkFailure();
     } else if (failure is ServerFailure) {
       return StateStatus.serverFailure();
+    } else if (failure is RateLimitFailure) {
+      return StateStatus.blockedFailure(failure.retryAfter);
     } else if (failure is UserFailure) {
       return StateStatus.failure(failure.message);
     } else if (failure is ValidationFailure) {

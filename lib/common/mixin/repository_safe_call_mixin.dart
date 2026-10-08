@@ -13,6 +13,9 @@ mixin RepositorySafeCallMixin {
     } on ValidationException catch (e) {
       _logError(e);
       return Left(ValidationFailure(e.errors));
+    } on RateLimitException catch (e) {
+      _logError(e);
+      return Left(RateLimitFailure(retryAfter: e.retryAfter));
     } on UserException catch (e) {
       _logError(e);
       return Left(UserFailure(message: e.message));

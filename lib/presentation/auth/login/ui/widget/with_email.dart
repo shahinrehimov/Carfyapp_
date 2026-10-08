@@ -13,7 +13,10 @@ class _LoginWithEmail extends StatelessWidget {
           listener: (context, state) {
             showStateStatusToast(context, state.emailLoginState);
           },
-          listenWhen: (oldState, newState) => oldState.emailLoginState != newState.emailLoginState,
+          listenWhen: (oldState, newState) =>
+              oldState.emailLoginState != newState.emailLoginState &&
+              !(oldState.emailLoginState is StateStatusBlockedFailure &&
+                  newState.emailLoginState is StateStatusBlockedFailure),
           child: Column(
             children: [
               const SizedBox(height: 30),
@@ -57,10 +60,17 @@ class _LoginWithEmail extends StatelessWidget {
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (oldState, newState) => oldState.emailLoginState != newState.emailLoginState,
                 builder: (context, state) {
-                  return CustomButton(
-                    onPressed: () => cubit.loginWithEmail(),
+                  final blocked = state.emailLoginState is StateStatusBlockedFailure
+                    ? state.emailLoginState as StateStatusBlockedFailure
+                    : null;
+                return CustomButton(
+                    onPressed: state.emailLoginState is StateStatusLoading || blocked != null
+                        ? null
+                        : () => cubit.loginWithEmail(),
                     loading: state.emailLoginState is StateStatusLoading,
-                    text: context.localization.forward,
+                    text: blocked != null
+                        ? '${context.localization.forward} (${blocked.seconds}s)'
+                        : context.localization.forward,
                   );
                 },
               ),
